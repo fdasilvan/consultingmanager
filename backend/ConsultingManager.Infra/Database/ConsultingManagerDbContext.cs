@@ -1,16 +1,19 @@
 ﻿using ConsultingManager.Infra.Database.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
-using Tnf.EntityFrameworkCore;
-using Tnf.Runtime.Session;
 
 namespace ConsultingManager.Infra.Database
 {
-    public class ConsultingManagerDbContext : TnfDbContext
+    public class ConsultingManagerDbContext : DbContext
     {
-        public ConsultingManagerDbContext(DbContextOptions<ConsultingManagerDbContext> options, ITnfSession session)
-          : base(options, session)
+        public ConsultingManagerDbContext()
+        {
+        }
+
+        public ConsultingManagerDbContext(DbContextOptions<ConsultingManagerDbContext> options)
+          : base(options)
         {
         }
 

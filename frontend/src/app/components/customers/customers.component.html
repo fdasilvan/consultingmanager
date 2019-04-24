@@ -1,3 +1,38 @@
-<p>
-  customers works!
-</p>
+<div class="row">
+    <ol class="breadcrumb">
+        <li><a href="#">
+                <em class="fa fa-home"></em>
+            </a></li>
+        <li class="active">Clientes</li>
+    </ol>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Clientes</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Selecione o cliente</div>
+            <div class="panel-body articles-container" *ngFor="let customer of customers">
+                <div class="article border-bottom">
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-2 col-md-2 date">
+                                <img src="{{customer.logoUrl}}">
+                            </div>
+                            <div class="col-xs-10 col-md-10">
+                                <h4><a href="#">{{customer.name}}</a></h4>
+                                <p><b>Etapa:</b> {{customer.step}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

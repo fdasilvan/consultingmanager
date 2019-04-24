@@ -8,7 +8,6 @@ using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tnf.Configuration;
 
 namespace ConsultingManager.Api
 {
@@ -25,10 +24,8 @@ namespace ConsultingManager.Api
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services
-                .AddResponseCompression()
-                .AddDatabaseDependency()
-                .AddTnfAspNetCore()
-                .AddTnfDefaultConventionalRegistrations();
+                .AddDatabaseDependency(Configuration)
+                .AddResponseCompression();
 
             services.AddCors(options =>
             {
@@ -59,12 +56,6 @@ namespace ConsultingManager.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseCors("AllowAll");
-
-            app.UseTnfAspNetCore(options =>
-            {
-                options.MultiTenancy(tenancy => tenancy.IsEnabled = true);
-                options.DefaultNameOrConnectionString = Configuration.GetConnectionString("ConsultingManager");
-            });
 
             if (env.IsDevelopment())
             {
