@@ -1,15 +1,24 @@
 import { Component, OnInit } from '@angular/core';
+import { Process } from 'src/app/models/process.model';
+import { WorklistService } from './worklist.service';
 
 @Component({
-  selector: 'app-worklist',
-  templateUrl: './worklist.component.html',
-  styleUrls: ['./worklist.component.css']
+    selector: 'app-worklist',
+    templateUrl: './worklist.component.html',
+    styleUrls: ['./worklist.component.css']
 })
 export class WorklistComponent implements OnInit {
 
-  constructor() { }
+    constructor(private service: WorklistService) { }
 
-  ngOnInit() {
-  }
+    public processesList: Process[];
 
+    ngOnInit() {
+        this.loadProcesses();
+    }
+
+    async loadProcesses() {
+        this.processesList = await this.service.getAll();
+        debugger;
+    }
 }

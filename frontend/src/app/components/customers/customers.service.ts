@@ -11,9 +11,9 @@ export class CustomersService {
 
     urlBase: string = 'http://localhost:3000';
 
-    public async getAll(): Promise<any[]> {
+    public async getAll(): Promise<Customer[]> {
         debugger;
-        var response = await this.http.get<any[]>(`${this.urlBase}/customers`);
+        var response = await this.http.get<Customer[]>(`${this.urlBase}/customers`);
         return response.toPromise();
     }
 }
