@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomersService } from './customers.service';
 import { Customer } from 'src/app/models/customer.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-customers',
@@ -9,7 +10,9 @@ import { Customer } from 'src/app/models/customer.model';
 })
 export class CustomersComponent implements OnInit {
 
-    constructor(private service: CustomersService) { }
+    constructor(private service: CustomersService,
+        private route: ActivatedRoute,
+        private router: Router) { }
 
     public customersUrl: string = "http://localhost:3000/customers";
     public customers: Customer[];
@@ -20,5 +23,11 @@ export class CustomersComponent implements OnInit {
 
     async loadCustomers() {
         this.customers = await this.service.getAll();
+    }
+
+    updateSelectedCustomer(customer: Customer, event: Event) {
+        event.preventDefault();
+        this.router.navigate(['timeline'], { state: { customer: customer } })
+        window.localStorage.setItem("customer", JSON.stringify(customer));
     }
 }

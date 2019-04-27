@@ -13,9 +13,6 @@ export class TimelineService {
 
 
     public async getAll(): Promise<Process[]> {
-
-        debugger;
-
         let stepOnboarding: Step = new Step();
 
         let tasksList: Task[] = [];
