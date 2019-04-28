@@ -32,7 +32,7 @@
                                     <div class="text-muted">{{task.estimatedDate | date: 'yyyy'}}</div>
                                 </div>
                                 <div class="col-xs-10 col-md-10">
-                                    <h4><a href="#">{{task.description}}</a></h4>
+                                    <h4><a (click)="updateSelectedTask(this.task, $event)">{{task.description}}</a></h4>
                                     <div class="text-muted">Duração: {{task.duration}} minutos</div>
                                 </div>
                             </div>

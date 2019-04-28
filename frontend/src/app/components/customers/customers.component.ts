@@ -27,7 +27,7 @@ export class CustomersComponent implements OnInit {
 
     updateSelectedCustomer(customer: Customer, event: Event) {
         event.preventDefault();
-        this.router.navigate(['timeline'], { state: { customer: customer } })
+        this.router.navigate(['timeline'])
         window.localStorage.setItem("customer", JSON.stringify(customer));
     }
 }

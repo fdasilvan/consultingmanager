@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TimelineComponent } from './timeline.component';
+import { TaskComponent } from './task.component';
 
-describe('TimelineComponent', () => {
-    let component: TimelineComponent;
-    let fixture: ComponentFixture<TimelineComponent>;
+describe('TaskComponent', () => {
+    let component: TaskComponent;
+    let fixture: ComponentFixture<TaskComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [TimelineComponent]
+            declarations: [TaskComponent]
         })
             .compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TimelineComponent);
+        fixture = TestBed.createComponent(TaskComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

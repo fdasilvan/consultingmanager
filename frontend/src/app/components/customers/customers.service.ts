@@ -6,13 +6,12 @@ import { Customer } from 'src/app/models/customer.model';
     providedIn: 'root'
 })
 export class CustomersService {
-    
+
     constructor(private http: HttpClient) { }
 
     urlBase: string = 'http://localhost:3000';
 
     public async getAll(): Promise<Customer[]> {
-        debugger;
         var response = await this.http.get<Customer[]>(`${this.urlBase}/customers`);
         return response.toPromise();
     }
