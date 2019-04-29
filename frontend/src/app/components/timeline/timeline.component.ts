@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TimelineService } from './timeline.service';
 import { Process } from 'src/app/models/process.model';
 import { Customer } from 'src/app/models/customer.model';
+import { Task } from 'src/app/models/task.model';
 
 @Component({
     selector: 'app-timeline',
@@ -28,6 +29,23 @@ export class TimelineComponent implements OnInit {
         this.customer = <Customer>JSON.parse(localStorage.getItem("customer"));
         if (!this.customer) {
             this.customer = window.history.state.customer;
+        }
+    }
+
+    loadClassIndicator(task: Task) {
+        let today: Date = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        if (!task.executionDate) {
+            if (task.estimatedDate < today) {
+                return "indicator label-danger";
+            } else if (task.estimatedDate.getTime() == today.getTime()) {
+                return "indicator label-warning";
+            } else {
+                return "indicator label-default";
+            }
+        } else {
+            return "indicator label-success";
         }
     }
 }

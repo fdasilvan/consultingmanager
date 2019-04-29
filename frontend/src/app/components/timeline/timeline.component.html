@@ -44,6 +44,8 @@
                                     <div class="text-muted">{{task.estimatedDate | date: 'yyyy'}}</div>
                                 </div>
                                 <div class="col-xs-10 col-md-10">
+                                    <span class="{{this.loadClassIndicator(task)}}"></span>
+                                    <div class="clear"></div>
                                     <h4><a href="#">{{task.description}}</a></h4>
                                     <div class="text-muted">Duração: {{task.duration}} minutos</div>
                                 </div>

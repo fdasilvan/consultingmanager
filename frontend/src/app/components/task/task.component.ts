@@ -16,10 +16,10 @@ export class TaskComponent implements OnInit {
     public customer: Customer;
 
     ngOnInit() {
-        this.loadTask();
+        this.loadTasks();
     }
 
-    loadTask() {
+    loadTasks() {
         this.customer = <Customer>JSON.parse(window.localStorage.getItem('customer'));
         this.task = <Task>JSON.parse(window.localStorage.getItem('task'));
     }
