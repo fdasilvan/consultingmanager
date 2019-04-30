@@ -36,9 +36,9 @@ export class WorklistComponent implements OnInit {
         today.setHours(0, 0, 0, 0);
 
         if (!task.executionDate) {
-            if (task.estimatedDate < today) {
+            if (today > task.endDate) {
                 return "indicator label-danger";
-            } else if (task.estimatedDate.getTime() == today.getTime()) {
+            } else if (today.getTime() >= task.startDate.getTime()) {
                 return "indicator label-warning";
             } else {
                 return "indicator label-default";

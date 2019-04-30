@@ -22,6 +22,7 @@ namespace ConsultingManager.Infra.Database
         public DbSet<ProcessPoco> Processes { get; set; }
         public DbSet<StepPoco> Steps { get; set; }
         public DbSet<TaskPoco> Tasks { get; set; }
+        public DbSet<TaskTypePoco> TaskTypes { get; set; }
         public DbSet<TaskTemplatePoco> TaskTemplates { get; set; }
         public DbSet<UserPoco> Users { get; set; }
         public DbSet<UserTypePoco> UserTypes { get; set; }

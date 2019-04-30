@@ -4,13 +4,16 @@ import { User } from './user.model';
 export class Task {
     id: string;
     description: string;
+    instructions: string;
     duration: number;
     creationDate: Date;
-    estimatedDate: Date;
+    startDate: Date;
+    endDate: Date;
     executionDate: Date;
     customer: Customer;
     customerUser: User;
-    consultingUser: User;
+    consultant: User;
+    owner: string;
 
     constructor() {
     }

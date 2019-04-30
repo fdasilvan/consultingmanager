@@ -1,8 +1,8 @@
 export class Customer {
     id: string;
     name: string;
-    process: string;
-    step: string;
+    currentProcess: string;
+    currentStep: string;
     logoUrl: string;
 
     constructor() {

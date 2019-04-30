@@ -6,8 +6,8 @@ export class Process {
     startDate: Date;
     estimateEndDate: Date;
     endDate: Date;
-    steps: Step[];    
-    
+    steps: Step[];
+
     constructor() {
     }
 }

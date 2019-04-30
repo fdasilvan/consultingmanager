@@ -28,14 +28,24 @@
                         <div class="col-xs-12">
                             <div class="row">
                                 <div class="col-xs-1 col-md-1 date">
-                                    <div class="large">{{task.estimatedDate | date: 'dd/MM'}}</div>
-                                    <div class="text-muted">{{task.estimatedDate | date: 'yyyy'}}</div>
+                                    <div class="text-muted">De</div>
+                                    <div class="large">{{task.startDate | date: 'dd/MM'}}</div>
+                                    <div class="text-muted">{{task.startDate | date: 'yyyy'}}</div>
+                                </div>
+                                <div class="col-xs-1 col-md-1 date">
+                                    <div class="text-muted">Até</div>
+                                    <div class="large">{{task.endDate | date: 'dd/MM'}}</div>
+                                    <div class="text-muted">{{task.endDate | date: 'yyyy'}}</div>
+                                </div>
+                                <div style="display: block;">
+                                    <span class="{{this.loadClassIndicator(task)}}"></span>
                                 </div>
                                 <div class="col-xs-10 col-md-10">
-                                    <span class="{{this.loadClassIndicator(task)}}"></span>
                                     <h4><a (click)="updateSelectedTask(this.task, $event)">{{task.description}}</a></h4>
-                                    <div *ngIf="task.executionDate" class="text-muted">Finalizada em: {{task.executionDate | date: 'dd/MM/yyyy' }}</div>
-                                    <div *ngIf="!task.executionDate" class="text-muted">Duração: {{task.duration}} minutos</div>                                    
+                                    <div *ngIf="task.executionDate" class="text-muted">Finalizada em:
+                                        {{task.executionDate | date: 'dd/MM/yyyy' }}</div>
+                                    <div *ngIf="!task.executionDate" class="text-muted">Duração: {{task.duration}}
+                                        minutos</div>
                                 </div>
                             </div>
                         </div>

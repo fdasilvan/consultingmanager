@@ -27,15 +27,68 @@
             <div class="panel-body">
                 <div class="form-horizontal row-border">
                     <div class="form-group">
-                        <label class="col-md-2 control-label">Cód. Tarefa</label>
+                        <label class="col-md-2 control-label">Cód. Tarefa:</label>
                         <div class="col-md-10">
                             <p>{{this.task.id}}</p>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-2 control-label">Descrição</label>
+                        <label class="col-md-2 control-label">Descrição:</label>
                         <div class="col-md-10">
                             <p>{{this.task.description}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Instruções:</label>
+                        <div class="col-md-10">
+                            <p>{{this.task.instructions}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Conteúdo de Apoio:</label>
+                        <div class="col-md-10">
+                            <p>ADICIONAR CONTEÚDO</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Duração:</label>
+                        <div class="col-md-10">
+                            <p>{{this.task.duration}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Responsável:</label>
+                        <div class="col-md-10">
+                            <p>{{this.task.owner}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Usuário Consultoria:</label>
+                        <div class="col-md-10">
+                            <p>{{this.task.consultingUser.name}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Usuário Cliente:</label>
+                        <div class="col-md-10">
+                            <p>{{this.task.customerUser.name}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">Comentários:</div>
+            <div class="panel-body">
+                <div class="form-horizontal row-border">
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <p>ADICIONAR COMENTÁRIOS</p>
                         </div>
                     </div>
                 </div>
