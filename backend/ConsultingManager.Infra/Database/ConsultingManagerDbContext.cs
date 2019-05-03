@@ -1,21 +1,16 @@
 ﻿using ConsultingManager.Infra.Database.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
+using Tnf.EntityFrameworkCore;
+using Tnf.Runtime.Session;
 
 namespace ConsultingManager.Infra.Database
 {
-    public class ConsultingManagerDbContext : DbContext
+    public class ConsultingManagerDbContext : TnfDbContext
     {
-        public ConsultingManagerDbContext()
-        {
-        }
-
-        public ConsultingManagerDbContext(DbContextOptions<ConsultingManagerDbContext> options)
-          : base(options)
-        {
-        }
+        public ConsultingManagerDbContext(DbContextOptions options, ITnfSession session)
+            : base(options, session) { }
 
         public DbSet<CustomerPoco> Customers { get; set; }
         public DbSet<PlatformPoco> Platforms { get; set; }

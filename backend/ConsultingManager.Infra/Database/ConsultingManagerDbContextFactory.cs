@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.IO;
+using Tnf.Runtime.Session;
 
 namespace ConsultingManager.Infra.Database
 {
@@ -16,9 +18,16 @@ namespace ConsultingManager.Infra.Database
 
         public ConsultingManagerDbContext CreateDbContext(string[] args)
         {
-            var obj = new DbContextOptionsBuilder<ConsultingManagerDbContext>();
-            obj.UseSqlServer("Server=sql-server-consulting-manager.ccn8jodofc23.sa-east-1.rds.amazonaws.com; Integrated Security=True; Persist Security Info=True;Initial Catalog=ConsultingManager;MultipleActiveResultSets=True; User Id=admin; Password=adalberto!1410");
-            return new ConsultingManagerDbContext(obj.Options);
+            var builder = new DbContextOptionsBuilder<ConsultingManagerDbContext>();
+
+            var configuration = new ConfigurationBuilder()
+                                    .SetBasePath(Directory.GetCurrentDirectory())
+                                    .AddJsonFile($"appsettings.json", false)
+                                    .Build();
+
+            builder.UseSqlServer(configuration.GetConnectionString("ProSaude"));
+
+            return (ConsultingManagerDbContext)Activator.CreateInstance(typeof(ConsultingManagerDbContext), builder.Options, NullTnfSession.Instance);
         }
     }
 }

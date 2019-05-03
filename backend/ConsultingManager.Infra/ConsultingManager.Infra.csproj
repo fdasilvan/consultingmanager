@@ -7,8 +7,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
+    <PackageReference Include="Tnf.AspNetCore" Version="2.6.0.10102" />
+    <PackageReference Include="Tnf.AutoMapper" Version="2.6.0.10102" />
+    <PackageReference Include="Tnf.EntityFrameworkCore" Version="2.6.0.10102" />
+    <PackageReference Include="Tnf.Repositories" Version="2.6.0.10102" />
   </ItemGroup>
 
 </Project>

@@ -8,7 +8,7 @@ namespace ConsultingManager.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class ValuesController : TnfController
     {
         // GET api/values
         [HttpGet]

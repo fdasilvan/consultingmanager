@@ -8,6 +8,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tnf.Configuration;
 
 namespace ConsultingManager.Api
 {
@@ -24,8 +25,11 @@ namespace ConsultingManager.Api
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services
-                .AddDatabaseDependency(Configuration)
-                .AddResponseCompression();
+                .AddResponseCompression()
+                .AddDatabaseDependency()
+                .AddTnfAspNetCore()
+                .AddTnfDefaultConventionalRegistrations();
+
 
             services.AddCors(options =>
             {
@@ -66,6 +70,13 @@ namespace ConsultingManager.Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseTnfAspNetCore(options =>
+            {
+                options.MultiTenancy(tenancy => tenancy.IsEnabled = true);
+                options.DefaultNameOrConnectionString = Configuration.GetConnectionString("ConsultingManager");
+            });
+
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
