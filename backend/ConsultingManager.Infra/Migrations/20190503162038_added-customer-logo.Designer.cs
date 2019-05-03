@@ -4,14 +4,16 @@ using ConsultingManager.Infra.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConsultingManager.Infra.Migrations
 {
     [DbContext(typeof(ConsultingManagerDbContext))]
-    partial class ConsultingManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190503162038_added-customer-logo")]
+    partial class addedcustomerlogo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -178,11 +180,7 @@ namespace ConsultingManager.Infra.Migrations
 
                     b.Property<string>("Password");
 
-                    b.Property<Guid>("UserTypeId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserTypeId");
 
                     b.ToTable("Users");
                 });
@@ -197,28 +195,6 @@ namespace ConsultingManager.Infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("d10dd961-e131-4618-a235-8b0116aecc91"),
-                            Description = "Administrador"
-                        },
-                        new
-                        {
-                            Id = new Guid("5f70a257-25a9-42e4-9db3-8623d6e758a5"),
-                            Description = "Líder"
-                        },
-                        new
-                        {
-                            Id = new Guid("70f24307-54b9-41e3-b4fb-4c86e0202ba4"),
-                            Description = "Consultor"
-                        },
-                        new
-                        {
-                            Id = new Guid("43c2e87c-35a8-47c0-a4dd-d233b836dd4a"),
-                            Description = "Cliente"
-                        });
                 });
 
             modelBuilder.Entity("ConsultingManager.Infra.Database.Models.CustomerPoco", b =>
@@ -270,14 +246,6 @@ namespace ConsultingManager.Infra.Migrations
                     b.HasOne("ConsultingManager.Infra.Database.Models.StepPoco", "Step")
                         .WithMany()
                         .HasForeignKey("StepId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.UserPoco", b =>
-                {
-                    b.HasOne("ConsultingManager.Infra.Database.Models.UserTypePoco", "UserType")
-                        .WithMany()
-                        .HasForeignKey("UserTypeId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618

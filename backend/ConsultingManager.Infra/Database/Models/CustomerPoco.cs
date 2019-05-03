@@ -11,5 +11,7 @@ namespace ConsultingManager.Infra.Database.Models
         public Guid PlatformId { get; set; }
         [ForeignKey(nameof(PlatformId))]
         public PlatformPoco Platform { get; set; }
+
+        public string LogoUrl { get; set; }
     }
 }

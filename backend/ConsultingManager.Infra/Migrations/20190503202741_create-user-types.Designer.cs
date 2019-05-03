@@ -4,14 +4,16 @@ using ConsultingManager.Infra.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConsultingManager.Infra.Migrations
 {
     [DbContext(typeof(ConsultingManagerDbContext))]
-    partial class ConsultingManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190503202741_create-user-types")]
+    partial class createusertypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -178,11 +180,7 @@ namespace ConsultingManager.Infra.Migrations
 
                     b.Property<string>("Password");
 
-                    b.Property<Guid>("UserTypeId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserTypeId");
 
                     b.ToTable("Users");
                 });
@@ -270,14 +268,6 @@ namespace ConsultingManager.Infra.Migrations
                     b.HasOne("ConsultingManager.Infra.Database.Models.StepPoco", "Step")
                         .WithMany()
                         .HasForeignKey("StepId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.UserPoco", b =>
-                {
-                    b.HasOne("ConsultingManager.Infra.Database.Models.UserTypePoco", "UserType")
-                        .WithMany()
-                        .HasForeignKey("UserTypeId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618

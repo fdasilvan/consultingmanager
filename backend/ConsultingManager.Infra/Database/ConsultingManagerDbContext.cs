@@ -45,6 +45,11 @@ namespace ConsultingManager.Infra.Database
                 }
             }
 
+            modelBuilder.Entity<UserTypePoco>().HasData(new UserTypePoco() { Id = Const.UserType.Administrator, Description = "Administrador" });
+            modelBuilder.Entity<UserTypePoco>().HasData(new UserTypePoco() { Id = Const.UserType.Leader, Description = "Líder" });
+            modelBuilder.Entity<UserTypePoco>().HasData(new UserTypePoco() { Id = Const.UserType.Consultant, Description = "Consultor" });
+            modelBuilder.Entity<UserTypePoco>().HasData(new UserTypePoco() { Id = Const.UserType.Customer, Description = "Cliente" });
+
             base.OnModelCreating(modelBuilder);
         }
     }

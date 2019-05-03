@@ -1,4 +1,5 @@
-﻿using ConsultingManager.Infra.Database;
+﻿using ConsultingManager.Domain;
+using ConsultingManager.Infra.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using Tnf.Configuration;
 
 namespace ConsultingManager.Api
@@ -27,9 +29,11 @@ namespace ConsultingManager.Api
             services
                 .AddResponseCompression()
                 .AddDatabaseDependency()
+                .AddDomainDependency()
                 .AddTnfAspNetCore()
                 .AddTnfDefaultConventionalRegistrations();
 
+            services.AddTransient<HttpClient>();
 
             services.AddCors(options =>
             {

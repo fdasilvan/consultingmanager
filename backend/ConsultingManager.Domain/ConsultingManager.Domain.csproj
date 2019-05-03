@@ -1,7 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tnf.AutoMapper" Version="2.6.0.10102" />
+    <PackageReference Include="Tnf.EntityFrameworkCore" Version="2.6.0.10102" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ConsultingManager.Dto\ConsultingManager.Dto.csproj" />
+    <ProjectReference Include="..\ConsultingManager.Infra\ConsultingManager.Infra.csproj" />
+  </ItemGroup>
 
 </Project>

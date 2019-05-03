@@ -9,10 +9,10 @@ export class CustomersService {
 
     constructor(private http: HttpClient) { }
 
-    urlBase: string = 'http://localhost:3000';
+    urlBase: string = 'https://localhost:44359/api';
 
     public async getAll(): Promise<Customer[]> {
-        var response = await this.http.get<Customer[]>(`${this.urlBase}/customers`);
+        var response = await this.http.get<Customer[]>(`${this.urlBase}/customer`);
         return response.toPromise();
     }
 }
