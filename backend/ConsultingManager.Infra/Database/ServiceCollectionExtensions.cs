@@ -7,15 +7,7 @@ namespace ConsultingManager.Infra.Database
     {
         public static IServiceCollection AddDatabaseDependency(this IServiceCollection services)
         {
-            services
-             .AddTnfEntityFrameworkCore()
-             .AddTnfDbContext<ConsultingManagerDbContext>((config) =>
-             {
-                 config.DbContextOptions.UseSqlServer(config.ConnectionString);
-             });
-
             return services;
-
         }
     }
 }

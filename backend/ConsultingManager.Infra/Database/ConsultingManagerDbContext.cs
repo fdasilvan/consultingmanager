@@ -9,8 +9,11 @@ namespace ConsultingManager.Infra.Database
 {
     public class ConsultingManagerDbContext : TnfDbContext
     {
-        public ConsultingManagerDbContext(DbContextOptions options, ITnfSession session)
-            : base(options, session) { }
+        public ConsultingManagerDbContext(DbContextOptions<ConsultingManagerDbContext> options, ITnfSession session)
+          : base(options, session)
+        {
+
+        }
 
         public DbSet<CustomerPoco> Customers { get; set; }
         public DbSet<PlatformPoco> Platforms { get; set; }

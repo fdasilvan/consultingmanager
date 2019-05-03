@@ -9,13 +9,6 @@ namespace ConsultingManager.Infra.Database
 {
     public class ConsultingManagerDbContextFactory : IDesignTimeDbContextFactory<ConsultingManagerDbContext>
     {
-        private IConfiguration _configuration;
-
-        public ConsultingManagerDbContextFactory(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-
         public ConsultingManagerDbContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<ConsultingManagerDbContext>();
@@ -25,9 +18,9 @@ namespace ConsultingManager.Infra.Database
                                     .AddJsonFile($"appsettings.json", false)
                                     .Build();
 
-            builder.UseSqlServer(configuration.GetConnectionString("ProSaude"));
+            builder.UseSqlServer(configuration.GetConnectionString("ConsultingManager"));
 
-            return (ConsultingManagerDbContext)Activator.CreateInstance(typeof(ConsultingManagerDbContext), builder.Options, NullTnfSession.Instance);
+            return new ConsultingManagerDbContext(builder.Options, NullTnfSession.Instance);
         }
     }
 }
