@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConsultingManager.Infra.Migrations
 {
     [DbContext(typeof(ConsultingManagerDbContext))]
-    [Migration("20190503203419_added-user-type-to-user")]
-    partial class addedusertypetouser
+    [Migration("20190505200914_initial-database")]
+    partial class initialdatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,11 +26,17 @@ namespace ConsultingManager.Infra.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getdate()");
+
                     b.Property<string>("LogoUrl");
 
                     b.Property<string>("Name");
 
                     b.Property<Guid>("PlatformId");
+
+                    b.Property<string>("StoreUrl");
 
                     b.HasKey("Id");
 
@@ -39,19 +45,7 @@ namespace ConsultingManager.Infra.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.PlatformPoco", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Platforms");
-                });
-
-            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.ProcessPoco", b =>
+            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.CustomerProcessPoco", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -62,22 +56,6 @@ namespace ConsultingManager.Infra.Migrations
 
                     b.Property<DateTime>("EstimatedEndDate");
 
-                    b.Property<DateTime>("StartDate");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Processes");
-                });
-
-            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.StepPoco", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Description");
-
-                    b.Property<DateTime>("EndDate");
-
                     b.Property<Guid>("ProcessId");
 
                     b.Property<DateTime>("StartDate");
@@ -86,10 +64,32 @@ namespace ConsultingManager.Infra.Migrations
 
                     b.HasIndex("ProcessId");
 
-                    b.ToTable("Steps");
+                    b.ToTable("CustomerProcesses");
                 });
 
-            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.TaskPoco", b =>
+            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.CustomerStepPoco", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("CustomerId");
+
+                    b.Property<Guid>("ProcessId");
+
+                    b.Property<Guid>("StepId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("ProcessId");
+
+                    b.HasIndex("StepId");
+
+                    b.ToTable("CustomerSteps");
+                });
+
+            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.CustomerTaskPoco", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -98,7 +98,7 @@ namespace ConsultingManager.Infra.Migrations
 
                     b.Property<DateTime>("CreationDate");
 
-                    b.Property<Guid?>("CustomerId");
+                    b.Property<Guid>("CustomerId");
 
                     b.Property<Guid>("CustomerUserId");
 
@@ -118,6 +118,10 @@ namespace ConsultingManager.Infra.Migrations
 
                     b.Property<Guid>("StepId");
 
+                    b.Property<Guid>("TaskTemplateId");
+
+                    b.Property<Guid>("TaskTypeId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ConsultantId");
@@ -130,17 +134,53 @@ namespace ConsultingManager.Infra.Migrations
 
                     b.HasIndex("StepId");
 
-                    b.ToTable("Tasks");
+                    b.HasIndex("TaskTemplateId");
+
+                    b.HasIndex("TaskTypeId");
+
+                    b.ToTable("CustomerTasks");
                 });
 
-            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.TaskTemplatePoco", b =>
+            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.ModelProcessPoco", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<long>("DaysToDo");
+                    b.Property<string>("Description");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ModelProcesses");
+                });
+
+            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.ModelStepPoco", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description");
+
+                    b.Property<DateTime>("EndDate");
+
+                    b.Property<Guid>("ProcessId");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProcessId");
+
+                    b.ToTable("ModelSteps");
+                });
+
+            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.ModelTaskPoco", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<long>("DueDays");
 
                     b.Property<long>("Duration");
 
@@ -150,11 +190,41 @@ namespace ConsultingManager.Infra.Migrations
 
                     b.Property<Guid>("StepId");
 
+                    b.Property<Guid>("TaskTypeId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("StepId");
 
-                    b.ToTable("TaskTemplates");
+                    b.HasIndex("TaskTypeId");
+
+                    b.ToTable("ModelTaks");
+                });
+
+            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.PlatformPoco", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Platforms");
+                });
+
+            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.TaskContentPoco", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("URL");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TaskContent");
                 });
 
             modelBuilder.Entity("ConsultingManager.Infra.Database.Models.TaskTypePoco", b =>
@@ -167,6 +237,23 @@ namespace ConsultingManager.Infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TaskTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("e84138fe-a7c6-4724-865f-1c4cab8be234"),
+                            Description = "Consultor"
+                        },
+                        new
+                        {
+                            Id = new Guid("a26f516b-6a6f-4159-8f4e-6ca3193bea95"),
+                            Description = "Cliente"
+                        },
+                        new
+                        {
+                            Id = new Guid("7b64054e-fc81-44e1-a1e2-cfb4bfcf8489"),
+                            Description = "Simplo7"
+                        });
                 });
 
             modelBuilder.Entity("ConsultingManager.Infra.Database.Models.UserPoco", b =>
@@ -231,15 +318,33 @@ namespace ConsultingManager.Infra.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.StepPoco", b =>
+            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.CustomerProcessPoco", b =>
                 {
-                    b.HasOne("ConsultingManager.Infra.Database.Models.ProcessPoco", "Process")
+                    b.HasOne("ConsultingManager.Infra.Database.Models.ModelProcessPoco", "Process")
                         .WithMany()
                         .HasForeignKey("ProcessId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.TaskPoco", b =>
+            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.CustomerStepPoco", b =>
+                {
+                    b.HasOne("ConsultingManager.Infra.Database.Models.CustomerPoco", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ConsultingManager.Infra.Database.Models.ModelProcessPoco", "Process")
+                        .WithMany()
+                        .HasForeignKey("ProcessId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ConsultingManager.Infra.Database.Models.ModelStepPoco", "Step")
+                        .WithMany()
+                        .HasForeignKey("StepId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.CustomerTaskPoco", b =>
                 {
                     b.HasOne("ConsultingManager.Infra.Database.Models.UserPoco", "Consultant")
                         .WithMany()
@@ -261,17 +366,40 @@ namespace ConsultingManager.Infra.Migrations
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("ConsultingManager.Infra.Database.Models.StepPoco", "Step")
+                    b.HasOne("ConsultingManager.Infra.Database.Models.ModelStepPoco", "Step")
                         .WithMany()
                         .HasForeignKey("StepId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ConsultingManager.Infra.Database.Models.ModelTaskPoco", "TaskTemplate")
+                        .WithMany()
+                        .HasForeignKey("TaskTemplateId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ConsultingManager.Infra.Database.Models.TaskTypePoco", "TaskType")
+                        .WithMany()
+                        .HasForeignKey("TaskTypeId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.TaskTemplatePoco", b =>
+            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.ModelStepPoco", b =>
                 {
-                    b.HasOne("ConsultingManager.Infra.Database.Models.StepPoco", "Step")
+                    b.HasOne("ConsultingManager.Infra.Database.Models.ModelProcessPoco", "Process")
+                        .WithMany()
+                        .HasForeignKey("ProcessId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.ModelTaskPoco", b =>
+                {
+                    b.HasOne("ConsultingManager.Infra.Database.Models.CustomerStepPoco", "Step")
                         .WithMany()
                         .HasForeignKey("StepId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ConsultingManager.Infra.Database.Models.TaskTypePoco", "TaskType")
+                        .WithMany()
+                        .HasForeignKey("TaskTypeId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

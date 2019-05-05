@@ -16,12 +16,15 @@ namespace ConsultingManager.Infra.Database
         }
 
         public DbSet<CustomerPoco> Customers { get; set; }
+        public DbSet<CustomerProcessPoco> CustomerProcesses { get; set; }
+        public DbSet<CustomerStepPoco> CustomerSteps { get; set; }
+        public DbSet<CustomerTaskPoco> CustomerTasks { get; set; }
+        public DbSet<ModelProcessPoco> ModelProcesses { get; set; }
+        public DbSet<ModelStepPoco> ModelSteps { get; set; }
+        public DbSet<ModelTaskPoco> ModelTaks { get; set; }
         public DbSet<PlatformPoco> Platforms { get; set; }
-        public DbSet<ProcessPoco> Processes { get; set; }
-        public DbSet<StepPoco> Steps { get; set; }
-        public DbSet<TaskPoco> Tasks { get; set; }
-        public DbSet<TaskTypePoco> TaskTypes { get; set; }
-        public DbSet<TaskTemplatePoco> TaskTemplates { get; set; }
+        public DbSet<TaskContentPoco> TaskContent { get; set; }
+        public DbSet<TaskTypePoco> TaskTypes { get; set; }        
         public DbSet<UserPoco> Users { get; set; }
         public DbSet<UserTypePoco> UserTypes { get; set; }
 
@@ -45,10 +48,27 @@ namespace ConsultingManager.Infra.Database
                 }
             }
 
-            modelBuilder.Entity<UserTypePoco>().HasData(new UserTypePoco() { Id = Const.UserType.Administrator, Description = "Administrador" });
-            modelBuilder.Entity<UserTypePoco>().HasData(new UserTypePoco() { Id = Const.UserType.Leader, Description = "Líder" });
-            modelBuilder.Entity<UserTypePoco>().HasData(new UserTypePoco() { Id = Const.UserType.Consultant, Description = "Consultor" });
-            modelBuilder.Entity<UserTypePoco>().HasData(new UserTypePoco() { Id = Const.UserType.Customer, Description = "Cliente" });
+            #region Tipo de Usuário
+
+            modelBuilder.Entity<UserTypePoco>().HasData(new UserTypePoco() { Id = Const.UserTypes.Administrator, Description = "Administrador" });
+            modelBuilder.Entity<UserTypePoco>().HasData(new UserTypePoco() { Id = Const.UserTypes.Leader, Description = "Líder" });
+            modelBuilder.Entity<UserTypePoco>().HasData(new UserTypePoco() { Id = Const.UserTypes.Consultant, Description = "Consultor" });
+            modelBuilder.Entity<UserTypePoco>().HasData(new UserTypePoco() { Id = Const.UserTypes.Customer, Description = "Cliente" });
+
+            #endregion
+
+            #region Tipos de Tarefa
+
+            modelBuilder.Entity<TaskTypePoco>().HasData(new TaskTypePoco() { Id = Const.TaskTypes.Consultant, Description = "Consultor" });
+            modelBuilder.Entity<TaskTypePoco>().HasData(new TaskTypePoco() { Id = Const.TaskTypes.Customer, Description = "Cliente" });
+
+            #endregion
+
+            #region Plataforma
+
+            modelBuilder.Entity<TaskTypePoco>().HasData(new TaskTypePoco() { Id = Const.Platforms.Simplo7, Description = "Simplo7" });
+
+            #endregion
 
             base.OnModelCreating(modelBuilder);
         }

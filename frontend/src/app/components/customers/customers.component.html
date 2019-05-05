@@ -27,8 +27,8 @@
                             <div class="col-xs-10 col-md-10">
                                 <h4><a class="link"
                                         (click)="updateSelectedCustomer(customer, $event);">{{customer.name}}</a></h4>
-                                <p><b>Processo:</b> {{customer.process}}</p>
-                                <p><b>Etapa:</b> {{customer.step}}</p>
+                                <p><b>Processo:</b> {{ customer.process ? customer.process : "Não iniciado" }}</p>
+                                <p><b>Etapa:</b> {{customer.step ? customer.step : "Não iniciado" }}</p>
                             </div>
                         </div>
                     </div>
