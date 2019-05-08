@@ -7,16 +7,14 @@ namespace ConsultingManager.Infra.Database.Models
     {
         public Guid Id { get; set; }
 
-        public Guid ProcessId { get; set; }
-        [ForeignKey(nameof(ProcessId))]
-        public ModelProcessPoco Process { get; set; }
+        public string Description { get; set; }
 
-        public Guid StepId { get; set; }
-        [ForeignKey(nameof(StepId))]
-        public ModelStepPoco Step { get; set; }
+        public Guid CustomerProcessId { get; set; }
+        [ForeignKey(nameof(CustomerProcessId))]
+        public CustomerProcessPoco CustomerProcess { get; set; }
 
-        public Guid CustomerId { get; set; }
-        [ForeignKey(nameof(CustomerId))]
-        public CustomerPoco Customer { get; set; }
+        public Guid ModelStepId { get; set; }
+        [ForeignKey(nameof(ModelStepId))]
+        public ModelStepPoco ModelStep { get; set; }
     }
 }

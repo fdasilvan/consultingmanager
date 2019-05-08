@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ConsultingManager.Domain.Repository;
+using ConsultingManager.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,10 +13,17 @@ namespace ConsultingManager.Api.Controllers
     [ApiController]
     public class ProcessController : ControllerBase
     {
-        [HttpGet]
-        public string Get()
+        private IProcessRepository _processRepository;
+
+        public ProcessController(IProcessRepository processRepository)
         {
-            return "ok!";
+            _processRepository = processRepository;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> StartCustomerProcess([FromBody]ModelProcessDto modelProcessDto, Guid customerId)
+        {
+            return Ok(await _processRepository.StartCustomerProcess(modelProcessDto, customerId));
         }
     }
 }

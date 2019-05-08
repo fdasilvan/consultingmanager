@@ -4,14 +4,16 @@ using ConsultingManager.Infra.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConsultingManager.Infra.Migrations
 {
     [DbContext(typeof(ConsultingManagerDbContext))]
-    partial class ConsultingManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190508001517_process-vs-step-relationship")]
+    partial class processvssteprelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,8 +77,6 @@ namespace ConsultingManager.Infra.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<Guid>("CustomerProcessId");
-
-                    b.Property<string>("Description");
 
                     b.Property<Guid>("ModelStepId");
 
@@ -160,7 +160,11 @@ namespace ConsultingManager.Infra.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<DateTime>("EndDate");
+
                     b.Property<Guid>("ProcessId");
+
+                    b.Property<DateTime>("StartDate");
 
                     b.HasKey("Id");
 

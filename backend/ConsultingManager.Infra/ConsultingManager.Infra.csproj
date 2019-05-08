@@ -12,6 +12,11 @@
     <Compile Remove="Migrations\20190503203419_added-user-type-to-user.cs" />
     <Compile Remove="Migrations\20190505193920_start-testing-tasks.cs" />
     <Compile Remove="Migrations\20190505195845_initial-database.cs" />
+    <Compile Remove="Migrations\20190505200914_initial-database.cs" />
+    <Compile Remove="Migrations\20190505210531_initial-migration.cs" />
+    <Compile Remove="Migrations\20190505212108_initial-migration.cs" />
+    <Compile Remove="Migrations\20190507225553_test.cs" />
+    <Compile Remove="Migrations\20190507231423_test.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,10 +27,6 @@
     <PackageReference Include="Tnf.AutoMapper" Version="2.6.0.10102" />
     <PackageReference Include="Tnf.EntityFrameworkCore" Version="2.6.0.10102" />
     <PackageReference Include="Tnf.Repositories" Version="2.6.0.10102" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

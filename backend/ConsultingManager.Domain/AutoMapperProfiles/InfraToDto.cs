@@ -9,9 +9,8 @@ namespace ConsultingManager.Domain
         public InfraToDto()
         {
             CreateMap<PlatformPoco, PlatformDto>().ForAllOtherMembers(opts => opts.MapAtRuntime());
-            CreateMap<CustomerPoco, CustomerDto>()
-                //.ForMember(o => o.Platform, src => src.MapFrom(u => u.Platform))
-                .ForAllOtherMembers(opts => opts.MapAtRuntime());
+            CreateMap<CustomerPoco, CustomerDto>().ForAllOtherMembers(opts => opts.MapAtRuntime());
+            CreateMap<CustomerProcessPoco, CustomerProcessDto>().ForAllOtherMembers(opts => opts.MapAtRuntime());
         }
     }
 }

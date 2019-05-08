@@ -21,7 +21,7 @@ namespace ConsultingManager.Infra.Database
         public DbSet<CustomerTaskPoco> CustomerTasks { get; set; }
         public DbSet<ModelProcessPoco> ModelProcesses { get; set; }
         public DbSet<ModelStepPoco> ModelSteps { get; set; }
-        public DbSet<ModelTaskPoco> ModelTaks { get; set; }
+        public DbSet<ModelTaskPoco> ModelTasks { get; set; }
         public DbSet<PlatformPoco> Platforms { get; set; }
         public DbSet<TaskContentPoco> TaskContent { get; set; }
         public DbSet<TaskTypePoco> TaskTypes { get; set; }        
@@ -64,9 +64,25 @@ namespace ConsultingManager.Infra.Database
 
             #endregion
 
-            #region Plataforma
+            #region Plataformas
 
-            modelBuilder.Entity<TaskTypePoco>().HasData(new TaskTypePoco() { Id = Const.Platforms.Simplo7, Description = "Simplo7" });
+            modelBuilder.Entity<PlatformPoco>().HasData(new PlatformPoco() { Id = Const.Platforms.Simplo7, Name = "Simplo7" });
+
+            #endregion
+
+            #region Customer x Processes 1-to-n relationship
+
+            modelBuilder.Entity<CustomerPoco>()
+                .HasMany(c => c.CustomerProcesses)
+                .WithOne(e => e.Customer);
+
+            #endregion
+
+            #region CustomerProcess x CustomerStep 1-to-n relationship
+
+            modelBuilder.Entity<CustomerProcessPoco>()
+                .HasMany(c => c.CustomerSteps)
+                .WithOne(e => e.CustomerProcess);
 
             #endregion
 

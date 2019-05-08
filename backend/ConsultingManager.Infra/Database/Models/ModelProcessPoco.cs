@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ConsultingManager.Infra.Database.Models
 {
@@ -6,5 +7,6 @@ namespace ConsultingManager.Infra.Database.Models
     {
         public Guid Id { get; set; }
         public string Description { get; set; }
+        public virtual ICollection<ModelStepPoco> ModelSteps { get; set; }
     }
 }

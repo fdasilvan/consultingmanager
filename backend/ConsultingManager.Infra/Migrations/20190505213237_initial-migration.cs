@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ConsultingManager.Infra.Migrations
 {
-    public partial class initialdatabase : Migration
+    public partial class initialmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -187,7 +187,7 @@ namespace ConsultingManager.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ModelTaks",
+                name: "ModelTasks",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -201,15 +201,15 @@ namespace ConsultingManager.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ModelTaks", x => x.Id);
+                    table.PrimaryKey("PK_ModelTasks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ModelTaks_CustomerSteps_StepId",
+                        name: "FK_ModelTasks_CustomerSteps_StepId",
                         column: x => x.StepId,
                         principalTable: "CustomerSteps",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ModelTaks_TaskTypes_TaskTypeId",
+                        name: "FK_ModelTasks_TaskTypes_TaskTypeId",
                         column: x => x.TaskTypeId,
                         principalTable: "TaskTypes",
                         principalColumn: "Id",
@@ -270,9 +270,9 @@ namespace ConsultingManager.Infra.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_CustomerTasks_ModelTaks_TaskTemplateId",
+                        name: "FK_CustomerTasks_ModelTasks_TaskTemplateId",
                         column: x => x.TaskTemplateId,
-                        principalTable: "ModelTaks",
+                        principalTable: "ModelTasks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -284,13 +284,17 @@ namespace ConsultingManager.Infra.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Platforms",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { new Guid("7b64054e-fc81-44e1-a1e2-cfb4bfcf8489"), "Simplo7" });
+
+            migrationBuilder.InsertData(
                 table: "TaskTypes",
                 columns: new[] { "Id", "Description" },
                 values: new object[,]
                 {
                     { new Guid("e84138fe-a7c6-4724-865f-1c4cab8be234"), "Consultor" },
-                    { new Guid("a26f516b-6a6f-4159-8f4e-6ca3193bea95"), "Cliente" },
-                    { new Guid("7b64054e-fc81-44e1-a1e2-cfb4bfcf8489"), "Simplo7" }
+                    { new Guid("a26f516b-6a6f-4159-8f4e-6ca3193bea95"), "Cliente" }
                 });
 
             migrationBuilder.InsertData(
@@ -370,13 +374,13 @@ namespace ConsultingManager.Infra.Migrations
                 column: "ProcessId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ModelTaks_StepId",
-                table: "ModelTaks",
+                name: "IX_ModelTasks_StepId",
+                table: "ModelTasks",
                 column: "StepId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ModelTaks_TaskTypeId",
-                table: "ModelTaks",
+                name: "IX_ModelTasks_TaskTypeId",
+                table: "ModelTasks",
                 column: "TaskTypeId");
 
             migrationBuilder.CreateIndex(
@@ -400,7 +404,7 @@ namespace ConsultingManager.Infra.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "ModelTaks");
+                name: "ModelTasks");
 
             migrationBuilder.DropTable(
                 name: "UserTypes");

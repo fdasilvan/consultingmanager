@@ -4,14 +4,16 @@ using ConsultingManager.Infra.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConsultingManager.Infra.Migrations
 {
     [DbContext(typeof(ConsultingManagerDbContext))]
-    partial class ConsultingManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190507213548_nullable-date-columns")]
+    partial class nullabledatecolumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,17 +76,19 @@ namespace ConsultingManager.Infra.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("CustomerProcessId");
+                    b.Property<Guid>("CustomerId");
 
-                    b.Property<string>("Description");
+                    b.Property<Guid>("ProcessId");
 
-                    b.Property<Guid>("ModelStepId");
+                    b.Property<Guid>("StepId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerProcessId");
+                    b.HasIndex("CustomerId");
 
-                    b.HasIndex("ModelStepId");
+                    b.HasIndex("ProcessId");
+
+                    b.HasIndex("StepId");
 
                     b.ToTable("CustomerSteps");
                 });
@@ -160,7 +164,11 @@ namespace ConsultingManager.Infra.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<DateTime>("EndDate");
+
                     b.Property<Guid>("ProcessId");
+
+                    b.Property<DateTime>("StartDate");
 
                     b.HasKey("Id");
 
@@ -331,14 +339,19 @@ namespace ConsultingManager.Infra.Migrations
 
             modelBuilder.Entity("ConsultingManager.Infra.Database.Models.CustomerStepPoco", b =>
                 {
-                    b.HasOne("ConsultingManager.Infra.Database.Models.CustomerProcessPoco", "CustomerProcess")
-                        .WithMany("CustomerSteps")
-                        .HasForeignKey("CustomerProcessId")
+                    b.HasOne("ConsultingManager.Infra.Database.Models.CustomerPoco", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("ConsultingManager.Infra.Database.Models.ModelStepPoco", "ModelStep")
+                    b.HasOne("ConsultingManager.Infra.Database.Models.ModelProcessPoco", "Process")
                         .WithMany()
-                        .HasForeignKey("ModelStepId")
+                        .HasForeignKey("ProcessId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ConsultingManager.Infra.Database.Models.ModelStepPoco", "Step")
+                        .WithMany()
+                        .HasForeignKey("StepId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
