@@ -15,8 +15,18 @@
     <Compile Remove="Migrations\20190505200914_initial-database.cs" />
     <Compile Remove="Migrations\20190505210531_initial-migration.cs" />
     <Compile Remove="Migrations\20190505212108_initial-migration.cs" />
+    <Compile Remove="Migrations\20190505213237_initial-migration.cs" />
+    <Compile Remove="Migrations\20190505230356_created-customer-process-relationship.cs" />
+    <Compile Remove="Migrations\20190507213548_nullable-date-columns.cs" />
     <Compile Remove="Migrations\20190507225553_test.cs" />
     <Compile Remove="Migrations\20190507231423_test.cs" />
+    <Compile Remove="Migrations\20190508001517_process-vs-step-relationship.cs" />
+    <Compile Remove="Migrations\20190508003204_update-steps-fields.cs" />
+    <Compile Remove="Migrations\20190509181133_initial-database.cs" />
+    <Compile Remove="Migrations\20190509181510_initial-database.cs" />
+    <Compile Remove="Migrations\20190509181629_initial-database.cs" />
+    <Compile Remove="Migrations\20190509183339_initial-database.cs" />
+    <Compile Remove="Migrations\20190510185702_initial-database.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +37,10 @@
     <PackageReference Include="Tnf.AutoMapper" Version="2.6.0.10102" />
     <PackageReference Include="Tnf.EntityFrameworkCore" Version="2.6.0.10102" />
     <PackageReference Include="Tnf.Repositories" Version="2.6.0.10102" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

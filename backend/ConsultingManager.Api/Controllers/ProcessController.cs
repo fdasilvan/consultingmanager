@@ -21,9 +21,9 @@ namespace ConsultingManager.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> StartCustomerProcess([FromBody]ModelProcessDto modelProcessDto, Guid customerId)
+        public async Task<IActionResult> StartCustomerProcess([FromBody]ModelProcessDto modelProcessDto, Guid customerId, Guid consultantId, Guid customerUserId, DateTime startDate)
         {
-            return Ok(await _processRepository.StartCustomerProcess(modelProcessDto, customerId));
+            return Ok(await _processRepository.StartCustomerProcess(modelProcessDto, customerId, consultantId, customerUserId, startDate));
         }
     }
 }

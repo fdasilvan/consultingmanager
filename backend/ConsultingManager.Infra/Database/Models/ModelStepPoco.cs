@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ConsultingManager.Infra.Database.Models
@@ -11,5 +12,7 @@ namespace ConsultingManager.Infra.Database.Models
         public Guid ProcessId { get; set; }
         [ForeignKey(nameof(ProcessId))]
         public ModelProcessPoco Process { get; set; }
+
+        public virtual ICollection<ModelTaskPoco> ModelTasks { get; set; }
     }
 }

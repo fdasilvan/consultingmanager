@@ -1,8 +1,7 @@
 ﻿using ConsultingManager.Dto;
+using ConsultingManager.Infra;
 using ConsultingManager.Infra.Database;
 using ConsultingManager.Infra.Database.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +17,10 @@ namespace ConsultingManager.Domain.Repository
         public ProcessRepository(IDbContextProvider<ConsultingManagerDbContext> dbContextProvider) : base(dbContextProvider)
         {
         }
-        
-        public async Task<CustomerProcessDto> StartCustomerProcess(ModelProcessDto modelProcessDto, Guid customerId)
+
+        public async Task<CustomerProcessDto> StartCustomerProcess(ModelProcessDto modelProcessDto, Guid customerId, Guid consultantId, Guid customerUserId, DateTime startDate)
         {
             CustomerProcessPoco customerProcess = new CustomerProcessPoco();
-
-            #region Get steps list
 
             List<ModelStepPoco> lstModelSteps = Context.ModelSteps
                 .Where(o => o.ProcessId == modelProcessDto.Id)
@@ -31,26 +28,70 @@ namespace ConsultingManager.Domain.Repository
 
             List<CustomerStepPoco> lstCustomerSteps = new List<CustomerStepPoco>();
 
-            foreach(ModelStepPoco modelStep in lstModelSteps)
+            DateTime? processEstimatedEndDate = null;
+
+            foreach (ModelStepPoco modelStep in lstModelSteps)
             {
                 CustomerStepPoco customerStep = new CustomerStepPoco();
 
                 customerStep.Id = Guid.NewGuid();
+
+                DateTime? firstDate = null;
+                DateTime? lastDate = null;
+
+                foreach (ModelTaskPoco modelTask in modelStep.ModelTasks)
+                {
+                    CustomerTaskPoco customerTask = new CustomerTaskPoco();
+
+                    customerTask.Id = Guid.NewGuid();
+                    customerTask.CustomerStepId = customerStep.Id;
+                    customerTask.ModelTaskId = modelTask.Id;
+
+                    customerTask.Description = modelTask.Description;
+                    customerTask.Instructions = modelTask.Instructions;
+                    customerTask.Duration = modelTask.Duration;
+                    customerTask.CreationDate = DateTime.Now;
+
+                    customerTask.StartDate = startDate.AddDays(modelTask.StartAfterDays);
+                    firstDate = (firstDate == null || customerTask.StartDate < firstDate ? customerTask.StartDate : firstDate);
+                    customerTask.EstimatedEndDate = customerTask.StartDate.AddDays(modelTask.DueDays);
+                    lastDate = (lastDate == null || customerTask.EstimatedEndDate > lastDate ? customerTask.EstimatedEndDate : lastDate);
+                    processEstimatedEndDate = (processEstimatedEndDate == null || lastDate > processEstimatedEndDate ? lastDate : processEstimatedEndDate);
+
+                    customerTask.EndDate = null;
+
+                    customerTask.CustomerId = customerId;
+                    customerTask.CustomerUserId = customerUserId;
+                    customerTask.ConsultantId = consultantId;
+
+                    if (modelTask.TaskTypeId == Const.TaskTypes.Customer)
+                    {
+                        customerTask.TaskTypeId = Const.TaskTypes.Customer;
+                        customerTask.OwnerId = customerUserId;
+                    }
+                    else
+                    {
+                        customerTask.TaskTypeId = Const.TaskTypes.Consultant;
+                        customerTask.OwnerId = consultantId;
+                    }
+                }
+
+                customerStep.StartDate = (firstDate.HasValue ? firstDate.Value : throw new Exception("Data inicial da etapa não definida."));
+                customerStep.EstimatedEndDate = (lastDate.HasValue ? lastDate.Value : throw new Exception("Data final da etapa não definida"));
+                customerStep.EndDate = null;
                 customerStep.Description = modelStep.Description;
                 customerStep.ModelStepId = modelStep.Id;
 
                 lstCustomerSteps.Add(customerStep);
             }
 
-            #endregion
-
             customerProcess.Id = new Guid();
             customerProcess.Description = modelProcessDto.Description;
             customerProcess.ModelProcessId = modelProcessDto.Id;
             customerProcess.CustomerId = customerId;
-            customerProcess.StartDate = DateTime.Now;
+            customerProcess.StartDate = startDate;
             customerProcess.CustomerSteps = lstCustomerSteps;
-            customerProcess.EstimatedEndDate = null;
+            customerProcess.EstimatedEndDate = (processEstimatedEndDate.HasValue ? processEstimatedEndDate.Value : throw new Exception("Data final do processo não definida"));
             customerProcess.EndDate = null;
 
             Context.CustomerProcesses.Add(customerProcess);

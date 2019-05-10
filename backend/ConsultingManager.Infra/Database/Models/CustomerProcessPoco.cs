@@ -9,7 +9,7 @@ namespace ConsultingManager.Infra.Database.Models
         public Guid Id { get; set; }
         public string Description { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime? EstimatedEndDate { get; set; }
+        public DateTime EstimatedEndDate { get; set; }
         public DateTime? EndDate { get; set; }
 
         public Guid ModelProcessId { get; set; }

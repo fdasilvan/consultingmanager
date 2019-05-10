@@ -12,8 +12,8 @@ namespace ConsultingManager.Infra.Database.Models
         public long Duration { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public DateTime ExecutionDate { get; set; }
+        public DateTime EstimatedEndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         public Guid CustomerId { get; set; }
         [ForeignKey(nameof(CustomerId))]
@@ -31,16 +31,16 @@ namespace ConsultingManager.Infra.Database.Models
         [ForeignKey(nameof(OwnerId))]
         public UserPoco Owner { get; set; }
 
-        public Guid StepId { get; set; }
-        [ForeignKey(nameof(StepId))]
-        public ModelStepPoco Step { get; set; }
-
         public Guid TaskTypeId { get; set; }
         [ForeignKey(nameof(TaskTypeId))]
         public TaskTypePoco TaskType { get; set; }
 
-        public Guid TaskTemplateId { get; set; }
-        [ForeignKey(nameof(TaskTemplateId))]
-        public ModelTaskPoco TaskTemplate { get; set; }
+        public Guid ModelTaskId { get; set; }
+        [ForeignKey(nameof(ModelTaskId))]
+        public ModelTaskPoco ModelTask { get; set; }
+
+        public Guid CustomerStepId { get; set; }
+        [ForeignKey(nameof(CustomerStepId))]
+        public CustomerStepPoco CustomerStep { get; set; }
     }
 }
