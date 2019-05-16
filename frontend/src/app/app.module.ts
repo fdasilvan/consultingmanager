@@ -9,6 +9,8 @@ import { CustomersComponent } from './components/customers/customers.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TaskComponent } from './components/task/task.component';
+import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
     declarations: [
@@ -16,7 +18,9 @@ import { TaskComponent } from './components/task/task.component';
         RoutingComponents,
         CustomersComponent,
         TimelineComponent,
-        TaskComponent
+        TaskComponent,
+        LoginComponent,
+        HomeComponent
     ],
     imports: [
         BrowserModule,
