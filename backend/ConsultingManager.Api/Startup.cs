@@ -1,6 +1,7 @@
 ﻿using ConsultingManager.Api.Helpers;
 using ConsultingManager.Domain;
 using ConsultingManager.Infra.Database;
+using IdentityServer4.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,13 +34,15 @@ namespace ConsultingManager.Api
                 .AddDatabaseDependency()
                 .AddDomainDependency()
                 .AddTnfAspNetCore()
-                .AddTnfDefaultConventionalRegistrations();
+                .AddTnfDefaultConventionalRegistrations()
+                .AddIdentityServer()
+                .AddInMemoryApiResources(new[] { new ApiResource("Api1", "Api1") })
+                .AddInMemoryClients(Config.GetClients())
+                .AddTestUsers(Config.GetUsers());
 
             services.AddTransient<HttpClient>();
 
-            // configure basic authentication 
-            services.AddAuthentication("BasicAuthentication")
-                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
 
             services.AddCors(options =>
             {
@@ -62,6 +65,12 @@ namespace ConsultingManager.Api
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddMvcCore()
+                .AddAuthorization()
+                .AddJsonFormatters();
+
+            services.AddAuthentication("Bearer");
 
             return services.BuildServiceProvider();
         }
@@ -88,6 +97,7 @@ namespace ConsultingManager.Api
             });
 
             app.UseAuthentication();
+            app.UseIdentityServer();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();

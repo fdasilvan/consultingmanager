@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TimelineService } from '../../services/timeline.service';
+import { TimelineService } from '../../services/timeline/timeline.service';
 import { Process } from 'src/app/models/process.model';
 import { Customer } from 'src/app/models/customer.model';
 import { Task } from 'src/app/models/task.model';

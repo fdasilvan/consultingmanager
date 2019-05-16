@@ -11,6 +11,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { TaskComponent } from './components/task/task.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
+import { AuthGuardService } from './services/auth/auth-guard.service';
+import { AuthService } from './services/auth/auth.service';
+import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
 
 @NgModule({
     declarations: [
@@ -20,7 +23,8 @@ import { HomeComponent } from './components/home/home.component';
         TimelineComponent,
         TaskComponent,
         LoginComponent,
-        HomeComponent
+        HomeComponent,
+        AuthCallbackComponent
     ],
     imports: [
         BrowserModule,
@@ -29,7 +33,7 @@ import { HomeComponent } from './components/home/home.component';
         HttpClientModule,
         NgbModule
     ],
-    providers: [],
+    providers: [AuthGuardService, AuthService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

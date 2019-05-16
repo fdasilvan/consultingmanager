@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Process } from 'src/app/models/process.model';
-import { WorklistService } from '../../services/worklist.service';
+import { WorklistService } from '../../services/worklist/worklist.service';
 import { Task } from 'src/app/models/task.model';
 import { ActivatedRoute, Router } from '@angular/router';
 

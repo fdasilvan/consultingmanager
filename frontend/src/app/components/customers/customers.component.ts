@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomersService } from '../../services/customers.service';
+import { CustomersService } from '../../services/customers/customers.service';
 import { Customer } from 'src/app/models/customer.model';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -13,8 +13,7 @@ export class CustomersComponent implements OnInit {
     constructor(private service: CustomersService,
         private route: ActivatedRoute,
         private router: Router) { }
-
-    public customersUrl: string = "http://localhost:3000/customers";
+        
     public customers: Customer[];
 
     ngOnInit() {
