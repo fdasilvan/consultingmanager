@@ -52,9 +52,9 @@ namespace ConsultingManager.Domain.Repository
                     customerTask.Duration = modelTask.Duration;
                     customerTask.CreationDate = DateTime.Now;
 
-                    customerTask.StartDate = startDate.AddDays(modelTask.StartAfterDays);
+                    customerTask.StartDate = Utils.AddBusinessDays(startDate, modelTask.StartAfterDays);
                     firstDate = (firstDate == null || customerTask.StartDate < firstDate ? customerTask.StartDate : firstDate);
-                    customerTask.EstimatedEndDate = customerTask.StartDate.AddDays(modelTask.DueDays);
+                    customerTask.EstimatedEndDate = Utils.AddBusinessDays(customerTask.StartDate, modelTask.DueDays);
                     lastDate = (lastDate == null || customerTask.EstimatedEndDate > lastDate ? customerTask.EstimatedEndDate : lastDate);
                     processEstimatedEndDate = (processEstimatedEndDate == null || lastDate > processEstimatedEndDate ? lastDate : processEstimatedEndDate);
 

@@ -27,6 +27,7 @@
     <Compile Remove="Migrations\20190509181629_initial-database.cs" />
     <Compile Remove="Migrations\20190509183339_initial-database.cs" />
     <Compile Remove="Migrations\20190510185702_initial-database.cs" />
+    <Compile Remove="Migrations\20190510194050_initial-database.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,10 +38,6 @@
     <PackageReference Include="Tnf.AutoMapper" Version="2.6.0.10102" />
     <PackageReference Include="Tnf.EntityFrameworkCore" Version="2.6.0.10102" />
     <PackageReference Include="Tnf.Repositories" Version="2.6.0.10102" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

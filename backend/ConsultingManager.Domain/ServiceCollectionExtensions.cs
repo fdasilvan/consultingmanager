@@ -13,6 +13,7 @@ namespace ConsultingManager.Domain
             services.AddMapperDependency();
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<IProcessRepository, ProcessRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
             return services;
         }
     }

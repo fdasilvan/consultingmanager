@@ -1,5 +1,7 @@
-﻿using ConsultingManager.Domain;
+﻿using ConsultingManager.Api.Helpers;
+using ConsultingManager.Domain;
 using ConsultingManager.Infra.Database;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +36,10 @@ namespace ConsultingManager.Api
                 .AddTnfDefaultConventionalRegistrations();
 
             services.AddTransient<HttpClient>();
+
+            // configure basic authentication 
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
             services.AddCors(options =>
             {
@@ -81,6 +87,7 @@ namespace ConsultingManager.Api
                 options.DefaultNameOrConnectionString = Configuration.GetConnectionString("ConsultingManager");
             });
 
+            app.UseAuthentication();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();

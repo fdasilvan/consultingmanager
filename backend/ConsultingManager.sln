@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsultingManager.Api", "Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsultingManager.Infra", "ConsultingManager.Infra\ConsultingManager.Infra.csproj", "{B831735A-B782-4A96-AF66-1CFB46DC6AEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsultingManager.Dto", "ConsultingManager.Dto\ConsultingManager.Dto.csproj", "{C019A18C-9B8F-46C8-85FE-F8811F363FA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsultingManager.Dto", "ConsultingManager.Dto\ConsultingManager.Dto.csproj", "{C019A18C-9B8F-46C8-85FE-F8811F363FA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsultingManager.Domain", "ConsultingManager.Domain\ConsultingManager.Domain.csproj", "{68F7C7E0-646F-43FA-A971-C78AB04C4067}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsultingManager.Domain", "ConsultingManager.Domain\ConsultingManager.Domain.csproj", "{68F7C7E0-646F-43FA-A971-C78AB04C4067}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
