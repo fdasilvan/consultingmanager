@@ -11,9 +11,6 @@ export class WorklistService {
     constructor() { }
 
     public async getAll(): Promise<Process[]> {
-
-        debugger;
-
         let stepOnboarding: Step = new Step();
 
         let tasksList: Task[] = [];

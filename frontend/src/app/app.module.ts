@@ -9,11 +9,10 @@ import { CustomersComponent } from './components/customers/customers.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TaskComponent } from './components/task/task.component';
-import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
-import { AuthGuardService } from './services/auth/auth-guard.service';
 import { AuthService } from './services/auth/auth.service';
-import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
+import { LoginComponent } from './components/login/login.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
     declarations: [
@@ -22,9 +21,9 @@ import { AuthCallbackComponent } from './components/auth-callback/auth-callback.
         CustomersComponent,
         TimelineComponent,
         TaskComponent,
-        LoginComponent,
         HomeComponent,
-        AuthCallbackComponent
+        LoginComponent,
+        LogoutComponent
     ],
     imports: [
         BrowserModule,
@@ -33,7 +32,7 @@ import { AuthCallbackComponent } from './components/auth-callback/auth-callback.
         HttpClientModule,
         NgbModule
     ],
-    providers: [AuthGuardService, AuthService],
+    providers: [AuthService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

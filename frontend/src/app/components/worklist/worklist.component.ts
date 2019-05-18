@@ -3,6 +3,7 @@ import { Process } from 'src/app/models/process.model';
 import { WorklistService } from '../../services/worklist/worklist.service';
 import { Task } from 'src/app/models/task.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { User } from 'src/app/models/user.model';
 
 @Component({
     selector: 'app-worklist',
@@ -16,8 +17,16 @@ export class WorklistComponent implements OnInit {
         private router: Router) { }
 
     public processesList: Process[];
-
+    public loggedUser: User;
+    
     ngOnInit() {
+
+        this.loggedUser = <User>JSON.parse(sessionStorage.getItem('user'));
+
+        if (!this.loggedUser) {
+            this.router.navigate(['login']);
+        }
+        
         this.loadProcesses();
     }
 

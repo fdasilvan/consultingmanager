@@ -20,9 +20,9 @@ namespace Auth.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public async Task<IActionResult> Authenticate([FromBody]UserDto userParam)
+        public async Task<IActionResult> Authenticate(UserDto userDto)
         {
-            var user = await _userRepository.Authenticate(userParam.Email, userParam.Password);
+            var user = await _userRepository.Authenticate(userDto.Email, userDto.Password);
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });

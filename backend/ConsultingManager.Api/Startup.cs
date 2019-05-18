@@ -30,19 +30,14 @@ namespace ConsultingManager.Api
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services
+                .AddCorsAll("AllowAll")
                 .AddResponseCompression()
                 .AddDatabaseDependency()
                 .AddDomainDependency()
                 .AddTnfAspNetCore()
-                .AddTnfDefaultConventionalRegistrations()
-                .AddIdentityServer()
-                .AddInMemoryApiResources(new[] { new ApiResource("Api1", "Api1") })
-                .AddInMemoryClients(Config.GetClients())
-                .AddTestUsers(Config.GetUsers());
+                .AddTnfDefaultConventionalRegistrations();
 
             services.AddTransient<HttpClient>();
-
-
 
             services.AddCors(options =>
             {
@@ -65,10 +60,6 @@ namespace ConsultingManager.Api
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.AddMvcCore()
-                .AddAuthorization()
-                .AddJsonFormatters();
 
             services.AddAuthentication("Bearer");
 
@@ -95,9 +86,6 @@ namespace ConsultingManager.Api
                 options.MultiTenancy(tenancy => tenancy.IsEnabled = true);
                 options.DefaultNameOrConnectionString = Configuration.GetConnectionString("ConsultingManager");
             });
-
-            app.UseAuthentication();
-            app.UseIdentityServer();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();

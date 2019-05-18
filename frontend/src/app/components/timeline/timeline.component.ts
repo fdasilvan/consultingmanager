@@ -25,7 +25,6 @@ export class TimelineComponent implements OnInit {
     }
 
     getCustomerId() {
-        debugger;
         this.customer = <Customer>JSON.parse(localStorage.getItem("customer"));
         if (!this.customer) {
             this.customer = window.history.state.customer;

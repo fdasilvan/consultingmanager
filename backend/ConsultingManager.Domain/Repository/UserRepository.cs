@@ -20,6 +20,7 @@ namespace ConsultingManager.Domain.Repository
         public async Task<UserDto> Authenticate(string email, string password)
         {
             var user = await Context.Users
+                .Include(o => o.UserType)
                 .Where(x => x.Email == email && x.Password == password)
                 .Select(o => o.MapTo<UserDto>())
                 .FirstOrDefaultAsync();

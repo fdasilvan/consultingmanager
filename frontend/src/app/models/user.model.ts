@@ -1,8 +1,12 @@
+import { UserType } from './usertype.model';
+
 export class User {
     id: string;
-    login: string;
     name: string;
+    email: string;
     password: string;
+    userTypeId: string;
+    userType: UserType;
 
     constructor() {
     }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CustomersService } from '../../services/customers/customers.service';
 import { Customer } from 'src/app/models/customer.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { User } from 'src/app/models/user.model';
 
 @Component({
     selector: 'app-customers',
@@ -15,8 +16,14 @@ export class CustomersComponent implements OnInit {
         private router: Router) { }
         
     public customers: Customer[];
-
+    public loggedUser: User;
+    
     ngOnInit() {
+        this.loggedUser = <User>JSON.parse(sessionStorage.getItem('user'));
+
+        if (!this.loggedUser) {
+            this.router.navigate(['login']);
+        }
         this.loadCustomers();
     }
 
