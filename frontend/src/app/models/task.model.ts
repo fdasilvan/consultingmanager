@@ -8,8 +8,8 @@ export class Task {
     duration: number;
     creationDate: Date;
     startDate: Date;
+    estimatedEndDate: Date;
     endDate: Date;
-    executionDate: Date;
     customer: Customer;
     customerUser: User;
     consultant: User;

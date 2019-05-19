@@ -42,9 +42,9 @@
                                 </div>
                                 <div class="col-xs-10 col-md-10">
                                     <h4><a (click)="updateSelectedTask(this.task, $event)">{{task.description}}</a></h4>
-                                    <div *ngIf="task.executionDate" class="text-muted">Finalizada em:
-                                        {{task.executionDate | date: 'dd/MM/yyyy' }}</div>
-                                    <div *ngIf="!task.executionDate" class="text-muted">Duração: {{task.duration}}
+                                    <div *ngIf="task.endDate" class="text-muted">Finalizada em:
+                                        {{task.endDate | date: 'dd/MM/yyyy HH:mm' }}</div>
+                                    <div *ngIf="!task.endDate" class="text-muted">Duração: {{task.duration}}
                                         minutos</div>
                                 </div>
                             </div>

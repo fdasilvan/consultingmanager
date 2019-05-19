@@ -18,7 +18,6 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         this.loggedUser = <User>JSON.parse(sessionStorage.getItem('user'));
-
         if (this.loggedUser) {
             this.router.navigate(['worklist']);
         } else {

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 import { Customer } from 'src/app/models/customer.model';
+import { TaskService } from 'src/app/services/task/task.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-task',
@@ -10,13 +12,18 @@ import { Customer } from 'src/app/models/customer.model';
 
 export class TaskComponent implements OnInit {
 
-    constructor() { }
+    constructor(private service: TaskService,
+        private router: Router) { }
 
     public task: Task;
     public customer: Customer;
 
     ngOnInit() {
         this.loadTasks();
+    }
+
+    async finishTask(taskId: string) {        
+        await this.service.finishTask(taskId);
     }
 
     loadTasks() {

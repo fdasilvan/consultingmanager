@@ -2,6 +2,8 @@
 using ConsultingManager.Infra;
 using ConsultingManager.Infra.Database;
 using ConsultingManager.Infra.Database.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +20,12 @@ namespace ConsultingManager.Domain.Repository
         {
         }
 
-        public async Task<CustomerProcessDto> StartCustomerProcess(ModelProcessDto modelProcessDto, Guid customerId, Guid consultantId, Guid customerUserId, DateTime startDate)
+        public async Task<CustomerProcessDto> StartCustomerProcess([FromBody]ModelProcessDto modelProcessDto, Guid customerId, Guid consultantId, Guid customerUserId, DateTime startDate)
         {
             CustomerProcessPoco customerProcess = new CustomerProcessPoco();
 
             List<ModelStepPoco> lstModelSteps = Context.ModelSteps
+                .Include(o => o.ModelTasks)
                 .Where(o => o.ProcessId == modelProcessDto.Id)
                 .ToList();
 
@@ -38,6 +41,8 @@ namespace ConsultingManager.Domain.Repository
 
                 DateTime? firstDate = null;
                 DateTime? lastDate = null;
+
+                List<CustomerTaskPoco> lstTasks = new List<CustomerTaskPoco>();
 
                 foreach (ModelTaskPoco modelTask in modelStep.ModelTasks)
                 {
@@ -74,8 +79,11 @@ namespace ConsultingManager.Domain.Repository
                         customerTask.TaskTypeId = Const.TaskTypes.Consultant;
                         customerTask.OwnerId = consultantId;
                     }
+
+                    lstTasks.Add(customerTask);
                 }
 
+                customerStep.CustomerTasks = lstTasks;
                 customerStep.StartDate = (firstDate.HasValue ? firstDate.Value : throw new Exception("Data inicial da etapa não definida."));
                 customerStep.EstimatedEndDate = (lastDate.HasValue ? lastDate.Value : throw new Exception("Data final da etapa não definida"));
                 customerStep.EndDate = null;
@@ -98,6 +106,52 @@ namespace ConsultingManager.Domain.Repository
             await Context.SaveChangesAsync();
 
             return customerProcess.MapTo<CustomerProcessDto>();
+        }
+
+        public async Task<List<CustomerProcessDto>> GetCustomerTasks(Guid customerId)
+        {
+            return await Context.CustomerProcesses
+                .Include(process => process.CustomerSteps)
+                    .ThenInclude(step => step.CustomerTasks)
+                        .ThenInclude(task => task.Customer)
+                .Include(process => process.CustomerSteps)
+                    .ThenInclude(step => step.CustomerTasks)
+                        .ThenInclude(task => task.CustomerUser)
+                .Include(process => process.CustomerSteps)
+                    .ThenInclude(step => step.CustomerTasks)
+                        .ThenInclude(task => task.Consultant)
+                .Include(process => process.CustomerSteps)
+                    .ThenInclude(step => step.CustomerTasks)
+                        .ThenInclude(task => task.Owner)
+                .Where(process => process.CustomerId == customerId)
+                .Select(process => process.MapTo<CustomerProcessDto>())
+                .ToListAsync();
+        }
+
+        public async Task<List<CustomerTaskDto>> GetUserTasks(Guid userId)
+        {
+            return await Context.CustomerTasks
+                .Include(task => task.Owner)
+                .Include(task => task.Customer)
+                .Include(task => task.Consultant)
+                .Include(task => task.Customer)
+                .Include(task => task.CustomerUser)
+                .Where(task => task.OwnerId == userId)
+                .Select(task => task.MapTo<CustomerTaskDto>())
+                .ToListAsync();
+        }
+
+        public async Task<CustomerTaskDto> FinishTask(Guid taskId)
+        {
+            CustomerTaskPoco task = await Context.CustomerTasks
+                .Where(o => o.Id == taskId)
+                .FirstOrDefaultAsync();
+
+            task.EndDate = DateTime.Now;
+
+            await Context.SaveChangesAsync();
+
+            return task.MapTo<CustomerTaskDto>();
         }
     }
 }

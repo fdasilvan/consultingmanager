@@ -3,6 +3,7 @@ import { TimelineService } from '../../services/timeline/timeline.service';
 import { Process } from 'src/app/models/process.model';
 import { Customer } from 'src/app/models/customer.model';
 import { Task } from 'src/app/models/task.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-timeline',
@@ -11,7 +12,9 @@ import { Task } from 'src/app/models/task.model';
 })
 export class TimelineComponent implements OnInit {
 
-    constructor(private service: TimelineService) { }
+    constructor(private service: TimelineService,
+        private route: ActivatedRoute,
+        private router: Router) { }
 
     public customer: Customer;
     public processesList: Process[];
@@ -21,7 +24,7 @@ export class TimelineComponent implements OnInit {
     }
 
     async loadProcesses(customer: Customer) {
-        this.processesList = await this.service.getAll();
+        this.processesList = await this.service.getProcesses(customer.id);
     }
 
     getCustomerId() {
@@ -31,14 +34,20 @@ export class TimelineComponent implements OnInit {
         }
     }
 
+    updateSelectedTask(task: Task, event: Event) {
+        event.preventDefault();
+        this.router.navigate(['task'])
+        window.localStorage.setItem('task', JSON.stringify(task));
+    }
+
     loadClassIndicator(task: Task) {
         let today: Date = new Date();
         today.setHours(0, 0, 0, 0);
 
-        if (!task.executionDate) {
-            if (today > task.endDate) {
+        if (!task.endDate) {
+            if (today > new Date(task.estimatedEndDate)) {
                 return "indicator label-danger";
-            } else if (today.getTime() >= task.startDate.getTime()) {
+            } else if (today.getTime() >= new Date(task.startDate).getTime()) {
                 return "indicator label-warning";
             } else {
                 return "indicator label-default";

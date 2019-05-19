@@ -31,8 +31,8 @@ export class LoginComponent implements OnInit {
         let response = await this.service.login(user);
 
         response.subscribe(resp => {
-            sessionStorage.setItem("user", JSON.stringify(user));
-            this.router.navigate(['worklist']);
+            sessionStorage.setItem("user", JSON.stringify(resp));
+            this.router.navigate(['']);
         }, error => {
             if (error.status == 400) {
                 alert('Usuário/senha inválidos!');

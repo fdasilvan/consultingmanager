@@ -1,9 +1,10 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
+using System.Text;
 
-namespace ConsultingManager.Infra.Database.Models
+namespace ConsultingManager.Dto
 {
-    public class ModelTaskPoco
+    public class ModelTaskDto
     {
         public Guid Id { get; set; }
         public string Description { get; set; }
@@ -13,11 +14,9 @@ namespace ConsultingManager.Infra.Database.Models
         public int DueDays { get; set; }
 
         public Guid TaskTypeId { get; set; }
-        [ForeignKey(nameof(TaskTypeId))]
-        public TaskTypePoco TaskType{ get; set; }
+        public TaskTypeDto TaskType { get; set; }
 
         public Guid ModelStepId { get; set; }
-        [ForeignKey(nameof(ModelStepId))]
-        public ModelStepPoco ModelStep { get; set; }
+        public ModelStepDto ModelStep { get; set; }
     }
 }

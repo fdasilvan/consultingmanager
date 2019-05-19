@@ -9,10 +9,10 @@ import { CustomersComponent } from './components/customers/customers.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TaskComponent } from './components/task/task.component';
-import { HomeComponent } from './components/home/home.component';
 import { AuthService } from './services/auth/auth.service';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { OrderByPipe } from './pipes/order-by.pipe';
 
 @NgModule({
     declarations: [
@@ -21,9 +21,9 @@ import { LogoutComponent } from './components/logout/logout.component';
         CustomersComponent,
         TimelineComponent,
         TaskComponent,
-        HomeComponent,
         LoginComponent,
-        LogoutComponent
+        LogoutComponent,
+        OrderByPipe
     ],
     imports: [
         BrowserModule,

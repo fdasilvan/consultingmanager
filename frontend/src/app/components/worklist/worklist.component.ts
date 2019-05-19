@@ -44,7 +44,7 @@ export class WorklistComponent implements OnInit {
         let today: Date = new Date();
         today.setHours(0, 0, 0, 0);
 
-        if (!task.executionDate) {
+        if (!task.estimatedEndDate) {
             if (today > task.endDate) {
                 return "indicator label-danger";
             } else if (today.getTime() >= task.startDate.getTime()) {

@@ -27,7 +27,7 @@ export class WorklistService {
         task1.creationDate = new Date(2019, 3, 24);
         task1.startDate = new Date(2019, 3, 26);
         task1.endDate = new Date(2019, 3, 26);
-        task1.executionDate = new Date(2019, 3, 27);
+        task1.estimatedEndDate = new Date(2019, 3, 27);
         stepOnboarding.tasks.push(task1);
 
         let task2: Task = new Task();
@@ -62,8 +62,8 @@ export class WorklistService {
         processImplantacao.id = "1";
         processImplantacao.description = "Implantação";
         processImplantacao.startDate = new Date(2019, 3, 21);
-        processImplantacao.steps = [];
-        processImplantacao.steps.push(stepOnboarding);
+        processImplantacao.customerSteps = [];
+        processImplantacao.customerSteps.push(stepOnboarding);
 
         let processesList: Process[] = [];
         processesList.push(processImplantacao);
