@@ -136,7 +136,7 @@ namespace ConsultingManager.Domain.Repository
                 .Include(task => task.Consultant)
                 .Include(task => task.Customer)
                 .Include(task => task.CustomerUser)
-                .Where(task => task.OwnerId == userId)
+                .Where(task => task.OwnerId == userId && task.EndDate == null && task.StartDate < DateTime.Now)
                 .Select(task => task.MapTo<CustomerTaskDto>())
                 .ToListAsync();
         }

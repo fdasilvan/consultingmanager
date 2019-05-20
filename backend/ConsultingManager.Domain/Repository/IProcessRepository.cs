@@ -10,5 +10,6 @@ namespace ConsultingManager.Domain.Repository
         Task<CustomerProcessDto> StartCustomerProcess(ModelProcessDto modelProcessDto, Guid customerId, Guid consultantId, Guid customerUserId, DateTime startDate);
         Task<List<CustomerProcessDto>> GetCustomerTasks(Guid customerId);
         Task<CustomerTaskDto> FinishTask(Guid taskId);
+        Task<List<CustomerTaskDto>> GetUserTasks(Guid userId);
     }
 }

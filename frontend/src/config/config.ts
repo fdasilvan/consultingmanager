@@ -1,3 +1,3 @@
 export const Config = {
-    apiUrl: 'https://localhost:44359/api'
+    apiUrl: 'http://consultingmanagerapi-dev.sa-east-1.elasticbeanstalk.com/api'
 }

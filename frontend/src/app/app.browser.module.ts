@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -13,32 +13,19 @@ import { AuthService } from './services/auth/auth.service';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { OrderByPipe } from './pipes/order-by.pipe';
-import { CommonModule } from '@angular/common';
-import { TransferHttpCacheModule } from '@nguniversal/common';
-import { NgtUniversalModule } from '@ng-toolkit/universal';
+import { AppModule } from './app.module';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        RoutingComponents,
-        CustomersComponent,
-        TimelineComponent,
-        TaskComponent,
-        LoginComponent,
-        LogoutComponent,
-        OrderByPipe
-    ],
     imports: [
-        BrowserModule.withServerTransition({ appId: 'serverApp' }),
+        
         AppRoutingModule,
         RouterModule,
         HttpClientModule,
         NgbModule,
-        CommonModule,
-        TransferHttpCacheModule,
-        NgtUniversalModule
+        AppModule,
+        BrowserTransferStateModule
     ],
     providers: [AuthService],
     bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppBrowserModule { }

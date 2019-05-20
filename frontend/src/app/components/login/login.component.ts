@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
     selector: 'app-login',
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
 
         response.subscribe(resp => {
             sessionStorage.setItem("user", JSON.stringify(resp));
-            this.router.navigate(['']);
+            this.router.navigate(['worklist']);
         }, error => {
             if (error.status == 400) {
                 alert('Usuário/senha inválidos!');

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { CustomersService } from '../../services/customers/customers.service';
 import { Customer } from 'src/app/models/customer.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
+import { WINDOW } from '@ng-toolkit/universal';
 
 @Component({
     selector: 'app-customers',
@@ -11,7 +12,7 @@ import { User } from 'src/app/models/user.model';
 })
 export class CustomersComponent implements OnInit {
 
-    constructor(private service: CustomersService,
+    constructor(@Inject(WINDOW) private window: Window, private service: CustomersService,
         private route: ActivatedRoute,
         private router: Router) { }
         
@@ -34,6 +35,6 @@ export class CustomersComponent implements OnInit {
     updateSelectedCustomer(customer: Customer, event: Event) {
         event.preventDefault();
         this.router.navigate(['timeline'])
-        window.localStorage.setItem("customer", JSON.stringify(customer));
+        this.window.localStorage.setItem("customer", JSON.stringify(customer));
     }
 }

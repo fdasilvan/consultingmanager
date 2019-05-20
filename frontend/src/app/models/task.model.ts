@@ -13,7 +13,7 @@ export class Task {
     customer: Customer;
     customerUser: User;
     consultant: User;
-    owner: string;
+    owner: User;
 
     constructor() {
     }

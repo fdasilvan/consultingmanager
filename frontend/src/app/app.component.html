@@ -25,7 +25,7 @@
     <ul class="nav menu">
         <li routerLinkActive="active"><a routerLink="/worklist"><em class="fa fa-check-square-o">&nbsp;</em> Tarefas</a>
         </li>
-        <li routerLinkActive="active"><a routerLink="/customers"><em class="fa fa-users">&nbsp;</em> Clientes</a>
+        <li *ngIf="this.loggedUser && this.loggedUser.userType.description != 'Cliente'" routerLinkActive="active"><a routerLink="/customers"><em class="fa fa-users">&nbsp;</em> Clientes</a>
         </li>
         <li routerLinkActive="active"><a routerLink="/logout"><em class="fa fa-sign-out">&nbsp;</em> Logout</a></li>
     </ul>

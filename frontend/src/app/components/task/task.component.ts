@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 import { Customer } from 'src/app/models/customer.model';
 import { TaskService } from 'src/app/services/task/task.service';
 import { Router } from '@angular/router';
+import { WINDOW } from '@ng-toolkit/universal';
 
 @Component({
     selector: 'app-task',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 
 export class TaskComponent implements OnInit {
 
-    constructor(private service: TaskService,
+    constructor(@Inject(WINDOW) private window: Window, private service: TaskService,
         private router: Router) { }
 
     public task: Task;
@@ -27,7 +28,7 @@ export class TaskComponent implements OnInit {
     }
 
     loadTasks() {
-        this.customer = <Customer>JSON.parse(window.localStorage.getItem('customer'));
-        this.task = <Task>JSON.parse(window.localStorage.getItem('task'));
+        this.customer = <Customer>JSON.parse(this.window.localStorage.getItem('customer'));
+        this.task = <Task>JSON.parse(this.window.localStorage.getItem('task'));
     }
 }

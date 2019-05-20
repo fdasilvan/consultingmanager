@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Process } from 'src/app/models/process.model';
-import { WorklistService } from '../../services/worklist/worklist.service';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
+import { TaskService } from 'src/app/services/task/task.service';
+import { Customer } from 'src/app/models/customer.model';
+import { WINDOW } from '@ng-toolkit/universal';
 
 @Component({
     selector: 'app-worklist',
@@ -12,11 +13,11 @@ import { User } from 'src/app/models/user.model';
 })
 export class WorklistComponent implements OnInit {
 
-    constructor(private service: WorklistService,
+    constructor(@Inject(WINDOW) private window: Window, private service: TaskService,
         private route: ActivatedRoute,
         private router: Router) { }
 
-    public processesList: Process[];
+    public tasksList: Task[];
     public loggedUser: User;
     
     ngOnInit() {
@@ -27,27 +28,35 @@ export class WorklistComponent implements OnInit {
             this.router.navigate(['login']);
         }
         
-        this.loadProcesses();
+        this.loadTasks();
     }
 
-    async loadProcesses() {
-        this.processesList = await this.service.getAll();
+    async loadTasks() {
+        debugger;
+        this.tasksList = await this.service.getUserTasks(this.loggedUser.id);
     }
 
     updateSelectedTask(task: Task, event: Event) {
         event.preventDefault();
         this.router.navigate(['task'])
-        window.localStorage.setItem('task', JSON.stringify(task));
+        this.window.localStorage.setItem('task', JSON.stringify(task));
+    }
+
+    updateSelectedCustomer(customer: Customer, event: Event) {
+        debugger;
+        event.preventDefault();
+        this.window.localStorage.setItem("customer", JSON.stringify(customer));
+        this.router.navigate(['timeline']);        
     }
 
     loadClassIndicator(task: Task) {
         let today: Date = new Date();
         today.setHours(0, 0, 0, 0);
 
-        if (!task.estimatedEndDate) {
-            if (today > task.endDate) {
+        if (!task.endDate) {
+            if (today > new Date(task.estimatedEndDate)) {
                 return "indicator label-danger";
-            } else if (today.getTime() >= task.startDate.getTime()) {
+            } else if (today.getTime() >= new Date(task.startDate).getTime()) {
                 return "indicator label-warning";
             } else {
                 return "indicator label-default";
