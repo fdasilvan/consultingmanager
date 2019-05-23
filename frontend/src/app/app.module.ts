@@ -13,9 +13,6 @@ import { AuthService } from './services/auth/auth.service';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { OrderByPipe } from './pipes/order-by.pipe';
-import { CommonModule } from '@angular/common';
-import { TransferHttpCacheModule } from '@nguniversal/common';
-import { NgtUniversalModule } from '@ng-toolkit/universal';
 
 @NgModule({
     declarations: [
@@ -29,14 +26,11 @@ import { NgtUniversalModule } from '@ng-toolkit/universal';
         OrderByPipe
     ],
     imports: [
-        BrowserModule.withServerTransition({ appId: 'serverApp' }),
+        BrowserModule,
         AppRoutingModule,
         RouterModule,
         HttpClientModule,
-        NgbModule,
-        CommonModule,
-        TransferHttpCacheModule,
-        NgtUniversalModule
+        NgbModule
     ],
     providers: [AuthService],
     bootstrap: [AppComponent]

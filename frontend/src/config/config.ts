@@ -1,3 +1,3 @@
 export const Config = {
-    apiUrl: 'http://consultingmanagerapi-dev.sa-east-1.elasticbeanstalk.com/api'
+    apiUrl: 'https://api.nimbustecnologia.com.br/api'
 }

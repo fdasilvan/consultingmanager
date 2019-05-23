@@ -1,10 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { TaskService } from 'src/app/services/task/task.service';
 import { Customer } from 'src/app/models/customer.model';
-import { WINDOW } from '@ng-toolkit/universal';
 
 @Component({
     selector: 'app-worklist',
@@ -13,7 +12,7 @@ import { WINDOW } from '@ng-toolkit/universal';
 })
 export class WorklistComponent implements OnInit {
 
-    constructor(@Inject(WINDOW) private window: Window, private service: TaskService,
+    constructor(private service: TaskService,
         private route: ActivatedRoute,
         private router: Router) { }
 
@@ -39,13 +38,13 @@ export class WorklistComponent implements OnInit {
     updateSelectedTask(task: Task, event: Event) {
         event.preventDefault();
         this.router.navigate(['task'])
-        this.window.localStorage.setItem('task', JSON.stringify(task));
+        window.localStorage.setItem('task', JSON.stringify(task));
     }
 
     updateSelectedCustomer(customer: Customer, event: Event) {
         debugger;
         event.preventDefault();
-        this.window.localStorage.setItem("customer", JSON.stringify(customer));
+        window.localStorage.setItem("customer", JSON.stringify(customer));
         this.router.navigate(['timeline']);        
     }
 

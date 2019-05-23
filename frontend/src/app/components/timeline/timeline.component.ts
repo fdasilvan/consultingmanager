@@ -1,10 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TimelineService } from '../../services/timeline/timeline.service';
 import { Process } from 'src/app/models/process.model';
 import { Customer } from 'src/app/models/customer.model';
 import { Task } from 'src/app/models/task.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LOCAL_STORAGE, WINDOW } from '@ng-toolkit/universal';
 
 @Component({
     selector: 'app-timeline',
@@ -13,7 +12,7 @@ import { LOCAL_STORAGE, WINDOW } from '@ng-toolkit/universal';
 })
 export class TimelineComponent implements OnInit {
 
-    constructor(@Inject(WINDOW) private window: Window, @Inject(LOCAL_STORAGE) private localStorage: any, private service: TimelineService,
+    constructor(private service: TimelineService,
         private route: ActivatedRoute,
         private router: Router) { }
 
@@ -31,16 +30,16 @@ export class TimelineComponent implements OnInit {
     getCustomerId() {
         debugger;
         
-        this.customer = <Customer>JSON.parse(this.localStorage.getItem("customer"));
+        this.customer = <Customer>JSON.parse(localStorage.getItem("customer"));
         if (!this.customer) {
-            this.customer = this.window.history.state.customer;
+            this.customer = window.history.state.customer;
         }
     }
 
     updateSelectedTask(task: Task, event: Event) {
         event.preventDefault();
         this.router.navigate(['task'])
-        this.window.localStorage.setItem('task', JSON.stringify(task));
+        window.localStorage.setItem('task', JSON.stringify(task));
     }
 
     loadClassIndicator(task: Task) {

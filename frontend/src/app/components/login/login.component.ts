@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -22,23 +22,23 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
     }
 
+    @Output() updateUser: EventEmitter<any> = new EventEmitter();
     async login() {
         let user: User = new User();
 
         user.email = this.email.nativeElement.value;
         user.password = this.password.nativeElement.value;
 
-        let response = await this.service.login(user);
-
-        response.subscribe(resp => {
-            sessionStorage.setItem("user", JSON.stringify(resp));
+        try {
+            let response = await this.service.login(user);
+            sessionStorage.setItem('user', JSON.stringify(response));
             this.router.navigate(['worklist']);
-        }, error => {
+        } catch (error) {
             if (error.status == 400) {
                 alert('Usuário/senha inválidos!');
             } else {
                 alert('Erro!');
             }
-        });
+        }
     }
 }

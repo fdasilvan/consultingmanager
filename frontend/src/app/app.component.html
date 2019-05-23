@@ -10,13 +10,13 @@
         </div>
     </div>
 </nav>
-<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+<div *ngIf="loggedUser" id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
     <div class="profile-sidebar">
         <div class="profile-userpic">
             <img src="/assets/images/user-icon.jpg" width="50" class="img-responsive" alt="">
         </div>
         <div class="profile-usertitle">
-            <div class="profile-usertitle-name">{{this.loggedUser.name}}</div>
+            <div class="profile-usertitle-name">{{loggedUser.name}}</div>
             <div class="profile-usertitle-status"><span class="indicator label-success"></span>Online</div>
         </div>
         <div class="clear"></div>
@@ -25,7 +25,8 @@
     <ul class="nav menu">
         <li routerLinkActive="active"><a routerLink="/worklist"><em class="fa fa-check-square-o">&nbsp;</em> Tarefas</a>
         </li>
-        <li *ngIf="this.loggedUser && this.loggedUser.userType.description != 'Cliente'" routerLinkActive="active"><a routerLink="/customers"><em class="fa fa-users">&nbsp;</em> Clientes</a>
+        <li *ngIf="loggedUser && loggedUser.userType.description != 'Cliente'" routerLinkActive="active"><a
+                routerLink="/customers"><em class="fa fa-users">&nbsp;</em> Clientes</a>
         </li>
         <li routerLinkActive="active"><a routerLink="/logout"><em class="fa fa-sign-out">&nbsp;</em> Logout</a></li>
     </ul>

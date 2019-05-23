@@ -1,19 +1,28 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Config } from 'src/config/config';
 import { User } from 'src/app/models/user.model';
+import { UserService } from '../user/user.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
 
-    constructor(private _http: HttpClient) {
+    constructor(private http: HttpClient,
+        private userService: UserService) {
     }
 
-    public async login(user: User) {
-        let response = await this._http.post<User>(`${Config.apiUrl}/users/authenticate`, { email: user.email, password: user.password });
-        return response.pipe(map(response => response));
+    updateUser: EventEmitter<any> = new EventEmitter();
+    public async login(user: User): Promise<User> {
+        debugger;
+        let response = await this.http.post<User>(`${Config.apiUrl}/users/authenticate`, { email: user.email, password: user.password }).toPromise();
+        this.userService.setUser(response);
+        return response;
+
+        //let response = await this.http.post<User>(`${Config.apiUrl}/users/authenticate`, { email: user.email, password: user.password });
+        //this.getLoggedInName.emit(response.toPromise());
+        //return response;
     }
 }
