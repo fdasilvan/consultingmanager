@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { TaskService } from 'src/app/services/task/task.service';
 import { Customer } from 'src/app/models/customer.model';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
     selector: 'app-worklist',
@@ -12,7 +13,8 @@ import { Customer } from 'src/app/models/customer.model';
 })
 export class WorklistComponent implements OnInit {
 
-    constructor(private service: TaskService,
+    constructor(private taskService: TaskService,
+        private userService: UserService,
         private route: ActivatedRoute,
         private router: Router) { }
 
@@ -21,7 +23,7 @@ export class WorklistComponent implements OnInit {
     
     ngOnInit() {
 
-        this.loggedUser = <User>JSON.parse(sessionStorage.getItem('user'));
+        this.loggedUser = this.userService.getUser();
 
         if (!this.loggedUser) {
             this.router.navigate(['login']);
@@ -31,8 +33,7 @@ export class WorklistComponent implements OnInit {
     }
 
     async loadTasks() {
-        debugger;
-        this.tasksList = await this.service.getUserTasks(this.loggedUser.id);
+        this.tasksList = await this.taskService.getUserTasks(this.loggedUser.id);
     }
 
     updateSelectedTask(task: Task, event: Event) {
@@ -42,7 +43,6 @@ export class WorklistComponent implements OnInit {
     }
 
     updateSelectedCustomer(customer: Customer, event: Event) {
-        debugger;
         event.preventDefault();
         window.localStorage.setItem("customer", JSON.stringify(customer));
         this.router.navigate(['timeline']);        

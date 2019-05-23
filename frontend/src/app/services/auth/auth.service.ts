@@ -16,13 +16,8 @@ export class AuthService {
 
     updateUser: EventEmitter<any> = new EventEmitter();
     public async login(user: User): Promise<User> {
-        debugger;
         let response = await this.http.post<User>(`${Config.apiUrl}/users/authenticate`, { email: user.email, password: user.password }).toPromise();
         this.userService.setUser(response);
         return response;
-
-        //let response = await this.http.post<User>(`${Config.apiUrl}/users/authenticate`, { email: user.email, password: user.password });
-        //this.getLoggedInName.emit(response.toPromise());
-        //return response;
     }
 }

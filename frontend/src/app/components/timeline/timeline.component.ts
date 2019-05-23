@@ -4,6 +4,8 @@ import { Process } from 'src/app/models/process.model';
 import { Customer } from 'src/app/models/customer.model';
 import { Task } from 'src/app/models/task.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
     selector: 'app-timeline',
@@ -12,9 +14,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class TimelineComponent implements OnInit {
 
-    constructor(private service: TimelineService,
+    public loggedUser: User;
+    constructor(private timelineService: TimelineService,
+        private userService: UserService,
         private route: ActivatedRoute,
-        private router: Router) { }
+        private router: Router) {
+
+        this.loggedUser = this.userService.getUser();
+
+        if (!this.loggedUser) {
+            this.router.navigate(['login']);
+        }
+    }
 
     public customer: Customer;
     public processesList: Process[];
@@ -24,12 +35,10 @@ export class TimelineComponent implements OnInit {
     }
 
     async loadProcesses(customer: Customer) {
-        this.processesList = await this.service.getProcesses(customer.id);
+        this.processesList = await this.timelineService.getProcesses(customer.id);
     }
 
     getCustomerId() {
-        debugger;
-        
         this.customer = <Customer>JSON.parse(localStorage.getItem("customer"));
         if (!this.customer) {
             this.customer = window.history.state.customer;

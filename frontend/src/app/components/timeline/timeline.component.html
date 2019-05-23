@@ -22,7 +22,8 @@
 <div *ngFor="let process of processesList | orderBy: 'startDate'">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Processo: {{process.description}} - {{process.startDate | date: 'dd/MM/yyyy'}} a {{process.estimatedEndDate | date: 'dd/MM/yyyy'}}</h1>
+            <h1 class="page-header">Processo: {{process.description}} - {{process.startDate | date: 'dd/MM/yyyy'}} a
+                {{process.estimatedEndDate | date: 'dd/MM/yyyy'}}</h1>
         </div>
     </div>
 
@@ -30,37 +31,36 @@
         <div class="col-md-12">
             <div class="panel panel-default articles">
                 <div class="panel-heading">
-                    {{step.description}} - {{step.startDate | date: 'dd/MM/yyyy'}} a {{step.estimatedEndDate | date: 'dd/MM/yyyy'}}
+                    {{step.description}} - {{step.startDate | date: 'dd/MM/yyyy'}} a
+                    {{step.estimatedEndDate | date: 'dd/MM/yyyy'}}
                     <span class="pull-right clickable panel-toggle panel-button-tab-left"><em
                             class="fa fa-toggle-up"></em></span>
                 </div>
-                <div class="panel-body articles-container"
-                    *ngFor="let task of step.customerTasks | orderBy: 'startDate'">
-                    <div class="article border-bottom">
-                        <div class="col-xs-12">
-                            <div class="row">
-                                <div class="col-xs-1 col-md-1 date">
-                                    <div class="text-muted">De</div>
-                                    <div class="large">{{task.startDate | date: 'dd/MM'}}</div>
-                                    <div class="text-muted">{{task.startDate | date: 'yyyy'}}</div>
-                                </div>
-                                <div class="col-xs-1 col-md-1 date">
-                                    <div class="text-muted">Até</div>
-                                    <div class="large">{{task.estimatedEndDate | date: 'dd/MM'}}</div>
-                                    <div class="text-muted">{{task.estimatedEndDate | date: 'yyyy'}}</div>
-                                </div>
-                                <div class="col-xs-10 col-md-10">
-                                    <span class="{{this.loadClassIndicator(task)}}"></span>
-                                    <div class="clear"></div>
-                                    <h4><a (click)="updateSelectedTask(this.task, $event)">{{task.description}}</a></h4>
-                                    <div *ngIf="task.endDate" class="text-muted">Finalizada em:
-                                            {{task.endDate | date: 'dd/MM/yyyy HH:mm' }}</div>
-                                        <div *ngIf="!task.endDate" class="text-muted">Duração: {{task.duration}}
-                                            minutos</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clear"></div>
+
+                <div class="panel-body articles-container">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Início</th>
+                                    <th scope="col">Fim</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Duração</th>
+                                    <th scope="col">Tarefa</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let task of step.customerTasks | orderBy: 'startDate'">
+                                    <td>{{task.startDate | date: 'dd/MM'}}</td>
+                                    <td>{{task.estimatedEndDate | date: 'dd/MM'}}</td>
+                                    <td><span class="{{this.loadClassIndicator(task)}}"></span></td>
+                                    <td><div>{{task.duration}} min</div></td>
+                                    <td>
+                                        <h4><a (click)="updateSelectedTask(this.task, $event)">{{task.description}}</a></h4>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

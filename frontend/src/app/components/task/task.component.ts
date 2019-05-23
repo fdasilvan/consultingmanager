@@ -4,6 +4,8 @@ import { Customer } from 'src/app/models/customer.model';
 import { TaskService } from 'src/app/services/task/task.service';
 import { Router } from '@angular/router';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
+import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
     selector: 'app-task',
@@ -12,9 +14,17 @@ import { routerNgProbeToken } from '@angular/router/src/router_module';
 })
 
 export class TaskComponent implements OnInit {
-
+    public loggedUser: User;
     constructor(private service: TaskService,
-        private router: Router) { }
+        private userService: UserService,
+        private router: Router) {
+            
+        this.loggedUser = this.userService.getUser();
+
+        if (!this.loggedUser) {
+            this.router.navigate(['login']);
+        }
+    }
 
     public task: Task;
     public customer: Customer;
@@ -23,7 +33,7 @@ export class TaskComponent implements OnInit {
         this.loadTasks();
     }
 
-    async finishTask(taskId: string) {        
+    async finishTask(taskId: string) {
         await this.service.finishTask(taskId);
         this.router.navigate(['worklist']);
     }

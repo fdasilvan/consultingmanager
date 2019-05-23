@@ -12,19 +12,18 @@ export class UserService {
     public userEvent: EventEmitter<User> = new EventEmitter();
 
     getUser() {
-        return this.loggedUser;
+        let user = <User>JSON.parse(localStorage.getItem('user'));
+
+        if (user) {
+            return user;
+        } else {
+            return this.loggedUser;
+        }
     }
 
     setUser(user: User) {
         this.loggedUser = user;
+        localStorage.setItem('user', JSON.stringify(user));
         this.userEvent.emit(user);
-    }
-
-    login() {
-
-    }
-
-    logout() {
-
     }
 }

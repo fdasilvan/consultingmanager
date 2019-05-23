@@ -12,7 +12,6 @@ export class LoginService {
     @Output() getLoggedInName: EventEmitter<any> = new EventEmitter();
 
     public async authenticate(user: User): Promise<User> {
-        debugger;
         let response = await this.http.post<User>(`${Config.apiUrl}/authenticate`, user).toPromise();
         this.getLoggedInName.emit(response.name);
         return response;

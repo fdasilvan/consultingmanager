@@ -1,7 +1,8 @@
 img {
     border: solid 1px #eee;
-    width: 90px;
-    height: 90px;
+    width: 30px;
+    height: 30px;
+    margin-right: 15px;
 }
 
 .link {

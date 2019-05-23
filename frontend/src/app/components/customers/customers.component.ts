@@ -3,6 +3,7 @@ import { CustomersService } from '../../services/customers/customers.service';
 import { Customer } from 'src/app/models/customer.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
     selector: 'app-customers',
@@ -12,12 +13,20 @@ import { User } from 'src/app/models/user.model';
 export class CustomersComponent implements OnInit {
 
     constructor(private service: CustomersService,
+        private userService: UserService,
         private route: ActivatedRoute,
-        private router: Router) { }
-        
+        private router: Router) {
+
+        this.loggedUser = this.userService.getUser();
+
+        if (!this.loggedUser) {
+            this.router.navigate(['login']);
+        }
+    }
+
     public customers: Customer[];
     public loggedUser: User;
-    
+
     ngOnInit() {
         this.loggedUser = <User>JSON.parse(sessionStorage.getItem('user'));
 
