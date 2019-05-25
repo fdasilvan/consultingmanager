@@ -16,7 +16,7 @@ export class TaskService {
     }
 
     public async getUserTasks(userId: string): Promise<Task[]> {
-        var response = await this.http.get<Task[]>(`${Config.apiUrl}/process/user-tasks/${userId}`);
+        var response = await this.http.get<Task[]>(`${Config.apiUrl}/process/user/${userId}`);
         return response.toPromise();
     }
 }

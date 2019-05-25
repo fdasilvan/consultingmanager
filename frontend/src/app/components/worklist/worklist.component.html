@@ -41,7 +41,8 @@
               <tbody>
                 <tr *ngFor="let task of this.tasksList | orderBy: 'startDate'">
                   <td>
-                    <h4><a (click)="updateSelectedCustomer(task.customer, $event)">{{task.customer.name}}</a>
+                    <h4><a href="javascript:void(0)"
+                        (click)="updateSelectedCustomer(task.customer, $event)">{{task.customer.name}}</a>
                     </h4>
                   </td>
                   <td>{{task.startDate | date: 'dd/MM'}}</td>
@@ -51,7 +52,8 @@
                     <div>{{task.duration}} min</div>
                   </td>
                   <td>
-                    <h4><a (click)="updateSelectedTask(this.task, $event)">{{task.description}}</a>
+                    <h4><a href="javascript:void(0)"
+                        (click)="updateSelectedTask(this.task, $event)">{{task.description}}</a>
                     </h4>
                   </td>
                 </tr>

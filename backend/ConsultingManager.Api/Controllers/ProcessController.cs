@@ -62,7 +62,7 @@ namespace ConsultingManager.Api.Controllers
             }
         }
 
-        [HttpGet("user-tasks/{userId}")]
+        [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetUserTasks(Guid userId)
         {
             try

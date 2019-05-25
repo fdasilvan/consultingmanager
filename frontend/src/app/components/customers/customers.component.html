@@ -34,10 +34,11 @@
               <tbody>
                 <tr *ngFor="let customer of customers">
                   <td>
-                    <h4><a (click)="updateSelectedCustomer(customer, $event);">{{customer.name}}</a>
+                    <h4><a href="javascript:void(0)"
+                        (click)="updateSelectedCustomer(customer, $event);">{{customer.name}}</a>
                     </h4>
                   </td>
-                  <td>{{ customer.process ? customer.process : "Não iniciado" }}</td>
+                  <td>{{ customer.customerProcesses ? customer.customerProcesses.length : "0" }}</td>
                   <td>{{ customer.step ? customer.step : "Não iniciado" }}</td>
                 </tr>
               </tbody>
