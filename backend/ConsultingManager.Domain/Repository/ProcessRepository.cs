@@ -130,6 +130,9 @@ namespace ConsultingManager.Domain.Repository
                 .Include(process => process.CustomerSteps)
                     .ThenInclude(step => step.CustomerTasks)
                         .ThenInclude(task => task.Owner)
+                .Include(process => process.CustomerSteps)
+                    .ThenInclude(step => step.CustomerTasks)
+                        .ThenInclude(task => task.TaskType)
                 .Where(process => process.CustomerId == customerId)
                 .Select(process => process.MapTo<CustomerProcessDto>())
                 .ToListAsync();

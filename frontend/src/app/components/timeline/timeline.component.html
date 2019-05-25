@@ -37,8 +37,8 @@
 
 
 
-        <div class="col-lg-12 mb-4">
-          <div class="card" *ngFor="let step of process.customerSteps | orderBy: 'startDate'">
+        <div class="col-lg-12">
+          <div class="card mt-4" *ngFor="let step of process.customerSteps | orderBy: 'startDate'">
             <div class="card-header">
               <h4>{{step.description}} - {{step.startDate | date: 'dd/MM/yyyy'}} a
                 {{step.estimatedEndDate | date: 'dd/MM/yyyy'}}</h4>
@@ -53,6 +53,7 @@
                       <th scope="col">Fim</th>
                       <th scope="col">Status</th>
                       <th scope="col">Duração</th>
+                      <th scope="col">Responsável</th>
                       <th scope="col">Tarefa</th>
                     </tr>
                   </thead>
@@ -66,6 +67,7 @@
                       <td>
                         <div>{{task.duration}} min</div>
                       </td>
+                      <td>{{task.taskType.description}}</td>
                       <td>
                         <h4><a href="javascript:void(0)"
                             (click)="updateSelectedTask(this.task, $event)">{{task.description}}</a>
