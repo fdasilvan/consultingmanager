@@ -17,12 +17,31 @@ namespace ConsultingManager.Api.Controllers
             _processRepository = processRepository;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> StartCustomerProcess([FromBody]ModelProcessDto modelProcessDto, Guid customerId, Guid consultantId, Guid customerUserId, DateTime startDate)
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
         {
             try
             {
-                return Ok(await _processRepository.StartCustomerProcess(modelProcessDto, customerId, consultantId, customerUserId, startDate));
+                return Ok(await _processRepository.GetAll());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar atividades do cliente.");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> StartCustomerProcess(StartCustomerProcessDto startCustomerProcessDto)
+        {
+            try
+            {
+                ModelProcessDto modelProcess = new ModelProcessDto();
+
+                modelProcess.Id = startCustomerProcessDto.modelProcessId;
+                modelProcess.Description = startCustomerProcessDto.modelProcessDescription;
+
+                return Ok(await _processRepository.StartCustomerProcess(modelProcess, startCustomerProcessDto.customerId, 
+                    startCustomerProcessDto.consultantId, startCustomerProcessDto.customerUserId, startCustomerProcessDto.startDate));
             }
             catch (Exception ex)
             {
@@ -30,7 +49,7 @@ namespace ConsultingManager.Api.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("customer/{customerId}")]
         public async Task<IActionResult> GetCustomerTasks(Guid customerId)
         {
             try

@@ -13,5 +13,9 @@ namespace ConsultingManager.Infra.Database.Models
         public Guid UserTypeId { get; set; }
         [ForeignKey(nameof(UserTypeId))]
         public UserTypePoco UserType { get; set; }
+
+        public Guid? CustomerId { get; set; }
+        [ForeignKey(nameof(CustomerId))]
+        public CustomerPoco Customer { get; set; }
     }
 }

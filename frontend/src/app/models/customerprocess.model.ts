@@ -1,6 +1,6 @@
 import { Step } from './step.model';
 
-export class Process {
+export class CustomerProcess {
     id: string;
     description: string;
     startDate: Date;

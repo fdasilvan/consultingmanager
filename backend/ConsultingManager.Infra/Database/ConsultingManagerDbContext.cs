@@ -94,6 +94,14 @@ namespace ConsultingManager.Infra.Database
 
             #endregion
 
+            #region CustomerPoco x User 1-to-n relationship
+
+            modelBuilder.Entity<CustomerPoco>()
+                .HasMany(c => c.Users)
+                .WithOne(e => e.Customer);
+
+            #endregion
+
             base.OnModelCreating(modelBuilder);
         }
     }

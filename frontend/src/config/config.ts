@@ -1,3 +1,3 @@
 export const Config = {
-    apiUrl: 'https://api.nimbustecnologia.com.br/api'
+    apiUrl: 'http://localhost:50493/api'
 }

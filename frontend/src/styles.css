@@ -1,5 +1,54 @@
+.table {
+    border: solid 1px #f0f0f0;
+}
+
 .table th,
 .table td {
   vertical-align: middle !important;
   text-align: center;
 }
+
+.indicator {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 9999px;
+  margin-right: 5px;
+}
+
+.label-default {
+  background-color: #777; }
+
+.label-default[href]:hover, .label-default[href]:focus {
+  background-color: #5e5e5e; }
+
+.label-primary {
+  color: #fff;
+  background-color: #30a5ff; }
+
+.label-primary[href]:hover, .label-primary[href]:focus {
+  background-color: #30a5ff; }
+
+.label-success {
+  background-color: #8ad919; }
+
+.label-success[href]:hover, .label-success[href]:focus {
+  background-color: #8ad919; }
+
+.label-info {
+  background-color: #30a5ff; }
+
+.label-info[href]:hover, .label-info[href]:focus {
+  background-color: #30a5ff; }
+
+.label-warning {
+  background-color: #ffb53e; }
+
+.label-warning[href]:hover, .label-warning[href]:focus {
+  background-color: #ec971f; }
+
+.label-danger {
+  background-color: #f9243f; }
+
+.label-danger[href]:hover, .label-danger[href]:focus {
+  background-color: #f9243f; }

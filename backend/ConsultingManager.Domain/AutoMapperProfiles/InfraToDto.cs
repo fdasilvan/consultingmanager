@@ -13,7 +13,7 @@ namespace ConsultingManager.Domain
             CreateMap<CustomerProcessPoco, CustomerProcessDto>().ForAllOtherMembers(opts => opts.MapAtRuntime());
             CreateMap<CustomerStepPoco, CustomerStepDto>().ForAllOtherMembers(opts => opts.MapAtRuntime());
             CreateMap<CustomerTaskPoco, CustomerTaskDto>().ForAllOtherMembers(opts => opts.MapAtRuntime());
-            CreateMap<UserPoco, UserDto>().ForAllOtherMembers(opts => opts.MapAtRuntime());
+            CreateMap<UserPoco, UserDto>().ForMember(o => o.Password, src => src.Ignore()).ForAllOtherMembers(opts => opts.MapAtRuntime());
             CreateMap<UserTypePoco, UserTypeDto>().ForAllOtherMembers(opts => opts.MapAtRuntime());
         }
     }

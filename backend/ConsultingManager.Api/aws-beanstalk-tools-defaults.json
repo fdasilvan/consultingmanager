@@ -9,7 +9,7 @@
     "solution-stack" : "64bit Windows Server 2016 v2.0.3 running IIS 10.0",
     "environment-type" : "SingleInstance",
     "service-role"     : "aws-elasticbeanstalk-service-role",
-    "health-check-url" : "/",
+    "health-check-url" : "/index.html",
     "instance-type"    : "t2.micro",
     "key-pair"         : "keypair_adalberto",
     "iis-website"      : "Default Web Site",

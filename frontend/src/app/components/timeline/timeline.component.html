@@ -1,69 +1,135 @@
-<div class="row">
-    <ol class="breadcrumb">
-        <li><a href="#">
-                <em class="fa fa-home"></em>
-            </a></li>
-        <li class="active">Tarefas</li>
-    </ol>
-</div>
+<header *ngIf="loggedUser" class="page-header row justify-center">
+  <div class="col-md-6 col-lg-8">
+    <h1 class="float-left text-center text-md-left">Minhas Tarefas</h1>
+  </div>
+  <div class="dropdown user-dropdown col-md-6 col-lg-4 text-center text-md-right"><a class="btn btn-stripped"
+      aria-haspopup="true" aria-expanded="false">
+      <img src="/assets/images/user-icon.jpg" alt="profile photo" class="circle float-left profile-photo" width="50"
+        height="auto">
+      <div class="username mt-1">
+        <h4 class="mb-1">{{loggedUser.name}}</h4>
+        <h6 class="text-muted">{{loggedUser.userType.description}}</h6>
+      </div>
+    </a>
+  </div>
+  <div class="clear"></div>
+</header>
+<section class="row">
+  <div class="col-12">
 
-<div class="row">
-    <div class="profile-sidebar">
-        <div class="profile-userpic">
-            <img src="{{this.customer.logoUrl}}" width="50" class="img-responsive" alt="">
-        </div>
-        <div class="profile-usertitle">
-            <div class="profile-usertitle-name">{{this.customer.name}}</div>
-        </div>
-        <div class="clear"></div>
+    <h2>{{customer.name}}</h2>
+
+
+    <div *ngIf="customerProcessesList && customerProcessesList.length == 0" class="jumbotron col-6">
+      <h4 class="mb-4">Ops! Nenhum processo iniciado...</h4>
+      <p class="lead">Inicie um processo agora mesmo!</p>
+      <div *ngIf="this.loggedUser.userType.id != '43C2E87C-35A8-47C0-A4DD-D233B836DD4A'">
+        <button class="btn btn-lg btn-outline-primary" (click)="openProcessModal(content)">Iniciar</button>
+      </div>
     </div>
-</div>
 
-<div *ngFor="let process of processesList | orderBy: 'startDate'">
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">Processo: {{process.description}} - {{process.startDate | date: 'dd/MM/yyyy'}} a
-                {{process.estimatedEndDate | date: 'dd/MM/yyyy'}}</h1>
-        </div>
-    </div>
+    <div *ngIf="customerProcessesList && customerProcessesList.length > 0">
+      <div *ngFor="let process of customerProcessesList | orderBy: 'startDate'">
+        <h3 class="margin-top-bottom">Processo: {{process.description}} -
+          {{process.startDate | date: 'dd/MM/yyyy'}} a
+          {{process.estimatedEndDate | date: 'dd/MM/yyyy'}}</h3>
 
-    <div class="row" *ngFor="let step of process.customerSteps | orderBy: 'startDate'">
-        <div class="col-md-12">
-            <div class="panel panel-default articles">
-                <div class="panel-heading">
-                    {{step.description}} - {{step.startDate | date: 'dd/MM/yyyy'}} a
-                    {{step.estimatedEndDate | date: 'dd/MM/yyyy'}}
-                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em
-                            class="fa fa-toggle-up"></em></span>
-                </div>
 
-                <div class="panel-body articles-container">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Início</th>
-                                    <th scope="col">Fim</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Duração</th>
-                                    <th scope="col">Tarefa</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let task of step.customerTasks | orderBy: 'startDate'">
-                                    <td>{{task.startDate | date: 'dd/MM'}}</td>
-                                    <td>{{task.estimatedEndDate | date: 'dd/MM'}}</td>
-                                    <td><span class="{{this.loadClassIndicator(task)}}"></span></td>
-                                    <td><div>{{task.duration}} min</div></td>
-                                    <td>
-                                        <h4><a (click)="updateSelectedTask(this.task, $event)">{{task.description}}</a></h4>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+
+        <div class="col-lg-12 mb-4">
+          <div class="card" *ngFor="let step of process.customerSteps | orderBy: 'startDate'">
+            <div class="card-header">
+              <h4>{{step.description}} - {{step.startDate | date: 'dd/MM/yyyy'}} a
+                {{step.estimatedEndDate | date: 'dd/MM/yyyy'}}</h4>
             </div>
+            <div class="card-block">
+
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Início</th>
+                      <th scope="col">Fim</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Duração</th>
+                      <th scope="col">Tarefa</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let task of step.customerTasks | orderBy: 'startDate'">
+                      <td>{{task.startDate | date: 'dd/MM'}}</td>
+                      <td>{{task.estimatedEndDate | date: 'dd/MM'}}
+                      </td>
+                      <td><span class="{{this.loadClassIndicator(task)}}"></span>
+                      </td>
+                      <td>
+                        <div>{{task.duration}} min</div>
+                      </td>
+                      <td>
+                        <h4><a (click)="updateSelectedTask(this.task, $event)">{{task.description}}</a>
+                        </h4>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+
+            </div>
+          </div>
         </div>
+
+
+
+      </div>
     </div>
-</div>
+  </div>
+</section>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Iniciar Processo</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="lstModelProcess">Processo</label>
+        <div class="input-group">
+          <select #lstModelProcess id="lstModelProcess" class="custom-select form-control">
+            <option *ngFor="let modelProcess of modelProcessesList" value="{{modelProcess.id}}">
+              {{modelProcess.description}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lstUsers">Usuário Responsável</label>
+        <div class="input-group">
+          <select #lstUsers id="lstUsers" class="custom-select form-control">
+            <option *ngFor="let user of this.customer.users" value="{{user.id}}">
+              {{user.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtStartDate">Data de Início</label>
+        <div class="input-group">
+          <input #txtStartDate id="txtStartDate" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
+            #dp="ngbDatepicker" value="{{this.today | date: 'yyyy-MM-dd'}}">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar fa fa-calendar" (click)="dp.toggle()"
+              type="button"></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark"
+      (click)="startCustomerProcess(lstModelProcess.value, lstModelProcess.innerText, lstUsers.value, txtStartDate.value)">Confirmar</button>
+  </div>
+</ng-template>

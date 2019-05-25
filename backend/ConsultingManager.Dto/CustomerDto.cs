@@ -13,5 +13,7 @@ namespace ConsultingManager.Dto
         public PlatformDto Platform { get; set; }
 
         public string LogoUrl { get; set; }
+
+        public ICollection<UserDto> Users { get; set; }
     }
 }

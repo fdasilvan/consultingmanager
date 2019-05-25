@@ -22,6 +22,8 @@ namespace ConsultingManager.Domain.Repository
         {
             return await Context.Customers
                 .Include(o => o.Platform)
+                .Include(o => o.Users)
+                    .ThenInclude(o => o.UserType)
                 .Select(o => o.MapTo<CustomerDto>())
                 .ToListAsync();
         }
