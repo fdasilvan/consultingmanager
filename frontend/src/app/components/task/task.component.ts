@@ -38,6 +38,10 @@ export class TaskComponent implements OnInit {
         this.router.navigate(['worklist']);
     }
 
+    async rescheduleTask() {
+      
+    }
+
     loadTasks() {
         this.customer = <Customer>JSON.parse(window.localStorage.getItem('customer'));
         this.task = <Task>JSON.parse(window.localStorage.getItem('task'));

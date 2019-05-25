@@ -30,7 +30,7 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">Cliente</th>
+                  <th scope="col" *ngIf="loggedUser && loggedUser.userType.description != 'Cliente'">Cliente</th>
                   <th scope="col">Início</th>
                   <th scope="col">Fim</th>
                   <th scope="col">Status</th>
@@ -40,7 +40,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let task of this.tasksList | orderBy: 'startDate'">
-                  <td>
+                  <td *ngIf="loggedUser && loggedUser.userType.description != 'Cliente'">
                     <h4><a href="javascript:void(0)"
                         (click)="updateSelectedCustomer(task.customer, $event)">{{task.customer.name}}</a>
                     </h4>

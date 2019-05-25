@@ -6,11 +6,15 @@
       <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><em class="fa fa-bars"></em></a>
       <ul class="nav nav-pills flex-column sidebar-nav">
         <li class="nav-item" routerLinkActive="active">
-          <a routerLink="/worklist" class="nav-link"><em class="fa fa-calendar-o"></em> Minhas Tarefas</a>
+          <a routerLink="/worklist" class="nav-link"><em class="fa fa-check-square-o"></em> Minhas Tarefas</a>
         </li>
         <li class="nav-item" *ngIf="loggedUser && loggedUser.userType.description != 'Cliente'"
           routerLinkActive="active">
           <a routerLink="/customers" class="nav-link"><em class="fa fa-users"></em> Clientes</a>
+        </li>
+        <li class="nav-item" *ngIf="loggedUser && loggedUser.userType.description == 'Cliente'"
+          routerLinkActive="active">
+          <a routerLink="/timeline" class="nav-link"><em class="fa fa-calendar-o"></em> Meu Planejamento</a>
         </li>
         <li class="nav-item" *ngIf="loggedUser && loggedUser.userType.description != 'Cliente'"
           routerLinkActive="active">

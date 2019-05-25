@@ -61,31 +61,5 @@ namespace ConsultingManager.Api.Controllers
                 return BadRequest("Erro ao buscar atividades do cliente.");
             }
         }
-
-        [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetUserTasks(Guid userId)
-        {
-            try
-            {
-                return Ok(await _processRepository.GetUserTasks(userId));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Erro ao buscar atividades do cliente.");
-            }
-        }
-
-        [HttpPost("finish-task/{taskId}")]
-        public async Task<IActionResult> FinishTask(Guid taskId)
-        {
-            try
-            {
-                return Ok(await _processRepository.FinishTask(taskId));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Erro ao finalizar atividade.");
-            }
-        }
     }
 }
