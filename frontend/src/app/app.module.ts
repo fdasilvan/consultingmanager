@@ -15,6 +15,8 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
     declarations: [
@@ -34,7 +36,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
         RouterModule,
         HttpClientModule,
         NgbModule,
-        NgxChartsModule
+        NgxChartsModule,
+        BrowserAnimationsModule
     ],
     providers: [AuthService],
     bootstrap: [AppComponent]

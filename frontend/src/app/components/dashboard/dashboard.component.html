@@ -19,13 +19,13 @@
     <div class="col-lg-8 mb-4 bg-default">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Tarefas por Consultor</h3>
+          <h3 class="card-title">Tarefas Atrasadas por Cliente</h3>
         </div>
         <div class="card-block">
           <ngx-charts-bar-vertical [view]="view" [scheme]="colorScheme" [results]="single" [gradient]="gradient"
             [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" 
-            [showDataLabel]="showDataLabel" (select)="onSelect($event)">
+            [showDataLabel]="showDataLabel">
           </ngx-charts-bar-vertical>
         </div>
       </div>

@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-	baseHref: '/'
+  baseHref: '/',
+  apiUrl: 'https://api.nimbustecnologia.com.br/api'
 };

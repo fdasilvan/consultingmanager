@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
   showXAxis = true;
   showYAxis = true;
   gradient = false;
-  showLegend = true;
+  showLegend = false;
   showXAxisLabel = true;
   xAxisLabel = 'Cliente';
   showYAxisLabel = true;
@@ -50,20 +50,6 @@ export class DashboardComponent implements OnInit {
 
   async loadConsultantChart() {
     this.single = await this.customerService.getChartResult();
-    this.single = this.single.map(x => ({ name: x.description, value: x.value }))
-    // this.single = [
-    //   {
-    //     "name": "Germany",
-    //     "value": 8940000
-    //   },
-    //   {
-    //     "name": "USA",
-    //     "value": 5000000
-    //   },
-    //   {
-    //     "name": "France",
-    //     "value": 7200000
-    //   }
-    // ];
+    this.single = this.single.map(x => ({ name: x.description, value: x.value }));
   }
 }
