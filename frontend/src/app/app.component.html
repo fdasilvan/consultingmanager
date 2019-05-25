@@ -12,6 +12,10 @@
           routerLinkActive="active">
           <a routerLink="/customers" class="nav-link"><em class="fa fa-users"></em> Clientes</a>
         </li>
+        <li class="nav-item" *ngIf="loggedUser && loggedUser.userType.description != 'Cliente'"
+          routerLinkActive="active">
+          <a routerLink="/dashboard" class="nav-link"><em class="fa fa-bar-chart"></em> Dashboard</a>
+        </li>
       </ul>
       <a routerLink="/logout" class="logout-button"><em class="fa fa-power-off"></em> Logout</a>
     </nav>

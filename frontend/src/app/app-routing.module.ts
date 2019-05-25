@@ -8,41 +8,46 @@ import { TaskComponent } from './components/task/task.component';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { AppComponent } from './app.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
-    {
-        path: '',
-        component: AppComponent
-    },
-    {
-        path: 'login',
-        component: LoginComponent
-    },
-    {
-        path: 'logout',
-        component: LogoutComponent
-    },
-    {
-        path: 'worklist',
-        component: WorklistComponent
-    },
-    {
-        path: 'timeline',
-        component: TimelineComponent
-    },
-    {
-        path: 'customers',
-        component: CustomersComponent
-    },
-    {
-        path: 'task',
-        component: TaskComponent
-    }
+  {
+    path: '',
+    component: AppComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'logout',
+    component: LogoutComponent
+  },
+  {
+    path: 'worklist',
+    component: WorklistComponent
+  },
+  {
+    path: 'timeline',
+    component: TimelineComponent
+  },
+  {
+    path: 'customers',
+    component: CustomersComponent
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent
+  },
+  {
+    path: 'task',
+    component: TaskComponent
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 
 export class AppRoutingModule { }

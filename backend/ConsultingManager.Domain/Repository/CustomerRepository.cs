@@ -27,5 +27,18 @@ namespace ConsultingManager.Domain.Repository
                 .Select(o => o.MapTo<CustomerDto>())
                 .ToListAsync();
         }
+
+        public async Task<List<ChartResultDto>> GetChartResult()
+        {
+            //var lst = await Context.CustomerTasks
+            //    .Where(o => o.EndDate == null && o.EstimatedEndDate < DateTime.Now)
+            //    .CountAsync();
+
+            return await Context.CustomerTasks
+                .Where(o => o.EndDate == null && o.EstimatedEndDate < DateTime.Now)
+                .GroupBy(p => new { p.Customer.Id, p.Customer.Name })
+                .Select(g => new ChartResultDto { Description = g.Key.Name, Value = g.Count() })
+                .ToListAsync();
+        }
     }
 }

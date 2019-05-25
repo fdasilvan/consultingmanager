@@ -13,6 +13,8 @@ import { AuthService } from './services/auth/auth.service';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { OrderByPipe } from './pipes/order-by.pipe';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
     declarations: [
@@ -23,14 +25,16 @@ import { OrderByPipe } from './pipes/order-by.pipe';
         TaskComponent,
         LoginComponent,
         LogoutComponent,
-        OrderByPipe
+        OrderByPipe,
+        DashboardComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         RouterModule,
         HttpClientModule,
-        NgbModule
+        NgbModule,
+        NgxChartsModule
     ],
     providers: [AuthService],
     bootstrap: [AppComponent]

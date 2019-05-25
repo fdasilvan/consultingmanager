@@ -25,5 +25,18 @@ namespace ConsultingManager.Api.Controllers
         {
             return Ok(await _customerRepository.GetAll());
         }
+
+        [HttpGet("chart")]
+        public async Task<IActionResult> GetCustomersDueTasks()
+        {
+            try
+            {
+                return Ok(await _customerRepository.GetChartResult());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar informações.");
+            }
+        }
     }
 }
