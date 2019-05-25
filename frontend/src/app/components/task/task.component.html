@@ -81,12 +81,15 @@
           <div class="form-group row" *ngIf="!this.task.endDate">
             <label class="col-md-2 control-label">Ações:</label>
             <div class="col-md-2">
-              <button class="btn btn-lg btn-outline-primary" (click)="finishTask(this.task.id)">Finalizar
-                tarefa</button>
+              <button class="btn btn-lg btn-outline-primary" (click)="finishTask(this.task.id)">
+                <span class="fa fa-check"></span> Finalizar
+              </button>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-lg btn-outline-primary" (click)="alert('Ainda não implementado!')">Reprogramar</button>
-              </div>
+              <button class="btn btn-lg btn-outline-primary" (click)="alert('Ainda não implementado!')">
+                <span class="fa fa-clock-o"></span> Reprogramar
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ import { Task } from 'src/app/models/task.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModelProcess } from 'src/app/models/modelprocess.model';
 
 @Component({
@@ -34,7 +34,8 @@ export class TimelineComponent implements OnInit {
   public customerProcessesList: CustomerProcess[];
   public modelProcessesList: ModelProcess[];
   public today: Date = new Date();
-  
+  public modalObject: NgbModalRef;
+
   closeResult: string;
 
   ngOnInit() {
@@ -51,9 +52,14 @@ export class TimelineComponent implements OnInit {
     this.customerProcessesList = await this.processService.getCustomerProcesses(customer.id);
   }
 
+  openProcessModal(content) {
+    this.modalObject = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+  }
+
   async startCustomerProcess(modelProcessId: string, modelDescription: string, customerUserId: string, startDate: string) {
-    debugger;
     await this.processService.startCustomerProcess(modelProcessId, modelDescription, this.customer.id, this.loggedUser.id, customerUserId, new Date(startDate));
+    this.modalObject.close();
+    this.router.navigate(['worklist']);
   }
 
   getCustomerId() {
@@ -65,7 +71,7 @@ export class TimelineComponent implements OnInit {
 
   updateSelectedTask(task: Task, event: Event) {
     event.preventDefault();
-    this.router.navigate(['task'])
+    this.router.navigate(['task']);
     window.localStorage.setItem('task', JSON.stringify(task));
   }
 
@@ -84,13 +90,5 @@ export class TimelineComponent implements OnInit {
     } else {
       return "indicator label-success";
     }
-  }
-
-  openProcessModal(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed`;
-    });
   }
 }

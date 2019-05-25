@@ -1,27 +1,26 @@
 <div class="main col-md-6">
-    <div class="login-panel card">
-        <div class="card-block">
-            <h3 class="card-title text-center mt-1">Login</h3>
-            <div class="divider mt-0"></div>
-            <form role="form">
-                <fieldset>
-                    <div class="form-group">
-                        <input class="form-control" #email placeholder="E-mail" name="email" type="email" autofocus="">
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control" #password placeholder="Password" name="password" type="password"
-                            value="">
-                    </div>
-                    <div class="checkbox mt-1 mb-2">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label custom-control-description mt-2 mb-3"
-                                for="customCheck1">Lembrar de mim</label>
-                        </div>
-                    </div>
-                    <div class="text-center"><a class="btn btn-lg btn-primary" (click)="login()">Login</a></div>
-                </fieldset>
-            </form>
-        </div>
+  <div class="login-panel card">
+    <div class="card-block">
+      <h3 class="card-title text-center mt-1 mb-3">Login</h3>
+      <div class="divider mt-0"></div>
+      <form role="form">
+        <fieldset>
+          <div class="form-group">
+            <input class="form-control" #email placeholder="E-mail" name="email" type="email" autofocus="">
+          </div>
+          <div class="form-group">
+            <input class="form-control" #password placeholder="Password" name="password" type="password" value="">
+          </div>
+          <div class="checkbox mt-1 mb-2">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="customCheck1">
+              <label class="custom-control-label custom-control-description mt-2 mb-3" for="customCheck1">Lembrar de
+                mim</label>
+            </div>
+          </div>
+          <div class="text-center"><a class="btn btn-lg btn-primary" (click)="login()">Login</a></div>
+        </fieldset>
+      </form>
     </div>
+  </div>
 </div>
