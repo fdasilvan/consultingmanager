@@ -1,90 +1,178 @@
-<div class="row">
-    <ol class="breadcrumb">
-        <li><a href="#">
-                <em class="fa fa-home"></em>
-            </a></li>
-        <li class="active">Tarefa</li>
-    </ol>
-</div>
+<header *ngIf="loggedUser" class="page-header row justify-center">
+  <div class="col-md-6 col-lg-8">
+    <h1 class="float-left text-center text-md-left">Detalhes da Tarefa</h1>
+  </div>
+  <div class="dropdown user-dropdown col-md-6 col-lg-4 text-center text-md-right"><a class="btn btn-stripped"
+      aria-haspopup="true" aria-expanded="false">
+      <img src="/assets/images/user-icon.jpg" alt="profile photo" class="circle float-left profile-photo" width="50"
+        height="auto">
+      <div class="username mt-1">
+        <h4 class="mb-1">{{loggedUser.name}}</h4>
+        <h6 class="text-muted">{{loggedUser.userType.description}}</h6>
+      </div>
+    </a>
+  </div>
+  <div class="clear"></div>
+</header>
 
-<div class="row">
-    <div class="profile-sidebar">
-        <div class="profile-userpic">
-            <img src="{{this.customer.logoUrl}}" width="50" class="img-responsive" alt="">
+<section class="row">
+  <div class="col-sm-12">
+    <div class="col-12 mb-2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <h3>{{this.task.description}}</h3>
+          </div>
+          <h6 class="text-muted">Cód: {{this.task.id}}</h6>
         </div>
-        <div class="profile-usertitle">
-            <div class="profile-usertitle-name">{{this.customer.name}}</div>
-        </div>
-        <div class="clear"></div>
-    </div>
-</div>
+        <div class="card-block">
 
-<div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading clearfix">Detalhes:</div>
-            <div class="panel-body">
-                <div class="form-horizontal row-border">
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">Cód. Tarefa:</label>
-                        <div class="col-md-10">
-                            <p>{{this.task.id}}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">Usuário Responsável:</label>
-                        <div class="col-md-10">
-                            <p>{{this.task.owner.name}}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">Descrição:</label>
-                        <div class="col-md-10">
-                            <p>{{this.task.description}}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">Instruções:</label>
-                        <div class="col-md-10">
-                            <p>{{this.task.instructions}}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">Conteúdo de Apoio:</label>
-                        <div class="col-md-10">
-                            <p>ADICIONAR CONTEÚDO</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">Duração:</label>
-                        <div class="col-md-10">
-                            <p>{{this.task.duration}} minutos</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">Usuário Consultoria:</label>
-                        <div class="col-md-10">
-                            <p>{{this.task.consultant.name}}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">Usuário Cliente:</label>
-                        <div class="col-md-10">
-                            <p>{{this.task.customerUser.name}}</p>
-                        </div>
-                    </div>
-                    <div class="form-group" *ngIf="!this.task.endDate">
-                        <label class="col-md-2 control-label">Ações:</label>
-                        <div class="col-md-10">
-                            <button (click)="finishTask(this.task.id)">Finalizar tarefa</button>
-                        </div>
-                    </div>
-                </div>
 
+          <div class="form-group row">
+            <label class="col-md-2 control-label">Usuário Responsável:</label>
+            <div class="col-md-10">
+              <p>{{this.task.owner.name}}</p>
             </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2 control-label">Descrição:</label>
+            <div class="col-md-10">
+              <p>{{this.task.description}}</p>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2 control-label">Instruções:</label>
+            <div class="col-md-10">
+              <p>{{this.task.instructions}}</p>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2 control-label">Conteúdo de Apoio:</label>
+            <div class="col-md-10">
+              <p>ADICIONAR CONTEÚDO</p>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2 control-label">Duração:</label>
+            <div class="col-md-10">
+              <p>{{this.task.duration}} minutos</p>
+            </div>
+          </div>
+
+
+          <div class="form-group row">
+            <label class="col-md-2 control-label">Usuário Consultoria:</label>
+            <div class="col-md-10">
+              <p>{{this.task.consultant.name}}</p>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2 control-label">Usuário Cliente:</label>
+            <div class="col-md-10">
+              <p>{{this.task.customerUser.name}}</p>
+            </div>
+          </div>
+
+          <div class="form-group row" *ngIf="!this.task.endDate">
+            <label class="col-md-2 control-label">Ações:</label>
+            <div class="col-md-2">
+              <button class="btn btn-lg btn-outline-primary" (click)="finishTask(this.task.id)">Finalizar
+                tarefa</button>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-lg btn-outline-primary" (click)="alert('Ainda não implementado!')">Reprogramar</button>
+              </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+</section>
+
+
+<!-- <div class="row">
+  <div class="profile-sidebar">
+    <div class="profile-userpic">
+      <img src="{{this.customer.logoUrl}}" width="50" class="img-responsive" alt="">
+    </div>
+    <div class="profile-usertitle">
+      <div class="profile-usertitle-name">{{this.customer.name}}</div>
+    </div>
+    <div class="clear"></div>
+  </div>
 </div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading clearfix">Detalhes:</div>
+      <div class="panel-body">
+        <div class="form-horizontal row-border">
+          <div class="form-group">
+            <label class="col-md-2 control-label">Cód. Tarefa:</label>
+            <div class="col-md-10">
+              <p></p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Usuário Responsável:</label>
+            <div class="col-md-10">
+              <p>{{this.task.owner.name}}</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Descrição:</label>
+            <div class="col-md-10">
+              <p>{{this.task.description}}</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Instruções:</label>
+            <div class="col-md-10">
+              <p>{{this.task.instructions}}</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Conteúdo de Apoio:</label>
+            <div class="col-md-10">
+              <p>ADICIONAR CONTEÚDO</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Duração:</label>
+            <div class="col-md-10">
+              <p>{{this.task.duration}} minutos</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Usuário Consultoria:</label>
+            <div class="col-md-10">
+              <p>{{this.task.consultant.name}}</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Usuário Cliente:</label>
+            <div class="col-md-10">
+              <p>{{this.task.customerUser.name}}</p>
+            </div>
+          </div>
+          <div class="form-group" *ngIf="!this.task.endDate">
+            <label class="col-md-2 control-label">Ações:</label>
+            <div class="col-md-10">
+              <button (click)="finishTask(this.task.id)">Finalizar tarefa</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div> -->
 
 <!-- <div class="row">
     <div class="col-lg-12">

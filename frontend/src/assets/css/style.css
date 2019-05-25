@@ -420,8 +420,8 @@ code {
   padding: 1rem; }
 
 .card-title {
-  padding-bottom: .25rem;
-  margin-bottom: 1rem; }
+  padding-bottom: 0px;
+  margin-bottom: 0px; }
 
 .card-subtitle {
   margin-top: -.75rem;

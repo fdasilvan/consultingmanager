@@ -1,9 +1,11 @@
 .customerLogo {
-    width: 70px;
-    height: 70px;
-    margin-right: 10px;
+    margin-right: 20px;
 }
 
 .margin-top-bottom {
-  margin: 20px 0px 20px 0px;
+  margin: 30px 0px 30px 0px;
+}
+
+.customer-info {
+  display: inline;
 }

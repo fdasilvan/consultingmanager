@@ -16,10 +16,11 @@
 </header>
 <section class="row">
   <div class="col-12">
-
-    <h2>{{customer.name}}</h2>
-
-
+    <div class="customer-info">
+      <img src="/assets/images/user-icon.jpg" alt="profile photo" class="circle float-left profile-photo customerLogo"
+        width="50" height="auto" />
+      <h2>{{customer.name}}</h2>
+    </div>
     <div *ngIf="customerProcessesList && customerProcessesList.length == 0" class="jumbotron col-6">
       <h4 class="mb-4">Ops! Nenhum processo iniciado...</h4>
       <p class="lead">Inicie um processo agora mesmo!</p>
