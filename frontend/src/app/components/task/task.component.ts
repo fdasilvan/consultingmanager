@@ -3,7 +3,6 @@ import { Task } from 'src/app/models/task.model';
 import { Customer } from 'src/app/models/customer.model';
 import { TaskService } from 'src/app/services/task/task.service';
 import { Router } from '@angular/router';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -45,5 +44,9 @@ export class TaskComponent implements OnInit {
     loadTasks() {
         this.customer = <Customer>JSON.parse(window.localStorage.getItem('customer'));
         this.task = <Task>JSON.parse(window.localStorage.getItem('task'));
+    }
+
+    goBack() {
+      window.history.back();
     }
 }

@@ -15,14 +15,7 @@ export class CustomersComponent implements OnInit {
     constructor(private service: CustomersService,
         private userService: UserService,
         private route: ActivatedRoute,
-        private router: Router) {
-
-        this.loggedUser = this.userService.getUser();
-
-        if (!this.loggedUser) {
-            this.router.navigate(['login']);
-        }
-    }
+        private router: Router) { }
 
     public customers: Customer[];
     public loggedUser: User;
