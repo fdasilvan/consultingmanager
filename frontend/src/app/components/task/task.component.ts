@@ -34,7 +34,7 @@ export class TaskComponent implements OnInit {
 
     async finishTask(taskId: string) {
         await this.service.finishTask(taskId);
-        this.router.navigate(['worklist']);
+        this.goBack();
     }
 
     async rescheduleTask() {
