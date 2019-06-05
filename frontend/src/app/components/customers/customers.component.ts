@@ -21,9 +21,6 @@ export class CustomersComponent implements OnInit {
   public loggedUser: User;
 
   ngOnInit() {
-
-    debugger;
-
     this.loggedUser = this.userService.getUser();
 
     if (!this.loggedUser) {

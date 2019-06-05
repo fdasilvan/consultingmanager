@@ -49,12 +49,12 @@
             </div>
           </div>
 
-          <div class="form-group row">
+          <!-- <div class="form-group row">
             <label class="col-md-2 control-label">Conteúdo de Apoio:</label>
             <div class="col-md-10">
               <p>ADICIONAR CONTEÚDO</p>
             </div>
-          </div>
+          </div> -->
 
           <div class="form-group row">
             <label class="col-md-2 control-label">Duração:</label>
@@ -78,16 +78,21 @@
             </div>
           </div>
 
-          <div class="form-group row" *ngIf="!this.task.endDate">
+          <div class="form-group row" *ngIf="this.showActionsMenu">
             <label class="col-md-2 control-label">Ações:</label>
-            <div class="col-md-2">
+            <div class="col-md-2" *ngIf="this.canFinishTask">
               <button class="btn btn-lg btn-outline-primary" (click)="finishTask(this.task.id)">
                 <span class="fa fa-check"></span> Finalizar
               </button>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" *ngIf="this.canRescheduleTask">
               <button class="btn btn-lg btn-outline-primary" (click)="rescheduleTaskModal(content)">
                 <span class="fa fa-clock-o"></span> Reprogramar
+              </button>
+            </div>
+            <div class="col-md-2" *ngIf="this.canReopenTask">
+              <button class="btn btn-lg btn-outline-primary" (click)="reopenTask(this.task.id)">
+                <span class="fa fa-clock-o"></span> Reabrir
               </button>
             </div>
           </div>

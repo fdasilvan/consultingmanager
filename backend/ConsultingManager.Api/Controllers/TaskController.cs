@@ -43,6 +43,19 @@ namespace ConsultingManager.Api.Controllers
             }
         }
 
+        [HttpPost("{taskId}/reopen")]
+        public async Task<IActionResult> ReopenTask(Guid taskId)
+        {
+            try
+            {
+                return Ok(await _taskRepository.ReopenTask(taskId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao finalizar atividade.");
+            }
+        }
+
         [HttpPost("{taskId}/reschedule/{newDate}")]
         public async Task<IActionResult> FinishTask(Guid taskId, DateTime newDate)
         {

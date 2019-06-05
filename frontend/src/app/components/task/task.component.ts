@@ -32,12 +32,24 @@ export class TaskComponent implements OnInit {
   public task: Task;
   public customer: Customer;
 
+  public canFinishTask = false;
+  public canReopenTask = false;
+  public canRescheduleTask = false;
+  public showActionsMenu = false;
+
+
   ngOnInit() {
     this.loadTasks();
+    this.checkPermissions();
   }
 
   async finishTask(taskId: string) {
     await this.taskService.finishTask(taskId);
+    this.goBack();
+  }
+
+  async reopenTask(taskId: string) {
+    await this.taskService.reopenTask(taskId);
     this.goBack();
   }
 
@@ -53,6 +65,30 @@ export class TaskComponent implements OnInit {
   loadTasks() {
     this.customer = <Customer>JSON.parse(window.localStorage.getItem('customer'));
     this.task = <Task>JSON.parse(window.localStorage.getItem('task'));
+  }
+
+  checkPermissions() {
+    debugger;
+    if (this.loggedUser.userType.description == "Cliente" && this.task.taskType.description != "Consultor") {
+      if (this.task.endDate) {
+        this.canReopenTask = true;
+        this.showActionsMenu = true;
+      } else {
+        this.canFinishTask = true;
+        this.showActionsMenu = true;
+      }
+    }
+
+    if (this.loggedUser.userType.description != "Cliente") {
+      if (this.task.endDate) {
+        this.canReopenTask = true;
+        this.showActionsMenu = true;
+      } else {
+        this.canFinishTask = true;
+        this.canRescheduleTask = true;
+        this.showActionsMenu = true;
+      }
+    }
   }
 
   goBack() {

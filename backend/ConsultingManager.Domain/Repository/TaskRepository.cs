@@ -28,6 +28,7 @@ namespace ConsultingManager.Domain.Repository
                 .Include(task => task.Consultant)
                 .Include(task => task.Customer)
                 .Include(task => task.CustomerUser)
+                .Include(task => task.TaskType)
                 .Where(task => task.OwnerId == userId && task.EndDate == null && task.StartDate < DateTime.Now)
                 .Select(task => task.MapTo<CustomerTaskDto>())
                 .ToListAsync();
@@ -40,6 +41,17 @@ namespace ConsultingManager.Domain.Repository
                 .FirstOrDefaultAsync();
 
             task.EndDate = DateTime.Now;
+            await Context.SaveChangesAsync();
+            return task.MapTo<CustomerTaskDto>();
+        }
+
+        public async Task<CustomerTaskDto> ReopenTask(Guid taskId)
+        {
+            CustomerTaskPoco task = await Context.CustomerTasks
+                .Where(o => o.Id == taskId)
+                .FirstOrDefaultAsync();
+
+            task.EndDate = null;
             await Context.SaveChangesAsync();
             return task.MapTo<CustomerTaskDto>();
         }
