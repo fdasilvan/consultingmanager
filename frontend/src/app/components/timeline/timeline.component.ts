@@ -75,6 +75,11 @@ export class TimelineComponent implements OnInit {
     window.localStorage.setItem('task', JSON.stringify(task));
   }
 
+  toggleElement(element) {
+    element.parentElement.nextElementSibling.style.display = (element.parentElement.nextElementSibling.style.display == "none" ? "" : "none");
+    element.className = (element.className == "fa fa-chevron-right" ? "fa fa-chevron-down" : "fa fa-chevron-right");
+  }
+
   loadClassIndicator(task: Task) {
     let today: Date = new Date();
     today.setHours(0, 0, 0, 0);

@@ -204,9 +204,9 @@ code {
   background: none; }
 
 .btn-outline-primary:hover, .btn-outline-primary:focus, .btn-outline-primary:active {
-  background-color: #7376df;
-  border-color: #7376df;
-  color: #ffffff; }
+  background-color: #7376df !important;
+  border-color: #7376df !important;
+  color: #ffffff !important; }
 
 .btn-secondary, .btn-default {
   background-color: #ffffff;

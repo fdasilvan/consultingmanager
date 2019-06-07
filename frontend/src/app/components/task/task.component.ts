@@ -68,7 +68,6 @@ export class TaskComponent implements OnInit {
   }
 
   checkPermissions() {
-    debugger;
     if (this.loggedUser.userType.description == "Cliente" && this.task.taskType.description != "Consultor") {
       if (this.task.endDate) {
         this.canReopenTask = true;

@@ -24,18 +24,21 @@
     <div *ngIf="customerProcessesList && customerProcessesList.length == 0" class="jumbotron col-6">
       <h4 class="mb-4">Ops! Nenhum processo iniciado...</h4>
       <p class="lead">Inicie um processo agora mesmo!</p>
-      <div *ngIf="this.loggedUser.userType.id != '43C2E87C-35A8-47C0-A4DD-D233B836DD4A'">
+      <div *ngIf="this.loggedUser.userType.description != 'Cliente'">
         <button class="btn btn-lg btn-outline-primary" (click)="openProcessModal(content)">Iniciar</button>
       </div>
     </div>
 
     <div *ngIf="customerProcessesList && customerProcessesList.length > 0">
+
+      <div *ngIf="this.loggedUser.userType.description != 'Cliente'" class="mt-4">
+        <button class="btn btn-lg btn-outline-primary" (click)="openProcessModal(content)">Incluir Processo</button>
+      </div>
+
       <div *ngFor="let process of customerProcessesList | orderBy: 'startDate'">
-        <h3 class="margin-top-bottom">Processo: {{process.description}} -
+        <h3 class="margin-top-bottom"><em (click)="toggleElement($event.target)" class="fa fa-chevron-down"></em> Processo: {{process.description}} -
           {{process.startDate | date: 'dd/MM/yyyy'}} a
           {{process.estimatedEndDate | date: 'dd/MM/yyyy'}}</h3>
-
-
 
         <div class="col-lg-12">
           <div class="card mt-4" *ngFor="let step of process.customerSteps | orderBy: 'startDate'">
@@ -44,7 +47,6 @@
                 {{step.estimatedEndDate | date: 'dd/MM/yyyy'}}</h4>
             </div>
             <div class="card-block">
-
               <div class="table-responsive">
                 <table class="table">
                   <thead>
@@ -129,6 +131,6 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark"
-      (click)="startCustomerProcess(lstModelProcess.value, lstModelProcess.innerText, lstUsers.value, txtStartDate.value)">Confirmar</button>
+      (click)="startCustomerProcess(lstModelProcess.value, lstModelProcess[lstModelProcess.selectedIndex].text, lstUsers.value, txtStartDate.value)">Confirmar</button>
   </div>
 </ng-template>
