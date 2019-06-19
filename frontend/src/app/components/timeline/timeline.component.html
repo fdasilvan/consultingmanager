@@ -31,9 +31,9 @@
 
     <div *ngIf="customerProcessesList && customerProcessesList.length > 0">
 
-      <div *ngIf="this.loggedUser.userType.description != 'Cliente'" class="mt-4">
+      <!-- <div *ngIf="this.loggedUser.userType.description != 'Cliente'" class="mt-4">
         <button class="btn btn-lg btn-outline-primary" (click)="openProcessModal(content)">Incluir Processo</button>
-      </div>
+      </div> -->
 
       <div *ngFor="let process of customerProcessesList | orderBy: 'startDate'">
         <h3 class="margin-top-bottom"><em (click)="toggleElement($event.target)" class="fa fa-chevron-down"></em> Processo: {{process.description}} -
