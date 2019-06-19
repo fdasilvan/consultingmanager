@@ -19,6 +19,7 @@ export class CustomersComponent implements OnInit {
 
   public customers: Customer[];
   public loggedUser: User;
+  public customersCount: number = 0;
 
   ngOnInit() {
     this.loggedUser = this.userService.getUser();
@@ -31,6 +32,7 @@ export class CustomersComponent implements OnInit {
 
   async loadCustomers() {
     this.customers = await this.service.getAll();
+    this.customersCount = this.customers.length;
   }
 
   updateSelectedCustomer(customer: Customer, event: Event) {
