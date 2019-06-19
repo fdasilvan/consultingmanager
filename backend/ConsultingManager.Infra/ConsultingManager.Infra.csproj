@@ -29,6 +29,7 @@
     <Compile Remove="Migrations\20190510185702_initial-database.cs" />
     <Compile Remove="Migrations\20190510194050_initial-database.cs" />
     <Compile Remove="Migrations\20190524010314_added-users-list-to-customer.cs" />
+    <Compile Remove="Migrations\20190618204602_content-column-fix.cs" />
   </ItemGroup>
 
   <ItemGroup>

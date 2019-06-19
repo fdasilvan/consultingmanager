@@ -1,6 +1,7 @@
 import { Customer } from './customer.model';
 import { User } from './user.model';
 import { TaskType } from './tasktype.model';
+import { ModelTask } from './modeltask.model';
 
 export class Task {
     id: string;
@@ -16,9 +17,7 @@ export class Task {
     consultant: User;
     owner: User;
     taskType: TaskType;
-
-    customerProcessDescription: string;
-    customerStepDescription: string;
+    modelTask: ModelTask;
 
     constructor() {
     }

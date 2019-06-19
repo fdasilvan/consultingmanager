@@ -27,6 +27,8 @@
     "@nguniversal/express-engine": "0.0.0",
     "@nguniversal/module-map-ngfactory-loader": "0.0.0",
     "@swimlane/ngx-charts": "^11.1.0",
+    "@types/vimeo__player": "^2.6.2",
+    "@vimeo/player": "^2.9.1",
     "aws-serverless-express": "^3.2.0",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.3.1",

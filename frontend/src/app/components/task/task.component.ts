@@ -37,7 +37,6 @@ export class TaskComponent implements OnInit {
   public canRescheduleTask = false;
   public showActionsMenu = false;
 
-
   ngOnInit() {
     this.loadTasks();
     this.checkPermissions();

@@ -16,6 +16,7 @@ import { OrderByPipe } from './pipes/order-by.pipe';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ContentComponent } from './components/content/content.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         LoginComponent,
         LogoutComponent,
         OrderByPipe,
-        DashboardComponent
+        DashboardComponent,
+        ContentComponent
     ],
     imports: [
         BrowserModule,

@@ -24,14 +24,16 @@ namespace ConsultingManager.Domain.Repository
                 .Include(o => o.Platform)
                 .Include(o => o.Users)
                     .ThenInclude(o => o.UserType)
+                .OrderBy(o => o.Name)
                 .Select(o => o.MapTo<CustomerDto>())
+                
                 .ToListAsync();
         }
 
         public async Task<List<ChartResultDto>> GetChartResult()
         {
             return await Context.CustomerTasks
-                .Where(o => o.EndDate == null && o.EstimatedEndDate < DateTime.Now)
+                .Where(o => o.EndDate == null && o.EstimatedEndDate < DateTime.Now.AddDays(1))
                 .GroupBy(p => new { p.Customer.Id, p.Customer.Name })
                 .Select(g => new ChartResultDto { Description = g.Key.Name, Value = g.Count() })
                 .ToListAsync();

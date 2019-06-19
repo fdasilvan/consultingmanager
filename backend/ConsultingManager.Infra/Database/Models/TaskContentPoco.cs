@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ConsultingManager.Infra.Database.Models
 {
-    public class ModelTaskContentPoco
+    public class TaskContentPoco
     {
         public Guid Id { get; set; }
-        public string Description { get; set; }
-        public string URL { get; set; }
+        public string Title { get; set; }
+        public string Body { get; set; }
+        public string VideoUrl { get; set; }
+        public int PageNumber { get; set; }
 
         public Guid ModelTaskId { get; set; }
         [ForeignKey(nameof(ModelTaskId))]

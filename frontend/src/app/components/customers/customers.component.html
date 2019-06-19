@@ -22,13 +22,16 @@
           <h3 class="card-title">Selecione o cliente</h3>
         </div>
         <div class="card-block">
-          <div class="table-responsive ">
+          <p>Clientes ativos: {{this.customers.length}}</p>
+          <div class="table-responsive">
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">Cliente</th>
+                  <th scope="col">Nome</th>
+                  <!--
                   <th scope="col">Processo</th>
                   <th scope="col">Etapa</th>
+                  -->
                 </tr>
               </thead>
               <tbody>
@@ -38,8 +41,9 @@
                         (click)="updateSelectedCustomer(customer, $event);">{{customer.name}}</a>
                     </h4>
                   </td>
-                  <td>{{ customer.customerProcesses ? customer.customerProcesses.length : "0" }}</td>
+                  <!-- <td>{{ customer.customerProcesses ? customer.customerProcesses.length : "0" }}</td>
                   <td>{{ customer.step ? customer.step : "Não iniciado" }}</td>
+                  -->
                 </tr>
               </tbody>
             </table>

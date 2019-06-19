@@ -27,18 +27,10 @@
         </div>
         <div class="card-block">
 
-
           <div class="form-group row">
             <label class="col-md-2 control-label">Usuário Responsável:</label>
             <div class="col-md-10">
               <p>{{this.task.owner.name}}</p>
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <label class="col-md-2 control-label">Descrição:</label>
-            <div class="col-md-10">
-              <p>{{this.task.description}}</p>
             </div>
           </div>
 
@@ -49,20 +41,12 @@
             </div>
           </div>
 
-          <!-- <div class="form-group row">
-            <label class="col-md-2 control-label">Conteúdo de Apoio:</label>
-            <div class="col-md-10">
-              <p>ADICIONAR CONTEÚDO</p>
-            </div>
-          </div> -->
-
           <div class="form-group row">
             <label class="col-md-2 control-label">Duração:</label>
             <div class="col-md-10">
               <p>{{this.task.duration}} minutos</p>
             </div>
           </div>
-
 
           <div class="form-group row">
             <label class="col-md-2 control-label">Usuário Consultoria:</label>
@@ -78,19 +62,21 @@
             </div>
           </div>
 
-          <div class="form-group row" *ngIf="this.showActionsMenu">
+          <app-content></app-content>
+
+          <div class="form-group row mt-4" *ngIf="this.showActionsMenu">
             <label class="col-md-2 control-label">Ações:</label>
-            <div class="col-md-2" *ngIf="this.canFinishTask">
+            <div *ngIf="this.canFinishTask">
               <button class="btn btn-lg btn-outline-primary" (click)="finishTask(this.task.id)">
                 <span class="fa fa-check"></span> Finalizar
               </button>
             </div>
-            <div class="col-md-2" *ngIf="this.canRescheduleTask">
+            <div *ngIf="this.canRescheduleTask">
               <button class="btn btn-lg btn-outline-primary" (click)="rescheduleTaskModal(content)">
                 <span class="fa fa-clock-o"></span> Reprogramar
               </button>
             </div>
-            <div class="col-md-2" *ngIf="this.canReopenTask">
+            <div *ngIf="this.canReopenTask">
               <button class="btn btn-lg btn-outline-primary" (click)="reopenTask(this.task.id)">
                 <span class="fa fa-clock-o"></span> Reabrir
               </button>
