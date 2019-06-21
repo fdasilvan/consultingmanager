@@ -17,7 +17,6 @@
 <section class="row">
   <div class="col-sm-12">
     <div class="col-lg-12 mb-4 bg-default">
-
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">Lista de atividades</h3>
@@ -26,7 +25,14 @@
           <div *ngIf="tasksList && tasksList.length == 0">
             <span>Parabéns! Você não possui atividades pendentes.</span>
           </div>
-          <div *ngIf="tasksList && tasksList.length > 0" class="table-responsive">
+          <div *ngIf="filteredTasksList && filteredTasksList.length > 0" class="table-responsive">
+            <div class="filter">
+              <label>Cliente: </label>
+              <select class="custom-select form-control" (change)="onCustomerChange($event.target.value)">
+                <option value="">Todos</option>
+                <option *ngFor="let customer of this.customersList" value="{{customer}}">{{customer}}</option>
+              </select>
+            </div>
             <table class="table">
               <thead>
                 <tr>
@@ -39,7 +45,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let task of this.tasksList | orderBy: 'startDate'">
+                <tr *ngFor="let task of this.filteredTasksList | orderBy: 'startDate'">
                   <td *ngIf="loggedUser && loggedUser.userType.description != 'Cliente'">
                     <h4><a href="javascript:void(0)"
                         (click)="updateSelectedCustomer(task.customer, $event)">{{task.customer.name}}</a>
@@ -62,7 +68,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
