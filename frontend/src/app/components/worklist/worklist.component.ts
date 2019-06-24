@@ -22,15 +22,16 @@ export class WorklistComponent implements OnInit {
   public filteredTasksList: Task[] = [];
   public loggedUser: User;
   public customersList: string[] = [];
+  public selectedCustomerFilter: string;
 
   ngOnInit() {
-
     this.loggedUser = this.userService.getUser();
 
     if (!this.loggedUser) {
       this.router.navigate(['login']);
     }
 
+    this.selectedCustomerFilter = '';
     this.loadTasks();
   }
 
@@ -38,10 +39,13 @@ export class WorklistComponent implements OnInit {
     this.tasksList = await this.taskService.getUserTasks(this.loggedUser.id);
     this.filteredTasksList = this.tasksList;
     this.loadCustomersList();
+    this.selectedCustomerFilter = window.sessionStorage.getItem('selectedCustomerFilter');
+    if (this.selectedCustomerFilter && this.selectedCustomerFilter != 'null') {
+      this.onCustomerChange(this.selectedCustomerFilter);
+    }
   }
 
   async loadCustomersList() {
-    debugger;
     if (this.tasksList && this.tasksList.length > 0) {
       for (let i = 0; i < this.tasksList.length; i++) {
         let task = this.tasksList[i];
@@ -61,7 +65,7 @@ export class WorklistComponent implements OnInit {
 
   updateSelectedCustomer(customer: Customer, event: Event) {
     event.preventDefault();
-    window.localStorage.setItem("customer", JSON.stringify(customer));
+    window.localStorage.setItem('customer', JSON.stringify(customer));
     this.router.navigate(['timeline']);
   }
 
@@ -71,18 +75,19 @@ export class WorklistComponent implements OnInit {
 
     if (!task.endDate) {
       if (today > new Date(task.estimatedEndDate)) {
-        return "indicator label-danger";
+        return 'indicator label-danger';
       } else if (today.getTime() >= new Date(task.startDate).getTime()) {
-        return "indicator label-warning";
+        return 'indicator label-warning';
       } else {
-        return "indicator label-default";
+        return 'indicator label-default';
       }
     } else {
-      return "indicator label-success";
+      return 'indicator label-success';
     }
   }
 
-  onCustomerChange(customerName: string) {
+  async onCustomerChange(customerName: string) {
+    window.sessionStorage.setItem('selectedCustomerFilter', customerName);
     if (customerName == '') {
       this.filteredTasksList = this.tasksList;
     } else {

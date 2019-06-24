@@ -15,6 +15,8 @@ export class ContentComponent implements OnInit {
 
   public player: Player;
   public task: Task;
+  public title: string;
+  public body: string;
   public taskContent: TaskContent[];
   public currentContent: TaskContent;
   public currentPage: number;
@@ -33,17 +35,16 @@ export class ContentComponent implements OnInit {
     if (this.taskContent.length > 0) {
       this.currentContent = this.taskContent[0];
       this.currentPage = 0;
-      container.style.display = "block";      
+      container.style.display = "block";
+      this.title = this.currentContent.title;
+      this.body = this.currentContent.body;
       this.loadVideo();
-    } else {      
+    } else {
       container.style.display = "none";
     }
   }
 
   loadVideo() {
-
-    debugger;
-
     this.showVideoPlayer = this.currentContent.videoUrl != '';
     let iframe = document.getElementById('videoPlayer');
 
@@ -60,6 +61,8 @@ export class ContentComponent implements OnInit {
     if (this.currentPage > 0) {
       this.currentPage--;
       this.currentContent = this.taskContent[this.currentPage];
+      this.title = this.currentContent.title;
+      this.body = this.currentContent.body;
       this.loadVideo();
     }
   }
@@ -68,6 +71,8 @@ export class ContentComponent implements OnInit {
     if (this.currentPage < this.taskContent.length) {
       this.currentPage++;
       this.currentContent = this.taskContent[this.currentPage];
+      this.title = this.currentContent.title;
+      this.body = this.currentContent.body;
       this.loadVideo();
     }
   }
