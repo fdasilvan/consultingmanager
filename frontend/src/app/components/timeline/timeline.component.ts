@@ -44,6 +44,13 @@ export class TimelineComponent implements OnInit {
     this.loadCustomerProcesses(this.customer);
   }
 
+  ngAfterViewChecked() {
+    let scrollY = window.sessionStorage.getItem('timeline_scroll');
+    if (scrollY && scrollY != 'null') {
+      window.scrollTo(0, parseInt(scrollY));
+    }
+  }
+
   async loadModelProcesses() {
     this.modelProcessesList = await this.processService.getModelProcesses();
   }
@@ -63,7 +70,7 @@ export class TimelineComponent implements OnInit {
   }
 
   getCustomerId() {
-    this.customer = <Customer>JSON.parse(localStorage.getItem("customer"));
+    this.customer = <Customer>JSON.parse(localStorage.getItem('customer'));
     if (!this.customer) {
       this.customer = window.history.state.customer;
     }
@@ -73,11 +80,12 @@ export class TimelineComponent implements OnInit {
     event.preventDefault();
     this.router.navigate(['task']);
     window.localStorage.setItem('task', JSON.stringify(task));
+    window.sessionStorage.setItem('timeline_scroll', window.pageYOffset.toString());
   }
 
   toggleElement(element) {
-    element.parentElement.nextElementSibling.style.display = (element.parentElement.nextElementSibling.style.display == "none" ? "" : "none");
-    element.className = (element.className == "fa fa-chevron-right" ? "fa fa-chevron-down" : "fa fa-chevron-right");
+    element.parentElement.nextElementSibling.style.display = (element.parentElement.nextElementSibling.style.display == 'none' ? '' : 'none');
+    element.className = (element.className == 'fa fa-chevron-right' ? 'fa fa-chevron-down' : 'fa fa-chevron-right');
   }
 
   loadClassIndicator(task: Task) {
@@ -86,14 +94,14 @@ export class TimelineComponent implements OnInit {
 
     if (!task.endDate) {
       if (today > new Date(task.estimatedEndDate)) {
-        return "indicator label-danger";
+        return 'indicator label-danger';
       } else if (today.getTime() >= new Date(task.startDate).getTime()) {
-        return "indicator label-warning";
+        return 'indicator label-warning';
       } else {
-        return "indicator label-default";
+        return 'indicator label-default';
       }
     } else {
-      return "indicator label-success";
+      return 'indicator label-success';
     }
   }
 }
