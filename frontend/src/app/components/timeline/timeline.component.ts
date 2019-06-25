@@ -79,7 +79,7 @@ export class TimelineComponent implements OnInit {
   updateSelectedTask(task: Task, event: Event) {
     event.preventDefault();
     this.router.navigate(['task']);
-    window.localStorage.setItem('task', JSON.stringify(task));
+    window.localStorage.setItem('taskId', task.id);
     window.sessionStorage.setItem('timeline_scroll', window.pageYOffset.toString());
   }
 

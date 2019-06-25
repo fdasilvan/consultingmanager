@@ -35,6 +35,21 @@ namespace ConsultingManager.Domain.Repository
                 .ToListAsync();
         }
 
+        public async Task<CustomerTaskDto> GetTask(Guid taskId)
+        {
+            return await Context.CustomerTasks
+                .Include(task => task.Owner)
+                .Include(task => task.Customer)
+                .Include(task => task.Consultant)
+                .Include(task => task.Customer)
+                .Include(task => task.CustomerUser)
+                .Include(task => task.TaskType)
+                .Include(task => task.ModelTask).ThenInclude(modelTask => modelTask.TaskContent)
+                .Where(task => task.Id == taskId)
+                .Select(task => task.MapTo<CustomerTaskDto>())
+                .SingleOrDefaultAsync();
+        }
+
         public async Task<CustomerTaskDto> FinishTask(Guid taskId)
         {
             CustomerTaskPoco task = await Context.CustomerTasks

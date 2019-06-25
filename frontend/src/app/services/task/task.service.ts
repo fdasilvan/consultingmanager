@@ -10,6 +10,11 @@ export class TaskService {
 
   constructor(private http: HttpClient) { }
 
+  public async getTask(taskId: string): Promise<Task> {
+    var response = await this.http.get<Task>(`${environment.apiUrl}/task/${taskId}`);
+    return response.toPromise();
+  }
+
   public async finishTask(taskId: string) {
     let response = await this.http.post<any>(`${environment.apiUrl}/task/${taskId}/finish`, null).toPromise();
     return response;

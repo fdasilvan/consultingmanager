@@ -9,6 +9,7 @@ namespace ConsultingManager.Domain.Repository
     {
         Task<CustomerTaskDto> FinishTask(Guid taskId);
         Task<List<CustomerTaskDto>> GetUserTasks(Guid userId);
+        Task<CustomerTaskDto> GetTask(Guid taskId);
         Task<CustomerTaskDto> RescheduleTask(Guid taskId, DateTime newDate);
         Task<CustomerTaskDto> ReopenTask(Guid taskId);
     }

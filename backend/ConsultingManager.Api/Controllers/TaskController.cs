@@ -30,6 +30,19 @@ namespace ConsultingManager.Api.Controllers
             }
         }
 
+        [HttpGet("{taskId}")]
+        public async Task<IActionResult> GetTask(Guid taskId)
+        {
+            try
+            {
+                return Ok(await _taskRepository.GetTask(taskId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar tarefa " + taskId);
+            }
+        }
+
         [HttpPost("{taskId}/finish")]
         public async Task<IActionResult> FinishTask(Guid taskId)
         {

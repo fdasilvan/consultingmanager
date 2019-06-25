@@ -60,7 +60,7 @@ export class WorklistComponent implements OnInit {
   updateSelectedTask(task: Task, event: Event) {
     event.preventDefault();
     this.router.navigate(['task'])
-    window.localStorage.setItem('task', JSON.stringify(task));
+    window.localStorage.setItem('taskId', task.id);
   }
 
   updateSelectedCustomer(customer: Customer, event: Event) {

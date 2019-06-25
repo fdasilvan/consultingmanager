@@ -29,6 +29,7 @@ export class TaskComponent implements OnInit {
 
   public today: Date = new Date();
   public modalObject: NgbModalRef;
+  public taskId: string;
   public task: Task;
   public customer: Customer;
 
@@ -38,8 +39,7 @@ export class TaskComponent implements OnInit {
   public showActionsMenu = false;
 
   ngOnInit() {
-    this.loadTasks();
-    this.checkPermissions();
+    this.loadTask();
   }
 
   async finishTask(taskId: string) {
@@ -61,9 +61,11 @@ export class TaskComponent implements OnInit {
     this.modalObject.close();
   }
 
-  loadTasks() {
+  async loadTask() {
     this.customer = <Customer>JSON.parse(window.localStorage.getItem('customer'));
-    this.task = <Task>JSON.parse(window.localStorage.getItem('task'));
+    this.taskId = window.localStorage.getItem('taskId');
+    this.task = await this.taskService.getTask(this.taskId);
+    this.checkPermissions();
   }
 
   checkPermissions() {
