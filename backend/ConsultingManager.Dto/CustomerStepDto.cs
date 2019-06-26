@@ -13,6 +13,7 @@ namespace ConsultingManager.Dto
         public DateTime? EndDate { get; set; }
 
         public Guid CustomerProcessId { get; set; }
+        public CustomerProcessDto CustomerProcess { get; set; }
 
         public Guid ModelStepId { get; set; }
         public ModelStepDto ModelStep { get; set; }

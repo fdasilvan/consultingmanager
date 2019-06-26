@@ -57,7 +57,13 @@ export class TaskComponent implements OnInit {
   }
 
   async rescheduleTask(newDate: Date) {
-    await this.taskService.rescheduleTask(this.task.id, newDate);
+    this.taskService.rescheduleTask(this.task.id, newDate)
+      .then(result => {
+        alert("Tarefa reprogramada com sucesso!");
+      })
+      .catch(result => {
+        alert(result.error);
+      });
     this.modalObject.close();
   }
 

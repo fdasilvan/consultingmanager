@@ -1,4 +1,5 @@
 import { Task } from './task.model';
+import { CustomerProcess } from './customerprocess.model';
 
 export class Step {
     id: string;
@@ -6,6 +7,7 @@ export class Step {
     startDate: Date;
     endDate: Date;
     tasks: Task[];
+    customerProcess: CustomerProcess;
 
     constructor() {
     }

@@ -16,7 +16,7 @@
 </header>
 
 <section class="row">
-  <div class="col-sm-12">
+  <div class="col-sm-12" *ngIf="this.task">
     <div class="col-12 mb-2">
       <div class="card">
         <div class="card-header">
@@ -26,6 +26,20 @@
           <h6 class="text-muted">Cód: {{this.task.id}}</h6>
         </div>
         <div class="card-block">
+
+          <div class="form-group row">
+            <label class="col-md-2 control-label">Processo:</label>
+            <div class="col-md-10">
+              <p>{{this.task.customerStep.customerProcess.description}}</p>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2 control-label">Etapa: </label>
+            <div class="col-md-10">
+              <p>{{this.task.customerStep.description}}</p>
+            </div>
+          </div>
 
           <div class="form-group row">
             <label class="col-md-2 control-label">Usuário Responsável:</label>

@@ -33,5 +33,7 @@ namespace ConsultingManager.Dto
 
         public Guid ModelTaskId { get; set; }
         public ModelTaskDto ModelTask { get; set; }
+
+        public CustomerStepDto CustomerStep { get; set; }
     }
 }

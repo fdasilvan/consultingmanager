@@ -37,17 +37,24 @@ namespace ConsultingManager.Domain.Repository
 
         public async Task<CustomerTaskDto> GetTask(Guid taskId)
         {
-            return await Context.CustomerTasks
+            CustomerTaskDto customerTask = await Context.CustomerTasks
                 .Include(task => task.Owner)
                 .Include(task => task.Customer)
                 .Include(task => task.Consultant)
                 .Include(task => task.Customer)
                 .Include(task => task.CustomerUser)
                 .Include(task => task.TaskType)
+                .Include(task => task.CustomerStep).ThenInclude(task => task.CustomerProcess)
                 .Include(task => task.ModelTask).ThenInclude(modelTask => modelTask.TaskContent)
                 .Where(task => task.Id == taskId)
                 .Select(task => task.MapTo<CustomerTaskDto>())
                 .SingleOrDefaultAsync();
+
+            customerTask.CustomerStep.CustomerProcess.CustomerSteps = null;
+            customerTask.CustomerStep.CustomerTasks = null;
+
+            return customerTask;
+
         }
 
         public async Task<CustomerTaskDto> FinishTask(Guid taskId)
@@ -74,6 +81,11 @@ namespace ConsultingManager.Domain.Repository
 
         public async Task<CustomerTaskDto> RescheduleTask(Guid taskId, DateTime newDate)
         {
+            if (newDate < DateTime.Now)
+            {
+                throw new Exception("Não é possível reprogramar a tarefa para uma data passada.");
+            }
+
             CustomerTaskPoco task = await Context.CustomerTasks
                 .Where(o => o.Id == taskId)
                 .FirstOrDefaultAsync();

@@ -117,7 +117,7 @@ namespace ConsultingManager.Domain.Repository
 
         public async Task<List<CustomerProcessDto>> GetCustomerTasks(Guid customerId)
         {
-            return await Context.CustomerProcesses
+            List<CustomerProcessDto> processesList = await Context.CustomerProcesses
                 .Include(process => process.CustomerSteps)
                     .ThenInclude(step => step.CustomerTasks)
                         .ThenInclude(task => task.Customer)
@@ -140,6 +140,21 @@ namespace ConsultingManager.Domain.Repository
                 .Where(process => process.CustomerId == customerId)
                 .Select(process => process.MapTo<CustomerProcessDto>())
                 .ToListAsync();
+
+            foreach (CustomerProcessDto process in processesList)
+            {
+                foreach (CustomerStepDto step in process.CustomerSteps)
+                {
+                    step.CustomerProcess = null;
+
+                    foreach (CustomerTaskDto task in step.CustomerTasks)
+                    {
+                        task.CustomerStep = null;
+                    }
+                }
+            }
+
+            return processesList;
         }
     }
 }

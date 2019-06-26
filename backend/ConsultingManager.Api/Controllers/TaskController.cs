@@ -52,7 +52,7 @@ namespace ConsultingManager.Api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest("Erro ao finalizar atividade.");
+                return BadRequest("Erro ao finalizar tarefa.");
             }
         }
 
@@ -65,12 +65,12 @@ namespace ConsultingManager.Api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest("Erro ao finalizar atividade.");
+                return BadRequest("Erro ao reabrir tarefa.");
             }
         }
 
         [HttpPost("{taskId}/reschedule/{newDate}")]
-        public async Task<IActionResult> FinishTask(Guid taskId, DateTime newDate)
+        public async Task<IActionResult> RescheduleTask(Guid taskId, DateTime newDate)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace ConsultingManager.Api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest("Erro ao finalizar atividade.");
+                return BadRequest(ex.Message);
             }
         }
     }
