@@ -27,6 +27,10 @@ namespace ConsultingManager.Infra.Database
         public DbSet<TaskTypePoco> TaskTypes { get; set; }        
         public DbSet<UserPoco> Users { get; set; }
         public DbSet<UserTypePoco> UserTypes { get; set; }
+        public DbSet<PlanPoco> Plans { get; set; }
+        public DbSet<CustomerCategoryPoco> CustomerCategories { get; set; }
+        public DbSet<CityPoco> Cities { get; set; }
+        public DbSet<CustomerSituationPoco> CustomerSituations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -67,6 +71,15 @@ namespace ConsultingManager.Infra.Database
             #region Plataformas
 
             modelBuilder.Entity<PlatformPoco>().HasData(new PlatformPoco() { Id = Const.Platforms.Simplo7, Name = "Simplo7" });
+
+            #endregion
+
+            #region Situações do Cliente
+
+            modelBuilder.Entity<CustomerSituationPoco>().HasData(new CustomerSituationPoco() { Id = Const.CustomerSituations.Active, Description = "Ativo" });
+            modelBuilder.Entity<CustomerSituationPoco>().HasData(new CustomerSituationPoco() { Id = Const.CustomerSituations.Paused, Description = "Pausado" });
+            modelBuilder.Entity<CustomerSituationPoco>().HasData(new CustomerSituationPoco() { Id = Const.CustomerSituations.Blocked, Description = "Bloqueado" });
+            modelBuilder.Entity<CustomerSituationPoco>().HasData(new CustomerSituationPoco() { Id = Const.CustomerSituations.Canceled, Description = "Cancelado" });            
 
             #endregion
 

@@ -4,14 +4,16 @@ using ConsultingManager.Infra.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConsultingManager.Infra.Migrations
 {
     [DbContext(typeof(ConsultingManagerDbContext))]
-    partial class ConsultingManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190627224802_added-customer-information")]
+    partial class addedcustomerinformation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,8 +56,6 @@ namespace ConsultingManager.Infra.Migrations
 
                     b.Property<Guid?>("CategoryId");
 
-                    b.Property<Guid?>("CityId");
-
                     b.Property<Guid?>("ConsultantId");
 
                     b.Property<DateTime>("CreatedDate")
@@ -72,23 +72,17 @@ namespace ConsultingManager.Infra.Migrations
 
                     b.Property<Guid>("PlatformId");
 
-                    b.Property<Guid?>("SituationId");
-
                     b.Property<string>("StoreUrl");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("CityId");
-
                     b.HasIndex("ConsultantId");
 
                     b.HasIndex("PlanId");
 
                     b.HasIndex("PlatformId");
-
-                    b.HasIndex("SituationId");
 
                     b.ToTable("Customers");
                 });
@@ -117,40 +111,6 @@ namespace ConsultingManager.Infra.Migrations
                     b.HasIndex("ModelProcessId");
 
                     b.ToTable("CustomerProcesses");
-                });
-
-            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.CustomerSituationPoco", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Description");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CustomerSituations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("dd57b16a-ccf9-4da1-8d3b-d24e59251aff"),
-                            Description = "Ativo"
-                        },
-                        new
-                        {
-                            Id = new Guid("11a6435d-be18-4427-af65-428eef70c23b"),
-                            Description = "Pausado"
-                        },
-                        new
-                        {
-                            Id = new Guid("3668344d-2bfa-4c36-aa91-5d7a42cb651f"),
-                            Description = "Bloqueado"
-                        },
-                        new
-                        {
-                            Id = new Guid("eb71c684-a336-4985-a50f-923b3f439387"),
-                            Description = "Cancelado"
-                        });
                 });
 
             modelBuilder.Entity("ConsultingManager.Infra.Database.Models.CustomerStepPoco", b =>
@@ -431,11 +391,6 @@ namespace ConsultingManager.Infra.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("ConsultingManager.Infra.Database.Models.CustomerCategoryPoco", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("ConsultingManager.Infra.Database.Models.UserPoco", "Consultant")
                         .WithMany()
                         .HasForeignKey("ConsultantId");
@@ -448,11 +403,6 @@ namespace ConsultingManager.Infra.Migrations
                     b.HasOne("ConsultingManager.Infra.Database.Models.PlatformPoco", "Platform")
                         .WithMany()
                         .HasForeignKey("PlatformId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ConsultingManager.Infra.Database.Models.CustomerSituationPoco", "Situation")
-                        .WithMany()
-                        .HasForeignKey("SituationId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

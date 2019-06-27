@@ -68,5 +68,40 @@ namespace ConsultingManager.Infra
                 }
             }
         }
+
+        public static class CustomerSituations
+        {
+            public static Guid Active
+            {
+                get
+                {
+                    return Guid.Parse("DD57B16A-CCF9-4DA1-8D3B-D24E59251AFF");
+                }
+            }
+
+            public static Guid Paused
+            {
+                get
+                {
+                    return Guid.Parse("11A6435D-BE18-4427-AF65-428EEF70C23B");
+                }
+            }
+
+            public static Guid Blocked
+            {
+                get
+                {
+                    return Guid.Parse("3668344D-2BFA-4C36-AA91-5D7A42CB651F");
+                }
+            }
+
+            public static Guid Canceled
+            {
+                get
+                {
+                    return Guid.Parse("EB71C684-A336-4985-A50F-923B3F439387");
+                }
+            }
+        }
     }
 }

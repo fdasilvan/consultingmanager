@@ -4,14 +4,16 @@ using ConsultingManager.Infra.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConsultingManager.Infra.Migrations
 {
     [DbContext(typeof(ConsultingManagerDbContext))]
-    partial class ConsultingManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190627233026_added-customer-situation")]
+    partial class addedcustomersituation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,29 +130,7 @@ namespace ConsultingManager.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CustomerSituations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("dd57b16a-ccf9-4da1-8d3b-d24e59251aff"),
-                            Description = "Ativo"
-                        },
-                        new
-                        {
-                            Id = new Guid("11a6435d-be18-4427-af65-428eef70c23b"),
-                            Description = "Pausado"
-                        },
-                        new
-                        {
-                            Id = new Guid("3668344d-2bfa-4c36-aa91-5d7a42cb651f"),
-                            Description = "Bloqueado"
-                        },
-                        new
-                        {
-                            Id = new Guid("eb71c684-a336-4985-a50f-923b3f439387"),
-                            Description = "Cancelado"
-                        });
+                    b.ToTable("CustomerSituationPoco");
                 });
 
             modelBuilder.Entity("ConsultingManager.Infra.Database.Models.CustomerStepPoco", b =>
