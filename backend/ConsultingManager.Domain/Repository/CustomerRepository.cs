@@ -18,15 +18,25 @@ namespace ConsultingManager.Domain.Repository
         {
         }
 
+        public async Task<CustomerDto> Add(CustomerDto customerDto)
+        {
+            var newCustomer = Context.Customers.Add(customerDto.MapTo<CustomerPoco>());
+            await Context.SaveChangesAsync();
+            return newCustomer.Entity.MapTo<CustomerDto>();
+        }
+
         public async Task<List<CustomerDto>> GetAll()
         {
             return await Context.Customers
                 .Include(o => o.Platform)
+                .Include(o => o.Plan)
+                .Include(o => o.Situation)
+                .Include(o => o.Category)
+                .Include(o => o.City)
                 .Include(o => o.Users)
                     .ThenInclude(o => o.UserType)
                 .OrderBy(o => o.Name)
                 .Select(o => o.MapTo<CustomerDto>())
-                
                 .ToListAsync();
         }
 
