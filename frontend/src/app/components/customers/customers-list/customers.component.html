@@ -19,7 +19,7 @@
     <div class="col-12 mb-2">
       <div class="card mb-4">
         <div class="card-header">
-          <h3 class="card-title">Selecione o cliente</h3>
+          <h3 class="card-title">Selecione o cliente para </h3>
         </div>
         <div class="card-block">
           <p>Clientes ativos: {{this.customersCount}}</p>
@@ -28,22 +28,27 @@
               <thead>
                 <tr>
                   <th scope="col">Nome</th>
-                  <!--
-                  <th scope="col">Processo</th>
-                  <th scope="col">Etapa</th>
-                  -->
+                  <th scope="col">Categoria</th>
+                  <th scope="col">Plano</th>
+                  <th scope="col">Situação</th>
+                  <th scope="col">Editar</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let customer of customers">
                   <td>
                     <h4><a href="javascript:void(0)"
-                        (click)="updateSelectedCustomer(customer, $event);">{{customer.name}}</a>
+                        (click)="goToCustomerTimeline(customer, $event);">{{customer.name}}</a>
                     </h4>
                   </td>
-                  <!-- <td>{{ customer.customerProcesses ? customer.customerProcesses.length : "0" }}</td>
-                  <td>{{ customer.step ? customer.step : "Não iniciado" }}</td>
-                  -->
+                  <td>{{(customer.category ? customer.category.description : 'Não informada')}}</td>
+                  <td>{{(customer.plan ? customer.plan.description : 'Não informado')}}</td>
+                  <td>{{(customer.customerSituation ? customer.customerSituation.description : 'Não informada')}}</td>
+                  <td>
+                    <h4><a href="javascript:void(0)" (click)="editCustomer(content, customer);"><em
+                          class="fa fa-edit"></em></a>
+                    </h4>
+                  </td>
                 </tr>
               </tbody>
             </table>

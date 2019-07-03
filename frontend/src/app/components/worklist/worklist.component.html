@@ -22,11 +22,11 @@
           <h3 class="card-title">Lista de atividades</h3>
         </div>
         <div class="card-block">
-          <div *ngIf="tasksList && tasksList.length == 0">
+          <div *ngIf="filteredTasksList && filteredTasksList.length == 0">
             <span>Parabéns! Você não possui atividades pendentes.</span>
           </div>
           <div *ngIf="filteredTasksList && filteredTasksList.length > 0" class="table-responsive">
-            <div class="filter">
+            <div class="filter" *ngIf="!this.isCustomer">
               <label>Cliente: </label>
               <select class="custom-select form-control" (change)="onCustomerChange($event.target.value)">
                 <option value="">Todos</option>
@@ -36,7 +36,7 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col" *ngIf="loggedUser && loggedUser.userType.description != 'Cliente'">Cliente</th>
+                  <th scope="col" *ngIf="!this.isCustomer">Cliente</th>
                   <th scope="col">Início</th>
                   <th scope="col">Fim</th>
                   <th scope="col">Status</th>
@@ -46,7 +46,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let task of this.filteredTasksList | orderBy: 'startDate'">
-                  <td *ngIf="loggedUser && loggedUser.userType.description != 'Cliente'">
+                  <td *ngIf="!this.isCustomer">
                     <h4><a href="javascript:void(0)"
                         (click)="updateSelectedCustomer(task.customer, $event)">{{task.customer.name}}</a>
                     </h4>

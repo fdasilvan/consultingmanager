@@ -23,9 +23,11 @@ export class WorklistComponent implements OnInit {
   public loggedUser: User;
   public customersList: string[] = [];
   public selectedCustomerFilter: string;
+  public isCustomer: boolean;
 
   ngOnInit() {
     this.loggedUser = this.userService.getUser();
+    this.isCustomer = this.loggedUser.userType.description == 'Cliente';
 
     if (!this.loggedUser) {
       this.router.navigate(['login']);
@@ -38,10 +40,13 @@ export class WorklistComponent implements OnInit {
   async loadTasks() {
     this.tasksList = await this.taskService.getUserTasks(this.loggedUser.id);
     this.filteredTasksList = this.tasksList;
-    this.loadCustomersList();
-    this.selectedCustomerFilter = window.sessionStorage.getItem('selectedCustomerFilter');
-    if (this.selectedCustomerFilter && this.selectedCustomerFilter != 'null') {
-      this.onCustomerChange(this.selectedCustomerFilter);
+
+    if (!this.isCustomer) {
+      this.loadCustomersList();
+      this.selectedCustomerFilter = window.sessionStorage.getItem('selectedCustomerFilter');
+      if (this.selectedCustomerFilter && this.selectedCustomerFilter != 'null') {
+        this.onCustomerChange(this.selectedCustomerFilter);
+      }
     }
   }
 

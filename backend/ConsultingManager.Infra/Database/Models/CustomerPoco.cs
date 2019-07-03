@@ -12,6 +12,7 @@ namespace ConsultingManager.Infra.Database.Models
         public string LogoUrl { get; set; }
         public string StoreUrl { get; set; }
         public string Phone { get; set; }
+        public string Email { get; set; }
 
         public Guid? ConsultantId { get; set; }
         [ForeignKey(nameof(ConsultantId))]

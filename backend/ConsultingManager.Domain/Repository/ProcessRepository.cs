@@ -2,7 +2,6 @@
 using ConsultingManager.Infra;
 using ConsultingManager.Infra.Database;
 using ConsultingManager.Infra.Database.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -112,7 +111,19 @@ namespace ConsultingManager.Domain.Repository
             Context.CustomerProcesses.Add(customerProcess);
             await Context.SaveChangesAsync();
 
-            return customerProcess.MapTo<CustomerProcessDto>();
+            CustomerProcessDto customerProcessDto = customerProcess.MapTo<CustomerProcessDto>();
+
+            foreach (CustomerStepDto step in customerProcessDto.CustomerSteps)
+            {
+                step.CustomerProcess = null;
+
+                foreach (CustomerTaskDto task in step.CustomerTasks)
+                {
+                    task.CustomerStep = null;
+                }
+            }
+
+            return customerProcessDto;
         }
 
         public async Task<List<CustomerProcessDto>> GetCustomerTasks(Guid customerId)

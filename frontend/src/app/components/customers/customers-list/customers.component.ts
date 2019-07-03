@@ -1,25 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomersService } from '../../services/customers/customers.service';
+import { CustomersService } from '../../../services/customers/customers.service';
 import { Customer } from 'src/app/models/customer.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { CustomerRegistrationComponent } from 'src/app/components/customers/customer-registration/customer-registration.component';
 
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.css']
 })
-export class CustomersComponent implements OnInit {
+export class CustomersListComponent implements OnInit {
 
   constructor(private service: CustomersService,
     private userService: UserService,
+    private modalService: NgbModal,
     private route: ActivatedRoute,
     private router: Router) { }
 
   public customers: Customer[];
   public loggedUser: User;
   public customersCount: number = 0;
+  public modalObject: NgbModalRef;
 
   ngOnInit() {
     this.loggedUser = this.userService.getUser();
@@ -35,9 +39,15 @@ export class CustomersComponent implements OnInit {
     this.customersCount = this.customers.length;
   }
 
-  updateSelectedCustomer(customer: Customer, event: Event) {
+  goToCustomerTimeline(customer: Customer, event: Event) {
     event.preventDefault();
     this.router.navigate(['timeline'])
     window.localStorage.setItem("customer", JSON.stringify(customer));
+  }
+
+  editCustomer(content, customer) {
+    debugger;
+    this.modalObject = this.modalService.open(CustomerRegistrationComponent, { ariaLabelledBy: 'modal-basic-title', size: 'lg' });
+    this.modalObject.componentInstance.customer = customer;
   }
 }

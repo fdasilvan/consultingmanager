@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { AppRoutingModule, RoutingComponents } from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CustomersComponent } from './components/customers/customers.component';
+import { CustomersListComponent } from './components/customers/customers-list/customers.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TaskComponent } from './components/task/task.component';
@@ -17,20 +17,23 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContentComponent } from './components/content/content.component';
+import { CustomerRegistrationComponent } from './components/customers/customer-registration/customer-registration.component';
+import { WorklistComponent } from './components/worklist/worklist.component';
 
 
 @NgModule({
     declarations: [
         AppComponent,
-        RoutingComponents,
-        CustomersComponent,
+        CustomersListComponent,
+        WorklistComponent,
         TimelineComponent,
         TaskComponent,
         LoginComponent,
         LogoutComponent,
         OrderByPipe,
         DashboardComponent,
-        ContentComponent
+        ContentComponent,
+        CustomerRegistrationComponent
     ],
     imports: [
         BrowserModule,
@@ -42,6 +45,7 @@ import { ContentComponent } from './components/content/content.component';
         BrowserAnimationsModule
     ],
     providers: [AuthService],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    entryComponents: [CustomerRegistrationComponent]
 })
 export class AppModule { }

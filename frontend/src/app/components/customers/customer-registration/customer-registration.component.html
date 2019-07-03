@@ -1,0 +1,103 @@
+<div class="modal-header" width="20rem">
+  <h4 class="modal-title" id="modal-basic-title">Cadastro de Cliente</h4>
+  <!-- <button type="button" class="close" aria-label="Close" (click)="this.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button> -->
+</div>
+<div class="modal-body">
+  <div class="cols-12">
+    <div class="card mb-4">
+      <div class="card-block">
+        <form class="form" action="#">
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Nome</label>
+            <div class="col-md-9">
+              <input type="text" name="name" class="form-control" value="{{customer.name}}">
+            </div>
+          </div>
+          <div class="form-group row" *ngIf="this.customer">
+            <label class="col-md-3 col-form-label">Código</label>
+            <div class="col-md-9">
+              <input type="text" disabled="disabled" name="regular" class="form-control" value="{{this.customer.id}}">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Cadastrado em</label>
+            <div class="col-md-9">
+              <input type="text" name="regular" class="form-control" disabled="disabled" value="{{this.customer.createdDate | date:'dd/MM/yyyy HH:mm:ss'}}">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">E-mail</label>
+            <div class="col-md-9">
+              <input type="text" name="regular" class="form-control" value="{{this.customer.email}}">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Telefone</label>
+            <div class="col-md-9">
+              <input type="text" name="regular" class="form-control">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Logotipo</label>
+            <div class="col-md-9">
+              <input type="text" name="regular" class="form-control">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">URL da loja</label>
+            <div class="col-md-9">
+              <input type="text" name="regular" class="form-control">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Cidade</label>
+            <div class="col-md-9">
+              <select class="custom-select form-control">
+                <option></option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Plataforma</label>
+            <div class="col-md-9">
+              <select class="custom-select form-control">
+                <option></option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Categoria</label>
+            <div class="col-md-9">
+              <select class="custom-select form-control">
+                <option></option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Plano</label>
+            <div class="col-md-9">
+              <select class="custom-select form-control">
+                <option></option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Situação</label>
+            <div class="col-md-9">
+              <select class="custom-select form-control">
+                <option></option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-12 widget-right no-padding">
+              <button type="submit" class="btn btn-primary btn-md float-right">Salvar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { WorklistComponent } from "./components/worklist/worklist.component"
-import { CustomersComponent } from './components/customers/customers.component';
+import { CustomersListComponent } from './components/customers/customers-list/customers.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
 import { TaskComponent } from './components/task/task.component';
 import { LoginComponent } from './components/login/login.component';
@@ -33,7 +33,7 @@ const routes: Routes = [
   },
   {
     path: 'customers',
-    component: CustomersComponent
+    component: CustomersListComponent
   },
   {
     path: 'dashboard',
@@ -51,4 +51,3 @@ const routes: Routes = [
 })
 
 export class AppRoutingModule { }
-export const RoutingComponents = [WorklistComponent, CustomersComponent, TimelineComponent];
