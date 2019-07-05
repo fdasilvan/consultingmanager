@@ -36,7 +36,8 @@
       </div> -->
 
       <div *ngFor="let process of customerProcessesList | orderBy: 'startDate'">
-        <h3 class="margin-top-bottom"><em (click)="toggleElement($event.target)" class="fa fa-chevron-down"></em> Processo: {{process.description}} -
+        <h3 class="margin-top-bottom"><em (click)="toggleElement($event.target)" class="fa fa-chevron-down"></em>
+          Processo: {{process.description}} -
           {{process.startDate | date: 'dd/MM/yyyy'}} a
           {{process.estimatedEndDate | date: 'dd/MM/yyyy'}}</h3>
 
@@ -46,6 +47,7 @@
             <div class="card-header">
               <h4>{{step.description}} - {{step.startDate | date: 'dd/MM/yyyy'}} a
                 {{step.estimatedEndDate | date: 'dd/MM/yyyy'}}</h4>
+              <h6 class="text-muted">Cód. Etapa: {{step.id}}</h6>
             </div>
             <div class="card-block">
               <div class="table-responsive">

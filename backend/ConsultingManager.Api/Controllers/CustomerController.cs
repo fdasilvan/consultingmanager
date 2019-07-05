@@ -44,5 +44,70 @@ namespace ConsultingManager.Api.Controllers
                 return BadRequest("Erro ao buscar informações.");
             }
         }
+
+        [HttpGet("cities")]
+        public async Task<IActionResult> GetCities()
+        {
+            try
+            {
+                return Ok(await _customerRepository.GetCities());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar informações.");
+            }
+        }
+
+        [HttpGet("platforms")]
+        public async Task<IActionResult> GetPlatforms()
+        {
+            try
+            {
+                return Ok(await _customerRepository.GetPlatforms());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar informações.");
+            }
+        }
+
+        [HttpGet("categories")]
+        public async Task<IActionResult> GetCustomerCategories()
+        {
+            try
+            {
+                return Ok(await _customerRepository.GetCustomerCategories());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar informações.");
+            }
+        }
+
+        [HttpGet("plans")]
+        public async Task<IActionResult> GetPlans()
+        {
+            try
+            {
+                return Ok(await _customerRepository.GetPlans());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar informações.");
+            }
+        }
+
+        [HttpGet("situations")]
+        public async Task<IActionResult> GetCustomerSituations()
+        {
+            try
+            {
+                return Ok(await _customerRepository.GetCustomerSituations());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar informações.");
+            }
+        }
     }
 }

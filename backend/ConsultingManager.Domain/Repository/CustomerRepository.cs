@@ -48,5 +48,45 @@ namespace ConsultingManager.Domain.Repository
                 .Select(g => new ChartResultDto { Description = g.Key.Name, Value = g.Count() })
                 .ToListAsync();
         }
+
+        public async Task<List<CityDto>> GetCities()
+        {
+            return await Context.Cities
+                .Select(o => o.MapTo<CityDto>())
+                .OrderBy(o => o.Name)
+                .ToListAsync();
+        }
+
+        public async Task<List<PlatformDto>> GetPlatforms()
+        {
+            return await Context.Platforms
+                .Select(o => o.MapTo<PlatformDto>())
+                .OrderBy(o => o.Name)
+                .ToListAsync();
+        }
+
+        public async Task<List<CustomerCategoryDto>> GetCustomerCategories()
+        {
+            return await Context.CustomerCategories
+                .Select(o => o.MapTo<CustomerCategoryDto>())
+                .OrderBy(o => o.Description)
+                .ToListAsync();
+        }
+
+        public async Task<List<PlanDto>> GetPlans()
+        {
+            return await Context.Plans
+                .Select(o => o.MapTo<PlanDto>())
+                .OrderBy(o => o.Description)
+                .ToListAsync();
+        }
+
+        public async Task<List<CustomerSituationDto>> GetCustomerSituations()
+        {
+            return await Context.CustomerSituations
+                .Select(o => o.MapTo<CustomerSituationDto>())
+                .OrderBy(o => o.Description)
+                .ToListAsync();
+        }
     }
 }

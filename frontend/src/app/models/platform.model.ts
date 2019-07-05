@@ -1,6 +1,4 @@
-export class Platform {
-    id: string;
-    name: string;
-    constructor() {
-    }
+export interface Platform {
+  id: string;
+  name: string;
 }
