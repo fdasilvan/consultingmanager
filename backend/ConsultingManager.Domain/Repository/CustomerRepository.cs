@@ -1,4 +1,5 @@
 ﻿using ConsultingManager.Dto;
+using ConsultingManager.Infra;
 using ConsultingManager.Infra.Database;
 using ConsultingManager.Infra.Database.Models;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ namespace ConsultingManager.Domain.Repository
         public async Task<CustomerDto> Add(CustomerDto customerDto)
         {
             var newCustomer = Context.Customers.Add(customerDto.MapTo<CustomerPoco>());
-            await Context.SaveChangesAsync();
+            //await Context.SaveChangesAsync();
             return newCustomer.Entity.MapTo<CustomerDto>();
         }
 
@@ -86,6 +87,15 @@ namespace ConsultingManager.Domain.Repository
             return await Context.CustomerSituations
                 .Select(o => o.MapTo<CustomerSituationDto>())
                 .OrderBy(o => o.Description)
+                .ToListAsync();
+        }
+
+        public async Task<List<UserDto>> GetConsultants()
+        {
+            return await Context.Users
+                .Where(o => o.UserTypeId == Const.UserTypes.Consultant)
+                .Select(o => o.MapTo<UserDto>())
+                .OrderBy(o => o.Name)
                 .ToListAsync();
         }
     }

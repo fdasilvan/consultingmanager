@@ -19,10 +19,13 @@
     <div class="col-12 mb-2">
       <div class="card mb-4">
         <div class="card-header">
-          <h3 class="card-title">Selecione o cliente para </h3>
+          <h3 class="card-title">Listagem de Clientes</h3>
         </div>
         <div class="card-block">
           <p>Clientes ativos: {{this.customersCount}}</p>
+          <div *ngIf="this.canAddCustomer" class="mb-4">
+            <button class="btn btn-lg btn-outline-primary" (click)="openCustomerModal()">Incluir Cliente</button>
+          </div>
           <div class="table-responsive">
             <table class="table">
               <thead>
@@ -45,7 +48,7 @@
                   <td>{{(customer.plan ? customer.plan.description : 'Não informado')}}</td>
                   <td>{{(customer.customerSituation ? customer.customerSituation.description : 'Não informada')}}</td>
                   <td>
-                    <h4><a href="javascript:void(0)" (click)="editCustomer(content, customer);"><em
+                    <h4><a href="javascript:void(0)" (click)="openCustomerModal(customer);"><em
                           class="fa fa-edit"></em></a>
                     </h4>
                   </td>

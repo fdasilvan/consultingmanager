@@ -109,5 +109,18 @@ namespace ConsultingManager.Api.Controllers
                 return BadRequest("Erro ao buscar informações.");
             }
         }
+
+        [HttpGet("consultants")]
+        public async Task<IActionResult> GetConsultants()
+        {
+            try
+            {
+                return Ok(await _customerRepository.GetConsultants());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar informações.");
+            }
+        }
     }
 }

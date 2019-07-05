@@ -14,11 +14,22 @@ export class Customer {
     phone: string;    
     email: string;    
     
+    consultantId: string;
     consultant: User;
+
+    cityId: string;
     city: City;
+
+    platformId: string;
     platform: Platform;
+
+    categoryId: string;
     category: CustomerCategory;
+
+    planId: string;
     plan: Plan;
+
+    situationId: string;
     sitaution: CustomerSituation;
 
     constructor() {

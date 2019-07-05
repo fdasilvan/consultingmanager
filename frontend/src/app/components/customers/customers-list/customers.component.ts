@@ -24,6 +24,7 @@ export class CustomersListComponent implements OnInit {
   public loggedUser: User;
   public customersCount: number = 0;
   public modalObject: NgbModalRef;
+  public canAddCustomer: boolean = false;
 
   ngOnInit() {
     this.loggedUser = this.userService.getUser();
@@ -32,6 +33,8 @@ export class CustomersListComponent implements OnInit {
       this.router.navigate(['login']);
     }
     this.loadCustomers();
+
+    this.canAddCustomer = (this.loggedUser.userType.description == 'Administrador' || this.loggedUser.userType.description == 'Líder');
   }
 
   async loadCustomers() {
@@ -45,7 +48,7 @@ export class CustomersListComponent implements OnInit {
     window.localStorage.setItem("customer", JSON.stringify(customer));
   }
 
-  editCustomer(content, customer) {
+  openCustomerModal(customer) {
     debugger;
     this.modalObject = this.modalService.open(CustomerRegistrationComponent, { ariaLabelledBy: 'modal-basic-title', size: 'lg' });
     this.modalObject.componentInstance.customer = customer;

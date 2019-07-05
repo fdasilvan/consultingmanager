@@ -1,22 +1,23 @@
 <div class="modal-header" width="20rem">
   <h4 class="modal-title" id="modal-basic-title">Cadastro de Cliente</h4>
-  <!-- <button type="button" class="close" aria-label="Close" (click)="this.dismiss('Cross click')">
-    <span aria-hidden="true">&times;</span>
-  </button> -->
+  <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
 </div>
 <div class="modal-body">
   <div class="cols-12">
     <div class="card mb-4">
       <div class="card-block">
-        <form class="form" action="#">
+        <form class="form">
           <div class="form-group row">
             <label class="col-md-3 col-form-label">Nome</label>
             <div class="col-md-9">
-              <input type="text" name="name" class="form-control mb-2" value="{{customer.name}}">
-              <h6 *ngIf="this.customer" class="text-muted">Cód. Cliente: {{this.customer.id}}</h6>
+              <input #txtName id="txtName" type="text" class="form-control mb-2"
+                value="{{isEdit ? customer.name : ''}}">
+              <h6 *ngIf="this.isEdit" class="text-muted">Cód. Cliente: {{this.customer.id}}</h6>
             </div>
           </div>
-          <div class="form-group row">
+          <div *ngIf="this.isEdit" class="form-group row">
             <label class="col-md-3 col-form-label">Cadastrado em</label>
             <div class="col-md-9">
               <input type="text" name="regular" class="form-control" disabled="disabled"
@@ -25,11 +26,11 @@
           </div>
           <div class="form-group row">
             <label class="col-md-3 col-form-label">Situação</label>
-            <div class="col-md-9">
-              <select class="custom-select form-control">
+            <div class="col-md-9" *ngIf="this.situationsList">
+              <select #lstSituations id="lstSituations" class="custom-select form-control">
                 <option value="">Não informado</option>
                 <option *ngFor="let situation of this.situationsList"
-                  [selected]="(this.customer.situation ? this.customer.situation.id == situation.id : false)"
+                  [selected]="(this.customer && this.customer.situation ? this.customer.situation.id == situation.id : false)"
                   value="{{situation.id}}">
                   {{situation.description}}
                 </option>
@@ -39,84 +40,103 @@
           <div class="form-group row">
             <label class="col-md-3 col-form-label">E-mail</label>
             <div class="col-md-9">
-              <input type="text" name="regular" class="form-control" value="{{this.customer.email}}">
+              <input #txtEmail id="txtEmail" type="text" name="regular" class="form-control"
+                value="{{this.isEdit ? this.customer.email : ''}}">
             </div>
           </div>
           <div class="form-group row">
             <label class="col-md-3 col-form-label">Telefone</label>
             <div class="col-md-9">
-              <input type="text" name="regular" class="form-control">
+              <input #txtPhone id="txtPhone" type="text" name="regular" class="form-control"
+                value="{{this.isEdit ? this.customer.phone : ''}}">
             </div>
           </div>
           <div class="form-group row">
             <label class="col-md-3 col-form-label">Logotipo</label>
             <div class="col-md-9">
-              <input type="text" name="regular" class="form-control" value="{{this.customer.logoUrl}}">
+              <input #txtLogoUrl id="txtLogoUrl" type="text" name="regular" class="form-control"
+                value="{{this.isEdit ? this.customer.logoUrl : ''}}">
             </div>
           </div>
           <div class="form-group row">
             <label class="col-md-3 col-form-label">URL da loja</label>
             <div class="col-md-9">
-              <input type="text" name="regular" class="form-control" value="{{this.customer.storeUrl}}">
+              <input #txtStoreUrl id="txtStoreUrl" type="text" name="regular" class="form-control"
+                value="{{this.isEdit ? this.customer.storeUrl : ''}}">
             </div>
           </div>
-          <div class="form-group row">
+          <div class="form-group row" *ngIf="this.citiesList">
             <label class="col-md-3 col-form-label">Cidade</label>
             <div class="col-md-9">
-              <select class="custom-select form-control">
+              <select #lstCities id="lstCities" class="custom-select form-control">
                 <option value="">Não informado</option>
                 <option *ngFor="let city of this.citiesList"
-                  [selected]="(this.customer.city ? this.customer.city.id == city.id : false)" value="{{city.id}}">
+                  [selected]="(this.customer && this.customer.city ? this.customer.city.id == city.id : false)"
+                  value="{{city.id}}">
                   {{city.name}} - {{city.state}}
                 </option>
               </select>
             </div>
           </div>
-          <div class="form-group row">
+          <div class="form-group row" *ngIf="this.platformsList">
             <label class="col-md-3 col-form-label">Plataforma</label>
             <div class="col-md-9">
-              <select class="custom-select form-control">
+              <select #lstPlatforms id="lstPlatforms" class="custom-select form-control">
                 <option value="">Não informado</option>
                 <option *ngFor="let platform of this.platformsList"
-                  [selected]="(this.customer.platform ? this.customer.platform.id == platform.id : false)"
+                  [selected]="(this.customer && this.customer.platform ? this.customer.platform.id == platform.id : false)"
                   value="{{platform.id}}">
                   {{platform.name}}
                 </option>
               </select>
             </div>
           </div>
-          <div class="form-group row">
+          <div class="form-group row" *ngIf="this.categoriesList">
             <label class="col-md-3 col-form-label">Categoria</label>
             <div class="col-md-9">
-              <select class="custom-select form-control">
+              <select #lstCategories id="lstCategories" class="custom-select form-control">
                 <option value="">Não informado</option>
                 <option *ngFor="let category of this.categoriesList"
-                  [selected]="(this.customer.category ? this.customer.category.id == category.id : false)"
-                  value="{{customer.id}}">
+                  [selected]="(this.customer && this.customer.category ? this.customer.category.id == category.id : false)"
+                  value="{{category.id}}">
                   {{category.description}}
                 </option>
               </select>
             </div>
           </div>
-          <div class="form-group row">
+          <div class="form-group row" *ngIf="this.plansList">
             <label class="col-md-3 col-form-label">Plano</label>
             <div class="col-md-9">
-              <select class="custom-select form-control">
+              <select #lstPlans id="lstPlans" class="custom-select form-control">
                 <option value="">Não informado</option>
                 <option *ngFor="let plan of this.plansList"
-                  [selected]="(this.customer.plan ? this.customer.plan.id == plan.id : false)" value="{{plan.id}}">
+                  [selected]="(this.customer && this.customer.plan ? this.customer.plan.id == plan.id : false)"
+                  value="{{plan.id}}">
                   {{plan.description}}
                 </option>
               </select>
             </div>
           </div>
-          <div class="form-group">
-            <div class="col-12 widget-right no-padding">
-              <button type="submit" class="btn btn-primary btn-md float-right">Salvar</button>
+          <div class="form-group row" *ngIf="this.consultantsList">
+            <label class="col-md-3 col-form-label">Consultor Resp.</label>
+            <div class="col-md-9">
+              <select #lstConsultants id="lstConsultants" class="custom-select form-control">
+                <option value="">Não informado</option>
+                <option *ngFor="let consultant of this.consultantsList"
+                  [selected]="(this.customer && this.customer.consultant ? this.customer.consultant.id == consultant.id : false)"
+                  value="{{consultant.id}}">
+                  {{consultant.name}}
+                </option>
+              </select>
             </div>
           </div>
         </form>
       </div>
     </div>
   </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary btn-md float-right"
+    (click)="SaveCustomer(txtName.value, lstSituations.value, txtEmail.value, txtPhone.value, txtLogoUrl.value,
+            txtStoreUrl.value, lstCities.value, lstPlatforms.value, lstCategories.value, lstPlans.value, lstConsultants.value)">Salvar</button>
 </div>

@@ -9,6 +9,7 @@ import { Platform } from 'src/app/models/platform.model';
 import { CustomerCategory } from 'src/app/models/customercategory.model';
 import { Plan } from 'src/app/models/plan.model';
 import { CustomerSituation } from 'src/app/models/customersituation.model';
+import { User } from 'src/app/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,17 @@ import { CustomerSituation } from 'src/app/models/customersituation.model';
 export class CustomersService {
 
   constructor(private http: HttpClient) { }
+
+  public async SaveCustomer(customerDto: Customer): Promise<Customer> {
+    debugger;
+    if(customerDto.id) {
+      let response = await this.http.put<Customer>(`${environment.apiUrl}/customer`, customerDto).toPromise();
+      return response;
+    } else {
+      let response = await this.http.post<Customer>(`${environment.apiUrl}/customer`, customerDto).toPromise();
+      return response;
+    }
+  }
 
   public async getAll(): Promise<Customer[]> {
     var response = await this.http.get<Customer[]>(`${environment.apiUrl}/customer`);
@@ -49,6 +61,11 @@ export class CustomersService {
 
   public async getSituations(): Promise<CustomerSituation[]> {
     var response = await this.http.get<CustomerSituation[]>(`${environment.apiUrl}/customer/situations`);
+    return response.toPromise();
+  }
+
+  public async getConsultants(): Promise<User[]> {
+    var response = await this.http.get<User[]>(`${environment.apiUrl}/customer/consultants`);
     return response.toPromise();
   }
 }
