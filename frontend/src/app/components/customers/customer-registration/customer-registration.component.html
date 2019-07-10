@@ -1,8 +1,8 @@
 <div class="modal-header" width="20rem">
   <h4 class="modal-title" id="modal-basic-title">Cadastro de Cliente</h4>
-  <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button> -->
+  <button type="button" class="close" aria-label="Close" (click)="this.activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
 <div class="modal-body">
   <div class="cols-12">
@@ -26,7 +26,7 @@
           </div>
           <div class="form-group row">
             <label class="col-md-3 col-form-label">Situação</label>
-            <div class="col-md-9" *ngIf="this.situationsList">
+            <div class="col-md-9">
               <select #lstSituations id="lstSituations" class="custom-select form-control">
                 <option value="">Não informado</option>
                 <option *ngFor="let situation of this.situationsList"
@@ -65,7 +65,7 @@
                 value="{{this.isEdit ? this.customer.storeUrl : ''}}">
             </div>
           </div>
-          <div class="form-group row" *ngIf="this.citiesList">
+          <div class="form-group row">
             <label class="col-md-3 col-form-label">Cidade</label>
             <div class="col-md-9">
               <select #lstCities id="lstCities" class="custom-select form-control">
@@ -78,7 +78,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group row" *ngIf="this.platformsList">
+          <div class="form-group row">
             <label class="col-md-3 col-form-label">Plataforma</label>
             <div class="col-md-9">
               <select #lstPlatforms id="lstPlatforms" class="custom-select form-control">
@@ -91,7 +91,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group row" *ngIf="this.categoriesList">
+          <div class="form-group row">
             <label class="col-md-3 col-form-label">Categoria</label>
             <div class="col-md-9">
               <select #lstCategories id="lstCategories" class="custom-select form-control">
@@ -104,7 +104,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group row" *ngIf="this.plansList">
+          <div class="form-group row">
             <label class="col-md-3 col-form-label">Plano</label>
             <div class="col-md-9">
               <select #lstPlans id="lstPlans" class="custom-select form-control">
@@ -117,7 +117,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group row" *ngIf="this.consultantsList">
+          <div class="form-group row">
             <label class="col-md-3 col-form-label">Consultor Resp.</label>
             <div class="col-md-9">
               <select #lstConsultants id="lstConsultants" class="custom-select form-control">
@@ -130,6 +130,21 @@
               </select>
             </div>
           </div>
+          <div #userInfo id="userInfo">
+            <h4 class="modal-title mb-4" id="modal-basic-title">Dados do Usuário:</h4>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Nome Usuário: </label>
+              <div class="col-md-9">
+                <input #txtUserName id="txtUserName" type="text" name="regular" class="form-control">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">E-mail Usuário</label>
+              <div class="col-md-9">
+                <input #txtUserEmail id="txtUserEmail" type="text" name="regular" class="form-control">
+              </div>
+            </div>
+          </div>
         </form>
       </div>
     </div>
@@ -138,5 +153,5 @@
 <div class="modal-footer">
   <button type="button" class="btn btn-primary btn-md float-right"
     (click)="SaveCustomer(txtName.value, lstSituations.value, txtEmail.value, txtPhone.value, txtLogoUrl.value,
-            txtStoreUrl.value, lstCities.value, lstPlatforms.value, lstCategories.value, lstPlans.value, lstConsultants.value)">Salvar</button>
+            txtStoreUrl.value, lstCities.value, lstPlatforms.value, lstCategories.value, lstPlans.value, lstConsultants.value, txtUserName, txtUserEmail)">Salvar</button>
 </div>

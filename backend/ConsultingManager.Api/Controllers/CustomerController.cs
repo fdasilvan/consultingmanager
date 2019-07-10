@@ -26,6 +26,17 @@ namespace ConsultingManager.Api.Controllers
             return Ok(await _customerRepository.Add(customerDto));
         }
 
+        [HttpPut]
+        public async Task<IActionResult> Update(CustomerDto customerDto)
+        {
+            try { 
+            return Ok(await _customerRepository.Update(customerDto));
+            } catch (Exception ex)
+            {
+                return BadRequest("Erro ao atualizar cliente: " + ex.Message);
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

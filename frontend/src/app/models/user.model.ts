@@ -1,4 +1,5 @@
 import { UserType } from './usertype.model';
+import { Customer } from './customer.model';
 
 export class User {
     id: string;
@@ -7,6 +8,8 @@ export class User {
     password: string;
     userTypeId: string;
     userType: UserType;
+    customerId: string;
+    customer: Customer;
 
     constructor() {
     }

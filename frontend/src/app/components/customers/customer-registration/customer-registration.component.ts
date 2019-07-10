@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { Customer } from 'src/app/models/customer.model';
 import { Platform } from 'src/app/models/platform.model';
 import { CustomersService } from 'src/app/services/customers/customers.service';
@@ -7,6 +7,9 @@ import { CustomerCategory } from 'src/app/models/customercategory.model';
 import { Plan } from 'src/app/models/plan.model';
 import { CustomerSituation } from 'src/app/models/customersituation.model';
 import { User } from 'src/app/models/user.model';
+import { Router } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-customer-registration',
@@ -15,22 +18,29 @@ import { User } from 'src/app/models/user.model';
 })
 export class CustomerRegistrationComponent implements OnInit {
 
-  constructor(private customersService: CustomersService) { }
+  constructor(private customersService: CustomersService,
+    private userService: UserService,
+    private router: Router,
+    private activeModal: NgbActiveModal) { }
 
   public isEdit: boolean = false;
-  public citiesList: City[];
-  public platformsList: Platform[];
-  public categoriesList: CustomerCategory[];
-  public plansList: Plan[];
-  public situationsList: CustomerSituation[];
-  public consultantsList: User[];
+  public citiesList: City[] = [];
+  public platformsList: Platform[] = [];
+  public categoriesList: CustomerCategory[] = [];
+  public plansList: Plan[] = [];
+  public situationsList: CustomerSituation[] = [];
+  public consultantsList: User[] = [];
 
   @Input() public customer: Customer;
   ngOnInit() {
-    debugger;
     if (this.customer) {
       this.isEdit = true;
+      let div = document.getElementById('userInfo');
+      div.style.display = 'none';
     }
+  }
+
+  ngAfterViewInit() {
     this.loadLists();
   }
 
@@ -44,13 +54,66 @@ export class CustomerRegistrationComponent implements OnInit {
   }
 
   async SaveCustomer(name: string, situationId: any, email: string, phone: string, logoUrl: string,
-    storeUrl: string, cityId: string, platformId: string, categoryId: string, planId: string, consultantId: string) {
-
-    debugger;
-
+    storeUrl: string, cityId: string, platformId: string, categoryId: string, planId: string, consultantId: string,
+    txtUserName: any, txtUserEmail: any) {
     let customerDto: Customer = new Customer();
 
-    customerDto.id = (this.customer ? this.customer.id : null);
+    if (name == '') {
+      alert('Nome obrigatório!');
+      return;
+    }
+
+    if (situationId == '') {
+      alert('Situação obrigatória!');
+      return;
+    }
+
+    if (email == '') {
+      alert('E-mail obrigatório!');
+      return;
+    }
+
+    if (phone == '') {
+      alert('Telefone obrigatório!');
+      return;
+    }
+
+    if (cityId == '') {
+      alert('Cidade obrigatória!');
+      return;
+    }
+
+    if (platformId == '') {
+      alert('Plataforma obrigatória!');
+      return;
+    }
+
+    if (categoryId == '') {
+      alert('Categoria obrigatória!');
+      return;
+    }
+
+    if (planId == '') {
+      alert('Plano obrigatório!');
+      return;
+    }
+
+    if (consultantId == '') {
+      alert('Consultor responsável obrigatório!');
+      return;
+    }
+
+    if (!this.isEdit && txtUserName && txtUserName.value == '') {
+      alert('Nome do usuário do cliente obrigatório!');
+      return;
+    }
+
+    if (!this.isEdit && txtUserEmail && txtUserEmail.value == '') {
+      alert('E-mail do usuário do cliente obrigatório!');
+      return;
+    }
+
+    customerDto.id = (this.customer ? this.customer.id : undefined);
     customerDto.name = name;
     customerDto.situationId = situationId;
     customerDto.email = email;
@@ -63,6 +126,32 @@ export class CustomerRegistrationComponent implements OnInit {
     customerDto.planId = planId;
     customerDto.consultantId = consultantId;
 
-    await this.customersService.SaveCustomer(customerDto);
+    this.customersService.saveCustomer(customerDto)
+      .then(newCustomer => {
+        if (!this.isEdit) {
+          let user = new User();
+
+          user.id = undefined;
+          user.email = txtUserEmail.value;
+          user.name = txtUserName.value;
+          user.password = '123456';
+          user.userTypeId = '43C2E87C-35A8-47C0-A4DD-D233B836DD4A';
+          user.customerId = newCustomer.id;
+
+          this.userService.saveUser(user)
+            .then(result => {
+              alert('Cliente cadastrado com sucesso!');
+              this.activeModal.close();
+              this.router.navigate(['worklist']);
+            })
+            .catch(error => {
+              console.log(error);
+              alert('Erro: ' + error.error);
+            });
+        }
+      })
+      .catch(error => {
+        alert('Erro: ' + error.error);
+      });
   }
 }

@@ -22,8 +22,36 @@ namespace ConsultingManager.Domain.Repository
         public async Task<CustomerDto> Add(CustomerDto customerDto)
         {
             var newCustomer = Context.Customers.Add(customerDto.MapTo<CustomerPoco>());
-            //await Context.SaveChangesAsync();
+            await Context.SaveChangesAsync();
             return newCustomer.Entity.MapTo<CustomerDto>();
+        }
+
+        public async Task<CustomerDto> Update(CustomerDto customerDto)
+        {
+            var customer = Context.Customers.FirstOrDefaultAsync(o => o.Id == customerDto.Id).Result;
+
+            if (customer != null)
+            {
+                customer.Name = customerDto.Name;
+                customer.SituationId = customerDto.SituationId;
+                customer.Email = customerDto.Email;
+                customer.Phone = customerDto.Phone;
+                customer.LogoUrl = customerDto.LogoUrl;
+                customer.StoreUrl = customerDto.StoreUrl;
+                customer.CityId = customerDto.CityId;
+                customer.PlatformId = customerDto.PlatformId;
+                customer.CategoryId = customerDto.CategoryId;
+                customer.PlanId = customerDto.PlanId;
+                customer.ConsultantId = customerDto.ConsultantId;
+
+                var updatedCustomer = Context.Customers.Update(customer);
+                await Context.SaveChangesAsync();
+                return updatedCustomer.Entity.MapTo<CustomerDto>();
+            }
+            else
+            {
+                throw new Exception("Não foi possível atualizar o cliente: " + customerDto.Name);
+            }
         }
 
         public async Task<List<CustomerDto>> GetAll()
@@ -35,6 +63,7 @@ namespace ConsultingManager.Domain.Repository
                 .Include(o => o.Category)
                 .Include(o => o.City)
                 .Include(o => o.Users)
+                .Include(o => o.Consultant)
                     .ThenInclude(o => o.UserType)
                 .OrderBy(o => o.Name)
                 .Select(o => o.MapTo<CustomerDto>())

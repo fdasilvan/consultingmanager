@@ -18,9 +18,8 @@ export class CustomersService {
 
   constructor(private http: HttpClient) { }
 
-  public async SaveCustomer(customerDto: Customer): Promise<Customer> {
-    debugger;
-    if(customerDto.id) {
+  public async saveCustomer(customerDto: Customer): Promise<Customer> {
+    if (customerDto.id) {
       let response = await this.http.put<Customer>(`${environment.apiUrl}/customer`, customerDto).toPromise();
       return response;
     } else {

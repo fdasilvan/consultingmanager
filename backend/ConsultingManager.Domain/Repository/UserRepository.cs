@@ -17,6 +17,13 @@ namespace ConsultingManager.Domain.Repository
         {
         }
 
+        public async Task<UserDto> Add(UserDto userDto)
+        {
+            var newUser = Context.Users.Add(userDto.MapTo<UserPoco>());
+            await Context.SaveChangesAsync();
+            return newUser.Entity.MapTo<UserDto>();
+        }
+
         public async Task<UserDto> Authenticate(string email, string password)
         {
             var user = await Context.Users

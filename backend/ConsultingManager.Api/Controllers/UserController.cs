@@ -19,6 +19,18 @@ namespace Auth.Api.Controllers
         }
 
         [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> Add(UserDto userDto)
+        {
+            var user = await _userRepository.Add(userDto);
+
+            if (user == null)
+                return BadRequest(new { message = "Erro ao cadastrar o usuário: " + userDto.Name });
+
+            return Ok(user);
+        }
+
+        [AllowAnonymous]
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate(UserDto userDto)
         {

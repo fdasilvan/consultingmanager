@@ -7,6 +7,7 @@ namespace ConsultingManager.Domain.Repository
     public interface ICustomerRepository
     {
         Task<CustomerDto> Add(CustomerDto customerDto);
+        Task<CustomerDto> Update(CustomerDto customerDto);
         Task<List<CustomerDto>> GetAll();
         Task<List<ChartResultDto>> GetChartResult();
         Task<List<CityDto>> GetCities();

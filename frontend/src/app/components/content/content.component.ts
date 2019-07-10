@@ -28,19 +28,23 @@ export class ContentComponent implements OnInit {
   }
 
   loadContent() {
+    // TODO: Refatorar a busca da tarefa com urgência!!
     this.task = <Task>JSON.parse(window.localStorage.getItem('task'));
-    this.taskContent = this.task.modelTask.taskContent.sort((a, b) => a.pageNumber - b.pageNumber);
-    let container = document.getElementById('content-container');
+    console.log(this.task);
+    if (this.task && this.task.modelTask) {
+      this.taskContent = this.task.modelTask.taskContent.sort((a, b) => a.pageNumber - b.pageNumber);
+      let container = document.getElementById('content-container');
 
-    if (this.taskContent.length > 0) {
-      this.currentContent = this.taskContent[0];
-      this.currentPage = 0;
-      container.style.display = "block";
-      this.title = this.currentContent.title;
-      this.body = this.currentContent.body;
-      this.loadVideo();
-    } else {
-      container.style.display = "none";
+      if (this.taskContent.length > 0) {
+        this.currentContent = this.taskContent[0];
+        this.currentPage = 0;
+        container.style.display = "block";
+        this.title = this.currentContent.title;
+        this.body = this.currentContent.body;
+        this.loadVideo();
+      } else {
+        container.style.display = "none";
+      }
     }
   }
 

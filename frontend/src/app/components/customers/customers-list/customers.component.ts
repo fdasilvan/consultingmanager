@@ -49,7 +49,6 @@ export class CustomersListComponent implements OnInit {
   }
 
   openCustomerModal(customer) {
-    debugger;
     this.modalObject = this.modalService.open(CustomerRegistrationComponent, { ariaLabelledBy: 'modal-basic-title', size: 'lg' });
     this.modalObject.componentInstance.customer = customer;
   }
