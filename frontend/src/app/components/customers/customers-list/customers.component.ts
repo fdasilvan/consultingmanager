@@ -20,7 +20,9 @@ export class CustomersListComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router) { }
 
-  public customers: Customer[];
+  public customers: Customer[] = [];
+  public filteredCustomers: Customer[] = [];
+  public consultantsList: string[] = [];
   public loggedUser: User;
   public customersCount: number = 0;
   public modalObject: NgbModalRef;
@@ -39,17 +41,45 @@ export class CustomersListComponent implements OnInit {
 
   async loadCustomers() {
     this.customers = await this.service.getAll();
+    this.filteredCustomers = this.customers;
     this.customersCount = this.customers.length;
+    this.loadConsultantsList();
   }
 
   goToCustomerTimeline(customer: Customer, event: Event) {
     event.preventDefault();
     this.router.navigate(['timeline'])
-    window.localStorage.setItem("customer", JSON.stringify(customer));
+    window.sessionStorage.setItem('customer', JSON.stringify(customer));
   }
 
   openCustomerModal(customer) {
-    this.modalObject = this.modalService.open(CustomerRegistrationComponent, { ariaLabelledBy: 'modal-basic-title', size: 'lg' });
-    this.modalObject.componentInstance.customer = customer;
+    window.sessionStorage.setItem('customer', JSON.stringify(customer));
+    this.router.navigate(['customer-registration']);
+  }
+
+  loadConsultantsList() {
+    if (this.customers && this.customers.length > 0) {
+      for (let i = 0; i < this.customers.length; i++) {
+        let customer = this.customers[i];
+
+        if (customer.consultant) {
+          if (this.consultantsList.indexOf(customer.consultant.name) < 0) {
+            this.consultantsList.push(customer.consultant.name);
+            this.consultantsList.sort((a, b) => a.localeCompare(b));
+          }
+        }
+      }
+    }
+  }
+
+  onConsultantChange(consultantName: string) {
+    window.sessionStorage.setItem('selectedConsultantFilter', consultantName);
+    if (consultantName == '') {
+      this.filteredCustomers = this.customers;
+    } else {
+      this.filteredCustomers = this.customers.filter(customer => {
+        return customer.consultant && customer.consultant.name == consultantName;
+      });
+    }
   }
 }

@@ -68,7 +68,7 @@ export class TaskComponent implements OnInit {
   }
 
   async loadTask() {
-    this.customer = <Customer>JSON.parse(window.localStorage.getItem('customer'));
+    this.customer = <Customer>JSON.parse(window.sessionStorage.getItem('customer'));
     this.taskId = window.localStorage.getItem('taskId');
     this.task = await this.taskService.getTask(this.taskId);
     this.checkPermissions();

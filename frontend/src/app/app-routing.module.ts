@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { CustomerRegistrationComponent } from './components/customers/customer-registration/customer-registration.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,10 @@ const routes: Routes = [
   {
     path: 'customers',
     component: CustomersListComponent
+  },
+  {
+    path: 'customer-registration',
+    component: CustomerRegistrationComponent
   },
   {
     path: 'dashboard',

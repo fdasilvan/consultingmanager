@@ -70,7 +70,7 @@ export class WorklistComponent implements OnInit {
 
   updateSelectedCustomer(customer: Customer, event: Event) {
     event.preventDefault();
-    window.localStorage.setItem('customer', JSON.stringify(customer));
+    window.sessionStorage.setItem('customer', JSON.stringify(customer));
     this.router.navigate(['timeline']);
   }
 

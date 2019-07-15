@@ -70,7 +70,7 @@ export class TimelineComponent implements OnInit {
   }
 
   getCustomerId() {
-    this.customer = <Customer>JSON.parse(localStorage.getItem('customer'));
+    this.customer = <Customer>JSON.parse(window.sessionStorage.getItem('customer'));
     if (!this.customer) {
       this.customer = window.history.state.customer;
     }

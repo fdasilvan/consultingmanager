@@ -7,7 +7,7 @@ import { CustomerCategory } from 'src/app/models/customercategory.model';
 import { Plan } from 'src/app/models/plan.model';
 import { CustomerSituation } from 'src/app/models/customersituation.model';
 import { User } from 'src/app/models/user.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -21,8 +21,9 @@ export class CustomerRegistrationComponent implements OnInit {
   constructor(private customersService: CustomersService,
     private userService: UserService,
     private router: Router,
-    private activeModal: NgbActiveModal) { }
+    private route: ActivatedRoute) { }
 
+  public customer: Customer;
   public isEdit: boolean = false;
   public citiesList: City[] = [];
   public platformsList: Platform[] = [];
@@ -31,8 +32,9 @@ export class CustomerRegistrationComponent implements OnInit {
   public situationsList: CustomerSituation[] = [];
   public consultantsList: User[] = [];
 
-  @Input() public customer: Customer;
   ngOnInit() {
+    this.loadCustomer();
+
     if (this.customer) {
       this.isEdit = true;
       let div = document.getElementById('userInfo');
@@ -42,6 +44,14 @@ export class CustomerRegistrationComponent implements OnInit {
 
   ngAfterViewInit() {
     this.loadLists();
+  }
+
+  loadCustomer() {
+    this.customer = <Customer>JSON.parse(window.sessionStorage.getItem('customer'));
+  }
+
+  goBack() {
+    window.history.back();
   }
 
   async loadLists() {
@@ -141,13 +151,15 @@ export class CustomerRegistrationComponent implements OnInit {
           this.userService.saveUser(user)
             .then(result => {
               alert('Cliente cadastrado com sucesso!');
-              this.activeModal.close();
-              this.router.navigate(['worklist']);
+              this.router.navigate(['customers']);
             })
             .catch(error => {
               console.log(error);
               alert('Erro: ' + error.error);
             });
+        } else {
+          alert('Cliente atualizado com sucesso!');
+          this.router.navigate(['customers']);
         }
       })
       .catch(error => {

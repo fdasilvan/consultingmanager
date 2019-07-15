@@ -151,6 +151,9 @@
   </div>
 </div>
 <div class="modal-footer">
+  <button class="btn btn-md btn-outline-primary" (click)="goBack()">
+    <span class="fa fa-arrow-left"></span> Voltar
+  </button>
   <button type="button" class="btn btn-primary btn-md float-right"
     (click)="SaveCustomer(txtName.value, lstSituations.value, txtEmail.value, txtPhone.value, txtLogoUrl.value,
             txtStoreUrl.value, lstCities.value, lstPlatforms.value, lstCategories.value, lstPlans.value, lstConsultants.value, txtUserName, txtUserEmail)">Salvar</button>
