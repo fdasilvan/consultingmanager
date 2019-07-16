@@ -47,7 +47,9 @@ export class CustomerRegistrationComponent implements OnInit {
   }
 
   loadCustomer() {
-    this.customer = <Customer>JSON.parse(window.sessionStorage.getItem('customer'));
+    if (window.sessionStorage.getItem('customer') != 'undefined') {
+      this.customer = <Customer>JSON.parse(window.sessionStorage.getItem('customer'));
+    }
   }
 
   goBack() {

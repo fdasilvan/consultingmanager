@@ -24,7 +24,7 @@
         <div class="card-block">
           <p>Clientes ativos: {{this.customersCount}}</p>
           <div class="filter">
-            <label>Cliente: </label>
+            <label>Consultor: </label>
             <select class="custom-select form-control" (change)="onConsultantChange($event.target.value)">
               <option value="">Todos</option>
               <option *ngFor="let consultantName of this.consultantsList" [selected]="consultantName == this.selectedConsultantFilter"
