@@ -17,7 +17,7 @@ namespace ConsultingManager.Dto
         public Guid? ConsultantId { get; set; }
         public UserDto Consultant { get; set; }
 
-        public Guid PlatformId { get; set; }
+        public Guid? PlatformId { get; set; }
         public PlatformDto Platform { get; set; }
 
         public Guid? PlanId { get; set; }

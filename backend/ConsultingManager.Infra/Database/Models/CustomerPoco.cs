@@ -18,7 +18,7 @@ namespace ConsultingManager.Infra.Database.Models
         [ForeignKey(nameof(ConsultantId))]
         public UserPoco Consultant { get; set; }
 
-        public Guid PlatformId { get; set; }
+        public Guid? PlatformId { get; set; }
         [ForeignKey(nameof(PlatformId))]
         public PlatformPoco Platform { get; set; }
 

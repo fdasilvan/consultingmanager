@@ -90,21 +90,6 @@ export class CustomerRegistrationComponent implements OnInit {
       return;
     }
 
-    if (cityId == '') {
-      alert('Cidade obrigatória!');
-      return;
-    }
-
-    if (platformId == '') {
-      alert('Plataforma obrigatória!');
-      return;
-    }
-
-    if (categoryId == '') {
-      alert('Categoria obrigatória!');
-      return;
-    }
-
     if (planId == '') {
       alert('Plano obrigatório!');
       return;
@@ -156,8 +141,7 @@ export class CustomerRegistrationComponent implements OnInit {
               this.router.navigate(['customers']);
             })
             .catch(error => {
-              console.log(error);
-              alert('Erro: ' + error.error);
+              alert('Erro: não foi possível cadastrar o usuário! ' + error.error);
             });
         } else {
           alert('Cliente atualizado com sucesso!');
@@ -165,7 +149,7 @@ export class CustomerRegistrationComponent implements OnInit {
         }
       })
       .catch(error => {
-        alert('Erro: ' + error.error);
+        alert('Erro: não foi possível cadastrar o cliente! ' + error.error);
       });
   }
 }
