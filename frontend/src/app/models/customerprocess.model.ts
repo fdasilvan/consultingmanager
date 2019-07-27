@@ -1,4 +1,4 @@
-import { Step } from './step.model';
+import { CustomerStep } from './customerstep.model';
 
 export class CustomerProcess {
     id: string;
@@ -6,7 +6,7 @@ export class CustomerProcess {
     startDate: Date;
     estimateEndDate: Date;
     endDate: Date;
-    customerSteps: Step[];
+    customerSteps: CustomerStep[];
 
     constructor() {
     }

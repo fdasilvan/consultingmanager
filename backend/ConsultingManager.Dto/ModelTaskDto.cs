@@ -16,9 +16,6 @@ namespace ConsultingManager.Dto
         public Guid TaskTypeId { get; set; }
         public TaskTypeDto TaskType { get; set; }
 
-        public Guid ModelStepId { get; set; }
-        public ModelStepDto ModelStep { get; set; }
-
         public ICollection<TaskContentDto> TaskContent { get; set; }
     }
 }

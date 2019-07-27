@@ -33,7 +33,7 @@ export class ProcessService {
       startDate: startDate
     };
 
-    let response = await this.http.post<CustomerProcess>(`${environment.apiUrl}/process`, params).toPromise();
+    let response = await this.http.post<CustomerProcess>(`${environment.apiUrl}/process/start`, params).toPromise();
     return response;
   }
 

@@ -31,6 +31,12 @@ namespace ConsultingManager.Api.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> Add(ModelProcessDto modelProcessDto)
+        {
+            return Ok(await _processRepository.Add(modelProcessDto));
+        }
+
+        [HttpPost("start")]
         public async Task<IActionResult> StartCustomerProcess(StartCustomerProcessDto startCustomerProcessDto)
         {
             try

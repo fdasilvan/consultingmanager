@@ -1,12 +1,12 @@
-import { Task } from './task.model';
 import { CustomerProcess } from './customerprocess.model';
+import { CustomerTask } from './customertask.model';
 
-export class Step {
+export class CustomerStep {
     id: string;
     description: string;
     startDate: Date;
     endDate: Date;
-    tasks: Task[];
+    tasks: CustomerTask[];
     customerProcess: CustomerProcess;
 
     constructor() {

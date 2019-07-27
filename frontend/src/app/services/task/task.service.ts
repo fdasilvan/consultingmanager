@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Task } from 'src/app/models/task.model';
+import { CustomerTask } from 'src/app/models/customertask.model';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 
@@ -10,8 +10,8 @@ export class TaskService {
 
   constructor(private http: HttpClient) { }
 
-  public async getTask(taskId: string): Promise<Task> {
-    var response = await this.http.get<Task>(`${environment.apiUrl}/task/${taskId}`);
+  public async getTask(taskId: string): Promise<CustomerTask> {
+    var response = await this.http.get<CustomerTask>(`${environment.apiUrl}/task/${taskId}`);
     return response.toPromise();
   }
 
@@ -30,8 +30,8 @@ export class TaskService {
     return response;
   }
 
-  public async getUserTasks(userId: string): Promise<Task[]> {
-    var response = await this.http.get<Task[]>(`${environment.apiUrl}/task/user/${userId}`);
+  public async getUserTasks(userId: string): Promise<CustomerTask[]> {
+    var response = await this.http.get<CustomerTask[]>(`${environment.apiUrl}/task/user/${userId}`);
     return response.toPromise();
   }
 }

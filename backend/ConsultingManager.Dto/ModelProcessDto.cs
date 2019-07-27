@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ConsultingManager.Dto
 {
@@ -6,5 +7,6 @@ namespace ConsultingManager.Dto
     {
         public Guid Id { get; set; }
         public string Description { get; set; }
+        public ICollection<ModelStepDto> ModelSteps { get; set; }
     }
 }

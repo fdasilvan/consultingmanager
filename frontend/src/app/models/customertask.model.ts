@@ -2,9 +2,9 @@ import { Customer } from './customer.model';
 import { User } from './user.model';
 import { TaskType } from './tasktype.model';
 import { ModelTask } from './modeltask.model';
-import { Step } from './step.model';
+import { CustomerStep } from './customerstep.model';
 
-export class Task {
+export class CustomerTask {
     id: string;
     description: string;
     instructions: string;
@@ -19,7 +19,7 @@ export class Task {
     owner: User;
     taskType: TaskType;
     modelTask: ModelTask;
-    customerStep: Step;
+    customerStep: CustomerStep;
 
     constructor() {
     }

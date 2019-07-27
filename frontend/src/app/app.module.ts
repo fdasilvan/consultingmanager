@@ -19,6 +19,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContentComponent } from './components/content/content.component';
 import { CustomerRegistrationComponent } from './components/customers/customer-registration/customer-registration.component';
 import { WorklistComponent } from './components/worklist/worklist.component';
+import { ProcessesListComponent } from './components/process/processes-list/processes-list.component';
+import { ProcessRegistrationComponent } from './components/process/process-registration/process-registration.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -33,7 +36,9 @@ import { WorklistComponent } from './components/worklist/worklist.component';
         OrderByPipe,
         DashboardComponent,
         ContentComponent,
-        CustomerRegistrationComponent
+        CustomerRegistrationComponent,
+        ProcessesListComponent,
+        ProcessRegistrationComponent
     ],
     imports: [
         BrowserModule,
@@ -42,7 +47,8 @@ import { WorklistComponent } from './components/worklist/worklist.component';
         HttpClientModule,
         NgbModule,
         NgxChartsModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        FormsModule
     ],
     providers: [AuthService],
     bootstrap: [AppComponent],

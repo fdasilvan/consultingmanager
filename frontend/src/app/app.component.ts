@@ -5,30 +5,37 @@ import { Router } from '@angular/router';
 import { UserService } from './services/user/user.service';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 
 
 export class AppComponent implements OnInit {
 
-    constructor(private router: Router,
-        private authService: AuthService,
-        private userService: UserService) {
-        this.userService.userEvent.subscribe(response => {
-            this.loggedUser = response;
-        });
+  constructor(private router: Router,
+    private authService: AuthService,
+    private userService: UserService) {
+    this.userService.userEvent.subscribe(response => {
+      this.loggedUser = response;
+    });
+  }
+
+  public loggedUser: User;
+  public canRegisterProcesses: boolean = false;
+
+  ngOnInit() {
+    this.loggedUser = this.userService.getUser();
+    if (this.loggedUser) {
+      this.router.navigate(['worklist']);
+    } else {
+      this.router.navigate(['login']);
     }
 
-    public loggedUser: User;
+    this.verifyPermissions();
+  }
 
-    ngOnInit() {
-        this.loggedUser = this.userService.getUser();
-        if (this.loggedUser) {
-            this.router.navigate(['worklist']);
-        } else {
-            this.router.navigate(['login']);
-        }
-    }
+  verifyPermissions() {
+    this.canRegisterProcesses = (this.loggedUser.userType.description == 'Administrador' || this.loggedUser.userType.description == 'Líder' || this.loggedUser.userType.description == 'Especialista');
+  }
 }

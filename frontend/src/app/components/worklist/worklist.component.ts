@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Task } from 'src/app/models/task.model';
+import { CustomerTask } from 'src/app/models/customertask.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { TaskService } from 'src/app/services/task/task.service';
@@ -18,8 +18,8 @@ export class WorklistComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router) { }
 
-  public tasksList: Task[];
-  public filteredTasksList: Task[] = [];
+  public tasksList: CustomerTask[];
+  public filteredTasksList: CustomerTask[] = [];
   public loggedUser: User;
   public customersList: string[] = [];
   public selectedCustomerFilter: string;
@@ -62,7 +62,7 @@ export class WorklistComponent implements OnInit {
     }
   }
 
-  updateSelectedTask(task: Task, event: Event) {
+  updateSelectedTask(task: CustomerTask, event: Event) {
     event.preventDefault();
     this.router.navigate(['task'])
     window.localStorage.setItem('taskId', task.id);
@@ -74,7 +74,7 @@ export class WorklistComponent implements OnInit {
     this.router.navigate(['timeline']);
   }
 
-  loadClassIndicator(task: Task) {
+  loadClassIndicator(task: CustomerTask) {
     let today: Date = new Date();
     today.setHours(0, 0, 0, 0);
 

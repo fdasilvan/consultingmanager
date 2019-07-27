@@ -26,6 +26,13 @@ namespace ConsultingManager.Domain.Repository
                 .ToListAsync();
         }
 
+        public async Task<ModelProcessDto> Add(ModelProcessDto modelProcessoDto)
+        {
+            var newProcess = Context.ModelProcesses.Add(modelProcessoDto.MapTo<ModelProcessPoco>());
+            await Context.SaveChangesAsync();
+            return newProcess.Entity.MapTo<ModelProcessDto>();
+        }
+
         public async Task<CustomerProcessDto> StartCustomerProcess(ModelProcessDto modelProcessDto, Guid customerId, Guid consultantId, Guid customerUserId, DateTime startDate)
         {
             CustomerProcessPoco customerProcess = new CustomerProcessPoco();

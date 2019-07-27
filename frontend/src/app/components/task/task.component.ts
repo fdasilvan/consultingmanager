@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Task } from 'src/app/models/task.model';
+import { CustomerTask } from 'src/app/models/customertask.model';
 import { Customer } from 'src/app/models/customer.model';
 import { TaskService } from 'src/app/services/task/task.service';
 import { Router } from '@angular/router';
@@ -30,7 +30,7 @@ export class TaskComponent implements OnInit {
   public today: Date = new Date();
   public modalObject: NgbModalRef;
   public taskId: string;
-  public task: Task;
+  public task: CustomerTask;
   public customer: Customer;
 
   public canFinishTask = false;

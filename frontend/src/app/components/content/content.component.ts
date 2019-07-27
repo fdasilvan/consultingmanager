@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 //noinspection TypeScriptCheckImport,TypeScriptCheckImport
 import Player from "@vimeo/player";
-import { Task } from 'src/app/models/task.model';
+import { CustomerTask } from 'src/app/models/customertask.model';
 import { TaskContent } from 'src/app/models/taskcontent.model';
 
 @Component({
@@ -14,7 +14,7 @@ export class ContentComponent implements OnInit {
   constructor() { }
 
   public player: Player;
-  public task: Task;
+  public task: CustomerTask;
   public title: string;
   public body: string;
   public taskContent: TaskContent[];
@@ -29,7 +29,7 @@ export class ContentComponent implements OnInit {
 
   loadContent() {
     // TODO: Refatorar a busca da tarefa com urgência!!
-    this.task = <Task>JSON.parse(window.localStorage.getItem('task'));
+    this.task = <CustomerTask>JSON.parse(window.localStorage.getItem('task'));
     console.log(this.task);
     if (this.task && this.task.modelTask) {
       this.taskContent = this.task.modelTask.taskContent.sort((a, b) => a.pageNumber - b.pageNumber);

@@ -41,6 +41,9 @@ export class CustomersListComponent implements OnInit {
 
   async loadCustomers() {
     this.customers = await this.service.getAll();
+
+    debugger;
+
     this.filteredCustomers = this.customers;
     this.customersCount = this.customers.length;
     this.loadConsultantsList();

@@ -10,6 +10,8 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CustomerRegistrationComponent } from './components/customers/customer-registration/customer-registration.component';
+import { ProcessesListComponent } from './components/process/processes-list/processes-list.component';
+import { ProcessRegistrationComponent } from './components/process/process-registration/process-registration.component';
 
 const routes: Routes = [
   {
@@ -31,6 +33,14 @@ const routes: Routes = [
   {
     path: 'timeline',
     component: TimelineComponent
+  },
+  {
+    path: 'processes',
+    component: ProcessesListComponent
+  },
+  {
+    path: 'process-registration',
+    component: ProcessRegistrationComponent
   },
   {
     path: 'customers',

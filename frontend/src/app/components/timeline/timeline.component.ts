@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProcessService } from '../../services/process/process.service';
 import { CustomerProcess } from 'src/app/models/customerprocess.model';
 import { Customer } from 'src/app/models/customer.model';
-import { Task } from 'src/app/models/task.model';
+import { CustomerTask } from 'src/app/models/customertask.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
@@ -76,7 +76,7 @@ export class TimelineComponent implements OnInit {
     }
   }
 
-  updateSelectedTask(task: Task, event: Event) {
+  updateSelectedTask(task: CustomerTask, event: Event) {
     event.preventDefault();
     this.router.navigate(['task']);
     window.localStorage.setItem('taskId', task.id);
@@ -88,7 +88,7 @@ export class TimelineComponent implements OnInit {
     element.className = (element.className == 'fa fa-chevron-right' ? 'fa fa-chevron-down' : 'fa fa-chevron-right');
   }
 
-  loadClassIndicator(task: Task) {
+  loadClassIndicator(task: CustomerTask) {
     let today: Date = new Date();
     today.setHours(0, 0, 0, 0);
 

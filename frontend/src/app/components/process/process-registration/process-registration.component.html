@@ -1,0 +1,48 @@
+<section class="row">
+  <div class="col-12">
+    <div class="card mb-4">
+      <div class="card-block btn-margins">
+        <h3 class="card-title">Cadastro de Processo</h3>
+        <form class="form">
+          <div class="form-group row mb-3 mt-4 pl-1">
+            <label class="col-md-1 col-form-label">Descrição: </label>
+            <div class="col-md-9">
+              <input #txtProcessDescription name="txtProcessDescription" [(ngModel)]="this.modelProcess.description"
+                type="text" class="form-control mb-2">
+            </div>
+          </div>
+          <div>
+            <p *ngIf="this.modelProcess.modelSteps.length == 0">Ainda não foram cadastradas etapas!</p>
+
+            <div class="card mb-2" *ngFor="let step of this.modelProcess.modelSteps">
+              <div class="card-header">
+                <input #txtStepDescription name="txtStepDescription" [(ngModel)]="step.description"
+                  [ngModelOptions]="{ standalone: true }" type="text" class="form-control mb-2">
+              </div>
+              <div class="card-block">
+
+                <p *ngIf="step.modelTasks.length == 0">Ainda não foram cadastradas tarefas!</p>
+
+                <div class="card mb-2" *ngFor="let task of step.modelTasks">
+                  <div class="card-header">{{task.id}}</div>
+                  <div class="card-block">
+                    TESTE
+                  </div>
+                </div>
+
+                <button class="btn btn-secondary margin" (click)="this.addTask(step)" type="button"><span
+                    class="fa fa-plus"></span> Tarefa</button>
+              </div>
+            </div>
+
+            <button class="btn btn-secondary margin" (click)="this.addStep()" type="button"><span
+                class="fa fa-plus"></span> Etapa</button>
+
+            <button class="btn btn-primary" (click)="this.testObject()" type="button"><span class="fa fa-plus"></span>
+              TESTAR</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
