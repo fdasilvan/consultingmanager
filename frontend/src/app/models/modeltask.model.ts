@@ -7,6 +7,7 @@ export class ModelTask {
     duration: number;
     startAfterDays: number;
     dueDays: number;
+    taskTypeId: string;
     taskContent: TaskContent[];
 
     constructor() {

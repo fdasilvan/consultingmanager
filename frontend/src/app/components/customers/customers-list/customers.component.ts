@@ -41,9 +41,6 @@ export class CustomersListComponent implements OnInit {
 
   async loadCustomers() {
     this.customers = await this.service.getAll();
-
-    debugger;
-
     this.filteredCustomers = this.customers;
     this.customersCount = this.customers.length;
     this.loadConsultantsList();
@@ -55,7 +52,7 @@ export class CustomersListComponent implements OnInit {
     window.sessionStorage.setItem('customer', JSON.stringify(customer));
   }
 
-  openCustomerModal(customer) {
+  registerCustomer(customer) {
     window.sessionStorage.setItem('customer', JSON.stringify(customer));
     this.router.navigate(['customer-registration']);
   }

@@ -2,47 +2,100 @@
   <div class="col-12">
     <div class="card mb-4">
       <div class="card-block btn-margins">
-        <h3 class="card-title">Cadastro de Processo</h3>
+        <h3 class="card-title">Cadastro de Plano de Ação</h3>
         <form class="form">
           <div class="form-group row mb-3 mt-4 pl-1">
-            <label class="col-md-1 col-form-label">Descrição: </label>
             <div class="col-md-9">
-              <input #txtProcessDescription name="txtProcessDescription" [(ngModel)]="this.modelProcess.description"
-                type="text" class="form-control mb-2">
+              <input #txtProcessDescription name="txtProcessDescription" placeholder="Novo Plano de Ação"
+                [(ngModel)]="this.modelProcess.description" [ngModelOptions]="{ standalone: true }" type="text"
+                class="form-control mb-2">
             </div>
           </div>
+          <h6 class="mb-4">Etapas: </h6>
           <div>
+            <!-- Plano de Ação -->
             <p *ngIf="this.modelProcess.modelSteps.length == 0">Ainda não foram cadastradas etapas!</p>
-
-            <div class="card mb-2" *ngFor="let step of this.modelProcess.modelSteps">
+            <div class="card mb-2" *ngFor="let step of this.modelProcess.modelSteps | orderBy: 'description'">
               <div class="card-header">
                 <input #txtStepDescription name="txtStepDescription" [(ngModel)]="step.description"
-                  [ngModelOptions]="{ standalone: true }" type="text" class="form-control mb-2">
+                  placeholder="Nova Etapa" [ngModelOptions]="{ standalone: true }" type="text"
+                  class="form-control mb-2">
               </div>
               <div class="card-block">
-
+                <h6 class="mb-4">Tarefas: </h6>
                 <p *ngIf="step.modelTasks.length == 0">Ainda não foram cadastradas tarefas!</p>
-
-                <div class="card mb-2" *ngFor="let task of step.modelTasks">
-                  <div class="card-header">{{task.id}}</div>
+                <!-- Etapas -->
+                <div class="card mb-2" *ngFor="let task of step.modelTasks | orderBy: 'startAfterDays'">
+                  <div class="card-header">
+                    <input #txtTaskDescription name="txtTaskDescription" placeholder="Nova Tarefa"
+                      [(ngModel)]="task.description" [ngModelOptions]="{ standalone: true }" type="text"
+                      class="form-control mb-2">
+                  </div>
                   <div class="card-block">
-                    TESTE
+                    <form class="form">
+                      <!-- Tarefas -->
+                      <div class="form-group row">
+                        <label class="col-md-2 col-form-label">Tipo de Tarefa: </label>
+                        <div class="col-md-9">
+                          <select #lstConsultants id="lstConsultants" class="custom-select form-control">
+                            <option
+                              [selected]="(task && task.taskTypeId ? task.taskTypeId.toUpperCase() == 'E84138FE-A7C6-4724-865F-1C4CAB8BE234' : false)"
+                              value="E84138FE-A7C6-4724-865F-1C4CAB8BE234">Consultor
+                            </option>
+                            <option
+                              [selected]="(task && task.taskTypeId ? task.taskTypeId.toUpperCase() == 'A26F516B-6A6F-4159-8F4E-6CA3193BEA95' : false)"
+                              value="A26F516B-6A6F-4159-8F4E-6CA3193BEA95">Cliente
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-2 col-form-label">Instruções: </label>
+                        <div class="col-md-10">
+                          <input #txtTaskInstructions name="txtTaskInstructions" [(ngModel)]="task.instructions"
+                            [ngModelOptions]="{ standalone: true }" type="text" class="form-control mb-2">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-2 col-form-label">Duração (min): </label>
+                        <div class="col-md-10">
+                          <input #txtTaskDuration name="txtTaskDuration" [(ngModel)]="task.duration"
+                            [ngModelOptions]="{ standalone: true }" type="number" class="form-control mb-2">
+                          <h6 class="text-muted">Tempo a ser reservado para realização da tarefa.</h6>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-2 col-form-label">Iniciar após (dias): </label>
+                        <div class="col-md-10">
+                          <input #txtStartAfterDays name="txtStartAfterDays" [(ngModel)]="task.startAfterDays"
+                            [ngModelOptions]="{ standalone: true }" type="number" class="form-control mb-2">
+                          <h6 class="text-muted">Quantidade de dias após o início da etapa.</h6>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-2 col-form-label">Prazo (dias): </label>
+                        <div class="col-md-10">
+                          <input #txtDueDays name="txtDueDays" [(ngModel)]="task.dueDays"
+                            [ngModelOptions]="{ standalone: true }" type="number" class="form-control mb-2">
+                          <h6 class="text-muted">Quantidade de dias previstos para realizar a tarefa.</h6>
+                        </div>
+                      </div>
+                    </form>
                   </div>
                 </div>
 
-                <button class="btn btn-secondary margin" (click)="this.addTask(step)" type="button"><span
+                <button class="btn btn-warning margin" (click)="this.addTask(step)" type="button"><span
                     class="fa fa-plus"></span> Tarefa</button>
               </div>
             </div>
-
-            <button class="btn btn-secondary margin" (click)="this.addStep()" type="button"><span
+            <button class="btn btn-warning margin" (click)="this.addStep()" type="button"><span
                 class="fa fa-plus"></span> Etapa</button>
-
-            <button class="btn btn-primary" (click)="this.testObject()" type="button"><span class="fa fa-plus"></span>
-              TESTAR</button>
           </div>
         </form>
       </div>
     </div>
+    <button class="btn btn-lg btn-primary mb-4" (click)="this.saveProcess()" type="button">
+      <span class="fa fa-check"></span> {{ this.isEdit ? 'Atualizar' : 'Salvar' }}
+    </button>
   </div>
 </section>

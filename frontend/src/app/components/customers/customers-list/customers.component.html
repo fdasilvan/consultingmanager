@@ -16,7 +16,7 @@
             </select>
           </div>
           <div *ngIf="this.canAddCustomer" class="mb-4">
-            <button class="btn btn-lg btn-outline-primary" (click)="openCustomerModal()">Incluir Cliente</button>
+            <button class="btn btn-lg btn-outline-primary" (click)="registerCustomer()">Incluir Cliente</button>
           </div>
           <div class="table-responsive">
             <table class="table">
@@ -40,7 +40,7 @@
                   <td>{{(customer.plan ? customer.plan.description : 'Não informado')}}</td>
                   <td>{{(customer.situation ? customer.situation.description : 'Não informada')}}</td>
                   <td>
-                    <h4><a href="javascript:void(0)" (click)="openCustomerModal(customer);"><em
+                    <h4><a href="javascript:void(0)" (click)="registerCustomer(customer);"><em
                           class="fa fa-edit"></em></a>
                     </h4>
                   </td>

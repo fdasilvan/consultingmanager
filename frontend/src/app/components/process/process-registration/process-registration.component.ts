@@ -14,9 +14,18 @@ export class ProcessRegistrationComponent implements OnInit {
   constructor() { }
 
   public modelProcess: ModelProcess;
+  public isEdit: boolean = false;
 
   ngOnInit() {
     this.initializeProcess();
+    this.loadProcess();
+  }
+
+  public loadProcess() {
+    if (window.sessionStorage.getItem('modelProcess') != 'undefined') {
+      this.isEdit = true;
+      this.modelProcess = <ModelProcess>JSON.parse(window.sessionStorage.getItem('modelProcess'));
+    }
   }
 
   initializeProcess() {
@@ -27,24 +36,24 @@ export class ProcessRegistrationComponent implements OnInit {
 
   public addStep() {
     let modelStep = new ModelStep();
-    
+
     modelStep.id = newGuid();
     modelStep.description = '';
     modelStep.modelTasks = [];
 
-    this.modelProcess.modelSteps.push(modelStep);    
+    this.modelProcess.modelSteps.push(modelStep);
   }
 
   public addTask(modelStep: ModelStep) {
     let modelTask = new ModelTask();
-    
+
     modelTask.id = newGuid();
     modelTask.taskContent = [];
 
     modelStep.modelTasks.push(modelTask);
   }
 
-  public testObject() {
+  public saveProcess() {
     console.log(this.modelProcess);
   }
 }
