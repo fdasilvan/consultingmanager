@@ -56,4 +56,13 @@ export class ProcessRegistrationComponent implements OnInit {
   public saveProcess() {
     console.log(this.modelProcess);
   }
+
+  toggleElement(element) {
+    element.parentElement.nextElementSibling.style.display = (element.parentElement.nextElementSibling.style.display == 'none' ? '' : 'none');
+    element.className = (element.className == 'fa fa-chevron-right' ? 'fa fa-chevron-down' : 'fa fa-chevron-right');
+  }
+
+  goBack() {
+    window.history.back();
+  }
 }

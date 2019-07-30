@@ -13,27 +13,28 @@
           </div>
           <h6 class="mb-4">Etapas: </h6>
           <div>
-            <!-- Plano de Ação -->
+            <!-- Etapas -->
             <p *ngIf="this.modelProcess.modelSteps.length == 0">Ainda não foram cadastradas etapas!</p>
             <div class="card mb-2" *ngFor="let step of this.modelProcess.modelSteps | orderBy: 'description'">
               <div class="card-header">
                 <input #txtStepDescription name="txtStepDescription" [(ngModel)]="step.description"
                   placeholder="Nova Etapa" [ngModelOptions]="{ standalone: true }" type="text"
                   class="form-control mb-2">
+                <em (click)="toggleElement($event.target)" class="fa fa-chevron-down"></em>
               </div>
               <div class="card-block">
                 <h6 class="mb-4">Tarefas: </h6>
                 <p *ngIf="step.modelTasks.length == 0">Ainda não foram cadastradas tarefas!</p>
-                <!-- Etapas -->
+                <!-- Tarefas -->
                 <div class="card mb-2" *ngFor="let task of step.modelTasks | orderBy: 'startAfterDays'">
                   <div class="card-header">
                     <input #txtTaskDescription name="txtTaskDescription" placeholder="Nova Tarefa"
                       [(ngModel)]="task.description" [ngModelOptions]="{ standalone: true }" type="text"
                       class="form-control mb-2">
+                    <em (click)="toggleElement($event.target)" class="fa fa-chevron-down"></em>
                   </div>
                   <div class="card-block">
                     <form class="form">
-                      <!-- Tarefas -->
                       <div class="form-group row">
                         <label class="col-md-2 col-form-label">Tipo de Tarefa: </label>
                         <div class="col-md-9">
@@ -84,18 +85,23 @@
                   </div>
                 </div>
 
-                <button class="btn btn-warning margin" (click)="this.addTask(step)" type="button"><span
+                <button class="btn btn-warning margin" (click)="addTask(step)" type="button"><span
                     class="fa fa-plus"></span> Tarefa</button>
               </div>
             </div>
-            <button class="btn btn-warning margin" (click)="this.addStep()" type="button"><span
-                class="fa fa-plus"></span> Etapa</button>
+            <button class="btn btn-warning margin" (click)="addStep()" type="button"><span class="fa fa-plus"></span>
+              Etapa</button>
           </div>
         </form>
       </div>
     </div>
-    <button class="btn btn-lg btn-primary mb-4" (click)="this.saveProcess()" type="button">
-      <span class="fa fa-check"></span> {{ this.isEdit ? 'Atualizar' : 'Salvar' }}
-    </button>
+    <div class="floating-button">
+      <button class="btn btn-lg btn-secondary mb-4" (click)="goBack()">
+        <span class="fa fa-arrow-left"></span> Voltar
+      </button>
+      <button class="btn btn-lg btn-primary mb-4" (click)="saveProcess()" type="button">
+        <span class="fa fa-check"></span> {{ this.isEdit ? 'Atualizar' : 'Salvar' }}
+      </button>
+    </div>
   </div>
 </section>
