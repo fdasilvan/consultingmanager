@@ -32,7 +32,7 @@ export class ProcessesListComponent implements OnInit {
     this.processes = await this.processService.getModelProcesses();
   }
 
-  public selectProcess(process, event) {
+  selectProcess(process) {
     window.sessionStorage.setItem('modelProcess', JSON.stringify(process));
     this.router.navigate(['process-registration']);
   }
