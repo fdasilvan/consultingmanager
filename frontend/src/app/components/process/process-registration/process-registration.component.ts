@@ -13,6 +13,7 @@ export class ProcessRegistrationComponent implements OnInit {
 
   constructor() { }
 
+  public selectedStep: ModelStep;
   public modelProcess: ModelProcess;
   public isEdit: boolean = false;
 
@@ -25,6 +26,11 @@ export class ProcessRegistrationComponent implements OnInit {
     if (window.sessionStorage.getItem('modelProcess') != 'undefined') {
       this.isEdit = true;
       this.modelProcess = <ModelProcess>JSON.parse(window.sessionStorage.getItem('modelProcess'));
+
+      if (this.modelProcess.modelSteps.length > 0) {
+        this.modelProcess.modelSteps = this.modelProcess.modelSteps.sort((a, b) => -b['description'].localeCompare(a['description']));
+        this.selectedStep = this.modelProcess.modelSteps[0];
+      }
     }
   }
 
@@ -38,10 +44,14 @@ export class ProcessRegistrationComponent implements OnInit {
     let modelStep = new ModelStep();
 
     modelStep.id = newGuid();
-    modelStep.description = '';
+    modelStep.description = 'Nova Etapa';
     modelStep.modelTasks = [];
 
     this.modelProcess.modelSteps.push(modelStep);
+
+    if (this.modelProcess.modelSteps.length == 1) {
+      this.selectedStep = this.modelProcess.modelSteps[0];
+    }
   }
 
   public addTask(modelStep: ModelStep) {
@@ -60,6 +70,14 @@ export class ProcessRegistrationComponent implements OnInit {
   toggleElement(element) {
     element.parentElement.nextElementSibling.style.display = (element.parentElement.nextElementSibling.style.display == 'none' ? '' : 'none');
     element.className = (element.className == 'fa fa-chevron-right' ? 'fa fa-chevron-down' : 'fa fa-chevron-right');
+  }
+
+  public selectStep(step: ModelStep) {
+    this.selectedStep = step;
+  }
+
+  public removeStep(step: ModelStep) {
+    this.modelProcess.modelSteps = this.modelProcess.modelSteps.filter(o => o.id != step.id);
   }
 
   goBack() {
