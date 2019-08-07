@@ -60,7 +60,8 @@
                       <div class="form-group col-8 row">
                         <label class="col-md-2 col-form-label">Tipo de Tarefa: </label>
                         <div class="col-md-9">
-                          <select #lstConsultants id="lstConsultants" class="custom-select form-control">
+                          <select #lstTaskType [name]="element" class="custom-select form-control task-type" required>
+                            <option value=""></option>
                             <option
                               [selected]="(task && task.taskTypeId ? task.taskTypeId.toUpperCase() == 'E84138FE-A7C6-4724-865F-1C4CAB8BE234' : false)"
                               value="E84138FE-A7C6-4724-865F-1C4CAB8BE234">Consultor

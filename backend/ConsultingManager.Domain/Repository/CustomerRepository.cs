@@ -125,7 +125,7 @@ namespace ConsultingManager.Domain.Repository
         public async Task<List<UserDto>> GetConsultants()
         {
             return await Context.Users
-                .Where(o => o.UserTypeId == Const.UserTypes.Consultant)
+                .Where(o => o.UserTypeId == Const.UserTypes.Consultant || o.UserTypeId == Const.UserTypes.Leader || o.UserTypeId == Const.UserTypes.Specialist)
                 .Select(o => o.MapTo<UserDto>())
                 .OrderBy(o => o.Name)
                 .ToListAsync();

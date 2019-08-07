@@ -63,8 +63,28 @@ export class ProcessRegistrationComponent implements OnInit {
     modelStep.modelTasks.push(modelTask);
   }
 
+  validateForm() {
+    debugger;
+    let elements = document.getElementsByClassName('task-type');
+
+    for (let i = 0; i < elements.length; i++) {
+      let element: any = elements[i];
+      if (element.value == '') {
+        alert('O campo "Tipo Tarefa" deve ser preenchido em todas as atividades!');
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   public saveProcess() {
-    console.log(this.modelProcess);
+    if (this.validateForm()) {
+      console.log('Form VÁLIDO!');
+      console.log(this.modelProcess);
+    } else {
+      console.log('Form INVÁLIDO!');
+    }
   }
 
   toggleElement(element) {
@@ -73,11 +93,17 @@ export class ProcessRegistrationComponent implements OnInit {
   }
 
   public selectStep(step: ModelStep) {
-    this.selectedStep = step;
+    if (this.validateForm()) {
+      this.selectedStep = step;
+    }
   }
 
   public removeStep(step: ModelStep) {
     this.modelProcess.modelSteps = this.modelProcess.modelSteps.filter(o => o.id != step.id);
+  }
+
+  public removeTask(task: ModelTask) {
+    this.selectedStep.modelTasks = this.selectedStep.modelTasks.filter(o => o.id != task.id);
   }
 
   goBack() {

@@ -25,33 +25,33 @@ import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        CustomersListComponent,
-        WorklistComponent,
-        TimelineComponent,
-        TaskComponent,
-        LoginComponent,
-        LogoutComponent,
-        OrderByPipe,
-        DashboardComponent,
-        ContentComponent,
-        CustomerRegistrationComponent,
-        ProcessesListComponent,
-        ProcessRegistrationComponent
-    ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        RouterModule,
-        HttpClientModule,
-        NgbModule,
-        NgxChartsModule,
-        BrowserAnimationsModule,
-        FormsModule
-    ],
-    providers: [AuthService],
-    bootstrap: [AppComponent],
-    entryComponents: [CustomerRegistrationComponent]
+  declarations: [
+    AppComponent,
+    CustomersListComponent,
+    WorklistComponent,
+    TimelineComponent,
+    TaskComponent,
+    LoginComponent,
+    LogoutComponent,
+    OrderByPipe,
+    DashboardComponent,
+    ContentComponent,
+    CustomerRegistrationComponent,
+    ProcessesListComponent,
+    ProcessRegistrationComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    RouterModule,
+    HttpClientModule,
+    NgbModule,
+    NgxChartsModule,
+    BrowserAnimationsModule,
+    FormsModule
+  ],
+  providers: [AuthService],
+  bootstrap: [AppComponent],
+  entryComponents: [CustomerRegistrationComponent]
 })
 export class AppModule { }

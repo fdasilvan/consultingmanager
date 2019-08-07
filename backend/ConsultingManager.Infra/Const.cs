@@ -37,6 +37,14 @@ namespace ConsultingManager.Infra
                     return Guid.Parse("43C2E87C-35A8-47C0-A4DD-D233B836DD4A");
                 }
             }
+
+            public static Guid Specialist
+            {
+                get
+                {
+                    return Guid.Parse("420884BA-D345-4E60-A289-02EF8DCF73B4");
+                }
+            }
         }
 
         public static class TaskTypes

@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
 
   public loggedUser: User;
   public canRegisterProcesses: boolean = false;
+  public canEditProcesses: boolean = false;
 
   ngOnInit() {
     this.loggedUser = this.userService.getUser();
@@ -37,5 +38,6 @@ export class AppComponent implements OnInit {
 
   verifyPermissions() {
     this.canRegisterProcesses = (this.loggedUser.userType.description == 'Administrador' || this.loggedUser.userType.description == 'Líder' || this.loggedUser.userType.description == 'Especialista');
+    this.canEditProcesses = (this.loggedUser.userType.description == 'Administrador' || this.loggedUser.userType.description == 'Líder' || this.loggedUser.userType.description == 'Especialista');
   }
 }
