@@ -42,7 +42,7 @@ namespace ConsultingManager.Infra
             {
                 get
                 {
-                    return Guid.Parse("420884BA-D345-4E60-A289-02EF8DCF73B4");
+                    return Guid.Parse("26C152BE-CEDD-4C77-90F5-69F986D600F2");
                 }
             }
         }
