@@ -1,0 +1,68 @@
+<section class="row">
+  <div class="col-12">
+    <div class="card mb-4">
+      <div class="card-header">
+        <h3 class="card-title">Cadastro de Encontros</h3>
+      </div>
+      <div class="card-block">
+        <div class="card-block btn-margins">
+          <div class="mb-4">
+            <h3 class="mb-4">Cliente: {{this.customer.name}} </h3>
+            <p>Plano: {{this.customer.plan ? this.customer.plan.description : 'Não informado'}}</p>
+            <p>Duração:
+              {{this.customer.plan && this.customer.plan.duration ? this.customer.plan.duration + ' meses' : 'Não informado'}}
+            </p>
+          </div>
+          <div *ngIf="this.meetingsList.length == 0" class="row ml-4 mb-4">
+            <div class="col-md-2">
+              <label class="col-form-label">Número de Encontros: </label>
+            </div>
+            <div class="col-md-2">
+              <input #txtQtyMeetings name="txtQtyMeetings" placeholder="Ex.: 12" type="number" class="form-control">
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-warning margin" (click)="suggestMeetings(txtQtyMeetings.value)" type="button"><span
+                  class="fa fa-clock-o"></span>
+                Sugerir</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Encontros</h3>
+            </div>
+            <div class="card-block">
+              <p *ngIf="this.meetingsList.length == 0">Ainda não foram cadastardos encontros para este cliente!</p>
+              <div class="mb-4 ml-2 row">
+                <button class="btn btn-warning margin" (click)="addMeeting()" type="button"><span
+                    class="fa fa-plus"></span>
+                  Encontro</button>
+              </div>
+              <div class="row ml-2 mb-2" *ngFor="let meeting of this.meetingsList | orderBy: 'date'; let i = index">
+                <div class="meeting-control row">
+                  <p class="ml-2 text-muted">{{i + 1}}</p>
+                  <input #txtMeetingDate name="txtMeetingDate" [ngModel]="meeting.date | date:'yyyy-MM-dd'"
+                    (ngModelChange)="meeting.date=$event" [ngModelOptions]="{ standalone: true }" type="date"
+                    class="meeting-date form-control ml-2">
+                  <p class="ml-4 text-muted">{{ meeting.date | date: 'EEEE' }}</p>
+                </div>
+                <div class="ml-2">
+                  <em (click)="removeMeeting(meeting)" class="fa fa-times"></em>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="floating-container mb-4">
+          <div class="floating-content">
+            <button class="btn btn-lg btn-secondary" (click)="goBack()" type="button">
+              <span class="fa fa-arrow-left"></span> Voltar
+            </button>
+            <button class="btn btn-lg btn-primary" (click)="saveProcess()">
+              <span class="fa fa-check"></span> {{ this.isEdit ? 'Atualizar' : 'Salvar' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

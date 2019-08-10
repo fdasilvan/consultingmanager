@@ -10,6 +10,7 @@ import { CustomerCategory } from 'src/app/models/customercategory.model';
 import { Plan } from 'src/app/models/plan.model';
 import { CustomerSituation } from 'src/app/models/customersituation.model';
 import { User } from 'src/app/models/user.model';
+import { CustomerMeeting } from 'src/app/models/customermeeting.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,16 @@ export class CustomersService {
       let response = await this.http.post<Customer>(`${environment.apiUrl}/customer`, customerDto).toPromise();
       return response;
     }
+  }
+
+  public async saveMeetings(customerId: string, customerMeetings: CustomerMeeting[]): Promise<boolean> {
+    let response = await this.http.post<boolean>(`${environment.apiUrl}/customer/${customerId}/meetings`, customerMeetings).toPromise();
+    return response;
+  }
+
+  public async getMeetings(customerId: string): Promise<CustomerMeeting[]> {
+    var response = await this.http.get<CustomerMeeting[]>(`${environment.apiUrl}/customer/${customerId}/meetings`);
+    return response.toPromise();
   }
 
   public async getAll(): Promise<Customer[]> {

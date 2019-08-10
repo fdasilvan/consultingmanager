@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ConsultingManager.Dto;
 
@@ -8,6 +9,8 @@ namespace ConsultingManager.Domain.Repository
     {
         Task<CustomerDto> Add(CustomerDto customerDto);
         Task<CustomerDto> Update(CustomerDto customerDto);
+        Task<bool> AddMeetings(Guid customerId, List<CustomerMeetingDto> customerMeetings);
+        Task<List<CustomerMeetingDto>> GetMeetings(Guid customerId);
         Task<List<CustomerDto>> GetAll();
         Task<List<ChartResultDto>> GetChartResult();
         Task<List<CityDto>> GetCities();

@@ -4,14 +4,16 @@ using ConsultingManager.Infra.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConsultingManager.Infra.Migrations
 {
     [DbContext(typeof(ConsultingManagerDbContext))]
-    partial class ConsultingManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190807225532_added-customer-meeting-registration")]
+    partial class addedcustomermeetingregistration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -312,6 +314,8 @@ namespace ConsultingManager.Infra.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("DaysBetweenMeetings");
+
                     b.Property<string>("Description");
 
                     b.Property<int>("Duration");
@@ -447,7 +451,7 @@ namespace ConsultingManager.Infra.Migrations
             modelBuilder.Entity("ConsultingManager.Infra.Database.Models.CustomerMeetingPoco", b =>
                 {
                     b.HasOne("ConsultingManager.Infra.Database.Models.CustomerPoco", "Customer")
-                        .WithMany("CustomerMeetings")
+                        .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });

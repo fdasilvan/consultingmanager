@@ -22,6 +22,7 @@ import { WorklistComponent } from './components/worklist/worklist.component';
 import { ProcessesListComponent } from './components/process/processes-list/processes-list.component';
 import { ProcessRegistrationComponent } from './components/process/process-registration/process-registration.component';
 import { FormsModule } from '@angular/forms';
+import { CustomerMeetingsComponent } from './components/customers/customer-meetings/customer-meetings.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { FormsModule } from '@angular/forms';
     ContentComponent,
     CustomerRegistrationComponent,
     ProcessesListComponent,
-    ProcessRegistrationComponent
+    ProcessRegistrationComponent,
+    CustomerMeetingsComponent
   ],
   imports: [
     BrowserModule,

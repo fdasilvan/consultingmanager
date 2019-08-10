@@ -54,6 +54,52 @@ namespace ConsultingManager.Domain.Repository
             }
         }
 
+        public async Task<List<CustomerMeetingDto>> GetMeetings(Guid customerId)
+        {
+            try
+            {
+                return await Context.CustomerMeetings
+                    .Include(o => o.Customer)
+                        .ThenInclude(o => o.Plan)
+                    .Where(o => o.CustomerId == customerId)
+                    .Select(o => o.MapTo<CustomerMeetingDto>())
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<bool> AddMeetings(Guid customerId, List<CustomerMeetingDto> customerMeetings)
+        {
+            try
+            {
+                foreach (CustomerMeetingDto customerMeetingDto in customerMeetings)
+                {
+                    if (customerId == customerMeetingDto.CustomerId)
+                    {
+                        var customerMeetingToEdit = await Context.CustomerMeetings.SingleOrDefaultAsync(o => o.Id == customerMeetingDto.Id);
+
+                        if (customerMeetingToEdit == null)
+                        {
+                            var lst = Context.CustomerMeetings.Add(customerMeetingDto.MapTo<CustomerMeetingPoco>());
+                        }
+                        else
+                        {
+                            customerMeetingToEdit.Date = customerMeetingDto.Date;
+                        }
+                    }
+                }
+                await Context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task<List<CustomerDto>> GetAll()
         {
             return await Context.Customers

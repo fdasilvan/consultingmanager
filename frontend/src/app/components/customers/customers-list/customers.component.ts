@@ -52,9 +52,14 @@ export class CustomersListComponent implements OnInit {
     window.sessionStorage.setItem('customer', JSON.stringify(customer));
   }
 
-  registerCustomer(customer) {
+  customerRegistration(customer) {
     window.sessionStorage.setItem('customer', JSON.stringify(customer));
     this.router.navigate(['customer-registration']);
+  }
+
+  customerMeetings(customer) {
+    window.sessionStorage.setItem('customer', JSON.stringify(customer));
+    this.router.navigate(['customer-meetings']);
   }
 
   loadConsultantsList() {

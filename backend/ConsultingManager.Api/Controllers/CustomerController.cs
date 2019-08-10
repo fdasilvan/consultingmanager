@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ConsultingManager.Domain.Repository;
+﻿using ConsultingManager.Domain.Repository;
 using ConsultingManager.Dto;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ConsultingManager.Api.Controllers
 {
@@ -29,9 +27,37 @@ namespace ConsultingManager.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(CustomerDto customerDto)
         {
-            try { 
-            return Ok(await _customerRepository.Update(customerDto));
-            } catch (Exception ex)
+            try
+            {
+                return Ok(await _customerRepository.Update(customerDto));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao atualizar cliente: " + ex.Message);
+            }
+        }
+
+        [HttpPost("{customerId}/meetings")]
+        public async Task<IActionResult> AddMeetings(Guid customerId, List<CustomerMeetingDto> customerMeetingsDto)
+        {
+            try
+            {
+                return Ok(await _customerRepository.AddMeetings(customerId, customerMeetingsDto));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao atualizar cliente: " + ex.Message);
+            }
+        }
+
+        [HttpGet("{customerId}/meetings")]
+        public async Task<IActionResult> GetMeetings(Guid customerId)
+        {
+            try
+            {
+                return Ok(await _customerRepository.GetMeetings(customerId));
+            }
+            catch (Exception ex)
             {
                 return BadRequest("Erro ao atualizar cliente: " + ex.Message);
             }

@@ -54,7 +54,6 @@ namespace ConsultingManager.Domain.Repository
             customerTask.CustomerStep.CustomerTasks = null;
 
             return customerTask;
-
         }
 
         public async Task<CustomerTaskDto> FinishTask(Guid taskId)

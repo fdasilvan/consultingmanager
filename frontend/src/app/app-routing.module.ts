@@ -12,6 +12,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CustomerRegistrationComponent } from './components/customers/customer-registration/customer-registration.component';
 import { ProcessesListComponent } from './components/process/processes-list/processes-list.component';
 import { ProcessRegistrationComponent } from './components/process/process-registration/process-registration.component';
+import { CustomerMeetingsComponent } from './components/customers/customer-meetings/customer-meetings.component';
 
 const routes: Routes = [
   {
@@ -49,6 +50,10 @@ const routes: Routes = [
   {
     path: 'customer-registration',
     component: CustomerRegistrationComponent
+  },
+  {
+    path: 'customer-meetings',
+    component: CustomerMeetingsComponent
   },
   {
     path: 'dashboard',

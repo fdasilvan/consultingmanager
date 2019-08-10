@@ -1,0 +1,37 @@
+.meeting-control {
+  width: 300px;
+}
+
+.meeting-date {
+  width: 85%;
+}
+
+.floating-container {
+  position: fixed;
+  bottom: -25px;
+  right: 50px;
+  cursor: pointer;
+  border: solid 1px #dfdfdf;
+  background-color: #fff;
+  text-align: center;
+  display: block;
+  float: left;
+  padding: 0.9rem;
+}
+
+.floating-content {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.btn-steps {
+  border-radius: 0px;
+  background-color: #fff !important;
+  color: #7376df !important;
+}
+
+.btn-steps-selected {
+  border-radius: 0px;
+  background-color: #7376df !important;
+  color: #fff !important;
+}
