@@ -107,7 +107,6 @@ namespace ConsultingManager.Domain.Repository
                 .Include(o => o.Plan)
                 .Include(o => o.Situation)
                 .Include(o => o.Category)
-                .Include(o => o.City)
                 .Include(o => o.Users)
                 .Include(o => o.Consultant)
                     .ThenInclude(o => o.UserType)

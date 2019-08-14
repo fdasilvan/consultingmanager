@@ -93,7 +93,7 @@
               <select #lstCities id="lstCities" class="custom-select form-control">
                 <option value="">Não informado</option>
                 <option *ngFor="let city of this.citiesList"
-                  [selected]="(this.customer && this.customer.city ? this.customer.city.id == city.id : false)"
+                  [selected]="(this.customer && this.customer.cityId ? this.customer.cityId == city.id : false)"
                   value="{{city.id}}">
                   {{city.name}} - {{city.state}}
                 </option>
