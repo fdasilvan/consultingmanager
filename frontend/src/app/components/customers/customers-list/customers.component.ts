@@ -62,6 +62,11 @@ export class CustomersListComponent implements OnInit {
     this.router.navigate(['customer-meetings']);
   }
 
+  customerFlightplan(customer) {
+    window.sessionStorage.setItem('customer', JSON.stringify(customer));
+    this.router.navigate(['flightplan']);
+  }
+
   loadConsultantsList() {
     if (this.customers && this.customers.length > 0) {
       for (let i = 0; i < this.customers.length; i++) {

@@ -23,6 +23,7 @@ import { ProcessesListComponent } from './components/process/processes-list/proc
 import { ProcessRegistrationComponent } from './components/process/process-registration/process-registration.component';
 import { FormsModule } from '@angular/forms';
 import { CustomerMeetingsComponent } from './components/customers/customer-meetings/customer-meetings.component';
+import { FlightplanComponent } from './components/flightplan/flightplan.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { CustomerMeetingsComponent } from './components/customers/customer-meeti
     CustomerRegistrationComponent,
     ProcessesListComponent,
     ProcessRegistrationComponent,
-    CustomerMeetingsComponent
+    CustomerMeetingsComponent,
+    FlightplanComponent
   ],
   imports: [
     BrowserModule,

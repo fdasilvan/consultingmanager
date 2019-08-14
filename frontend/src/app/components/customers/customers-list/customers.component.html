@@ -24,11 +24,12 @@
               <thead>
                 <tr>
                   <th scope="col">Nome</th>
-                  <th scope="col">Editar</th>
-                  <th scope="col">Encontros</th>
                   <th scope="col">Consultor</th>
                   <th scope="col">Plano</th>
                   <th scope="col">Situação</th>
+                  <th scope="col">Editar</th>
+                  <th scope="col">Encontros</th>
+                  <th scope="col">Pl. de Vôo</th>
                 </tr>
               </thead>
               <tbody>
@@ -38,6 +39,9 @@
                         (click)="goToCustomerTimeline(customer, $event);">{{customer.name}}</a>
                     </h4>
                   </td>
+                  <td>{{(customer.consultant ? customer.consultant.name : 'Não atribuido')}}</td>
+                  <td>{{(customer.plan ? customer.plan.description : 'Não informado')}}</td>
+                  <td>{{(customer.situation ? customer.situation.description : 'Não informada')}}</td>
                   <td>
                     <h4><a href="javascript:void(0)" (click)="customerRegistration(customer);"><em
                           class="fa fa-edit"></em></a>
@@ -48,9 +52,11 @@
                           class="fa fa-users"></em></a>
                     </h4>
                   </td>
-                  <td>{{(customer.consultant ? customer.consultant.name : 'Não atribuido')}}</td>
-                  <td>{{(customer.plan ? customer.plan.description : 'Não informado')}}</td>
-                  <td>{{(customer.situation ? customer.situation.description : 'Não informada')}}</td>
+                  <td>
+                    <h4><a href="javascript:void(0)" (click)="customerFlightplan(customer);"><em
+                          class="fa fa-plane"></em></a>
+                    </h4>
+                  </td>
                 </tr>
               </tbody>
             </table>
