@@ -8,6 +8,7 @@ export class ModelTask {
     startAfterDays: number;
     dueDays: number;
     taskTypeId: string;
+    modelStepId: string;
     taskContent: TaskContent[];
 
     constructor() {

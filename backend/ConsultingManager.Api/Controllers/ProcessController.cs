@@ -31,9 +31,9 @@ namespace ConsultingManager.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(ModelProcessDto modelProcessDto)
+        public async Task<IActionResult> Save(ModelProcessDto modelProcessDto)
         {
-            return Ok(await _processRepository.Add(modelProcessDto));
+            return Ok(await _processRepository.Save(modelProcessDto));
         }
 
         [HttpPost("start")]

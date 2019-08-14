@@ -12,6 +12,7 @@ namespace ConsultingManager.Dto
         public int Duration { get; set; }
         public int StartAfterDays { get; set; }
         public int DueDays { get; set; }
+        public Guid ModelStepId { get; set; }
 
         public Guid TaskTypeId { get; set; }
         public TaskTypeDto TaskType { get; set; }

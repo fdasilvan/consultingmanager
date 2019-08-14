@@ -37,6 +37,11 @@ export class ProcessService {
     return response;
   }
 
+  public async saveProcess(modelProcess: ModelProcess): Promise<boolean> {
+    let response = await this.http.post<boolean>(`${environment.apiUrl}/process`, modelProcess).toPromise();
+    return response;
+  }
+
   public async getCustomerProcesses(customerId: string): Promise<CustomerProcess[]> {
     var response = await this.http.get<CustomerProcess[]>(`${environment.apiUrl}/process/customer/${customerId}`);
     return response.toPromise();

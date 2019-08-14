@@ -80,7 +80,23 @@ namespace ConsultingManager.Infra.Database
             modelBuilder.Entity<CustomerSituationPoco>().HasData(new CustomerSituationPoco() { Id = Const.CustomerSituations.Active, Description = "Ativo" });
             modelBuilder.Entity<CustomerSituationPoco>().HasData(new CustomerSituationPoco() { Id = Const.CustomerSituations.Paused, Description = "Pausado" });
             modelBuilder.Entity<CustomerSituationPoco>().HasData(new CustomerSituationPoco() { Id = Const.CustomerSituations.Blocked, Description = "Bloqueado" });
-            modelBuilder.Entity<CustomerSituationPoco>().HasData(new CustomerSituationPoco() { Id = Const.CustomerSituations.Canceled, Description = "Cancelado" });            
+            modelBuilder.Entity<CustomerSituationPoco>().HasData(new CustomerSituationPoco() { Id = Const.CustomerSituations.Canceled, Description = "Cancelado" });
+
+            #endregion
+
+            #region ModelProcess x ModelSteps 1-to-n relationship
+
+            modelBuilder.Entity<ModelProcessPoco>()
+                .HasMany(c => c.ModelSteps)
+                .WithOne(e => e.Process);
+
+            #endregion
+
+            #region ModelStep x ModelTasks 1-to-n relationship
+
+            modelBuilder.Entity<ModelStepPoco>()
+                .HasMany(c => c.ModelTasks)
+                .WithOne(e => e.ModelStep);
 
             #endregion
 

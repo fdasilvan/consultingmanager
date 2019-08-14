@@ -8,6 +8,7 @@ namespace ConsultingManager.Dto
     {
         public Guid Id { get; set; }
         public string Description { get; set; }
+        public Guid ProcessId { get; set; }
         public ICollection<ModelTaskDto> ModelTasks { get; set; }
     }
 }

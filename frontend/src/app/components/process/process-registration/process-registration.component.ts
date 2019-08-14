@@ -3,6 +3,8 @@ import { ModelProcess } from 'src/app/models/modelprocess.model';
 import { ModelStep } from 'src/app/models/modelstep.model';
 import { ModelTask } from 'src/app/models/modeltask.model';
 import { v4 as newGuid } from 'uuid';
+import { ProcessService } from 'src/app/services/process/process.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-process-registration',
@@ -11,7 +13,8 @@ import { v4 as newGuid } from 'uuid';
 })
 export class ProcessRegistrationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router,
+    private processService: ProcessService) { }
 
   public selectedStep: ModelStep;
   public modelProcess: ModelProcess;
@@ -46,6 +49,7 @@ export class ProcessRegistrationComponent implements OnInit {
     modelStep.id = newGuid();
     modelStep.description = 'Nova Etapa';
     modelStep.modelTasks = [];
+    modelStep.processId = this.modelProcess.id;
 
     this.modelProcess.modelSteps.push(modelStep);
 
@@ -59,14 +63,13 @@ export class ProcessRegistrationComponent implements OnInit {
 
     modelTask.id = newGuid();
     modelTask.taskContent = [];
+    modelTask.modelStepId = modelStep.id;
 
     modelStep.modelTasks.push(modelTask);
   }
 
   validateForm() {
-    debugger;
     let elements = document.getElementsByClassName('task-type');
-
     for (let i = 0; i < elements.length; i++) {
       let element: any = elements[i];
       if (element.value == '') {
@@ -82,6 +85,9 @@ export class ProcessRegistrationComponent implements OnInit {
     if (this.validateForm()) {
       console.log('Form VÁLIDO!');
       console.log(this.modelProcess);
+      this.processService.saveProcess(this.modelProcess);
+      alert('Processo salvo com sucesso!');
+      this.router.navigate(['processes']);
     } else {
       console.log('Form INVÁLIDO!');
     }

@@ -28,11 +28,63 @@ namespace ConsultingManager.Domain.Repository
                 .ToListAsync();
         }
 
-        public async Task<ModelProcessDto> Add(ModelProcessDto modelProcessoDto)
+        public async Task<bool> Save(ModelProcessDto modelProcessDto)
         {
-            var newProcess = Context.ModelProcesses.Add(modelProcessoDto.MapTo<ModelProcessPoco>());
-            await Context.SaveChangesAsync();
-            return newProcess.Entity.MapTo<ModelProcessDto>();
+            try
+            {
+                var modelProcessToEdit = await Context.ModelProcesses.SingleOrDefaultAsync(o => o.Id == modelProcessDto.Id);
+
+                if (modelProcessToEdit == null)
+                {
+                    var newProcess = Context.ModelProcesses.Add(modelProcessDto.MapTo<ModelProcessPoco>());
+                }
+                else
+                {
+                    modelProcessToEdit.Description = modelProcessDto.Description;
+
+                    foreach (ModelStepDto step in modelProcessDto.ModelSteps)
+                    {
+                        ModelStepPoco modelStepPoco = Context.ModelSteps.FirstOrDefault(o => o.Id == step.Id);
+
+                        if (modelStepPoco == null)
+                        {
+                            var newStep = Context.ModelSteps.Add(step.MapTo<ModelStepPoco>());
+                        }
+                        else
+                        {
+                            modelStepPoco.Description = step.Description;
+                            modelStepPoco.ProcessId = modelProcessToEdit.Id;
+
+                            foreach (ModelTaskDto task in step.ModelTasks)
+                            {
+                                ModelTaskPoco modelTaskPoco = Context.ModelTasks.FirstOrDefault(o => o.Id == task.Id);
+
+                                if (modelTaskPoco == null)
+                                {
+                                    var newTask = Context.ModelTasks.Add(task.MapTo<ModelTaskPoco>());
+                                }
+                                else
+                                {
+                                    modelTaskPoco.ModelStepId = step.Id;
+                                    modelTaskPoco.Description = task.Description;
+                                    modelTaskPoco.TaskTypeId = task.TaskTypeId;
+                                    modelTaskPoco.Instructions = task.Instructions;
+                                    modelTaskPoco.Duration = task.Duration;
+                                    modelTaskPoco.StartAfterDays = task.StartAfterDays;
+                                    modelTaskPoco.DueDays = task.DueDays;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                await Context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<CustomerProcessDto> StartCustomerProcess(ModelProcessDto modelProcessDto, Guid customerId, Guid consultantId, Guid customerUserId, DateTime startDate)

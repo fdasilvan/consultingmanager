@@ -8,11 +8,9 @@ namespace ConsultingManager.Infra.Database.Models
     {
         public Guid Id { get; set; }
         public string Description { get; set; }
-
         public Guid ProcessId { get; set; }
         [ForeignKey(nameof(ProcessId))]
         public ModelProcessPoco Process { get; set; }
-
         public virtual ICollection<ModelTaskPoco> ModelTasks { get; set; }
     }
 }
