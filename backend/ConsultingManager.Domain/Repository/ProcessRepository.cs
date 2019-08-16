@@ -189,29 +189,32 @@ namespace ConsultingManager.Domain.Repository
 
         public async Task<List<CustomerProcessDto>> GetCustomerTasks(Guid customerId)
         {
+
             List<CustomerProcessDto> processesList = await Context.CustomerProcesses
                 .Include(process => process.CustomerSteps)
-                    .ThenInclude(step => step.CustomerTasks)
-                        .ThenInclude(task => task.Customer)
-                .Include(process => process.CustomerSteps)
-                    .ThenInclude(step => step.CustomerTasks)
-                        .ThenInclude(task => task.CustomerUser)
-                .Include(process => process.CustomerSteps)
-                    .ThenInclude(step => step.CustomerTasks)
-                        .ThenInclude(task => task.Consultant)
-                .Include(process => process.CustomerSteps)
-                    .ThenInclude(step => step.CustomerTasks)
-                        .ThenInclude(task => task.Owner)
-                .Include(process => process.CustomerSteps)
-                    .ThenInclude(step => step.CustomerTasks)
-                        .ThenInclude(task => task.TaskType)
-                .Include(process => process.CustomerSteps)
-                    .ThenInclude(step => step.CustomerTasks)
-                        .ThenInclude(task => task.ModelTask)
-                            .ThenInclude(modelTask => modelTask.TaskContent)
                 .Where(process => process.CustomerId == customerId)
                 .Select(process => process.MapTo<CustomerProcessDto>())
                 .ToListAsync();
+
+            foreach (CustomerProcessDto customerProcess in processesList)
+            {
+                foreach (CustomerStepDto customerStep in customerProcess.CustomerSteps)
+                {
+                    List<CustomerTaskDto> customerTasks = await Context.CustomerTasks
+                            .Include(task => task.Customer)
+                            .Include(task => task.CustomerUser)
+                            .Include(task => task.Consultant)
+                            .Include(task => task.Owner)
+                            .Include(task => task.TaskType)
+                            .Include(task => task.ModelTask)
+                                .ThenInclude(modelTask => modelTask.TaskContent)
+                        .Where(o => o.CustomerStepId == customerStep.Id)
+                        .Select(task => task.MapTo<CustomerTaskDto>())
+                        .ToListAsync();
+
+                    customerStep.CustomerTasks = customerTasks;
+                }
+            }
 
             foreach (CustomerProcessDto process in processesList)
             {
