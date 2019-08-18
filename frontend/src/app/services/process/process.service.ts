@@ -18,7 +18,7 @@ export class ProcessService {
   }
 
   public async startCustomerProcess(modelProcessId: string, modelProcessDescription: string, customerId: string,
-    consultantId: string, customerUserId: string, startDate: Date): Promise<CustomerProcess> {
+    consultantId: string, customerUserId: string, startDate: Date, customerMeetingId: string): Promise<CustomerProcess> {
 
     let modelProcess: ModelProcess = new ModelProcess();
     modelProcess.id = modelProcessId;
@@ -30,7 +30,8 @@ export class ProcessService {
       customerId: customerId,
       consultantId: consultantId,
       customerUserId: customerUserId,
-      startDate: startDate
+      startDate: startDate,
+      customerMeetingId: customerMeetingId
     };
 
     let response = await this.http.post<CustomerProcess>(`${environment.apiUrl}/process/start`, params).toPromise();

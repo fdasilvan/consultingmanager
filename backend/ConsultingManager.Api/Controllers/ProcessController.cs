@@ -43,11 +43,12 @@ namespace ConsultingManager.Api.Controllers
             {
                 ModelProcessDto modelProcess = new ModelProcessDto();
 
-                modelProcess.Id = startCustomerProcessDto.modelProcessId;
-                modelProcess.Description = startCustomerProcessDto.modelProcessDescription;
+                modelProcess.Id = startCustomerProcessDto.ModelProcessId;
+                modelProcess.Description = startCustomerProcessDto.ModelProcessDescription;
 
-                return Ok(await _processRepository.StartCustomerProcess(modelProcess, startCustomerProcessDto.customerId, 
-                    startCustomerProcessDto.consultantId, startCustomerProcessDto.customerUserId, startCustomerProcessDto.startDate));
+                return Ok(await _processRepository.StartCustomerProcess(modelProcess, startCustomerProcessDto.CustomerId,
+                    startCustomerProcessDto.ConsultantId, startCustomerProcessDto.CustomerUserId, startCustomerProcessDto.StartDate,
+                    startCustomerProcessDto.CustomerMeetingId));
             }
             catch (Exception ex)
             {

@@ -6,6 +6,7 @@ export class CustomerProcess {
     startDate: Date;
     estimateEndDate: Date;
     endDate: Date;
+    customerMeetingId: string;
     customerSteps: CustomerStep[];
 
     constructor() {

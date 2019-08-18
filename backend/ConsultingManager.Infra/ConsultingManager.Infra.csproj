@@ -33,6 +33,7 @@
     <Compile Remove="Migrations\20190627224417_added-customer-information.cs" />
     <Compile Remove="Migrations\20190627224524_added-customer-information.cs" />
     <Compile Remove="Migrations\20190814223223_added-model-process-relationship.cs" />
+    <Compile Remove="Migrations\20190816191030_added-meeting-process-relationship.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -64,7 +64,7 @@ export class TimelineComponent implements OnInit {
   }
 
   async startCustomerProcess(modelProcessId: string, modelDescription: string, customerUserId: string, startDate: string) {
-    await this.processService.startCustomerProcess(modelProcessId, modelDescription, this.customer.id, this.loggedUser.id, customerUserId, new Date(startDate));
+    await this.processService.startCustomerProcess(modelProcessId, modelDescription, this.customer.id, this.loggedUser.id, customerUserId, new Date(startDate), null);
     this.modalObject.close();
     this.router.navigate(['worklist']);
   }

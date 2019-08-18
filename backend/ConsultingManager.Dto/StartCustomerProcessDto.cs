@@ -6,11 +6,12 @@ namespace ConsultingManager.Dto
 {
     public class StartCustomerProcessDto
     {
-        public Guid modelProcessId { get; set; }
-        public string modelProcessDescription { get; set; }
-        public Guid customerId { get; set; }
-        public Guid consultantId { get; set; }
-        public Guid customerUserId { get; set; }
-        public DateTime startDate { get; set; }
+        public Guid ModelProcessId { get; set; }
+        public string ModelProcessDescription { get; set; }
+        public Guid CustomerId { get; set; }
+        public Guid ConsultantId { get; set; }
+        public Guid CustomerUserId { get; set; }
+        public DateTime StartDate { get; set; }
+        public Guid? CustomerMeetingId { get; set; }
     }
 }

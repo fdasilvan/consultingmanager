@@ -1,3 +1,34 @@
-<p>
-  EM DESENVOLVIMENTO!
-</p>
+<section class="row">
+  <div class="col-12">
+    <div class="card mb-4">
+      <div class="card-header">
+        <h3 class="card-title">Plano de Vôo</h3>
+      </div>
+      <div class="card-block btn-margins">
+        <h3 class="mb-4">Cliente: {{this.customer.name}}</h3>
+        <h5 class="mb-4">Encontros: </h5>
+        <div>
+          <div class="mb-4 ml-2 row">
+            <p *ngIf="this.meetings.length == 0">Não há encontros cadastardos para este cliente!</p>
+            <div class="margin" *ngFor="let meeting of this.meetings | orderBy: 'date'">
+              <button class="btn btn-lg btn-primary btn-steps margin" (click)="selectMeeting(meeting)" type="button">
+                {{meeting.date | date: 'dd/MM/yyyy'}}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="this.selectedMeeting">
+          <div>
+            <h5 class="mb-4">Plano de Vôo {{this.selectedMeeting.date | date: 'dd/MM/yyyy'}}</h5>
+            <p *ngIf="this.processes.length == 0">Não há planos de ação definidos para este encontro!</p>
+            <div class="margin" *ngFor="let process of this.processes | orderBy: 'startDate'">
+              <button class="btn btn-lg btn-primary btn-steps margin" (click)="selectMeeting(meeting)" type="button">
+                {{process.date | date: 'dd/MM/yyyy'}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

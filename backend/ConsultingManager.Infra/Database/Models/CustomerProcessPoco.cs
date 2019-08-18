@@ -20,6 +20,10 @@ namespace ConsultingManager.Infra.Database.Models
         [ForeignKey(nameof(CustomerId))]
         public CustomerPoco Customer { get; set; }
 
+        public Guid? CustomerMeetingId { get; set; }
+        [ForeignKey(nameof(CustomerMeetingId))]
+        public CustomerMeetingPoco CustomerMeeting { get; set; }
+
         public virtual ICollection<CustomerStepPoco> CustomerSteps { get; set; }
     }
 }

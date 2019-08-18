@@ -108,6 +108,14 @@ namespace ConsultingManager.Infra.Database
 
             #endregion
 
+            #region CustomerMeeting x CustomerProcess 1-to-n relationship
+
+            modelBuilder.Entity<CustomerMeetingPoco>()
+                .HasMany(c => c.CustomerProcesses)
+                .WithOne(e => e.CustomerMeeting);
+
+            #endregion
+
             #region CustomerProcess x CustomerStep 1-to-n relationship
 
             modelBuilder.Entity<CustomerProcessPoco>()

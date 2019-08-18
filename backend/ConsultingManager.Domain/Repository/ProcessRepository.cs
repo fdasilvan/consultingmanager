@@ -87,7 +87,7 @@ namespace ConsultingManager.Domain.Repository
             }
         }
 
-        public async Task<CustomerProcessDto> StartCustomerProcess(ModelProcessDto modelProcessDto, Guid customerId, Guid consultantId, Guid customerUserId, DateTime startDate)
+        public async Task<CustomerProcessDto> StartCustomerProcess(ModelProcessDto modelProcessDto, Guid customerId, Guid consultantId, Guid customerUserId, DateTime startDate, Guid? customerMeetingId)
         {
             CustomerProcessPoco customerProcess = new CustomerProcessPoco();
 
@@ -168,6 +168,7 @@ namespace ConsultingManager.Domain.Repository
             customerProcess.CustomerSteps = lstCustomerSteps;
             customerProcess.EstimatedEndDate = (processEstimatedEndDate.HasValue ? processEstimatedEndDate.Value : throw new Exception("Data final do processo não definida"));
             customerProcess.EndDate = null;
+            customerProcess.CustomerMeetingId = customerMeetingId;
 
             Context.CustomerProcesses.Add(customerProcess);
             await Context.SaveChangesAsync();
@@ -187,9 +188,52 @@ namespace ConsultingManager.Domain.Repository
             return customerProcessDto;
         }
 
+        public async Task<List<CustomerProcessDto>> GetMeetingProcesses(Guid customerMeetingId)
+        {
+            List<CustomerProcessDto> processesList = await Context.CustomerProcesses
+                .Include(process => process.CustomerSteps)
+                .Where(process => process.CustomerMeetingId == customerMeetingId)
+                .Select(process => process.MapTo<CustomerProcessDto>())
+                .ToListAsync();
+
+            foreach (CustomerProcessDto customerProcess in processesList)
+            {
+                foreach (CustomerStepDto customerStep in customerProcess.CustomerSteps)
+                {
+                    List<CustomerTaskDto> customerTasks = await Context.CustomerTasks
+                            .Include(task => task.Customer)
+                            .Include(task => task.CustomerUser)
+                            .Include(task => task.Consultant)
+                            .Include(task => task.Owner)
+                            .Include(task => task.TaskType)
+                            .Include(task => task.ModelTask)
+                                .ThenInclude(modelTask => modelTask.TaskContent)
+                        .Where(o => o.CustomerStepId == customerStep.Id)
+                        .Select(task => task.MapTo<CustomerTaskDto>())
+                        .ToListAsync();
+
+                    customerStep.CustomerTasks = customerTasks;
+                }
+            }
+
+            foreach (CustomerProcessDto process in processesList)
+            {
+                foreach (CustomerStepDto step in process.CustomerSteps)
+                {
+                    step.CustomerProcess = null;
+
+                    foreach (CustomerTaskDto task in step.CustomerTasks)
+                    {
+                        task.CustomerStep = null;
+                    }
+                }
+            }
+
+            return processesList;
+        }
+
         public async Task<List<CustomerProcessDto>> GetCustomerTasks(Guid customerId)
         {
-
             List<CustomerProcessDto> processesList = await Context.CustomerProcesses
                 .Include(process => process.CustomerSteps)
                 .Where(process => process.CustomerId == customerId)
