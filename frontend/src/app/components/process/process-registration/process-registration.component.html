@@ -60,10 +60,12 @@
                       <select #lstTaskType name="lstTaskType" [(ngModel)]="task.taskTypeId"
                         [ngModelOptions]="{ standalone: true }" class="custom-select form-control task-type" required>
                         <option value=""></option>
-                        <option [selected]="(task && task.taskTypeId ? task.taskTypeId.toLowerCase() == 'e84138fe-a7c6-4724-865f-1c4cab8be234' : false)"
+                        <option
+                          [selected]="(task && task.taskTypeId ? task.taskTypeId.toLowerCase() == 'e84138fe-a7c6-4724-865f-1c4cab8be234' : false)"
                           value="e84138fe-a7c6-4724-865f-1c4cab8be234">Consultor
                         </option>
-                        <option [selected]="(task && task.taskTypeId ? task.taskTypeId.toLowerCase() == 'a26f516b-6a6f-4159-8f4e-6ca3193bea95' : false)"
+                        <option
+                          [selected]="(task && task.taskTypeId ? task.taskTypeId.toLowerCase() == 'a26f516b-6a6f-4159-8f4e-6ca3193bea95' : false)"
                           value="a26f516b-6a6f-4159-8f4e-6ca3193bea95">Cliente
                         </option>>
                       </select>
@@ -98,6 +100,24 @@
                       <input #txtDueDays name="txtDueDays" [(ngModel)]="task.dueDays"
                         [ngModelOptions]="{ standalone: true }" type="number" class="form-control mb-2">
                       <h6 class="text-muted">Quantidade de dias previstos para realizar a tarefa.</h6>
+                    </div>
+                  </div>
+                  <div>
+                    <h6 class="text-muted">Conteúdo de e-mail:</h6>
+                    <div class="form-group col-8 row">
+                      <label class="col-md-2 col-form-label">Assunto: </label>
+                      <div class="col-md-10">
+                        <input #txtMailSubject name="txtMailSubject" [(ngModel)]="task.mailSubject"
+                          [ngModelOptions]="{ standalone: true }" type="text" class="form-control mb-2">
+                      </div>
+                    </div>
+                    <div class="form-group col-8 row">
+                      <label class="col-md-2 col-form-label">Conteúdo: </label>
+                      <div class="col-md-10">
+                        <textarea #txtMailBody name="txtMailBody" [(ngModel)]="task.mailBody"
+                          [ngModelOptions]="{ standalone: true }" type="text" rows="8" class="form-control mb-2">
+                        </textarea>
+                      </div>
                     </div>
                   </div>
                 </div>

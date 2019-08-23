@@ -1,5 +1,6 @@
 ﻿using ConsultingManager.Api.Helpers;
 using ConsultingManager.Domain;
+using ConsultingManager.Dto;
 using ConsultingManager.Infra.Database;
 using IdentityServer4.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -60,6 +61,8 @@ namespace ConsultingManager.Api
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.Configure<MailingConfigDto>(Configuration.GetSection("MailingConfig"));
 
             services.AddAuthentication("Bearer");
 

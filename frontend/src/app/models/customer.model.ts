@@ -6,32 +6,32 @@ import { Plan } from './plan.model';
 import { CustomerSituation } from './customersituation.model';
 
 export class Customer {
-    id: string;
-    createdDate: Date;
-    name: string;
-    logoUrl: string;
-    storeUrl: string;
-    phone: string;    
-    email: string;    
-    
-    consultantId: string;
-    consultant: User;
+  id: string;
+  createdDate: Date;
+  name: string;
+  logoUrl: string;
+  storeUrl: string;
+  phone: string;
+  email: string;
 
-    cityId: string;
-    city: City;
+  consultantId: string;
+  consultant: User;
 
-    platformId: string;
-    platform: Platform;
+  cityId: string;
+  city: City;
 
-    categoryId: string;
-    category: CustomerCategory;
+  platformId: string;
+  platform: Platform;
 
-    planId: string;
-    plan: Plan;
+  categoryId: string;
+  category: CustomerCategory;
 
-    situationId: string;
-    sitaution: CustomerSituation;
+  planId: string;
+  plan: Plan;
 
-    constructor() {
-    }
+  situationId: string;
+  sitaution: CustomerSituation;
+
+  constructor() {
+  }
 }

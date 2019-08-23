@@ -1,8 +1,7 @@
-﻿using ConsultingManager.Dto;
-using ConsultingManager.Infra;
+﻿using ConsultingManager.Domain.Mailing;
+using ConsultingManager.Dto;
 using ConsultingManager.Infra.Database;
 using ConsultingManager.Infra.Database.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,8 +15,11 @@ namespace ConsultingManager.Domain.Repository
 {
     public class TaskRepository : EfCoreRepositoryBase<ConsultingManagerDbContext, ModelTaskPoco>, IRepository<ModelTaskPoco>, ITaskRepository
     {
-        public TaskRepository(IDbContextProvider<ConsultingManagerDbContext> dbContextProvider) : base(dbContextProvider)
+        IMailingHelper _mailingHelper;
+        public TaskRepository(IDbContextProvider<ConsultingManagerDbContext> dbContextProvider,
+            IMailingHelper mailingHelper) : base(dbContextProvider)
         {
+            _mailingHelper = mailingHelper;
         }
 
         public async Task<List<CustomerTaskDto>> GetUserTasks(Guid userId)
@@ -59,11 +61,22 @@ namespace ConsultingManager.Domain.Repository
         public async Task<CustomerTaskDto> FinishTask(Guid taskId)
         {
             CustomerTaskPoco task = await Context.CustomerTasks
+                .Include(o => o.Customer)
+                .Include(o => o.CustomerUser)
                 .Where(o => o.Id == taskId)
                 .FirstOrDefaultAsync();
 
             task.EndDate = DateTime.Now;
             await Context.SaveChangesAsync();
+
+            if (!string.IsNullOrEmpty(task.MailSubject) && (!string.IsNullOrEmpty(task.MailBody)))
+            {
+                string toName = task.CustomerUser.Name;
+                string toEmailAddress = task.CustomerUser.Email;
+
+                await _mailingHelper.SendEmail(toName, toEmailAddress, task.MailSubject, task.MailBody);
+            }
+
             return task.MapTo<CustomerTaskDto>();
         }
 

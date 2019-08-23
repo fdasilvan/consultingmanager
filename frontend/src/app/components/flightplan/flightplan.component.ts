@@ -76,6 +76,12 @@ export class FlightplanComponent implements OnInit {
 
   async addProcess(modelProcessId: string, modelDescription: string, customerUserId: string, startDate: string) {
     await this.processService.startCustomerProcess(modelProcessId, modelDescription, this.customer.id, this.loggedUser.id, customerUserId, new Date(startDate), this.selectedMeeting.id);
+    this.loadCustomerProcesses();
     this.modalObject.close();
+  }
+
+  registerMeetings() {
+    window.sessionStorage.setItem('customer', JSON.stringify(this.customer));
+    this.router.navigate(['customer-meetings']);
   }
 }

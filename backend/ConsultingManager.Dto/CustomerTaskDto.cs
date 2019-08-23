@@ -15,6 +15,8 @@ namespace ConsultingManager.Dto
         public DateTime StartDate { get; set; }
         public DateTime EstimatedEndDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public string MailSubject { get; set; }
+        public string MailBody { get; set; }
 
         public Guid CustomerId { get; set; }
         public CustomerDto Customer { get; set; }

@@ -1,4 +1,4 @@
 export interface ChartResult {
-    description: string;
-    value: number;
+  description: string;
+  value: number;
 }

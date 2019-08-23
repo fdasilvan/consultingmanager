@@ -72,6 +72,8 @@ namespace ConsultingManager.Domain.Repository
                                     modelTaskPoco.Duration = task.Duration;
                                     modelTaskPoco.StartAfterDays = task.StartAfterDays;
                                     modelTaskPoco.DueDays = task.DueDays;
+                                    modelTaskPoco.MailSubject = task.MailSubject;
+                                    modelTaskPoco.MailBody = task.MailBody;
                                 }
                             }
                         }
@@ -129,8 +131,10 @@ namespace ConsultingManager.Domain.Repository
                     customerTask.EstimatedEndDate = Utils.AddBusinessDays(customerTask.StartDate, modelTask.DueDays);
                     lastDate = (lastDate == null || customerTask.EstimatedEndDate > lastDate ? customerTask.EstimatedEndDate : lastDate);
                     processEstimatedEndDate = (processEstimatedEndDate == null || lastDate > processEstimatedEndDate ? lastDate : processEstimatedEndDate);
-
                     customerTask.EndDate = null;
+
+                    customerTask.MailSubject = modelTask.MailSubject;
+                    customerTask.MailBody = modelTask.MailSubject;
 
                     customerTask.CustomerId = customerId;
                     customerTask.CustomerUserId = customerUserId;

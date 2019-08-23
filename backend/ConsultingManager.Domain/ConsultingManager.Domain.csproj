@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MailKit" Version="2.2.0" />
     <PackageReference Include="Tnf.AutoMapper" Version="2.6.0.10102" />
     <PackageReference Include="Tnf.EntityFrameworkCore" Version="2.6.0.10102" />
   </ItemGroup>

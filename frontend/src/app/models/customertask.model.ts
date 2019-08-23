@@ -5,22 +5,24 @@ import { ModelTask } from './modeltask.model';
 import { CustomerStep } from './customerstep.model';
 
 export class CustomerTask {
-    id: string;
-    description: string;
-    instructions: string;
-    duration: number;
-    creationDate: Date;
-    startDate: Date;
-    estimatedEndDate: Date;
-    endDate: Date;
-    customer: Customer;
-    customerUser: User;
-    consultant: User;
-    owner: User;
-    taskType: TaskType;
-    modelTask: ModelTask;
-    customerStep: CustomerStep;
+  id: string;
+  description: string;
+  instructions: string;
+  duration: number;
+  creationDate: Date;
+  startDate: Date;
+  estimatedEndDate: Date;
+  endDate: Date;
+  mailSubject: string;
+  mailBody: string;
+  customer: Customer;
+  customerUser: User;
+  consultant: User;
+  owner: User;
+  taskType: TaskType;
+  modelTask: ModelTask;
+  customerStep: CustomerStep;
 
-    constructor() {
-    }
+  constructor() {
+  }
 }

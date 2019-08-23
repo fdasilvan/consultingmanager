@@ -12,10 +12,12 @@ namespace ConsultingManager.Infra.Database.Models
         public int Duration { get; set; }
         public int StartAfterDays { get; set; }
         public int DueDays { get; set; }
+        public string MailSubject { get; set; }
+        public string MailBody { get; set; }
 
         public Guid TaskTypeId { get; set; }
         [ForeignKey(nameof(TaskTypeId))]
-        public TaskTypePoco TaskType{ get; set; }
+        public TaskTypePoco TaskType { get; set; }
 
         public Guid ModelStepId { get; set; }
         [ForeignKey(nameof(ModelStepId))]

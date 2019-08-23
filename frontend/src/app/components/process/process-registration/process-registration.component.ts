@@ -85,6 +85,7 @@ export class ProcessRegistrationComponent implements OnInit {
     if (this.validateForm()) {
       console.log('Form VÁLIDO!');
       console.log(this.modelProcess);
+      debugger;
       this.processService.saveProcess(this.modelProcess);
       alert('Processo salvo com sucesso!');
       this.router.navigate(['processes']);

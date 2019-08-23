@@ -14,6 +14,8 @@ namespace ConsultingManager.Infra.Database.Models
         public DateTime StartDate { get; set; }
         public DateTime EstimatedEndDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public string MailSubject { get; set; }
+        public string MailBody { get; set; }
 
         public Guid CustomerId { get; set; }
         [ForeignKey(nameof(CustomerId))]

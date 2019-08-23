@@ -1,4 +1,5 @@
-﻿using ConsultingManager.Domain.Repository;
+﻿using ConsultingManager.Domain.Mailing;
+using ConsultingManager.Domain.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace ConsultingManager.Domain
             services.AddTransient<IProcessRepository, ProcessRepository>();
             services.AddTransient<ITaskRepository, TaskRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IMailingHelper, MailingHelper>();
             return services;
         }
     }
