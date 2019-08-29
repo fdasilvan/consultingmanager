@@ -15,7 +15,7 @@
         <div>
           <div class="mb-4 ml-2 row">
             <!-- Novas Etapas -->
-            <div class="margin" *ngFor="let step of this.modelProcess.modelSteps | orderBy: 'description'">
+            <div class="margin" *ngFor="let step of this.modelProcess.modelSteps">
               <button class="btn btn-lg btn-primary btn-steps margin" (click)="selectStep(step)" type="button">
                 {{step.description}}
                 <em (click)="removeStep(step)" class="fa fa-times"></em>
@@ -38,7 +38,7 @@
               </div>
               <p *ngIf="this.selectedStep.modelTasks.length == 0">Ainda não foram cadastradas tarefas!</p>
               <!-- Tarefas -->
-              <div class="card mb-2" *ngFor="let task of this.selectedStep.modelTasks | orderBy: 'startAfterDays'">
+              <div class="card mb-2" *ngFor="let task of this.selectedStep.modelTasks">
                 <div class="card-header">
                   <div class="row">
                     <div class="col-10">
@@ -50,10 +50,12 @@
                       <em (click)="removeTask(task)" class="fa fa-times"></em>
                     </div>
                   </div>
-
                   <em (click)="toggleElement($event.target)" class="fa fa-chevron-down"></em>
                 </div>
                 <div class="card-block">
+                  <div class="form-group col-8 row">
+                    <h6 class="text-muted">Cód. Tarefa: {{task.id}}</h6>
+                  </div>
                   <div class="form-group col-8 row">
                     <label class="col-md-2 col-form-label">Tipo de Tarefa: </label>
                     <div class="col-md-9">
@@ -103,7 +105,8 @@
                     </div>
                   </div>
                   <div class="mb-2">
-                    <h6 class="text-muted">Conteúdo de e-mail:</h6>
+                    <h6 class="text-muted">Conteúdo de e-mail: <em (click)="showMailInfo(content)"
+                        class="fa fa-info-circle"></em></h6>
                   </div>
                   <div class="mt-4">
                     <div class="form-group col-8 row">
@@ -141,3 +144,23 @@
     </div>
   </div>
 </section>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Variáveis do E-mail</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><b>Nome do cliente:</b> {{NomeCliente}<!---->}</p>
+    <p><b>Nome do usuário do cliente:</b> {{NomeUsuarioCliente}<!---->}</p>
+    <p><b>Nome do consultor:</b> {{NomeConsultor}<!---->}</p>
+    <p><b>Endereço da sala virtual do consultor:</b> {{SalaConsultor}<!---->}</p>
+    <p><b>Data inicial da tarefa:</b> {{DataInicial}<!---->}</p>
+    <p><b>Data final da tarefa:</b> {{DataFinal}<!---->}</p>
+    <p><br/></p>
+    <p><b>Ex.:</b> Boa tarde, {{NomeUsuarioCliente}<!---->}! Você possui uma tarefa agendada para {{DataInicial}<!---->}, com prazo de
+      finalização até {{DataFinal}<!---->}!</p>
+  </div>
+</ng-template>

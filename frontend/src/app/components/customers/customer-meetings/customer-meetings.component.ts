@@ -47,6 +47,7 @@ export class CustomerMeetingsComponent implements OnInit {
 
   async loadMeetings() {
     this.meetingsList = await this.customersService.getMeetings(this.customer.id);
+    this.orderMeetings();
   }
 
   public addMeeting() {
@@ -121,6 +122,34 @@ export class CustomerMeetingsComponent implements OnInit {
       .catch(error => {
         alert('Erro: não foi possível cadastrar os encontros do cliente: ' + error.error);
       });
+  }
+
+  public dayOfWeek(date: string) {
+    debugger;
+    if (date) {
+      let dateType = new Date(date);
+      let weekday = dateType.getDay();
+      switch (weekday) {
+        case 0:
+          return 'Domingo';
+        case 1:
+          return 'Segunda-feira';
+        case 2:
+          return 'Terça-feira';
+        case 3:
+          return 'Quarta-feira';
+        case 4:
+          return 'Quinta-feira';
+        case 5:
+          return 'Sexta-feira';
+        case 6:
+          return 'Sábado';
+      }
+    }
+  }
+
+  public orderMeetings() {
+    this.meetingsList = this.meetingsList.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
   }
 
   goBack() {

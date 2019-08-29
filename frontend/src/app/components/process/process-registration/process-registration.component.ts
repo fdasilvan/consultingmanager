@@ -5,6 +5,7 @@ import { ModelTask } from 'src/app/models/modeltask.model';
 import { v4 as newGuid } from 'uuid';
 import { ProcessService } from 'src/app/services/process/process.service';
 import { Router } from '@angular/router';
+import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-process-registration',
@@ -14,11 +15,13 @@ import { Router } from '@angular/router';
 export class ProcessRegistrationComponent implements OnInit {
 
   constructor(private router: Router,
-    private processService: ProcessService) { }
+    private processService: ProcessService,
+    private modalService: NgbModal) { }
 
   public selectedStep: ModelStep;
   public modelProcess: ModelProcess;
   public isEdit: boolean = false;
+  public modalObject: NgbModalRef;
 
   ngOnInit() {
     this.initializeProcess();
@@ -66,6 +69,32 @@ export class ProcessRegistrationComponent implements OnInit {
     modelTask.modelStepId = modelStep.id;
 
     modelStep.modelTasks.push(modelTask);
+
+    this.focusOnTask(modelTask.id);
+  }
+
+  public focusOnTask(id: string) {
+    var aTags = document.getElementsByTagName("h6");
+    var searchText = id;
+    var element;
+
+    for (var i = 0; i < aTags.length; i++) {
+      let control = aTags[i].textContent.toUpperCase();
+      debugger;
+      if (control.includes(searchText.toUpperCase())) {
+        element = aTags[i];
+        break;
+      }
+    }
+
+    if (element) {
+      debugger;
+      window.scrollTo(0, parseInt(element));
+    }
+  }
+
+  public showMailInfo(content) {
+    this.modalObject = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   validateForm() {
