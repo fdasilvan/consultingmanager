@@ -21,7 +21,7 @@ namespace ConsultingManager.Api.Controllers
         {
             try
             {
-                _mailingHelper.SendEmail(mailDto.ToName, mailDto.ToEmailAddress, mailDto.Subject, mailDto.MailBody);
+                _mailingHelper.SendEmail(mailDto.ToName, mailDto.ToEmailAddress, mailDto.Subject, mailDto.MailBody, mailDto.CarbonCopyAddress);
                 return Ok("E-mail enviado com sucesso.");
             }
             catch (Exception ex)
