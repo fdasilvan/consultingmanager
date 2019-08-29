@@ -3,6 +3,7 @@ using ConsultingManager.Dto;
 using ConsultingManager.Infra.Database;
 using ConsultingManager.Infra.Database.Models;
 using Microsoft.EntityFrameworkCore;
+using MimeKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,6 +64,7 @@ namespace ConsultingManager.Domain.Repository
             CustomerTaskPoco task = await Context.CustomerTasks
                 .Include(o => o.Customer)
                 .Include(o => o.CustomerUser)
+                .Include(o => o.Consultant)
                 .Where(o => o.Id == taskId)
                 .FirstOrDefaultAsync();
 
@@ -73,8 +75,25 @@ namespace ConsultingManager.Domain.Repository
             {
                 string toName = task.CustomerUser.Name;
                 string toEmailAddress = task.CustomerUser.Email;
+                string carbonCopyAddress = task.Consultant.Email;
 
-                await _mailingHelper.SendEmail(toName, toEmailAddress, task.MailSubject, task.MailBody);
+                string mailSubject = task.MailSubject;
+                mailSubject = mailSubject.Replace("{{NomeCliente}}", task.Customer.Name);
+                mailSubject = mailSubject.Replace("{{NomeUsuarioCliente}}", task.CustomerUser.Name);
+                mailSubject = mailSubject.Replace("{{NomeConsultor}}", task.Consultant.Name);
+                mailSubject = mailSubject.Replace("{{SalaConsultor}}", task.Consultant.ConferenceRoomAddress);
+                mailSubject = mailSubject.Replace("{{DataInicial}}", task.StartDate.ToShortDateString());
+                mailSubject = mailSubject.Replace("{{DataFinal}}", task.EstimatedEndDate.ToShortDateString());
+
+                string mailBody = task.MailBody;
+                mailBody = mailBody.Replace("{{NomeCliente}}", task.Customer.Name);
+                mailBody = mailBody.Replace("{{NomeUsuarioCliente}}", task.CustomerUser.Name);
+                mailBody = mailBody.Replace("{{NomeConsultor}}", task.Consultant.Name);
+                mailBody = mailBody.Replace("{{SalaConsultor}}", task.Consultant.ConferenceRoomAddress);
+                mailBody = mailBody.Replace("{{DataInicial}}", task.StartDate.ToShortDateString());
+                mailBody = mailBody.Replace("{{DataFinal}}", task.EstimatedEndDate.ToShortDateString());
+
+                await _mailingHelper.SendEmail(toName, toEmailAddress, task.MailSubject, mailBody, carbonCopyAddress);
             }
 
             return task.MapTo<CustomerTaskDto>();
