@@ -80,7 +80,6 @@ export class ProcessRegistrationComponent implements OnInit {
 
     for (var i = 0; i < aTags.length; i++) {
       let control = aTags[i].textContent.toUpperCase();
-      debugger;
       if (control.includes(searchText.toUpperCase())) {
         element = aTags[i];
         break;
@@ -88,7 +87,6 @@ export class ProcessRegistrationComponent implements OnInit {
     }
 
     if (element) {
-      debugger;
       window.scrollTo(0, parseInt(element));
     }
   }
@@ -114,7 +112,6 @@ export class ProcessRegistrationComponent implements OnInit {
     if (this.validateForm()) {
       console.log('Form VÁLIDO!');
       console.log(this.modelProcess);
-      debugger;
       this.processService.saveProcess(this.modelProcess);
       alert('Processo salvo com sucesso!');
       this.router.navigate(['processes']);

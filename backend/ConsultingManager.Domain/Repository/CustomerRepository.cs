@@ -54,6 +54,24 @@ namespace ConsultingManager.Domain.Repository
             }
         }
 
+        public async Task<CustomerDto> Transfer(Guid customerId, Guid consultantId)
+        {
+            var customer = Context.Customers.FirstOrDefaultAsync(o => o.Id == customerId).Result;
+
+            if (customer != null)
+            {
+                customer.ConsultantId = consultantId;
+
+                var updatedCustomer = Context.Customers.Update(customer);
+                await Context.SaveChangesAsync();
+                return updatedCustomer.Entity.MapTo<CustomerDto>();
+            }
+            else
+            {
+                throw new Exception("Não foi possível transferir o cliente: " + customerId);
+            }
+        }
+
         public async Task<List<CustomerMeetingDto>> GetMeetings(Guid customerId)
         {
             try

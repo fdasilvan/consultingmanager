@@ -16,13 +16,13 @@
   vertical-align: middle;
 }
 
-.btn-steps {
+.btn-steps-selected {
   border-radius: 0px;
   background-color: #fff !important;
   color: #7376df !important;
 }
 
-.btn-steps-selected {
+.btn-steps {
   border-radius: 0px;
   background-color: #7376df !important;
   color: #fff !important;

@@ -14,7 +14,9 @@
               <button class="btn btn-lg btn-outline-primary" (click)="registerMeetings()">Cadastrar Encontros</button>
             </div>
             <div class="margin" *ngFor="let meeting of this.meetings | orderBy: 'date'">
-              <button class="btn btn-lg btn-primary btn-steps margin" (click)="selectMeeting(meeting)" type="button">
+              <button
+                class="{{(this.selectedMeeting && this.selectedMeeting.id == meeting.id ? 'btn btn-lg btn-primary btn-steps margin' : 'btn btn-lg btn-primary btn-steps-selected margin')}}"
+                (click)="selectMeeting(meeting)" type="button">
                 {{meeting.date | date: 'dd/MM/yyyy'}}
               </button>
             </div>
@@ -49,7 +51,7 @@
 
             <button class="btn btn-warning margin" (click)="openProcessModal(content)" type="button"><span
                 class="fa fa-plus"></span>
-              Plano de Ação</button>
+              Ação</button>
           </div>
         </div>
       </div>

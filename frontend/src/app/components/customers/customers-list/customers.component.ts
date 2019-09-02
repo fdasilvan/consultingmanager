@@ -5,7 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { CustomerRegistrationComponent } from 'src/app/components/customers/customer-registration/customer-registration.component';
+import { CustomerSituation } from 'src/app/models/customersituation.model';
+import { Plan } from 'src/app/models/plan.model';
 
 @Component({
   selector: 'app-customers',
@@ -16,15 +17,14 @@ export class CustomersListComponent implements OnInit {
 
   constructor(private service: CustomersService,
     private userService: UserService,
-    private modalService: NgbModal,
-    private route: ActivatedRoute,
     private router: Router) { }
 
   public customers: Customer[] = [];
   public filteredCustomers: Customer[] = [];
-  public consultantsList: string[] = [];
+  public consultantsList: User[] = [];
+  public situationsList: CustomerSituation[] = [];
+  public plansList: Plan[] = [];
   public loggedUser: User;
-  public customersCount: number = 0;
   public modalObject: NgbModalRef;
   public canAddCustomer: boolean = false;
 
@@ -42,8 +42,7 @@ export class CustomersListComponent implements OnInit {
   async loadCustomers() {
     this.customers = await this.service.getAll();
     this.filteredCustomers = this.customers;
-    this.customersCount = this.customers.length;
-    this.loadConsultantsList();
+    this.loadFilters();
   }
 
   goToCustomerTimeline(customer: Customer, event: Event) {
@@ -67,29 +66,57 @@ export class CustomersListComponent implements OnInit {
     this.router.navigate(['flightplan']);
   }
 
-  loadConsultantsList() {
-    if (this.customers && this.customers.length > 0) {
-      for (let i = 0; i < this.customers.length; i++) {
-        let customer = this.customers[i];
+  async loadConsultantsList() {
+    this.consultantsList = await this.service.getConsultants();
+  }
 
-        if (customer.consultant) {
-          if (this.consultantsList.indexOf(customer.consultant.name) < 0) {
-            this.consultantsList.push(customer.consultant.name);
-            this.consultantsList.sort((a, b) => a.localeCompare(b));
-          }
-        }
-      }
+  async loadPlansList() {
+    this.plansList = await this.service.getPlans();
+  }
+
+  async loadSituationsList() {
+    this.situationsList = await this.service.getSituations();
+  }
+
+  loadFilters() {
+    this.loadConsultantsList();
+    this.loadSituationsList();
+    this.loadPlansList();
+  }
+
+  filterResults(consultantId: string, customerName: string, situationId: string, planId: string) {
+    this.filteredCustomers = this.customers;
+
+    if (consultantId != '') {
+      this.filteredCustomers = this.filteredCustomers.filter(customer => {
+        return customer.consultant && customer.consultant.id == consultantId;
+      });
+    }
+
+    if (customerName != '') {
+      this.filteredCustomers = this.filteredCustomers.filter(customer => {
+        return customer && customer.name.toUpperCase().includes(customerName.toUpperCase());
+      });
+    }
+
+    if (situationId != '') {
+      this.filteredCustomers = this.filteredCustomers.filter(customer => {
+        return customer && customer.situationId == situationId;
+      });
+    }
+
+    if (planId != '') {
+      this.filteredCustomers = this.filteredCustomers.filter(customer => {
+        return customer && customer.planId == planId;
+      });
     }
   }
 
-  onConsultantChange(consultantName: string) {
-    window.sessionStorage.setItem('selectedConsultantFilter', consultantName);
-    if (consultantName == '') {
-      this.filteredCustomers = this.customers;
-    } else {
-      this.filteredCustomers = this.customers.filter(customer => {
-        return customer.consultant && customer.consultant.name == consultantName;
-      });
-    }
+  clearFilters(lstConsultant, txtCustomer, lstSituation, lstPlan) {
+    lstConsultant.selectedIndex = 0;
+    txtCustomer.value = '';
+    lstSituation.selectedIndex = 0;
+    lstPlan.selectedIndex = 0;
+    this.filteredCustomers = this.customers;
   }
 }

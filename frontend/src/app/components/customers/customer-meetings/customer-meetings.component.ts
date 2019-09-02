@@ -117,7 +117,8 @@ export class CustomerMeetingsComponent implements OnInit {
       .then(meetingsList => {
         console.log(meetingsList);
         alert('Encontros salvos com sucesso!');
-        this.router.navigate(['customers']);
+        window.sessionStorage.setItem('customer', JSON.stringify(this.customer));
+        this.router.navigate(['flightplan']);
       })
       .catch(error => {
         alert('Erro: não foi possível cadastrar os encontros do cliente: ' + error.error);
@@ -125,7 +126,6 @@ export class CustomerMeetingsComponent implements OnInit {
   }
 
   public dayOfWeek(date: string) {
-    debugger;
     if (date) {
       let dateType = new Date(date);
       let weekday = dateType.getDay();

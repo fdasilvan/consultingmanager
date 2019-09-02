@@ -8,6 +8,7 @@ namespace ConsultingManager.Dto
     {
         public Guid ModelProcessId { get; set; }
         public string ModelProcessDescription { get; set; }
+        public string Detail { get; set; }
         public Guid CustomerId { get; set; }
         public Guid ConsultantId { get; set; }
         public Guid CustomerUserId { get; set; }

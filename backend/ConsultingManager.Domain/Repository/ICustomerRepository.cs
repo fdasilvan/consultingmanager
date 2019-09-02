@@ -9,6 +9,7 @@ namespace ConsultingManager.Domain.Repository
     {
         Task<CustomerDto> Add(CustomerDto customerDto);
         Task<CustomerDto> Update(CustomerDto customerDto);
+        Task<CustomerDto> Transfer(Guid customerId, Guid consultantId);
         Task<bool> AddMeetings(Guid customerId, List<CustomerMeetingDto> customerMeetings);
         Task<List<CustomerMeetingDto>> GetMeetings(Guid customerId);
         Task<List<CustomerDto>> GetAll();

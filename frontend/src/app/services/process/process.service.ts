@@ -17,7 +17,7 @@ export class ProcessService {
     return response.toPromise();
   }
 
-  public async startCustomerProcess(modelProcessId: string, modelProcessDescription: string, customerId: string,
+  public async startCustomerProcess(modelProcessId: string, modelProcessDescription: string, detail: string, customerId: string,
     consultantId: string, customerUserId: string, startDate: Date, customerMeetingId: string): Promise<CustomerProcess> {
 
     let modelProcess: ModelProcess = new ModelProcess();
@@ -27,6 +27,7 @@ export class ProcessService {
     let params = {
       modelProcessId: modelProcess.id,
       modelProcessDescription: modelProcess.description,
+      detail: detail,
       customerId: customerId,
       consultantId: consultantId,
       customerUserId: customerUserId,

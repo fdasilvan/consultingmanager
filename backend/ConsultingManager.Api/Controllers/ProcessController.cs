@@ -48,7 +48,7 @@ namespace ConsultingManager.Api.Controllers
 
                 return Ok(await _processRepository.StartCustomerProcess(modelProcess, startCustomerProcessDto.CustomerId,
                     startCustomerProcessDto.ConsultantId, startCustomerProcessDto.CustomerUserId, startCustomerProcessDto.StartDate,
-                    startCustomerProcessDto.CustomerMeetingId));
+                    startCustomerProcessDto.Detail, startCustomerProcessDto.CustomerMeetingId));
             }
             catch (Exception ex)
             {

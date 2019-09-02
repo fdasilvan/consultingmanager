@@ -4,34 +4,32 @@
       <img src="/assets/images/user-icon.jpg" alt="profile photo" class="circle float-left profile-photo customerLogo"
         width="50" height="auto" />
       <h2>{{customer.name}}</h2>
+      <h3 *ngIf="customer.consultant" class="text-muted">Consultor Responsável: {{customer.consultant.name}}</h3>
     </div>
 
-    <!-- <div *ngIf="customerProcessesList && customerProcessesList.length == 0" class="jumbotron col-6">
-      <h4 class="mb-4">Ops! Nenhum processo iniciado...</h4>
-      <p class="lead">Inicie um processo agora mesmo!</p>
-      <div *ngIf="this.loggedUser.userType.description != 'Cliente'">
-        <button class="btn btn-lg btn-outline-primary" (click)="openProcessModal(content)">Iniciar</button>
-      </div>
-    </div> -->
-
-
     <div *ngIf="this.loggedUser.userType.description != 'Cliente'" class="mt-4 mb-4">
-      <button class="btn btn-warning margin" (click)="openProcessModal(content)" type="button"><span
-          class="fa fa-plus"></span> Plano de Ação</button>
+      <button class="btn btn-warning margin mr-1" (click)="openProcessModal(content)" type="button"><span
+          class="fa fa-plus"></span> Ação</button>
+      <button class="btn btn-warning margin mr-1" (click)="openProcessModal(contentTransfer)" type="button"><span
+          class="fa fa-share"></span>
+        Transferir</button>
+      <button class="btn btn-warning margin mr-1" (click)="editCustomer()" type="button"><span
+          class="fa fa-edit"></span>
+        Editar</button>
     </div>
 
     <div *ngIf="customerProcessesList && customerProcessesList.length == 0">
-      <p>Não há planos de ação iniciados para este cliente!</p>
+      <p>Não há ações iniciados para este cliente!</p>
     </div>
     <div *ngIf="customerProcessesList && customerProcessesList.length > 0">
       <div *ngFor="let process of customerProcessesList | orderBy: 'startDate'">
         <h3 class="margin-top-bottom"><em (click)="toggleElement($event.target)" class="fa fa-chevron-down"></em>
-          Plano de Ação: {{process.description}} -
+          Ação: {{process.description}} - {{(process.detail != null ? process.detail + ' - ' : '')}}
           {{process.startDate | date: 'dd/MM/yyyy'}} a
           {{process.estimatedEndDate | date: 'dd/MM/yyyy'}}</h3>
 
         <div class="col-lg-12">
-          <h6 class="text-muted">Cód. Plano de Ação: {{process.id}}</h6>
+          <h6 class="text-muted">Cód. Ação: {{process.id}}</h6>
           <div class="card mt-4" *ngFor="let step of process.customerSteps | orderBy: 'startDate'">
             <div class="card-header">
               <h4>{{step.description}} - {{step.startDate | date: 'dd/MM/yyyy'}} a
@@ -81,7 +79,7 @@
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Iniciar Plano de Ação</h4>
+    <h4 class="modal-title" id="modal-basic-title">Iniciar Ação</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -89,13 +87,19 @@
   <div class="modal-body">
     <form>
       <div class="form-group">
-        <label for="lstModelProcess">Plano de Ação</label>
+        <label for="lstModelProcess">Ação</label>
         <div class="input-group">
           <select #lstModelProcess id="lstModelProcess" class="custom-select form-control">
             <option *ngFor="let modelProcess of modelProcessesList" value="{{modelProcess.id}}">
               {{modelProcess.description}}
             </option>
           </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtStartDate">Detalhes (opcional)</label>
+        <div class="input-group">
+          <input #txtDetail id="txtDetail" class="form-control" placeholder="(Ex.: produto X ou categoria Y)">
         </div>
       </div>
       <div class="form-group">
@@ -123,6 +127,33 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark"
-      (click)="startCustomerProcess(lstModelProcess.value, lstModelProcess[lstModelProcess.selectedIndex].text, lstUsers.value, txtStartDate.value)">Confirmar</button>
+      (click)="startCustomerProcess(lstModelProcess.value, lstModelProcess[lstModelProcess.selectedIndex].text, txtDetail.value, lstUsers.value, txtStartDate.value)">Incluir</button>
+  </div>
+</ng-template>
+
+<ng-template #contentTransfer let-modalTransfer>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Transferir Cliente</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalTransfer.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="lstUsers">Consultor</label>
+        <div class="input-group">
+          <select #lstConsultants id="lstConsultants" class="custom-select form-control">
+            <option *ngFor="let consultant of this.consultantsList" value="{{consultant.id}}">
+              {{consultant.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark"
+      (click)="transferCustomer(lstConsultants.value)">Transferir</button>
   </div>
 </ng-template>

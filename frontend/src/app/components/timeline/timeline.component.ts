@@ -8,6 +8,7 @@ import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModelProcess } from 'src/app/models/modelprocess.model';
+import { CustomersService } from 'src/app/services/customers/customers.service';
 
 @Component({
   selector: 'app-timeline',
@@ -18,6 +19,7 @@ export class TimelineComponent implements OnInit {
 
   public loggedUser: User;
   constructor(private processService: ProcessService,
+    private customerService: CustomersService,
     private userService: UserService,
     private modalService: NgbModal,
     private route: ActivatedRoute,
@@ -33,6 +35,7 @@ export class TimelineComponent implements OnInit {
   public customer: Customer;
   public customerProcessesList: CustomerProcess[];
   public modelProcessesList: ModelProcess[];
+  public consultantsList: User[];
   public today: Date = new Date();
   public modalObject: NgbModalRef;
 
@@ -42,6 +45,7 @@ export class TimelineComponent implements OnInit {
     this.getCustomerId();
     this.loadModelProcesses();
     this.loadCustomerProcesses(this.customer);
+    this.loadConsultants();
   }
 
   ngAfterViewChecked() {
@@ -59,14 +63,18 @@ export class TimelineComponent implements OnInit {
     this.customerProcessesList = await this.processService.getCustomerProcesses(customer.id);
   }
 
+  async loadConsultants() {
+    this.consultantsList = await this.customerService.getConsultants();
+  }
+
   openProcessModal(content) {
     this.modalObject = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  async startCustomerProcess(modelProcessId: string, modelDescription: string, customerUserId: string, startDate: string) {
-    await this.processService.startCustomerProcess(modelProcessId, modelDescription, this.customer.id, this.loggedUser.id, customerUserId, new Date(startDate), null);
+  async startCustomerProcess(modelProcessId: string, modelDescription: string, detail: string, customerUserId: string, startDate: string) {
+    await this.processService.startCustomerProcess(modelProcessId, modelDescription, detail, this.customer.id, this.loggedUser.id, customerUserId, new Date(startDate), null);
     this.modalObject.close();
-    this.router.navigate(['worklist']);
+    this.loadCustomerProcesses(this.customer);
   }
 
   getCustomerId() {
@@ -86,6 +94,18 @@ export class TimelineComponent implements OnInit {
   toggleElement(element) {
     element.parentElement.nextElementSibling.style.display = (element.parentElement.nextElementSibling.style.display == 'none' ? '' : 'none');
     element.className = (element.className == 'fa fa-chevron-right' ? 'fa fa-chevron-down' : 'fa fa-chevron-right');
+  }
+
+  editCustomer() {
+    window.sessionStorage.setItem('customer', JSON.stringify(this.customer));
+    this.router.navigate(['customer-registration']);
+  }
+
+  async transferCustomer(consultantId: string) {
+    await this.customerService.transferCustomer(this.customer.id, consultantId);
+    this.modalObject.close();
+    alert('Cliente transferido com sucesso!');
+    this.router.navigate(['customers']);
   }
 
   loadClassIndicator(task: CustomerTask) {

@@ -80,6 +80,7 @@ namespace ConsultingManager.Domain.Repository
                 string mailSubject = task.MailSubject;
                 mailSubject = mailSubject.Replace("{{NomeCliente}}", task.Customer.Name);
                 mailSubject = mailSubject.Replace("{{NomeUsuarioCliente}}", task.CustomerUser.Name);
+                mailSubject = mailSubject.Replace("{{UrlLoja}}", task.Customer.StoreUrl);
                 mailSubject = mailSubject.Replace("{{NomeConsultor}}", task.Consultant.Name);
                 mailSubject = mailSubject.Replace("{{SalaConsultor}}", task.Consultant.ConferenceRoomAddress);
                 mailSubject = mailSubject.Replace("{{DataInicial}}", task.StartDate.ToShortDateString());
@@ -88,12 +89,14 @@ namespace ConsultingManager.Domain.Repository
                 string mailBody = task.MailBody;
                 mailBody = mailBody.Replace("{{NomeCliente}}", task.Customer.Name);
                 mailBody = mailBody.Replace("{{NomeUsuarioCliente}}", task.CustomerUser.Name);
+                mailBody = mailBody.Replace("{{UrlLoja}}", task.Customer.StoreUrl);
                 mailBody = mailBody.Replace("{{NomeConsultor}}", task.Consultant.Name);
                 mailBody = mailBody.Replace("{{SalaConsultor}}", task.Consultant.ConferenceRoomAddress);
                 mailBody = mailBody.Replace("{{DataInicial}}", task.StartDate.ToShortDateString());
                 mailBody = mailBody.Replace("{{DataFinal}}", task.EstimatedEndDate.ToShortDateString());
+                mailBody = mailBody.Replace("\n", "<br>");
 
-                await _mailingHelper.SendEmail(toName, toEmailAddress, task.MailSubject, mailBody, carbonCopyAddress);
+                await _mailingHelper.SendEmail(toName, toEmailAddress, mailSubject, mailBody, carbonCopyAddress);
             }
 
             return task.MapTo<CustomerTaskDto>();

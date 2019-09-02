@@ -6,19 +6,63 @@
           <h3 class="card-title">Listagem de Clientes</h3>
         </div>
         <div class="card-block">
-          <p>Clientes ativos: {{this.customersCount}}</p>
-          <div class="filter">
-            <label>Consultor: </label>
-            <select class="custom-select form-control" (change)="onConsultantChange($event.target.value)">
-              <option value="">Todos</option>
-              <option *ngFor="let consultantName of this.consultantsList"
-                [selected]="consultantName == this.selectedConsultantFilter" value="{{consultantName}}">
-                {{consultantName}}</option>
-            </select>
-          </div>
           <div *ngIf="this.canAddCustomer" class="mb-4">
-            <button class="btn btn-lg btn-outline-primary" (click)="customerRegistration()">Incluir Cliente</button>
+            <button class="btn btn-warning margin" (click)="customerRegistration()" type="button"><span
+                class="fa fa-plus"></span>
+              Cliente</button>
           </div>
+          <div class="filters row">
+            <div class="col-1">
+              <label>Consultor: </label>
+            </div>
+            <div class="col-3">
+              <select #lstConsultant name="lstConsultant" class="custom-select form-control">
+                <option value="">Todos</option>
+                <option *ngFor="let consultant of this.consultantsList" value="{{consultant.id}}">
+                  {{consultant.name}}</option>
+              </select>
+            </div>
+            <div class="col-1">
+              <label>Nome: </label>
+            </div>
+            <div class="col-3">
+              <input #txtCustomerName name="txtCustomerName" class="form-control"
+                (keydown.enter)="filterResults(lstConsultant.value, txtCustomerName.value, lstSituation.value, lstPlan.value)"
+                type="text">
+            </div>
+          </div>
+          <div class="filters row">
+            <div class="col-1">
+              <label>Situação: </label>
+            </div>
+            <div class="col-3">
+              <select #lstSituation name="lstSituation" class="custom-select form-control">
+                <option value="">Todas</option>
+                <option *ngFor=" let situation of this.situationsList" value="{{situation.id}}">
+                  {{situation.description}}</option>
+              </select>
+            </div>
+            <div class="col-1">
+              <label>Planos: </label>
+            </div>
+            <div class="col-3">
+              <select #lstPlan name="lstPlan" class="custom-select form-control">
+                <option value="">Todos</option>
+                <option *ngFor="let plan of this.plansList" value="{{plan.id}}">
+                  {{plan.description}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="mt-2 mb-4">
+            <button class="btn btn-warning margin mr-1"
+              (click)="filterResults(lstConsultant.value, txtCustomerName.value, lstSituation.value, lstPlan.value)"
+              type="button"><span class="fa fa-filter"></span>
+              Filtrar</button>
+            <button class="btn btn-warning margin" (click)="clearFilters(lstConsultant, txtCustomerName, lstSituation, lstPlan)" type="button"><span
+                class="fa fa-times"></span>
+              Limpar</button>
+          </div>
+          <p>Resultados: {{this.filteredCustomers.length}} de {{this.customers.length}}</p>
           <div class="table-responsive">
             <table class="table">
               <thead>
@@ -27,7 +71,6 @@
                   <th scope="col">Consultor</th>
                   <th scope="col">Plano</th>
                   <th scope="col">Situação</th>
-                  <th scope="col">Editar</th>
                   <th scope="col">Encontros</th>
                   <th scope="col">Pl. de Vôo</th>
                 </tr>
@@ -42,11 +85,6 @@
                   <td>{{(customer.consultant ? customer.consultant.name : 'Não atribuido')}}</td>
                   <td>{{(customer.plan ? customer.plan.description : 'Não informado')}}</td>
                   <td>{{(customer.situation ? customer.situation.description : 'Não informada')}}</td>
-                  <td>
-                    <h4><a href="javascript:void(0)" (click)="customerRegistration(customer);"><em
-                          class="fa fa-edit"></em></a>
-                    </h4>
-                  </td>
                   <td>
                     <h4><a href="javascript:void(0)" (click)="customerMeetings(customer);"><em
                           class="fa fa-users"></em></a>

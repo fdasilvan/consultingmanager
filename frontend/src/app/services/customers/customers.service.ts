@@ -29,6 +29,11 @@ export class CustomersService {
     }
   }
 
+  public async transferCustomer(customerId: string, consultantId: string) {
+    let response = await this.http.put<Customer>(`${environment.apiUrl}/customer/transfer`, {}, { params: { customerId: customerId, consultantId: consultantId } }).toPromise();
+    return response;
+  }
+
   public async saveMeetings(customerId: string, customerMeetings: CustomerMeeting[]): Promise<boolean> {
     let response = await this.http.post<boolean>(`${environment.apiUrl}/customer/${customerId}/meetings`, customerMeetings).toPromise();
     return response;

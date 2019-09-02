@@ -1,12 +1,19 @@
-.filter {
+.filters {
   display: flex;
 }
 
-.filter label {
+.filters label {
   line-height: 2.5rem;
+  margin-left: 0.5rem;
 }
 
-.filter select {
+.filters input {
+  width: 20rem;
+  margin-left: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.filters select {
   width: 20rem;
   margin-left: 0.5rem;
   margin-bottom: 0.5rem;

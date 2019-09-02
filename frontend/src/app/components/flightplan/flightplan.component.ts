@@ -58,7 +58,7 @@ export class FlightplanComponent implements OnInit {
 
   async loadCustomerProcesses() {
     this.customerProcesses = await this.processService.getCustomerProcesses(this.customer.id);
-    this.filteredCustomerProcesses = this.customerProcesses;
+    this.filteredCustomerProcesses = this.customerProcesses.filter(o => o.customerMeetingId == this.selectedMeeting.id);
   }
 
   async loadMeetings() {
@@ -67,7 +67,9 @@ export class FlightplanComponent implements OnInit {
 
   selectMeeting(meeting: CustomerMeeting) {
     this.selectedMeeting = meeting;
-    this.filteredCustomerProcesses = this.customerProcesses.filter(o => o.customerMeetingId == this.selectedMeeting.id);
+    if (this.selectedMeeting) {
+      this.filteredCustomerProcesses = this.customerProcesses.filter(o => o.customerMeetingId == this.selectedMeeting.id);
+    }
   }
 
   openProcessModal(content) {
@@ -75,9 +77,10 @@ export class FlightplanComponent implements OnInit {
   }
 
   async addProcess(modelProcessId: string, modelDescription: string, customerUserId: string, startDate: string) {
-    await this.processService.startCustomerProcess(modelProcessId, modelDescription, this.customer.id, this.loggedUser.id, customerUserId, new Date(startDate), this.selectedMeeting.id);
-    this.loadCustomerProcesses();
-    this.modalObject.close();
+    //await this.processService.startCustomerProcess(modelProcessId, modelDescription, this.customer.id, this.loggedUser.id, customerUserId, new Date(startDate), this.selectedMeeting.id);
+    //this.loadCustomerProcesses();
+    //this.modalObject.close();
+    alert('Em atualização');
   }
 
   registerMeetings() {

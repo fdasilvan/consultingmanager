@@ -11,6 +11,7 @@ namespace ConsultingManager.Infra.Database.Models
         public DateTime StartDate { get; set; }
         public DateTime EstimatedEndDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public string Detail { get; set; }
 
         public Guid ModelProcessId { get; set; }
         [ForeignKey(nameof(ModelProcessId))]

@@ -89,7 +89,7 @@ namespace ConsultingManager.Domain.Repository
             }
         }
 
-        public async Task<CustomerProcessDto> StartCustomerProcess(ModelProcessDto modelProcessDto, Guid customerId, Guid consultantId, Guid customerUserId, DateTime startDate, Guid? customerMeetingId)
+        public async Task<CustomerProcessDto> StartCustomerProcess(ModelProcessDto modelProcessDto, Guid customerId, Guid consultantId, Guid customerUserId, DateTime startDate, string detail, Guid? customerMeetingId)
         {
             CustomerProcessPoco customerProcess = new CustomerProcessPoco();
 
@@ -134,7 +134,7 @@ namespace ConsultingManager.Domain.Repository
                     customerTask.EndDate = null;
 
                     customerTask.MailSubject = modelTask.MailSubject;
-                    customerTask.MailBody = modelTask.MailSubject;
+                    customerTask.MailBody = modelTask.MailBody;
 
                     customerTask.CustomerId = customerId;
                     customerTask.CustomerUserId = customerUserId;
@@ -172,6 +172,7 @@ namespace ConsultingManager.Domain.Repository
             customerProcess.CustomerSteps = lstCustomerSteps;
             customerProcess.EstimatedEndDate = (processEstimatedEndDate.HasValue ? processEstimatedEndDate.Value : throw new Exception("Data final do processo não definida"));
             customerProcess.EndDate = null;
+            customerProcess.Detail = detail;
             customerProcess.CustomerMeetingId = customerMeetingId;
 
             Context.CustomerProcesses.Add(customerProcess);

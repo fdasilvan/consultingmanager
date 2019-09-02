@@ -4,14 +4,16 @@ using ConsultingManager.Infra.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConsultingManager.Infra.Migrations
 {
     [DbContext(typeof(ConsultingManagerDbContext))]
-    partial class ConsultingManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190902000522_added-customer-task-detail")]
+    partial class addedcustomertaskdetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,8 +126,6 @@ namespace ConsultingManager.Infra.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("Detail");
-
                     b.Property<DateTime?>("EndDate");
 
                     b.Property<DateTime>("EstimatedEndDate");
@@ -221,6 +221,8 @@ namespace ConsultingManager.Infra.Migrations
                     b.Property<Guid>("CustomerUserId");
 
                     b.Property<string>("Description");
+
+                    b.Property<string>("Detail");
 
                     b.Property<int>("Duration");
 

@@ -37,6 +37,19 @@ namespace ConsultingManager.Api.Controllers
             }
         }
 
+        [HttpPut("transfer")]
+        public async Task<IActionResult> Transfer(Guid customerId, Guid consultantId)
+        {
+            try
+            {
+                return Ok(await _customerRepository.Transfer(customerId, consultantId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao atualizar cliente: " + ex.Message);
+            }
+        }
+
         [HttpPost("{customerId}/meetings")]
         public async Task<IActionResult> AddMeetings(Guid customerId, List<CustomerMeetingDto> customerMeetingsDto)
         {
