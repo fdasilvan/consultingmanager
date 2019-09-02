@@ -79,6 +79,12 @@
         </div>
       </div>
       <div class="form-group">
+        <label for="txtStartDate">Detalhes (opcional)</label>
+        <div class="input-group">
+          <input #txtDetail id="txtDetail" class="form-control" placeholder="(Ex.: produto X ou categoria Y)">
+        </div>
+      </div>
+      <div class="form-group">
         <label for="lstUsers">Usuário Responsável</label>
         <div class="input-group">
           <select #lstUsers id="lstUsers" class="custom-select form-control">
@@ -103,6 +109,6 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark"
-      (click)="addProcess(lstModelProcess.value, lstModelProcess[lstModelProcess.selectedIndex].text, lstUsers.value, txtStartDate.value)">Confirmar</button>
+      (click)="addProcess(lstModelProcess.value, lstModelProcess[lstModelProcess.selectedIndex].text, txtDetail.value, lstUsers.value, txtStartDate.value)">Confirmar</button>
   </div>
 </ng-template>

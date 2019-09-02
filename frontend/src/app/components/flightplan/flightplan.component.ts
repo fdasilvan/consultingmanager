@@ -76,11 +76,10 @@ export class FlightplanComponent implements OnInit {
     this.modalObject = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  async addProcess(modelProcessId: string, modelDescription: string, customerUserId: string, startDate: string) {
-    //await this.processService.startCustomerProcess(modelProcessId, modelDescription, this.customer.id, this.loggedUser.id, customerUserId, new Date(startDate), this.selectedMeeting.id);
-    //this.loadCustomerProcesses();
-    //this.modalObject.close();
-    alert('Em atualização');
+  async addProcess(modelProcessId: string, modelDescription: string, detail: string, customerUserId: string, startDate: string) {
+    await this.processService.startCustomerProcess(modelProcessId, modelDescription, detail, this.customer.id, this.loggedUser.id, customerUserId, new Date(startDate), this.selectedMeeting.id);
+    this.loadCustomerProcesses();
+    this.modalObject.close();
   }
 
   registerMeetings() {
