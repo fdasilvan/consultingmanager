@@ -89,6 +89,36 @@ namespace ConsultingManager.Domain.Repository
             }
         }
 
+        public async Task<bool> Delete(Guid customerProcessId)
+        {
+            try
+            {
+                CustomerProcessPoco customerProcess = Context.CustomerProcesses
+                    .Include(process => process.CustomerSteps)
+                        .ThenInclude(steps => steps.CustomerTasks)
+                    .FirstOrDefault(o => o.Id == customerProcessId);
+
+                foreach (CustomerStepPoco customerStep in customerProcess.CustomerSteps)
+                {
+                    foreach (CustomerTaskPoco customerTask in customerStep.CustomerTasks)
+                    {
+                        Context.CustomerTasks.Remove(customerTask);
+                    }
+
+                    Context.CustomerSteps.Remove(customerStep);
+                }
+
+                Context.CustomerProcesses.Remove(customerProcess);
+                await Context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public async Task<CustomerProcessDto> StartCustomerProcess(ModelProcessDto modelProcessDto, Guid customerId, Guid consultantId, Guid customerUserId, DateTime startDate, string detail, Guid? customerMeetingId)
         {
             CustomerProcessPoco customerProcess = new CustomerProcessPoco();

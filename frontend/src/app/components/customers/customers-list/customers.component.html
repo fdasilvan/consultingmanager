@@ -58,7 +58,8 @@
               (click)="filterResults(lstConsultant.value, txtCustomerName.value, lstSituation.value, lstPlan.value)"
               type="button"><span class="fa fa-filter"></span>
               Filtrar</button>
-            <button class="btn btn-warning margin" (click)="clearFilters(lstConsultant, txtCustomerName, lstSituation, lstPlan)" type="button"><span
+            <button class="btn btn-warning margin"
+              (click)="clearFilters(lstConsultant, txtCustomerName, lstSituation, lstPlan)" type="button"><span
                 class="fa fa-times"></span>
               Limpar</button>
           </div>
@@ -76,6 +77,9 @@
                 </tr>
               </thead>
               <tbody>
+                <tr *ngIf="this.filteredCustomers.length == 0">
+                  <td colspan="6">Não foram encontrados clientes com os filtros informados!</td>
+                </tr>
                 <tr *ngFor="let customer of this.filteredCustomers">
                   <td>
                     <h4><a href="javascript:void(0)"

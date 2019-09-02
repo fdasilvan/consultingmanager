@@ -44,6 +44,11 @@ export class ProcessService {
     return response;
   }
 
+  public async delete(customerProcessId: string): Promise<boolean> {
+    let response = await this.http.delete<boolean>(`${environment.apiUrl}/process`, { params: { customerProcessId: customerProcessId } }).toPromise();
+    return response;
+  }
+
   public async getCustomerProcesses(customerId: string): Promise<CustomerProcess[]> {
     var response = await this.http.get<CustomerProcess[]>(`${environment.apiUrl}/process/customer/${customerId}`);
     return response.toPromise();

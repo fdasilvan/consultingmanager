@@ -38,6 +38,7 @@ export class TimelineComponent implements OnInit {
   public consultantsList: User[];
   public today: Date = new Date();
   public modalObject: NgbModalRef;
+  public canDeleteProcess: boolean;
 
   closeResult: string;
 
@@ -46,6 +47,11 @@ export class TimelineComponent implements OnInit {
     this.loadModelProcesses();
     this.loadCustomerProcesses(this.customer);
     this.loadConsultants();
+    this.getUserPermissions();
+  }
+
+  getUserPermissions() {
+    this.canDeleteProcess = this.loggedUser.userType.description == "Administrador" || this.loggedUser.userType.description == "Líder";
   }
 
   ngAfterViewChecked() {
@@ -75,6 +81,14 @@ export class TimelineComponent implements OnInit {
     await this.processService.startCustomerProcess(modelProcessId, modelDescription, detail, this.customer.id, this.loggedUser.id, customerUserId, new Date(startDate), null);
     this.modalObject.close();
     this.loadCustomerProcesses(this.customer);
+  }
+
+  async deleteProcess(customerProcessId: string) {
+    let result = confirm('Tem certeza que quer excluir a ação?');
+    if (result) {
+      await this.processService.delete(customerProcessId);
+      this.loadCustomerProcesses(this.customer);
+    }
   }
 
   getCustomerId() {

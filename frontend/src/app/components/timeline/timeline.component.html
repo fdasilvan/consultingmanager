@@ -24,12 +24,18 @@
     <div *ngIf="customerProcessesList && customerProcessesList.length > 0">
       <div *ngFor="let process of customerProcessesList | orderBy: 'startDate'">
         <h3 class="margin-top-bottom"><em (click)="toggleElement($event.target)" class="fa fa-chevron-down"></em>
-          Ação: {{process.description}} - {{(process.detail != null ? process.detail + ' - ' : '')}}
+          Ação: {{process.description}} -
+          {{(process.detail != null && process.detail != ''  ? process.detail + ' - ' : '')}}
           {{process.startDate | date: 'dd/MM/yyyy'}} a
           {{process.estimatedEndDate | date: 'dd/MM/yyyy'}}</h3>
 
         <div class="col-lg-12">
           <h6 class="text-muted">Cód. Ação: {{process.id}}</h6>
+          <div *ngIf="this.canDeleteProcess">
+            <button class="btn btn-danger margin mr-1 mt-2" (click)="deleteProcess(process.id)" type="button"><span
+                class="fa fa-trash"></span>
+              Remover</button>
+          </div>
           <div class="card mt-4" *ngFor="let step of process.customerSteps | orderBy: 'startDate'">
             <div class="card-header">
               <h4>{{step.description}} - {{step.startDate | date: 'dd/MM/yyyy'}} a

@@ -36,6 +36,19 @@ namespace ConsultingManager.Api.Controllers
             return Ok(await _processRepository.Save(modelProcessDto));
         }
 
+        [HttpDelete]
+        public async Task<IActionResult> Delete(Guid customerProcessId)
+        {
+            try
+            {
+                return Ok(await _processRepository.Delete(customerProcessId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao excluir ação do cliente.");
+            }
+        }
+
         [HttpPost("start")]
         public async Task<IActionResult> StartCustomerProcess(StartCustomerProcessDto startCustomerProcessDto)
         {
