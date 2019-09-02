@@ -38,6 +38,7 @@ export class FlightplanComponent implements OnInit {
   public modelProcessesList: ModelProcess[] = [];
   public selectedMeeting: CustomerMeeting;
   public modalObject: NgbModalRef;
+  public today: Date = new Date();
 
   ngOnInit() {
     this.loadCustomer();
@@ -58,7 +59,6 @@ export class FlightplanComponent implements OnInit {
 
   async loadCustomerProcesses() {
     this.customerProcesses = await this.processService.getCustomerProcesses(this.customer.id);
-    this.filteredCustomerProcesses = this.customerProcesses.filter(o => o.customerMeetingId == this.selectedMeeting.id);
   }
 
   async loadMeetings() {
@@ -67,9 +67,7 @@ export class FlightplanComponent implements OnInit {
 
   selectMeeting(meeting: CustomerMeeting) {
     this.selectedMeeting = meeting;
-    if (this.selectedMeeting) {
-      this.filteredCustomerProcesses = this.customerProcesses.filter(o => o.customerMeetingId == this.selectedMeeting.id);
-    }
+    this.filteredCustomerProcesses = this.customerProcesses.filter(o => o.customerMeetingId == this.selectedMeeting.id);
   }
 
   openProcessModal(content) {
@@ -77,9 +75,13 @@ export class FlightplanComponent implements OnInit {
   }
 
   async addProcess(modelProcessId: string, modelDescription: string, detail: string, customerUserId: string, startDate: string) {
-    await this.processService.startCustomerProcess(modelProcessId, modelDescription, detail, this.customer.id, this.loggedUser.id, customerUserId, new Date(startDate), this.selectedMeeting.id);
-    this.loadCustomerProcesses();
-    this.modalObject.close();
+    if (modelProcessId == '' || customerUserId == '') {
+      alert('O modelo e o usuário do cliente são obrigatórios!');
+    } else {
+      await this.processService.startCustomerProcess(modelProcessId, modelDescription, detail, this.customer.id, this.loggedUser.id, customerUserId, new Date(startDate), this.selectedMeeting.id);
+      this.loadCustomerProcesses();
+      this.modalObject.close();
+    }
   }
 
   registerMeetings() {

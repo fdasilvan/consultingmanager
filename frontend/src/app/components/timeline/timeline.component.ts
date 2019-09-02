@@ -78,9 +78,13 @@ export class TimelineComponent implements OnInit {
   }
 
   async startCustomerProcess(modelProcessId: string, modelDescription: string, detail: string, customerUserId: string, startDate: string) {
-    await this.processService.startCustomerProcess(modelProcessId, modelDescription, detail, this.customer.id, this.loggedUser.id, customerUserId, new Date(startDate), null);
-    this.modalObject.close();
-    this.loadCustomerProcesses(this.customer);
+    if (modelProcessId == '' || customerUserId == '') {
+      alert('O modelo e o usuário do cliente são obrigatórios!');
+    } else {
+      await this.processService.startCustomerProcess(modelProcessId, modelDescription, detail, this.customer.id, this.loggedUser.id, customerUserId, new Date(startDate), null);
+      this.modalObject.close();
+      this.loadCustomerProcesses(this.customer);
+    }
   }
 
   async deleteProcess(customerProcessId: string) {

@@ -72,6 +72,9 @@
         <label for="lstModelProcess">Processo</label>
         <div class="input-group">
           <select #lstModelProcess id="lstModelProcess" class="custom-select form-control">
+            <option value="">
+              Selecionar
+            </option>
             <option *ngFor="let modelProcess of modelProcessesList" value="{{modelProcess.id}}">
               {{modelProcess.description}}
             </option>
@@ -88,6 +91,9 @@
         <label for="lstUsers">Usuário Responsável</label>
         <div class="input-group">
           <select #lstUsers id="lstUsers" class="custom-select form-control">
+            <option value="">
+              Selecionar
+            </option>
             <option *ngFor="let user of this.customer.users" value="{{user.id}}">
               {{user.name}}
             </option>
