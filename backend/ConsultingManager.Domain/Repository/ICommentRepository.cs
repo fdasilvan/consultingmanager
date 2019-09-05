@@ -10,5 +10,6 @@ namespace ConsultingManager.Domain.Repository
         Task<CommentDto> Add(CommentDto commentDto);
         Task<List<CommentDto>> GetMeetingComments(Guid customerMeetingId);
         Task<List<CommentDto>> GetCustomerComments(Guid customerMeetingId);
+        Task<List<CommentDto>> GetTaskComments(Guid customerTaskId);
     }
 }

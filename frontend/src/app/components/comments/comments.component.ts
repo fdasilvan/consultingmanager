@@ -44,6 +44,9 @@ export class CommentsComponent implements OnInit {
       case "customer":
         this.comments = await this.commentService.getCustomerComments(this.genericId);
         break;
+      case "task":
+        this.comments = await this.commentService.getTaskComments(this.genericId);
+        break;
     }
   }
 
@@ -61,6 +64,8 @@ export class CommentsComponent implements OnInit {
         case "customer":
           comment.customerId = this.genericId;
           break;
+        case "task":
+          comment.customerTaskId = this.genericId;
       }
 
       comment.date = new Date();

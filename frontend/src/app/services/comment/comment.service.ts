@@ -24,4 +24,9 @@ export class CommentService {
     var response = await this.http.get<Comment[]>(`${environment.apiUrl}/comment/customer/${customerId}`);
     return response.toPromise();
   }
+
+  public async getTaskComments(customerTaskId: string) {
+    var response = await this.http.get<Comment[]>(`${environment.apiUrl}/comment/task/${customerTaskId}`);
+    return response.toPromise();
+  }
 }

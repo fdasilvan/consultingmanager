@@ -50,5 +50,18 @@ namespace ConsultingManager.Api.Controllers
                 return BadRequest("Erro ao buscar comentários do cliente.");
             }
         }
+
+        [HttpGet("task/{customerTaskId}")]
+        public async Task<IActionResult> GetTaskComments(Guid customerTaskId)
+        {
+            try
+            {
+                return Ok(await _commentRepository.GetTaskComments(customerTaskId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar comentários da tarefa.");
+            }
+        }
     }
 }

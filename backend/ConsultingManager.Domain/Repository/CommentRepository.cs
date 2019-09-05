@@ -48,5 +48,15 @@ namespace ConsultingManager.Domain.Repository
                 .Select(task => task.MapTo<CommentDto>())
                 .ToListAsync();
         }
+
+        public async Task<List<CommentDto>> GetTaskComments(Guid customerTaskId)
+        {
+            return await Context.Comments
+                .Include(comment => comment.Customer)
+                .Include(comment => comment.User)
+                .Where(comment => comment.CustomerTaskId == customerTaskId)
+                .Select(task => task.MapTo<CommentDto>())
+                .ToListAsync();
+        }
     }
 }
