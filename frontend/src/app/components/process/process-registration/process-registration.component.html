@@ -2,10 +2,10 @@
   <div class="col-12">
     <div class="card mb-4">
       <div class="card-block btn-margins">
-        <h3 class="card-title">Cadastro de Plano de Ação</h3>
+        <h3 class="card-title">Cadastro de Ação</h3>
         <div class="form-group row mb-3 mt-4 pl-1">
           <div class="col-md-12">
-            <label class="col-md-3 col-form-label">Descrição do Plano de Ação: </label>
+            <label class="col-md-3 col-form-label">Descrição da Ação: </label>
             <input #txtProcessDescription name="txtProcessDescription" placeholder="Descrição"
               [(ngModel)]="this.modelProcess.description" [ngModelOptions]="{ standalone: true }" type="text"
               class="form-control mb-2">
@@ -93,7 +93,7 @@
                     <div class="col-md-10">
                       <input #txtStartAfterDays name="txtStartAfterDays" [(ngModel)]="task.startAfterDays"
                         [ngModelOptions]="{ standalone: true }" type="number" class="form-control mb-2">
-                      <h6 class="text-muted">Quantidade de dias após o início do plano de ação.</h6>
+                      <h6 class="text-muted">Quantidade de dias após o início da ação.</h6>
                     </div>
                   </div>
                   <div class="form-group col-8 row">

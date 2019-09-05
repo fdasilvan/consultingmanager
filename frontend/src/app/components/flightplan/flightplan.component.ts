@@ -59,6 +59,9 @@ export class FlightplanComponent implements OnInit {
 
   async loadCustomerProcesses() {
     this.customerProcesses = await this.processService.getCustomerProcesses(this.customer.id);
+    if (this.selectedMeeting) {
+      this.filteredCustomerProcesses = this.customerProcesses.filter(o => o.customerMeetingId == this.selectedMeeting.id);
+    }
   }
 
   async loadMeetings() {
@@ -79,7 +82,7 @@ export class FlightplanComponent implements OnInit {
       alert('O modelo e o usuário do cliente são obrigatórios!');
     } else {
       await this.processService.startCustomerProcess(modelProcessId, modelDescription, detail, this.customer.id, this.loggedUser.id, customerUserId, new Date(startDate), this.selectedMeeting.id);
-      this.loadCustomerProcesses();
+      await this.loadCustomerProcesses();
       this.modalObject.close();
     }
   }
