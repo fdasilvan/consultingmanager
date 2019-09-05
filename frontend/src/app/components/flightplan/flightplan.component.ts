@@ -87,6 +87,10 @@ export class FlightplanComponent implements OnInit {
     }
   }
 
+  goBack() {
+    window.history.back();
+  }
+
   registerMeetings() {
     window.sessionStorage.setItem('customer', JSON.stringify(this.customer));
     this.router.navigate(['customer-meetings']);

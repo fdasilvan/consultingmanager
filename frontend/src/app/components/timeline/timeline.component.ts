@@ -126,6 +126,16 @@ export class TimelineComponent implements OnInit {
     this.router.navigate(['customers']);
   }
 
+  customerMeetings() {
+    window.sessionStorage.setItem('customer', JSON.stringify(this.customer));
+    this.router.navigate(['customer-meetings']);
+  }
+
+  customerFlightplan() {
+    window.sessionStorage.setItem('customer', JSON.stringify(this.customer));
+    this.router.navigate(['flightplan']);
+  }
+
   loadClassIndicator(task: CustomerTask) {
     let today: Date = new Date();
     today.setHours(0, 0, 0, 0);

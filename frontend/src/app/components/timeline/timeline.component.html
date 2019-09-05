@@ -4,12 +4,18 @@
       <img src="/assets/images/user-icon.jpg" alt="profile photo" class="circle float-left profile-photo customerLogo"
         width="50" height="auto" />
       <h2>{{customer.name}}</h2>
-      <h3 *ngIf="customer.consultant" class="text-muted">Consultor Responsável: {{customer.consultant.name}}</h3>
+      <h3 *ngIf="customer.consultant" class="text-muted mt-4">Consultor Responsável: {{customer.consultant.name}}</h3>
     </div>
 
     <div *ngIf="this.loggedUser.userType.description != 'Cliente'" class="mt-4 mb-4">
       <button class="btn btn-warning margin mr-1" (click)="openProcessModal(content)" type="button"><span
           class="fa fa-plus"></span> Ação</button>
+      <button class="btn btn-warning margin mr-1" (click)="customerMeetings()" type="button"><span
+          class="fa fa-users"></span>
+        Encontros</button>
+      <button class="btn btn-warning margin mr-1" (click)="customerFlightplan()" type="button"><span
+          class="fa fa-plane"></span>
+        Plano de Vôo</button>
       <button class="btn btn-warning margin mr-1" (click)="openProcessModal(contentTransfer)" type="button"><span
           class="fa fa-share"></span>
         Transferir</button>
@@ -19,7 +25,7 @@
     </div>
 
     <div *ngIf="customerProcessesList && customerProcessesList.length == 0">
-      <p>Não há ações iniciados para este cliente!</p>
+      <p>Não há ações iniciadas para este cliente!</p>
     </div>
     <div *ngIf="customerProcessesList && customerProcessesList.length > 0">
       <div *ngFor="let process of customerProcessesList | orderBy: 'startDate'">
