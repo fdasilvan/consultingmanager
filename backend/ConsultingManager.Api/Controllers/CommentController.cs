@@ -34,7 +34,20 @@ namespace ConsultingManager.Api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest("Erro ao buscar atividades do cliente.");
+                return BadRequest("Erro ao buscar comentários do encontro.");
+            }
+        }
+
+        [HttpGet("customer/{customerId}")]
+        public async Task<IActionResult> GetCustomerComments(Guid customerId)
+        {
+            try
+            {
+                return Ok(await _commentRepository.GetCustomerComments(customerId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar comentários do cliente.");
             }
         }
     }

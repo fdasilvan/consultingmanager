@@ -1,6 +1,6 @@
 <div class="comments-container">
   <h5 class="mt-4 mb-4">Comentários</h5>
-  <div class="ml-4 mt-4 mb-4">Ainda não há comentários para este registro!</div>
+  <div class="ml-4 mt-4 mb-4" *ngIf="this.comments.length == 0">Ainda não há comentários para este registro!</div>
   <div class="card mb-2" *ngFor="let comment of this.comments">
     <div class="card-header">
       <p class="username">{{comment.user.name}}</p> em {{comment.date | date: 'dd/MM/yyyy HH:mm:ss'}}
@@ -8,9 +8,10 @@
     <div class="card-block">{{comment.text}}</div>
   </div>
   <div class="add-comment row mb-4 mt-4">
-    <input #txtComment name="txtComment" (keydown.enter)="addComment(txtComment)" placeholder="Adicionar comentário" type="text" class="form-control">
-    <button class="btn btn-warning margin" (click)="addComment(txtComment)" type="button"><span class="fa fa-plus"></span>
+    <input #txtComment name="txtComment" (keydown.enter)="addComment(txtComment)" placeholder="Adicionar comentário"
+      type="text" class="form-control">
+    <button class="btn btn-warning margin" (click)="addComment(txtComment)" type="button"><span
+        class="fa fa-plus"></span>
       Comentário</button>
   </div>
-
 </div>

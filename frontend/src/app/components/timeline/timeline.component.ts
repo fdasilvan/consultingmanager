@@ -73,8 +73,8 @@ export class TimelineComponent implements OnInit {
     this.consultantsList = await this.customerService.getConsultants();
   }
 
-  openProcessModal(content) {
-    this.modalObject = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+  openModal(content) {
+    this.modalObject = this.modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' });
   }
 
   async startCustomerProcess(modelProcessId: string, modelDescription: string, detail: string, customerUserId: string, startDate: string) {

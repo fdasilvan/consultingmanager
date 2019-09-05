@@ -19,4 +19,9 @@ export class CommentService {
     var response = await this.http.get<Comment[]>(`${environment.apiUrl}/comment/meeting/${customerMeetingId}`);
     return response.toPromise();
   }
+
+  public async getCustomerComments(customerId: string) {
+    var response = await this.http.get<Comment[]>(`${environment.apiUrl}/comment/customer/${customerId}`);
+    return response.toPromise();
+  }
 }

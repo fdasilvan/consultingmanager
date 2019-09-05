@@ -33,26 +33,34 @@ export class CommentsComponent implements OnInit {
   }
 
   async ngOnInit() {
-    if (this.commentType == "meetings") {
-      await this.loadComments();
-    } else {
-      alert('Não foi possível carregar os comentários!');
-    }
+    await this.loadComments();
   }
 
   async loadComments() {
-    if (this.commentType == "meetings") {
-      this.comments = await this.commentService.getMeetingComments(this.genericId);
+    switch (this.commentType) {
+      case "meeting":
+        this.comments = await this.commentService.getMeetingComments(this.genericId);
+        break;
+      case "customer":
+        this.comments = await this.commentService.getCustomerComments(this.genericId);
+        break;
     }
   }
 
   async addComment(txtComment) {
 
+    debugger;
+
     if (txtComment.value != '') {
       let comment: Comment = new Comment();
 
-      if (this.commentType == "meetings") {
-        comment.customerMeetingId = this.genericId;
+      switch (this.commentType) {
+        case "meeting":
+          comment.customerMeetingId = this.genericId;
+          break;
+        case "customer":
+          comment.customerId = this.genericId;
+          break;
       }
 
       comment.date = new Date();

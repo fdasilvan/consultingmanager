@@ -74,7 +74,7 @@ export class FlightplanComponent implements OnInit {
   }
 
   openProcessModal(content) {
-    this.modalObject = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalObject = this.modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' });
   }
 
   async addProcess(modelProcessId: string, modelDescription: string, detail: string, customerUserId: string, startDate: string) {
