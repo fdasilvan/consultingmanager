@@ -18,7 +18,7 @@
             <div class="col-3">
               <select #lstConsultant name="lstConsultant" class="custom-select form-control">
                 <option value="">Todos</option>
-                <option *ngFor="let consultant of this.consultantsList" value="{{consultant.id}}">
+                <option *ngFor="let consultant of this.consultantsList" [selected]="(this.loggedUser && this.loggedUser.id == consultant.id)" value="{{consultant.id}}">
                   {{consultant.name}}</option>
               </select>
             </div>
@@ -76,7 +76,7 @@
               </thead>
               <tbody>
                 <tr *ngIf="this.filteredCustomers.length == 0">
-                  <td colspan="6">Não foram encontrados clientes com os filtros informados!</td>
+                  <td colspan="4">Não foram encontrados clientes com os filtros informados!</td>
                 </tr>
                 <tr *ngFor="let customer of this.filteredCustomers">
                   <td>

@@ -26,23 +26,29 @@ export class CustomersListComponent implements OnInit {
   public plansList: Plan[] = [];
   public loggedUser: User;
   public modalObject: NgbModalRef;
-  public canAddCustomer: boolean = false;
 
-  ngOnInit() {
+  public canAddCustomer: boolean = false;
+  public filterConsultant: boolean = false;
+
+  async ngOnInit() {
     this.loggedUser = this.userService.getUser();
 
     if (!this.loggedUser) {
       this.router.navigate(['login']);
     }
-    this.loadCustomers();
 
     this.canAddCustomer = (this.loggedUser.userType.description == 'Administrador' || this.loggedUser.userType.description == 'Líder');
+
+    this.loadFilters();
+    await this.loadCustomers();
+    if (this.filterConsultant) {
+      this.filterResults(this.loggedUser.id, '', '', '');
+    }
   }
 
   async loadCustomers() {
     this.customers = await this.service.getAll();
     this.filteredCustomers = this.customers;
-    this.loadFilters();
   }
 
   goToCustomerTimeline(customer: Customer, event: Event) {
@@ -68,6 +74,10 @@ export class CustomersListComponent implements OnInit {
 
   async loadConsultantsList() {
     this.consultantsList = await this.service.getConsultants();
+
+    if (this.consultantsList.find(o => o.id == this.loggedUser.id)) {
+      this.filterConsultant = true;
+    }
   }
 
   async loadPlansList() {
