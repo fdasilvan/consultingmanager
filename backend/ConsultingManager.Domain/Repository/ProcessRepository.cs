@@ -24,6 +24,7 @@ namespace ConsultingManager.Domain.Repository
             return await Context.ModelProcesses
                 .Include(o => o.ModelSteps)
                 .ThenInclude(p => p.ModelTasks)
+                .OrderBy(o => o.Description)
                 .Select(process => process.MapTo<ModelProcessDto>())
                 .ToListAsync();
         }

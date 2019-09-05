@@ -8,6 +8,7 @@ namespace ConsultingManager.Infra.Database.Models
     {
         public Guid Id { get; set; }
         public DateTime CreatedDate { get; set; }
+        public DateTime StartDate { get; set; }
         public string Name { get; set; }
         public string LogoUrl { get; set; }
         public string StoreUrl { get; set; }
