@@ -17,6 +17,7 @@ namespace ConsultingManager.Domain
             services.AddTransient<ITaskRepository, TaskRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IMailingHelper, MailingHelper>();
+            services.AddTransient<ICommentRepository, CommentRepository>();
             return services;
         }
     }

@@ -24,6 +24,7 @@ import { ProcessRegistrationComponent } from './components/process/process-regis
 import { FormsModule } from '@angular/forms';
 import { CustomerMeetingsComponent } from './components/customers/customer-meetings/customer-meetings.component';
 import { FlightplanComponent } from './components/flightplan/flightplan.component';
+import { CommentsComponent } from './components/comments/comments.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { FlightplanComponent } from './components/flightplan/flightplan.componen
     ProcessesListComponent,
     ProcessRegistrationComponent,
     CustomerMeetingsComponent,
-    FlightplanComponent
+    FlightplanComponent,
+    CommentsComponent
   ],
   imports: [
     BrowserModule,

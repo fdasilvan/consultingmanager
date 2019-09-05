@@ -25,6 +25,8 @@ namespace ConsultingManager.Domain
             CreateMap<UserPoco, UserDto>().ForMember(o => o.Password, src => src.Ignore()).ForAllOtherMembers(opts => opts.MapAtRuntime());
             CreateMap<UserDto, UserPoco>().ForAllOtherMembers(opts => opts.MapAtRuntime());
             CreateMap<UserTypePoco, UserTypeDto>().ForAllOtherMembers(opts => opts.MapAtRuntime());
+            CreateMap<CommentDto, CommentPoco>().ForAllOtherMembers(opts => opts.MapAtRuntime());
+            CreateMap<CommentPoco, CommentDto>().ForAllOtherMembers(opts => opts.MapAtRuntime());
         }
     }
 }

@@ -4,14 +4,16 @@ using ConsultingManager.Infra.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConsultingManager.Infra.Migrations
 {
     [DbContext(typeof(ConsultingManagerDbContext))]
-    partial class ConsultingManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190905180438_added-date-to-comments")]
+    partial class addeddatetocomments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,11 +44,11 @@ namespace ConsultingManager.Infra.Migrations
 
                     b.Property<Guid?>("CustomerId");
 
-                    b.Property<Guid?>("CustomerMeetingId");
-
                     b.Property<Guid?>("CustomerTaskId");
 
                     b.Property<DateTime>("Date");
+
+                    b.Property<Guid?>("MeetingId");
 
                     b.Property<string>("Text");
 
@@ -56,9 +58,9 @@ namespace ConsultingManager.Infra.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("CustomerMeetingId");
-
                     b.HasIndex("CustomerTaskId");
+
+                    b.HasIndex("MeetingId");
 
                     b.HasIndex("UserId");
 
@@ -499,14 +501,14 @@ namespace ConsultingManager.Infra.Migrations
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("ConsultingManager.Infra.Database.Models.CustomerMeetingPoco", "CustomerMeeting")
-                        .WithMany("Comments")
-                        .HasForeignKey("CustomerMeetingId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("ConsultingManager.Infra.Database.Models.CustomerTaskPoco", "CustomerTask")
                         .WithMany("Comments")
                         .HasForeignKey("CustomerTaskId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ConsultingManager.Infra.Database.Models.CustomerMeetingPoco", "CustomerMeeting")
+                        .WithMany("Comments")
+                        .HasForeignKey("MeetingId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ConsultingManager.Infra.Database.Models.UserPoco", "User")

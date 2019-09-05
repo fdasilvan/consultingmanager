@@ -16,5 +16,6 @@ namespace ConsultingManager.Infra.Database.Models
         public CustomerPoco Customer { get; set; }
 
         public virtual ICollection<CustomerProcessPoco> CustomerProcesses { get; set; }
+        public virtual ICollection<CommentPoco> Comments { get; set; }
     }
 }

@@ -32,6 +32,7 @@ namespace ConsultingManager.Infra.Database
         public DbSet<CustomerCategoryPoco> CustomerCategories { get; set; }
         public DbSet<CityPoco> Cities { get; set; }
         public DbSet<CustomerSituationPoco> CustomerSituations { get; set; }
+        public DbSet<CommentPoco> Comments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -144,6 +145,30 @@ namespace ConsultingManager.Infra.Database
 
             modelBuilder.Entity<CustomerPoco>()
                 .HasMany(c => c.Users)
+                .WithOne(e => e.Customer);
+
+            #endregion
+
+            #region CustomerMeeting x Comment 1-to-n relationship
+
+            modelBuilder.Entity<CustomerMeetingPoco>()
+                .HasMany(c => c.Comments)
+                .WithOne(e => e.CustomerMeeting);
+
+            #endregion
+
+            #region CustomerTask x Comment 1-to-n relationship
+
+            modelBuilder.Entity<CustomerTaskPoco>()
+                .HasMany(c => c.Comments)
+                .WithOne(e => e.CustomerTask);
+
+            #endregion
+
+            #region Customer x Comment 1-to-n relationship
+
+            modelBuilder.Entity<CustomerPoco>()
+                .HasMany(c => c.Comments)
                 .WithOne(e => e.Customer);
 
             #endregion

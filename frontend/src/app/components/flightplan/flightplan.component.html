@@ -23,35 +23,45 @@
           </div>
         </div>
         <div *ngIf="this.selectedMeeting">
-          <div>
-            <h5 class="mb-4">Plano de Vôo - Encontro {{this.selectedMeeting.date | date: 'dd/MM/yyyy'}}</h5>
-            <p *ngIf="this.filteredCustomerProcesses.length == 0">Não há planos de ação definidos para este encontro!
-            </p>
-
-            <div class="table-responsive" *ngIf="this.filteredCustomerProcesses.length > 0">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Descrição</th>
-                    <th scope="col">Dt. Início</th>
-                    <th scope="col">Dt. Estimada Fim</th>
-                    <th scope="col">Dt. Finalização</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let process of this.filteredCustomerProcesses | orderBy: 'startDate'">
-                    <td>{{ process.description }}</td>
-                    <td>{{ process.startDate | date: 'dd/MM/yyyy' }}</td>
-                    <td>{{ process.estimatedEndDate | date: 'dd/MM/yyyy' }}</td>
-                    <td>{{ process.endDate | date: 'dd/MM/yyyy' }}</td>
-                  </tr>
-                </tbody>
-              </table>
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Plano de Vôo - Encontro {{this.selectedMeeting.date | date: 'dd/MM/yyyy'}}
+              </h3>
             </div>
+            <div class="card-block">
+              <h5 class="mt-4 mb-4">Ações</h5>
+              <p *ngIf="this.filteredCustomerProcesses.length == 0">Não há planos de ação definidos para este encontro!
+              </p>
 
-            <button class="btn btn-warning margin" (click)="openProcessModal(content)" type="button"><span
-                class="fa fa-plus"></span>
-              Ação</button>
+              <div class="table-responsive" *ngIf="this.filteredCustomerProcesses.length > 0">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Descrição</th>
+                      <th scope="col">Dt. Início</th>
+                      <th scope="col">Dt. Estimada Fim</th>
+                      <th scope="col">Dt. Finalização</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let process of this.filteredCustomerProcesses | orderBy: 'startDate'">
+                      <td>{{ process.description }}</td>
+                      <td>{{ process.startDate | date: 'dd/MM/yyyy' }}</td>
+                      <td>{{ process.estimatedEndDate | date: 'dd/MM/yyyy' }}</td>
+                      <td>{{ process.endDate | date: 'dd/MM/yyyy' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <button class="btn btn-warning margin" (click)="openProcessModal(content)" type="button"><span
+                  class="fa fa-plus"></span>
+                Ação</button>
+
+              <div>
+                <app-comments commentType="meetings" [(genericId)]="this.selectedMeeting.id"></app-comments>
+              </div>
+            </div>
           </div>
         </div>
 

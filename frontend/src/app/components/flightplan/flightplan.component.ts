@@ -81,9 +81,9 @@ export class FlightplanComponent implements OnInit {
     if (modelProcessId == '' || customerUserId == '') {
       alert('O modelo e o usuário do cliente são obrigatórios!');
     } else {
+      this.modalObject.close();
       await this.processService.startCustomerProcess(modelProcessId, modelDescription, detail, this.customer.id, this.loggedUser.id, customerUserId, new Date(startDate), this.selectedMeeting.id);
       await this.loadCustomerProcesses();
-      this.modalObject.close();
     }
   }
 
