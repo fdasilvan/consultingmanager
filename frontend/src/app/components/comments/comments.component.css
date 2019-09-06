@@ -1,7 +1,11 @@
-.add-comment input {
-  width: 70%;
+.add-comment textarea {
+  width: 90%;
   margin-right: 0.5rem;
   margin-left: 1rem;
+}
+
+.add-comment button {
+
 }
 
 .username {

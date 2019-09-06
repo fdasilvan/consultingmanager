@@ -39,7 +39,7 @@ namespace ConsultingManager.Domain.Repository
                 customer.LogoUrl = customerDto.LogoUrl;
                 customer.StoreUrl = customerDto.StoreUrl;
                 customer.CityId = customerDto.CityId;
-                customer.PlatformId = customerDto.PlatformId.Value;
+                customer.PlatformId = customerDto.PlatformId;
                 customer.CategoryId = customerDto.CategoryId;
                 customer.PlanId = customerDto.PlanId;
                 customer.ConsultantId = customerDto.ConsultantId;

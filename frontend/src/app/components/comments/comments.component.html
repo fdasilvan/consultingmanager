@@ -8,8 +8,10 @@
     <div class="card-block">{{comment.text}}</div>
   </div>
   <div class="add-comment row mb-4 mt-4">
-    <input #txtComment name="txtComment" (keydown.enter)="addComment(txtComment)" placeholder="Adicionar comentário"
-      type="text" class="form-control">
+    <textarea #txtComment name="txtComment" placeholder="Adicionar comentário" type="text" rows="3"
+      class="form-control"></textarea>
+  </div>
+  <div class="mb-2">
     <button class="btn btn-warning margin" (click)="addComment(txtComment)" type="button"><span
         class="fa fa-plus"></span>
       Comentário</button>

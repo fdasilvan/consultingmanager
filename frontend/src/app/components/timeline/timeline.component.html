@@ -3,8 +3,13 @@
     <div class="customer-info">
       <img src="/assets/images/user-icon.jpg" alt="profile photo" class="circle float-left profile-photo customerLogo"
         width="50" height="auto" />
-      <h2>{{customer.name}}</h2>
-      <h3 *ngIf="customer.consultant" class="text-muted mt-4">Consultor Responsável: {{customer.consultant.name}}</h3>
+      <h2 class="mb-2">{{customer.name}}</h2>
+      <div *ngIf="customer.consultant">
+        <p class="text-muted">Consultor Responsável: {{customer.consultant.name}}</p>
+        <p class="text-muted">Telefone: {{(customer.phone && customer.phone != '' ? customer.phone : 'Não informado')}}
+        </p>
+        <a href="https://{{customer.storeUrl}}" target="_blank">https://{{customer.storeUrl}}</a>
+      </div>
     </div>
 
     <div *ngIf="this.loggedUser.userType.description != 'Cliente'" class="mt-4 mb-4">
