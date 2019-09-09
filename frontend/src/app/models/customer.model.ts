@@ -4,6 +4,7 @@ import { City } from './city.model';
 import { CustomerCategory } from './customercategory.model';
 import { Plan } from './plan.model';
 import { CustomerSituation } from './customersituation.model';
+import { CustomerLevel } from './customerlevel.model';
 
 export class Customer {
   id: string;
@@ -31,6 +32,9 @@ export class Customer {
 
   situationId: string;
   sitaution: CustomerSituation;
+
+  customerLevelId: string;
+  customerLevel: CustomerLevel;
 
   constructor() {
   }

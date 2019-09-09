@@ -30,6 +30,11 @@ export class TaskService {
     return response;
   }
 
+  public async transferTask(taskId: string, consultantId: string) {
+    let response = await this.http.put<any>(`${environment.apiUrl}/task/${taskId}/transfer/${consultantId}`, null).toPromise();
+    return response;
+  }
+
   public async getUserTasks(userId: string): Promise<CustomerTask[]> {
     var response = await this.http.get<CustomerTask[]>(`${environment.apiUrl}/task/user/${userId}`);
     return response.toPromise();

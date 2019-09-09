@@ -4,14 +4,16 @@ using ConsultingManager.Infra.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConsultingManager.Infra.Migrations
 {
     [DbContext(typeof(ConsultingManagerDbContext))]
-    partial class ConsultingManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190909201354_added-customer-level")]
+    partial class addedcustomerlevel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,7 +84,7 @@ namespace ConsultingManager.Infra.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Description");
+                    b.Property<Guid>("Description");
 
                     b.Property<decimal>("RevenueHighLimit");
 
@@ -90,7 +92,7 @@ namespace ConsultingManager.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CustomerLevels");
+                    b.ToTable("CustomerLevelPoco");
                 });
 
             modelBuilder.Entity("ConsultingManager.Infra.Database.Models.CustomerMeetingPoco", b =>

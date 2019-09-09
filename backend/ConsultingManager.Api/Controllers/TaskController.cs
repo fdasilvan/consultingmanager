@@ -81,5 +81,18 @@ namespace ConsultingManager.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPut("{taskId}/transfer/{consultantId}")]
+        public async Task<IActionResult> RescheduleTask(Guid taskId, Guid consultantId)
+        {
+            try
+            {
+                return Ok(await _taskRepository.TransferTask(taskId, consultantId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

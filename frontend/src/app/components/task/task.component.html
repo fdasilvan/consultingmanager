@@ -68,6 +68,11 @@
                 <span class="fa fa-check"></span> Finalizar
               </button>
             </div>
+            <div *ngIf="this.canTransferTask">
+              <button class="btn btn-lg btn-outline-primary" (click)="openModal(contentTransfer)">
+                <span class="fa fa-share"></span> Transferir
+              </button>
+            </div>
             <div *ngIf="this.canRescheduleTask">
               <button class="btn btn-lg btn-outline-primary" (click)="rescheduleTaskModal(content)">
                 <span class="fa fa-clock-o"></span> Reprogramar
@@ -117,5 +122,33 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="rescheduleTask(txtStartDate.value)">Confirmar</button>
+  </div>
+</ng-template>
+
+<ng-template #contentTransfer let-modalTransfer>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Transferir Cliente</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalTransfer.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="lstUsers">Consultor</label>
+        <div class="input-group">
+          <select #lstConsultants id="lstConsultants" class="custom-select form-control">
+            <option value="">Selecione</option>
+            <option *ngFor="let consultant of this.consultantsList" value="{{consultant.id}}">
+              {{consultant.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark"
+      (click)="transferTask(lstConsultants.value)">Transferir</button>
   </div>
 </ng-template>

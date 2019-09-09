@@ -160,6 +160,19 @@ namespace ConsultingManager.Api.Controllers
             }
         }
 
+        [HttpGet("levels")]
+        public async Task<IActionResult> GetCustomerLevels()
+        {
+            try
+            {
+                return Ok(await _customerRepository.GetCustomerLevels());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar informações.");
+            }
+        }
+
         [HttpGet("consultants")]
         public async Task<IActionResult> GetConsultants()
         {

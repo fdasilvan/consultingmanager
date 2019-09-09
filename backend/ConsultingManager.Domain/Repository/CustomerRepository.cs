@@ -34,6 +34,7 @@ namespace ConsultingManager.Domain.Repository
             {
                 customer.Name = customerDto.Name;
                 customer.SituationId = customerDto.SituationId;
+                customer.CustomerLevelId = customerDto.CustomerLevelId;
                 customer.Email = customerDto.Email;
                 customer.Phone = customerDto.Phone;
                 customer.LogoUrl = customerDto.LogoUrl;
@@ -181,6 +182,14 @@ namespace ConsultingManager.Domain.Repository
         {
             return await Context.CustomerSituations
                 .Select(o => o.MapTo<CustomerSituationDto>())
+                .OrderBy(o => o.Description)
+                .ToListAsync();
+        }
+
+        public async Task<List<CustomerLevelDto>> GetCustomerLevels()
+        {
+            return await Context.CustomerLevels
+                .Select(o => o.MapTo<CustomerLevelDto>())
                 .OrderBy(o => o.Description)
                 .ToListAsync();
         }

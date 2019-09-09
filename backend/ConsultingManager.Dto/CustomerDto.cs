@@ -32,6 +32,9 @@ namespace ConsultingManager.Dto
         public Guid? CityId { get; set; }
         public CityDto City { get; set; }
 
+        public Guid CustomerLevelId { get; set; }
+        public CustomerLevelDto CustomerLevel { get; set; }
+
         public ICollection<UserDto> Users { get; set; }
     }
 }

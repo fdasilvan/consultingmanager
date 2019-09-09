@@ -128,5 +128,16 @@ namespace ConsultingManager.Domain.Repository
             await Context.SaveChangesAsync();
             return task.MapTo<CustomerTaskDto>();
         }
+
+        public async Task<CustomerTaskDto> TransferTask(Guid taskId, Guid consultantId)
+        {
+            CustomerTaskPoco task = await Context.CustomerTasks
+                .Where(o => o.Id == taskId)
+                .FirstOrDefaultAsync();
+
+            task.OwnerId = consultantId;
+            await Context.SaveChangesAsync();
+            return task.MapTo<CustomerTaskDto>();
+        }
     }
 }

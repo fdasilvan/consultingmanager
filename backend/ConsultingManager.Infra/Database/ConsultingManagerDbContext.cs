@@ -20,6 +20,7 @@ namespace ConsultingManager.Infra.Database
         public DbSet<CustomerMeetingPoco> CustomerMeetings { get; set; }
         public DbSet<CustomerStepPoco> CustomerSteps { get; set; }
         public DbSet<CustomerTaskPoco> CustomerTasks { get; set; }
+        public DbSet<CustomerLevelPoco> CustomerLevels { get; set; }
         public DbSet<ModelProcessPoco> ModelProcesses { get; set; }
         public DbSet<ModelStepPoco> ModelSteps { get; set; }
         public DbSet<ModelTaskPoco> ModelTasks { get; set; }

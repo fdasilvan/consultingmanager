@@ -11,6 +11,7 @@ import { Plan } from 'src/app/models/plan.model';
 import { CustomerSituation } from 'src/app/models/customersituation.model';
 import { User } from 'src/app/models/user.model';
 import { CustomerMeeting } from 'src/app/models/customermeeting.model';
+import { CustomerLevel } from 'src/app/models/customerlevel.model';
 
 @Injectable({
   providedIn: 'root'
@@ -76,6 +77,11 @@ export class CustomersService {
 
   public async getSituations(): Promise<CustomerSituation[]> {
     var response = await this.http.get<CustomerSituation[]>(`${environment.apiUrl}/customer/situations`);
+    return response.toPromise();
+  }
+
+  public async getCustomerLevels(): Promise<CustomerLevel[]> {
+    var response = await this.http.get<CustomerLevel[]>(`${environment.apiUrl}/customer/levels`);
     return response.toPromise();
   }
 

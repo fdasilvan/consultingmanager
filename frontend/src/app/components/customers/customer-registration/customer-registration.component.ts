@@ -10,6 +10,7 @@ import { User } from 'src/app/models/user.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'src/app/services/user/user.service';
+import { CustomerLevel } from 'src/app/models/customerlevel.model';
 
 @Component({
   selector: 'app-customer-registration',
@@ -31,6 +32,7 @@ export class CustomerRegistrationComponent implements OnInit {
   public plansList: Plan[] = [];
   public situationsList: CustomerSituation[] = [];
   public consultantsList: User[] = [];
+  public customerLevelsList: CustomerLevel[] = [];
 
   ngOnInit() {
     this.loadCustomer();
@@ -63,9 +65,10 @@ export class CustomerRegistrationComponent implements OnInit {
     this.plansList = await this.customersService.getPlans();
     this.situationsList = await this.customersService.getSituations();
     this.consultantsList = await this.customersService.getConsultants();
+    this.customerLevelsList = await this.customersService.getCustomerLevels();
   }
 
-  async SaveCustomer(name: string, situationId: any, email: string, phone: string, logoUrl: string,
+  async SaveCustomer(name: string, situationId: any, customerLevelId: any, email: string, phone: string, logoUrl: string,
     storeUrl: string, cityId: string, platformId: string, categoryId: string, planId: string, consultantId: string,
     txtUserName: any, txtUserEmail: any) {
     let customerDto: Customer = new Customer();
@@ -113,6 +116,7 @@ export class CustomerRegistrationComponent implements OnInit {
     customerDto.id = (this.customer ? this.customer.id : undefined);
     customerDto.name = name;
     customerDto.situationId = situationId;
+    customerDto.customerLevelId = customerLevelId;
     customerDto.email = email;
     customerDto.phone = phone;
     customerDto.logoUrl = logoUrl;

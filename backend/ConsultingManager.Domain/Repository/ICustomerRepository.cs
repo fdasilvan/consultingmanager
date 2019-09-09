@@ -17,6 +17,7 @@ namespace ConsultingManager.Domain.Repository
         Task<List<CityDto>> GetCities();
         Task<List<CustomerCategoryDto>> GetCustomerCategories();
         Task<List<CustomerSituationDto>> GetCustomerSituations();
+        Task<List<CustomerLevelDto>> GetCustomerLevels();
         Task<List<PlanDto>> GetPlans();
         Task<List<PlatformDto>> GetPlatforms();
         Task<List<UserDto>> GetConsultants();
