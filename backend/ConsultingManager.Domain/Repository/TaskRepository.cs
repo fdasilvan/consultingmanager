@@ -115,7 +115,7 @@ namespace ConsultingManager.Domain.Repository
 
         public async Task<CustomerTaskDto> RescheduleTask(Guid taskId, DateTime newDate)
         {
-            if (newDate < DateTime.Now)
+            if (newDate.DayOfYear < DateTime.Now.DayOfYear)
             {
                 throw new Exception("Não é possível reprogramar a tarefa para uma data passada.");
             }
