@@ -70,7 +70,7 @@ export class CustomerRegistrationComponent implements OnInit {
 
   async SaveCustomer(name: string, situationId: any, customerLevelId: any, email: string, phone: string, logoUrl: string,
     storeUrl: string, cityId: string, platformId: string, categoryId: string, planId: string, consultantId: string,
-    txtUserName: any, txtUserEmail: any) {
+    txtUserName: any, txtUserEmail: any, redirectToTimeline: boolean) {
     let customerDto: Customer = new Customer();
 
     if (name == '') {
@@ -80,6 +80,11 @@ export class CustomerRegistrationComponent implements OnInit {
 
     if (situationId == '') {
       alert('Situação obrigatória!');
+      return;
+    }
+
+    if(customerLevelId == '') {
+      alert('Nível de cliente obrigatório!');
       return;
     }
 
@@ -149,7 +154,13 @@ export class CustomerRegistrationComponent implements OnInit {
             });
         } else {
           alert('Cliente atualizado com sucesso!');
-          this.router.navigate(['customers']);
+
+          if (redirectToTimeline) {
+            window.sessionStorage.setItem('customer', JSON.stringify(this.customer));
+            this.router.navigate(['timeline']);
+          } else {
+            this.router.navigate(['customers']);
+          }
         }
       })
       .catch(error => {

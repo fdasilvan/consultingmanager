@@ -51,9 +51,6 @@ export class CommentsComponent implements OnInit {
   }
 
   async addComment(txtComment) {
-
-    debugger;
-
     if (txtComment.value != '') {
       let comment: Comment = new Comment();
 
