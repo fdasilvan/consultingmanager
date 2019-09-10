@@ -1,5 +1,6 @@
 ﻿using ConsultingManager.Domain.Mailing;
 using ConsultingManager.Dto;
+using ConsultingManager.Infra;
 using ConsultingManager.Infra.Database;
 using ConsultingManager.Infra.Database.Models;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,7 @@ namespace ConsultingManager.Domain.Repository
                 .Include(task => task.CustomerUser)
                 .Include(task => task.TaskType)
                 .Include(task => task.ModelTask).ThenInclude(modelTask => modelTask.TaskContent)
-                .Where(task => task.OwnerId == userId && task.EndDate == null && task.StartDate < DateTime.Now)
+                .Where(task => task.OwnerId == userId && task.EndDate == null && task.StartDate < DateTime.Now && task.Customer.SituationId == Const.CustomerSituations.Active)
                 .Select(task => task.MapTo<CustomerTaskDto>())
                 .ToListAsync();
         }
