@@ -39,6 +39,7 @@ export class TimelineComponent implements OnInit {
   public today: Date = new Date();
   public modalObject: NgbModalRef;
   public canDeleteProcess: boolean;
+  public canAssignTask: boolean;
 
   closeResult: string;
 
@@ -52,6 +53,7 @@ export class TimelineComponent implements OnInit {
 
   getUserPermissions() {
     this.canDeleteProcess = this.loggedUser.userType.description == "Administrador" || this.loggedUser.userType.description == "Líder";
+    this.canAssignTask = this.loggedUser.userType.description == "Administrador" || this.loggedUser.userType.description == "Líder";
   }
 
   ngAfterViewChecked() {
@@ -77,11 +79,14 @@ export class TimelineComponent implements OnInit {
     this.modalObject = this.modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' });
   }
 
-  async startCustomerProcess(modelProcessId: string, modelDescription: string, detail: string, customerUserId: string, startDate: string) {
-    if (modelProcessId == '' || customerUserId == '') {
-      alert('O modelo e o usuário do cliente são obrigatórios!');
+  async startCustomerProcess(modelProcessId: string, modelDescription: string, detail: string, consultantId: string, customerUserId: string, startDate: string) {
+    if (modelProcessId == '' || customerUserId == '' || (this.canAssignTask && consultantId == '')) {
+      alert('Favor preencher todos os campos obrigatórios!');
     } else {
-      await this.processService.startCustomerProcess(modelProcessId, modelDescription, detail, this.customer.id, this.loggedUser.id, customerUserId, new Date(startDate), null);
+
+      let ownerId = (consultantId && consultantId == '' ? this.loggedUser.id : consultantId);
+
+      await this.processService.startCustomerProcess(modelProcessId, modelDescription, detail, this.customer.id, ownerId, customerUserId, new Date(startDate), null);
       this.modalObject.close();
       this.loadCustomerProcesses(this.customer);
     }

@@ -107,7 +107,7 @@
   <div class="modal-body">
     <form>
       <div class="form-group">
-        <label for="lstModelProcess">Processo</label>
+        <label for="lstModelProcess">Processo (obrigatório)</label>
         <div class="input-group">
           <select #lstModelProcess id="lstModelProcess" class="custom-select form-control">
             <option value="">
@@ -126,7 +126,22 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="lstUsers">Usuário Responsável (cliente)</label>
+        <label for="lstConsultantsStartProcess">Consultor (obrigatório)</label>
+        <div class="input-group">
+          <select #lstConsultantsStartProcess id="lstConsultantsStartProcess" class="custom-select form-control"
+            [disabled]="!this.canAssignTask">
+            <option value="">
+              Selecionar
+            </option>
+            <option *ngFor="let consultant of this.consultantsList" value="{{consultant.id}}"
+              [selected]="((!canAssignTask && this.loggedUser.id == consultant.id) ? true : false)">
+              {{consultant.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lstUsers">Cliente (obrigatório)</label>
         <div class="input-group">
           <select #lstUsers id="lstUsers" class="custom-select form-control">
             <option value="">
@@ -139,7 +154,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="txtStartDate">Data de Início</label>
+        <label for="txtStartDate">Data de Início (obrigatório)</label>
         <div class="input-group">
           <input #txtStartDate id="txtStartDate" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
             #dp="ngbDatepicker" value="{{this.today | date: 'yyyy-MM-dd'}}">
@@ -153,7 +168,7 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark"
-      (click)="startCustomerProcess(lstModelProcess.value, lstModelProcess[lstModelProcess.selectedIndex].text, txtDetail.value, lstUsers.value, txtStartDate.value)">Incluir</button>
+      (click)="startCustomerProcess(lstModelProcess.value, lstModelProcess[lstModelProcess.selectedIndex].text, txtDetail.value, lstConsultantsStartProcess.value, lstUsers.value, txtStartDate.value)">Incluir</button>
   </div>
 </ng-template>
 
