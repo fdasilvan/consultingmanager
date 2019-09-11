@@ -30,6 +30,19 @@ namespace ConsultingManager.Api.Controllers
             }
         }
 
+        [HttpGet("model/{modelProcessId}")]
+        public async Task<IActionResult> GetModel(Guid modelProcessId)
+        {
+            try
+            {
+                return Ok(await _processRepository.Get(modelProcessId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar atividades do cliente.");
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> Save(ModelProcessDto modelProcessDto)
         {

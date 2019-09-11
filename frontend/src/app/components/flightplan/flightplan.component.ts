@@ -39,6 +39,7 @@ export class FlightplanComponent implements OnInit {
   public selectedMeeting: CustomerMeeting;
   public modalObject: NgbModalRef;
   public today: Date = new Date();
+  public selectedModelProcessId: string;
 
   ngOnInit() {
     this.loadCustomer();
@@ -73,8 +74,12 @@ export class FlightplanComponent implements OnInit {
     this.filteredCustomerProcesses = this.customerProcesses.filter(o => o.customerMeetingId == this.selectedMeeting.id);
   }
 
-  openProcessModal(content) {
+  openModal(content) {
     this.modalObject = this.modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' });
+  }
+
+  updateSelectedModelProcess(modelProcessId: string) {
+    this.selectedModelProcessId = modelProcessId;
   }
 
   async addProcess(modelProcessId: string, modelDescription: string, detail: string, customerUserId: string, startDate: string) {

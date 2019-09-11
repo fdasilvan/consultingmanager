@@ -25,6 +25,7 @@ import { FormsModule } from '@angular/forms';
 import { CustomerMeetingsComponent } from './components/customers/customer-meetings/customer-meetings.component';
 import { FlightplanComponent } from './components/flightplan/flightplan.component';
 import { CommentsComponent } from './components/comments/comments.component';
+import { ProcessViewComponent } from './components/process/process-view/process-view.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { CommentsComponent } from './components/comments/comments.component';
     ProcessRegistrationComponent,
     CustomerMeetingsComponent,
     FlightplanComponent,
-    CommentsComponent
+    CommentsComponent,
+    ProcessViewComponent
   ],
   imports: [
     BrowserModule,

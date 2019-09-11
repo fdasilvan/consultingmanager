@@ -29,6 +29,15 @@ namespace ConsultingManager.Domain.Repository
                 .ToListAsync();
         }
 
+        public async Task<ModelProcessDto> Get(Guid modelProcessId)
+        {
+            return Context.ModelProcesses
+                .Include(o => o.ModelSteps)
+                    .ThenInclude(p => p.ModelTasks)
+                .FirstOrDefaultAsync(o => o.Id == modelProcessId)
+                .Result.MapTo<ModelProcessDto>();
+        }
+
         public async Task<bool> Save(ModelProcessDto modelProcessDto)
         {
             try

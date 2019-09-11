@@ -109,7 +109,7 @@
       <div class="form-group">
         <label for="lstModelProcess">Processo (obrigatório)</label>
         <div class="input-group">
-          <select #lstModelProcess id="lstModelProcess" class="custom-select form-control">
+          <select #lstModelProcess id="lstModelProcess" (change)="updateSelectedModelProcess($event.target.value)" class="custom-select form-control">
             <option value="">
               Selecionar
             </option>
@@ -117,6 +117,10 @@
               {{modelProcess.description}}
             </option>
           </select>
+        </div>
+        <div class="form-group mt-2">
+          <button class="btn btn-warning margin mr-1" (click)="openModal(contentProcessView)" type="button"><span
+              class="fa fa-search"></span> Visualizar Ação</button>
         </div>
       </div>
       <div class="form-group">
@@ -209,6 +213,20 @@
   <div class="modal-body">
     <div>
       <app-comments commentType="customer" [(genericId)]="this.customer.id"></app-comments>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #contentProcessView let-modalProcessView>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Visualização de Ação</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalProcessView.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <app-process-view [(modelProcessId)]="this.selectedModelProcessId"></app-process-view>
     </div>
   </div>
 </ng-template>

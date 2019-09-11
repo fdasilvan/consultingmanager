@@ -40,6 +40,7 @@ export class TimelineComponent implements OnInit {
   public modalObject: NgbModalRef;
   public canDeleteProcess: boolean;
   public canAssignTask: boolean;
+  public selectedModelProcessId: string;
 
   closeResult: string;
 
@@ -98,6 +99,10 @@ export class TimelineComponent implements OnInit {
       await this.processService.delete(customerProcessId);
       this.loadCustomerProcesses(this.customer);
     }
+  }
+
+  updateSelectedModelProcess(modelProcessId: string) {
+    this.selectedModelProcessId = modelProcessId;
   }
 
   getCustomerId() {

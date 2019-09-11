@@ -17,6 +17,11 @@ export class ProcessService {
     return response.toPromise();
   }
 
+  public async getModelProcess(modelProcessId): Promise<ModelProcess> {
+    var response = await this.http.get<ModelProcess>(`${environment.apiUrl}/process/model/${modelProcessId}`);
+    return response.toPromise();
+  }
+
   public async startCustomerProcess(modelProcessId: string, modelProcessDescription: string, detail: string, customerId: string,
     consultantId: string, customerUserId: string, startDate: Date, customerMeetingId: string): Promise<CustomerProcess> {
 

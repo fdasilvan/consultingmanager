@@ -1,0 +1,31 @@
+<div *ngIf="!this.showContent">
+  <p>Modelo de ação não selecionado!</p>
+</div>
+<div *ngIf="this.showContent">
+  <h3 class="mb-3">Ação: {{this.modelProcess.description}}</h3>
+  <div class="card mt-2 mb-2" *ngFor="let step of this.modelProcess.modelSteps | orderBy: 'description'">
+    <div class="card-header">
+      <h5 class="card-title">Etapa: {{step.description}}</h5>
+    </div>
+    <div class="card-block">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Descrição</th>
+              <th scope="col">Iniciar Após</th>
+              <th scope="col">Prazo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let task of step.modelTasks | orderBy: 'startAfterDays'">
+              <td>{{task.description}}</td>
+              <td>{{(task.startAfterDays == 0 ? 'Imediato' : task.startAfterDays + ' dia(s)')}}</td>
+              <td>{{task.dueDays}} dia(s)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
