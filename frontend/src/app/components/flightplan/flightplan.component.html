@@ -58,7 +58,7 @@
                   class="fa fa-plus"></span>
                 Ação</button>
 
-              <div>
+              <div class="mt-4">
                 <app-comments commentType="meeting" [(genericId)]="this.selectedMeeting.id"></app-comments>
               </div>
             </div>
@@ -89,7 +89,8 @@
       <div class="form-group">
         <label for="lstModelProcess">Processo</label>
         <div class="input-group">
-          <select #lstModelProcess id="lstModelProcess" (change)="updateSelectedModelProcess($event.target.value)" class="custom-select form-control">
+          <select #lstModelProcess id="lstModelProcess" (change)="updateSelectedModelProcess($event.target.value)"
+            class="custom-select form-control">
             <option value="">
               Selecionar
             </option>
