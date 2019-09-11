@@ -64,6 +64,7 @@ namespace ConsultingManager.Domain.Repository
         {
             CustomerTaskPoco task = await Context.CustomerTasks
                 .Include(o => o.Customer)
+                .Include(o => o.Owner)
                 .Include(o => o.CustomerUser)
                 .Include(o => o.Consultant)
                 .Where(o => o.Id == taskId)
@@ -71,6 +72,8 @@ namespace ConsultingManager.Domain.Repository
 
             task.EndDate = DateTime.Now;
             await Context.SaveChangesAsync();
+
+            #region Send task e-mail after finishing
 
             if (!string.IsNullOrEmpty(task.MailSubject) && (!string.IsNullOrEmpty(task.MailBody)))
             {
@@ -99,6 +102,25 @@ namespace ConsultingManager.Domain.Repository
 
                 await _mailingHelper.SendEmail(toName, toEmailAddress, mailSubject, mailBody, carbonCopyAddress);
             }
+
+            #endregion
+
+            #region Send e-mail to consultant and owner if they are different
+
+            if(task.Customer.Consultant.Id != task.OwnerId && task.EndDate.HasValue)
+            {
+                string toName = task.Consultant.Name;
+                string toEmailAddress = task.Customer.Consultant.Email;
+                string carbonCopyAddress = task.Owner.Email;
+
+                string mailSubject = string.Format("Cliente {0} - Atividade Finalizada", task.Customer.Name);
+                string mailBody = string.Format("A atividade '{0}' do cliente {1} foi finalizada por {2} em {3}.", 
+                    task.Description, task.Customer.Name, task.Owner.Name, task.EndDate.Value.ToShortDateString());
+
+                await _mailingHelper.SendEmail(toName, toEmailAddress, mailSubject, mailBody, carbonCopyAddress);
+            }
+
+            #endregion
 
             return task.MapTo<CustomerTaskDto>();
         }
