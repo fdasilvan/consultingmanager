@@ -14,6 +14,9 @@ export class Customer {
   storeUrl: string;
   phone: string;
   email: string;
+  customerFolderUrl: string;
+  storeAnalysisUrl: string;
+  meetingsDescription: string;
 
   consultantId: string;
   consultant: User;

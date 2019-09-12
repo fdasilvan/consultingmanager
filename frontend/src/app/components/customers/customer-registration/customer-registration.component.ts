@@ -34,8 +34,8 @@ export class CustomerRegistrationComponent implements OnInit {
   public consultantsList: User[] = [];
   public customerLevelsList: CustomerLevel[] = [];
 
-  ngOnInit() {
-    this.loadCustomer();
+  async ngOnInit() {
+    await this.loadCustomer();
 
     if (this.customer) {
       this.isEdit = true;
@@ -69,7 +69,7 @@ export class CustomerRegistrationComponent implements OnInit {
   }
 
   async SaveCustomer(name: string, situationId: any, customerLevelId: any, email: string, phone: string, logoUrl: string,
-    storeUrl: string, cityId: string, platformId: string, categoryId: string, planId: string, consultantId: string,
+    storeUrl: string, storeAnalysisUrl: string, cityId: string, platformId: string, categoryId: string, customerFolderUrl: string, meetingsDescription: string, planId: string, consultantId: string,
     txtUserName: any, txtUserEmail: any, redirectToTimeline: boolean) {
     let customerDto: Customer = new Customer();
 
@@ -126,14 +126,20 @@ export class CustomerRegistrationComponent implements OnInit {
     customerDto.phone = phone;
     customerDto.logoUrl = logoUrl;
     customerDto.storeUrl = storeUrl;
+    customerDto.storeAnalysisUrl = storeAnalysisUrl;
     customerDto.cityId = cityId;
     customerDto.platformId = platformId;
     customerDto.categoryId = categoryId;
+    customerDto.customerFolderUrl = customerFolderUrl;
+    customerDto.meetingsDescription = meetingsDescription;
     customerDto.planId = planId;
     customerDto.consultantId = consultantId;
 
     this.customersService.saveCustomer(customerDto)
       .then(newCustomer => {
+
+        window.sessionStorage.setItem('customer', JSON.stringify(newCustomer));
+
         if (!this.isEdit) {
           let user = new User();
 
@@ -148,7 +154,6 @@ export class CustomerRegistrationComponent implements OnInit {
             .then(result => {
               alert('Cliente cadastrado com sucesso!');
               if (redirectToTimeline) {
-                window.sessionStorage.setItem('customer', JSON.stringify(this.customer));
                 this.router.navigate(['timeline']);
               } else {
                 this.router.navigate(['customers']);
@@ -161,7 +166,6 @@ export class CustomerRegistrationComponent implements OnInit {
           alert('Cliente atualizado com sucesso!');
 
           if (redirectToTimeline) {
-            window.sessionStorage.setItem('customer', JSON.stringify(this.customer));
             this.router.navigate(['timeline']);
           } else {
             this.router.navigate(['customers']);

@@ -44,6 +44,9 @@ namespace ConsultingManager.Domain.Repository
                 customer.CategoryId = customerDto.CategoryId;
                 customer.PlanId = customerDto.PlanId;
                 customer.ConsultantId = customerDto.ConsultantId;
+                customer.CustomerFolderUrl = customerDto.CustomerFolderUrl;
+                customer.StoreAnalysisUrl = customerDto.StoreAnalysisUrl;
+                customer.MeetingsDescription = customerDto.MeetingsDescription;
 
                 var updatedCustomer = Context.Customers.Update(customer);
                 await Context.SaveChangesAsync();

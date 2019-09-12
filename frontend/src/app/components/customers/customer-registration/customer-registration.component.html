@@ -104,6 +104,13 @@
             </div>
           </div>
           <div class="form-group row">
+            <label class="col-md-3 col-form-label">URL da Análise de Loja</label>
+            <div class="col-md-9">
+              <input #txtStoreAnalysis id="txtStoreAnalysis" type="text" name="regular" class="form-control"
+                value="{{this.isEdit ? this.customer.storeAnalysisUrl : ''}}">
+            </div>
+          </div>
+          <div class="form-group row">
             <label class="col-md-3 col-form-label">Cidade</label>
             <div class="col-md-9">
               <select #lstCities id="lstCities" class="custom-select form-control">
@@ -142,8 +149,22 @@
               </select>
             </div>
           </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Pasta do Cliente</label>
+            <div class="col-md-9">
+              <input #txtCustomerFolderUrl id="txtCustomerFolderUrl" type="text" name="regular" class="form-control"
+                value="{{this.isEdit ? this.customer.customerFolderUrl : ''}}">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Descrição de Encontros</label>
+            <div class="col-md-9">
+              <input #txtMeetingsDescription id="txtMeetingsDescription" type="text" name="regular" class="form-control"
+                value="{{this.isEdit ? this.customer.meetingsDescription : ''}}">
+            </div>
+          </div>
           <div #userInfo id="userInfo">
-            <h4 class="modal-title mb-4" id="modal-basic-title">Dados do Usuário:</h4>
+            <h4 class="modal-title mb-4" id="modal-basic-title">Dados do Usuário</h4>
             <div class="form-group row">
               <label class="col-md-3 col-form-label">Nome Usuário: </label>
               <div class="col-md-9">
@@ -161,11 +182,12 @@
         <div>
           <button type="button" class="btn btn-lg btn-primary float-right"
             (click)="SaveCustomer(txtName.value, lstSituations.value, lstCustomerLevels.value, txtEmail.value, txtPhone.value, txtLogoUrl.value,
-              txtStoreUrl.value, lstCities.value, lstPlatforms.value, lstCategories.value, lstPlans.value, lstConsultants.value, txtUserName, txtUserEmail, true)">Salvar e Visualizar
+              txtStoreUrl.value, txtStoreAnalysis.value, lstCities.value, lstPlatforms.value, lstCategories.value, txtCustomerFolderUrl.value, txtMeetingsDescription.value, lstPlans.value, lstConsultants.value, txtUserName, txtUserEmail, true)">Salvar
+            e Visualizar
             Cliente</button>
           <button type="button" class="btn btn-lg btn-primary float-right ml-1 mr-1"
             (click)="SaveCustomer(txtName.value, lstSituations.value, lstCustomerLevels.value, txtEmail.value, txtPhone.value, txtLogoUrl.value,
-              txtStoreUrl.value, lstCities.value, lstPlatforms.value, lstCategories.value, lstPlans.value, lstConsultants.value, txtUserName, txtUserEmail, false)">Salvar</button>
+              txtStoreUrl.value, txtStoreAnalysis.value, lstCities.value, lstPlatforms.value, lstCategories.value, txtCustomerFolderUrl.value, txtMeetingsDescription.value, lstPlans.value, lstConsultants.value, txtUserName, txtUserEmail, false)">Salvar</button>
           <button class="btn btn-lg btn-outline-primary float-right" (click)="goBack()">
             <span class="fa fa-arrow-left"></span> Voltar
           </button>

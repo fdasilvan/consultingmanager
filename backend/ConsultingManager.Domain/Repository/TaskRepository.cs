@@ -4,7 +4,6 @@ using ConsultingManager.Infra;
 using ConsultingManager.Infra.Database;
 using ConsultingManager.Infra.Database.Models;
 using Microsoft.EntityFrameworkCore;
-using MimeKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,6 +88,8 @@ namespace ConsultingManager.Domain.Repository
                 mailSubject = mailSubject.Replace("{{SalaConsultor}}", task.Consultant.ConferenceRoomAddress);
                 mailSubject = mailSubject.Replace("{{DataInicial}}", task.StartDate.ToShortDateString());
                 mailSubject = mailSubject.Replace("{{DataFinal}}", task.EstimatedEndDate.ToShortDateString());
+                mailSubject = mailSubject.Replace("{{AnaliseLoja}}", task.Customer.StoreAnalysisUrl);
+                mailSubject = mailSubject.Replace("{{PastaCliente}}", task.Customer.CustomerFolderUrl);
 
                 string mailBody = task.MailBody;
                 mailBody = mailBody.Replace("{{NomeCliente}}", task.Customer.Name);
@@ -98,6 +99,8 @@ namespace ConsultingManager.Domain.Repository
                 mailBody = mailBody.Replace("{{SalaConsultor}}", task.Consultant.ConferenceRoomAddress);
                 mailBody = mailBody.Replace("{{DataInicial}}", task.StartDate.ToShortDateString());
                 mailBody = mailBody.Replace("{{DataFinal}}", task.EstimatedEndDate.ToShortDateString());
+                mailBody = mailBody.Replace("{{AnaliseLoja}}", task.Customer.StoreAnalysisUrl);
+                mailBody = mailBody.Replace("{{PastaCliente}}", task.Customer.CustomerFolderUrl);
                 mailBody = mailBody.Replace("\n", "<br>");
 
                 await _mailingHelper.SendEmail(toName, toEmailAddress, mailSubject, mailBody, carbonCopyAddress);
@@ -107,14 +110,14 @@ namespace ConsultingManager.Domain.Repository
 
             #region Send e-mail to consultant and owner if they are different
 
-            if(task.Customer.Consultant.Id != task.OwnerId && task.EndDate.HasValue)
+            if (task.Customer.Consultant.Id != task.OwnerId && task.EndDate.HasValue)
             {
                 string toName = task.Consultant.Name;
                 string toEmailAddress = task.Customer.Consultant.Email;
                 string carbonCopyAddress = task.Owner.Email;
 
                 string mailSubject = string.Format("Cliente {0} - Atividade Finalizada", task.Customer.Name);
-                string mailBody = string.Format("A atividade '{0}' do cliente {1} foi finalizada por {2} em {3}.", 
+                string mailBody = string.Format("A atividade '{0}' do cliente {1} foi finalizada por {2} em {3}.",
                     task.Description, task.Customer.Name, task.Owner.Name, task.EndDate.Value.ToShortDateString());
 
                 await _mailingHelper.SendEmail(toName, toEmailAddress, mailSubject, mailBody, carbonCopyAddress);

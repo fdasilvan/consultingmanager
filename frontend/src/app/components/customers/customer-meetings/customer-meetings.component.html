@@ -12,6 +12,8 @@
             <p>Duração:
               {{this.customer.plan && this.customer.plan.duration ? this.customer.plan.duration + ' meses' : 'Não informado'}}
             </p>
+            <p>Descrição de Encontros:
+              {{this.customer.meetingsDescription ? this.customer.meetingsDescription : 'Não informado'}}</p>
           </div>
           <div *ngIf="this.meetingsList.length == 0" class="row ml-4 mb-4">
             <div class="col-md-2">

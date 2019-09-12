@@ -14,6 +14,10 @@ namespace ConsultingManager.Infra.Database.Models
         public string StoreUrl { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
+        public string CustomerFolderUrl { get; set; }
+        public string StoreAnalysisUrl { get; set; }
+        public string MeetingsDescription { get; set; }
+
 
         public Guid? ConsultantId { get; set; }
         [ForeignKey(nameof(ConsultantId))]
