@@ -83,7 +83,7 @@ export class CustomerRegistrationComponent implements OnInit {
       return;
     }
 
-    if(customerLevelId == '') {
+    if (customerLevelId == '') {
       alert('Nível de cliente obrigatório!');
       return;
     }
@@ -147,7 +147,12 @@ export class CustomerRegistrationComponent implements OnInit {
           this.userService.saveUser(user)
             .then(result => {
               alert('Cliente cadastrado com sucesso!');
-              this.router.navigate(['customers']);
+              if (redirectToTimeline) {
+                window.sessionStorage.setItem('customer', JSON.stringify(this.customer));
+                this.router.navigate(['timeline']);
+              } else {
+                this.router.navigate(['customers']);
+              }
             })
             .catch(error => {
               alert('Erro: não foi possível cadastrar o usuário! ' + error.error);
