@@ -36,6 +36,8 @@ export class Customer {
   customerLevelId: string;
   customerLevel: CustomerLevel;
 
+  users: User[];
+
   constructor() {
   }
 }

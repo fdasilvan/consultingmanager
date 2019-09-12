@@ -84,11 +84,9 @@ export class TimelineComponent implements OnInit {
     if (modelProcessId == '' || customerUserId == '' || (this.canAssignTask && consultantId == '')) {
       alert('Favor preencher todos os campos obrigatórios!');
     } else {
-
-      let ownerId = (consultantId && consultantId == '' ? this.loggedUser.id : consultantId);
-
-      await this.processService.startCustomerProcess(modelProcessId, modelDescription, detail, this.customer.id, ownerId, customerUserId, new Date(startDate), null);
       this.modalObject.close();
+      let ownerId = (consultantId && consultantId == '' ? this.loggedUser.id : consultantId);
+      await this.processService.startCustomerProcess(modelProcessId, modelDescription, detail, this.customer.id, ownerId, customerUserId, new Date(startDate), null);
       this.loadCustomerProcesses(this.customer);
     }
   }
