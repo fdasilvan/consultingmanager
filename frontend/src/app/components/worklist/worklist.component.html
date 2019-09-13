@@ -14,7 +14,8 @@
               <label>Cliente: </label>
               <select class="custom-select form-control" (change)="onCustomerChange($event.target.value)">
                 <option value="">Todos</option>
-                <option *ngFor="let customer of this.customersList" [selected]="customer == this.selectedCustomerFilter" value="{{customer}}">{{customer}}</option>
+                <option *ngFor="let customer of this.customersList" [selected]="customer == this.selectedCustomerFilter"
+                  value="{{customer}}">{{customer}}</option>
               </select>
             </div>
             <table class="table">

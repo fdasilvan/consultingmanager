@@ -2,6 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { CustomerMeeting } from 'src/app/models/customermeeting.model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,5 +33,10 @@ export class UserService {
   public async saveUser(userDto: User): Promise<User> {
     let response = this.http.post<User>(`${environment.apiUrl}/user`, userDto).toPromise();
     return response;
+  }
+
+  public async getUserMeetings(userId: string): Promise<CustomerMeeting[]> {
+    var response = await this.http.get<CustomerMeeting[]>(`${environment.apiUrl}/user/${userId}/meetings`);
+    return response.toPromise();
   }
 }

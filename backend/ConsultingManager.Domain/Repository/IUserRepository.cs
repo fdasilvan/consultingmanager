@@ -1,4 +1,6 @@
 ﻿using ConsultingManager.Dto;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ConsultingManager.Domain.Repository
@@ -7,5 +9,6 @@ namespace ConsultingManager.Domain.Repository
     {
         Task<UserDto> Add(UserDto userDto);
         Task<UserDto> Authenticate(string email, string password);
+        Task<List<CustomerMeetingDto>> GetUserMeetings(Guid userId);
     }
 }

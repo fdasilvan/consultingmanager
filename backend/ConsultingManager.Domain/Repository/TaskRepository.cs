@@ -84,8 +84,8 @@ namespace ConsultingManager.Domain.Repository
                 mailSubject = mailSubject.Replace("{{NomeCliente}}", task.Customer.Name);
                 mailSubject = mailSubject.Replace("{{NomeUsuarioCliente}}", task.CustomerUser.Name);
                 mailSubject = mailSubject.Replace("{{UrlLoja}}", task.Customer.StoreUrl);
-                mailSubject = mailSubject.Replace("{{NomeConsultor}}", task.Consultant.Name);
-                mailSubject = mailSubject.Replace("{{SalaConsultor}}", task.Consultant.ConferenceRoomAddress);
+                mailSubject = mailSubject.Replace("{{NomeConsultor}}", task.Owner.Name);
+                mailSubject = mailSubject.Replace("{{SalaConsultor}}", task.Owner.ConferenceRoomAddress);
                 mailSubject = mailSubject.Replace("{{DataInicial}}", task.StartDate.ToShortDateString());
                 mailSubject = mailSubject.Replace("{{DataFinal}}", task.EstimatedEndDate.ToShortDateString());
                 mailSubject = mailSubject.Replace("{{AnaliseLoja}}", task.Customer.StoreAnalysisUrl);
@@ -95,8 +95,8 @@ namespace ConsultingManager.Domain.Repository
                 mailBody = mailBody.Replace("{{NomeCliente}}", task.Customer.Name);
                 mailBody = mailBody.Replace("{{NomeUsuarioCliente}}", task.CustomerUser.Name);
                 mailBody = mailBody.Replace("{{UrlLoja}}", task.Customer.StoreUrl);
-                mailBody = mailBody.Replace("{{NomeConsultor}}", task.Consultant.Name);
-                mailBody = mailBody.Replace("{{SalaConsultor}}", task.Consultant.ConferenceRoomAddress);
+                mailBody = mailBody.Replace("{{NomeConsultor}}", task.Owner.Name);
+                mailBody = mailBody.Replace("{{SalaConsultor}}", task.Owner.ConferenceRoomAddress);
                 mailBody = mailBody.Replace("{{DataInicial}}", task.StartDate.ToShortDateString());
                 mailBody = mailBody.Replace("{{DataFinal}}", task.EstimatedEndDate.ToShortDateString());
                 mailBody = mailBody.Replace("{{AnaliseLoja}}", task.Customer.StoreAnalysisUrl);
@@ -110,7 +110,7 @@ namespace ConsultingManager.Domain.Repository
 
             #region Send e-mail to consultant and owner if they are different
 
-            if (task.Customer.Consultant.Id != task.OwnerId && task.EndDate.HasValue)
+            if (task.Customer.Consultant.Id != task.OwnerId && task.EndDate.HasValue && task.TaskTypeId == Const.TaskTypes.Consultant)
             {
                 string toName = task.Consultant.Name;
                 string toEmailAddress = task.Customer.Consultant.Email;

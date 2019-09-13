@@ -3,6 +3,7 @@ using ConsultingManager.Infra.Database;
 using ConsultingManager.Infra.Database.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tnf.EntityFrameworkCore;
@@ -39,6 +40,17 @@ namespace ConsultingManager.Domain.Repository
             // authentication successful so return user details without password
             user.Password = null;
             return user;
+        }
+
+        public async Task<List<CustomerMeetingDto>> GetUserMeetings(Guid userId)
+        {
+            var meetings = await Context.CustomerMeetings
+                .Include(o => o.Customer)
+                .Where(o => o.Customer.ConsultantId == userId)
+                .Select(o => o.MapTo<CustomerMeetingDto>())
+                .ToListAsync();
+
+            return meetings;
         }
     }
 }

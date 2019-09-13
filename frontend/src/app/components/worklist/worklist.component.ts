@@ -5,6 +5,7 @@ import { User } from 'src/app/models/user.model';
 import { TaskService } from 'src/app/services/task/task.service';
 import { Customer } from 'src/app/models/customer.model';
 import { UserService } from 'src/app/services/user/user.service';
+import { CustomerMeeting } from 'src/app/models/customermeeting.model';
 
 @Component({
   selector: 'app-worklist',
@@ -24,6 +25,7 @@ export class WorklistComponent implements OnInit {
   public customersList: string[] = [];
   public selectedCustomerFilter: string;
   public isCustomer: boolean;
+  public userMeetings: CustomerMeeting[] = [];
 
   ngOnInit() {
     this.loggedUser = this.userService.getUser();
@@ -35,6 +37,7 @@ export class WorklistComponent implements OnInit {
 
     this.selectedCustomerFilter = '';
     this.loadTasks();
+    this.loadUserMeetings();
   }
 
   async loadTasks() {
@@ -48,6 +51,11 @@ export class WorklistComponent implements OnInit {
         this.onCustomerChange(this.selectedCustomerFilter);
       }
     }
+  }
+
+  async loadUserMeetings() {
+    this.userMeetings = await this.userService.getUserMeetings(this.loggedUser.id);
+    debugger;
   }
 
   async loadCustomersList() {

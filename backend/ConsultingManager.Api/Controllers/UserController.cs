@@ -2,11 +2,11 @@
 using ConsultingManager.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Auth.Api.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
@@ -17,8 +17,7 @@ namespace Auth.Api.Controllers
         {
             _userRepository = userRepository;
         }
-
-        [AllowAnonymous]
+        
         [HttpPost]
         public async Task<IActionResult> Add(UserDto userDto)
         {
@@ -30,7 +29,6 @@ namespace Auth.Api.Controllers
             return Ok(user);
         }
 
-        [AllowAnonymous]
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate(UserDto userDto)
         {
@@ -40,6 +38,19 @@ namespace Auth.Api.Controllers
                 return BadRequest(new { message = "Username or password is incorrect" });
 
             return Ok(user);
+        }
+
+        [HttpGet("{userId}/meetings")]
+        public async Task<IActionResult> GetUserMeetings(Guid userId)
+        {
+            try
+            {
+                return Ok(await _userRepository.GetUserMeetings(userId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar encontros do usuário: " + userId);
+            }
         }
     }
 }
