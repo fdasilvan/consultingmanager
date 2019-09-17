@@ -122,6 +122,21 @@ namespace ConsultingManager.Domain.Repository
             }
         }
 
+        public async Task<CustomerDto> Get(Guid customerId)
+        {
+            var customer = await Context.Customers
+                .Include(o => o.Platform)
+                .Include(o => o.Plan)
+                .Include(o => o.Situation)
+                .Include(o => o.Category)
+                .Include(o => o.Users)
+                .Include(o => o.Consultant)
+                    .ThenInclude(o => o.UserType)
+                .FirstOrDefaultAsync(o => o.Id == customerId);
+
+            return customer.MapTo<CustomerDto>();
+        }
+
         public async Task<List<CustomerDto>> GetAll()
         {
             return await Context.Customers

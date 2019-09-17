@@ -26,6 +26,8 @@ export class WorklistComponent implements OnInit {
   public selectedCustomerFilter: string;
   public isCustomer: boolean;
   public userMeetings: CustomerMeeting[] = [];
+  public filteredUserMeetings: CustomerMeeting[] = []
+  public today: Date = new Date();
 
   ngOnInit() {
     this.loggedUser = this.userService.getUser();
@@ -34,6 +36,8 @@ export class WorklistComponent implements OnInit {
     if (!this.loggedUser) {
       this.router.navigate(['login']);
     }
+
+    this.today.setHours(0, 0, 0, 0);
 
     this.selectedCustomerFilter = '';
     this.loadTasks();
@@ -55,7 +59,27 @@ export class WorklistComponent implements OnInit {
 
   async loadUserMeetings() {
     this.userMeetings = await this.userService.getUserMeetings(this.loggedUser.id);
-    debugger;
+    this.filteredUserMeetings = this.userMeetings.filter(o => {
+      let meetingDate = new Date(o.date);
+      meetingDate.setHours(0, 0, 0, 0);
+      return (meetingDate.getTime() == this.today.getTime());
+    });
+  }
+
+  onMeetingDateChanged(date: Date) {
+    if (date) {
+      let selectedDay = new Date(date + "T00:00");
+      this.filteredUserMeetings = this.userMeetings.filter(o => {
+        let meetingDate = new Date(o.date);
+        let datesMatch = (meetingDate.getTime() == selectedDay.getTime());
+        return datesMatch;
+      });
+    }
+  }
+
+  openCustomerTimeline(customer: Customer) {
+    window.sessionStorage.setItem('customer', JSON.stringify(customer));
+    this.router.navigate(['timeline']);
   }
 
   async loadCustomersList() {

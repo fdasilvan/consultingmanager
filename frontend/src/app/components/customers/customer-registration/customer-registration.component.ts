@@ -48,9 +48,11 @@ export class CustomerRegistrationComponent implements OnInit {
     this.loadLists();
   }
 
-  loadCustomer() {
+  async loadCustomer() {
     if (window.sessionStorage.getItem('customer') != 'undefined') {
       this.customer = <Customer>JSON.parse(window.sessionStorage.getItem('customer'));
+      this.customer = await this.customersService.getCustomer(this.customer.id);
+      debugger;
     }
   }
 

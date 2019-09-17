@@ -1,13 +1,32 @@
 <section class="row">
   <div class="col-sm-12">
     <div class="col-lg-12 mb-4 bg-default">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h3 class="card-title">Meus Encontros</h3>
+        </div>
+        <div class="card-block row">
+          <div class="col-2">
+            <input #txtMeetingDate id="txtMeetingDate" type="date" class="form-control" style="width: 12rem"
+              (change)="onMeetingDateChanged($event.target.value)" value="{{this.today | date: 'yyyy-MM-dd'}}">
+          </div>
+          <div class="col-10">
+            <p *ngIf="filteredUserMeetings && filteredUserMeetings.length == 0">
+              Você não possui encontros agendados para esta data.</p>
+            <div *ngFor="let meeting of this.filteredUserMeetings">
+              <button class="btn btn-warning margin mr-1" (click)="openCustomerTimeline(meeting.customer)"
+                type="button"><span class="fa fa-user"></span> {{meeting.customer.name}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">Lista de atividades</h3>
         </div>
         <div class="card-block">
           <div *ngIf="filteredTasksList && filteredTasksList.length == 0">
-            <span>Parabéns! Você não possui atividades pendentes.</span>
+            <p>Parabéns! Você não possui atividades pendentes.</p>
           </div>
           <div *ngIf="filteredTasksList && filteredTasksList.length > 0" class="table-responsive">
             <div class="filter" *ngIf="!this.isCustomer">

@@ -50,6 +50,11 @@ export class CustomersService {
     return response.toPromise();
   }
 
+  public async getCustomer(customerId: string): Promise<Customer> {
+    var response = await this.http.get<Customer>(`${environment.apiUrl}/customer/${customerId}`);
+    return response.toPromise();
+  }
+
   public async getChartResult(): Promise<ChartResult[]> {
     var response = await this.http.get<ChartResult[]>(`${environment.apiUrl}/customer/chart`);
     return response.toPromise();

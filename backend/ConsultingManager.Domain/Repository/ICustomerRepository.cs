@@ -13,6 +13,7 @@ namespace ConsultingManager.Domain.Repository
         Task<bool> AddMeetings(Guid customerId, List<CustomerMeetingDto> customerMeetings);
         Task<List<CustomerMeetingDto>> GetMeetings(Guid customerId);
         Task<List<CustomerDto>> GetAll();
+        Task<CustomerDto> Get(Guid customerId);
         Task<List<ChartResultDto>> GetChartResult();
         Task<List<CityDto>> GetCities();
         Task<List<CustomerCategoryDto>> GetCustomerCategories();

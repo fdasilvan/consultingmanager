@@ -18,6 +18,12 @@ namespace ConsultingManager.Api.Controllers
             _customerRepository = customerRepository;
         }
 
+        [HttpGet("{customerId}")]
+        public async Task<IActionResult> Get(Guid customerId)
+        {
+            return Ok(await _customerRepository.Get(customerId));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Add(CustomerDto customerDto)
         {
