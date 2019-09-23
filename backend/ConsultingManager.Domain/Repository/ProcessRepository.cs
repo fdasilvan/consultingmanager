@@ -23,7 +23,8 @@ namespace ConsultingManager.Domain.Repository
         {
             return await Context.ModelProcesses
                 .Include(o => o.ModelSteps)
-                .ThenInclude(p => p.ModelTasks)
+                    .ThenInclude(p => p.ModelTasks)
+                .Where(o => o.Enabled)
                 .OrderBy(o => o.Description)
                 .Select(process => process.MapTo<ModelProcessDto>())
                 .ToListAsync();
@@ -84,6 +85,7 @@ namespace ConsultingManager.Domain.Repository
                                     modelTaskPoco.DueDays = task.DueDays;
                                     modelTaskPoco.MailSubject = task.MailSubject;
                                     modelTaskPoco.MailBody = task.MailBody;
+                                    modelTaskPoco.Enabled = task.Enabled;
                                 }
                             }
                         }
@@ -128,6 +130,32 @@ namespace ConsultingManager.Domain.Repository
             }
         }
 
+        public async Task<ModelStepDto> DisableModelStep(Guid modelStepId)
+        {
+            var modelStep = Context.ModelSteps
+                .Include(o => o.ModelTasks)
+                .FirstOrDefaultAsync(o => o.Id == modelStepId)
+                .Result;
+
+            if (modelStep != null)
+            {
+                modelStep.Enabled = false;
+
+                foreach (ModelTaskPoco modelTask in modelStep.ModelTasks)
+                {
+                    modelTask.Enabled = false;
+                }
+
+                var updatedCustomer = Context.ModelSteps.Update(modelStep);
+                await Context.SaveChangesAsync();
+                return updatedCustomer.Entity.MapTo<ModelStepDto>();
+            }
+            else
+            {
+                throw new Exception("Não foi possível desabilitar o modelo de etapa: " + modelStep.Id);
+            }
+        }
+
 
         public async Task<CustomerProcessDto> StartCustomerProcess(ModelProcessDto modelProcessDto, Guid customerId, Guid consultantId, Guid customerUserId, DateTime startDate, string detail, Guid? customerMeetingId)
         {
@@ -135,7 +163,7 @@ namespace ConsultingManager.Domain.Repository
 
             List<ModelStepPoco> lstModelSteps = Context.ModelSteps
                 .Include(o => o.ModelTasks)
-                .Where(o => o.ProcessId == modelProcessDto.Id)
+                .Where(o => o.ProcessId == modelProcessDto.Id && o.Enabled)
                 .ToList();
 
             List<CustomerStepPoco> lstCustomerSteps = new List<CustomerStepPoco>();
@@ -144,6 +172,11 @@ namespace ConsultingManager.Domain.Repository
 
             foreach (ModelStepPoco modelStep in lstModelSteps)
             {
+                if (!modelStep.Enabled)
+                {
+                    continue;
+                }
+
                 CustomerStepPoco customerStep = new CustomerStepPoco();
 
                 customerStep.Id = Guid.NewGuid();
@@ -155,43 +188,46 @@ namespace ConsultingManager.Domain.Repository
 
                 foreach (ModelTaskPoco modelTask in modelStep.ModelTasks)
                 {
-                    CustomerTaskPoco customerTask = new CustomerTaskPoco();
-
-                    customerTask.Id = Guid.NewGuid();
-                    customerTask.CustomerStepId = customerStep.Id;
-                    customerTask.ModelTaskId = modelTask.Id;
-
-                    customerTask.Description = modelTask.Description;
-                    customerTask.Instructions = modelTask.Instructions;
-                    customerTask.Duration = modelTask.Duration;
-                    customerTask.CreationDate = DateTime.Now;
-
-                    customerTask.StartDate = Utils.AddBusinessDays(startDate, modelTask.StartAfterDays);
-                    firstDate = (firstDate == null || customerTask.StartDate < firstDate ? customerTask.StartDate : firstDate);
-                    customerTask.EstimatedEndDate = Utils.AddBusinessDays(customerTask.StartDate, modelTask.DueDays);
-                    lastDate = (lastDate == null || customerTask.EstimatedEndDate > lastDate ? customerTask.EstimatedEndDate : lastDate);
-                    processEstimatedEndDate = (processEstimatedEndDate == null || lastDate > processEstimatedEndDate ? lastDate : processEstimatedEndDate);
-                    customerTask.EndDate = null;
-
-                    customerTask.MailSubject = modelTask.MailSubject;
-                    customerTask.MailBody = modelTask.MailBody;
-
-                    customerTask.CustomerId = customerId;
-                    customerTask.CustomerUserId = customerUserId;
-                    customerTask.ConsultantId = consultantId;
-
-                    if (modelTask.TaskTypeId == Const.TaskTypes.Customer)
+                    if (modelTask.Enabled)
                     {
-                        customerTask.TaskTypeId = Const.TaskTypes.Customer;
-                        customerTask.OwnerId = customerUserId;
-                    }
-                    else
-                    {
-                        customerTask.TaskTypeId = Const.TaskTypes.Consultant;
-                        customerTask.OwnerId = consultantId;
-                    }
+                        CustomerTaskPoco customerTask = new CustomerTaskPoco();
 
-                    lstTasks.Add(customerTask);
+                        customerTask.Id = Guid.NewGuid();
+                        customerTask.CustomerStepId = customerStep.Id;
+                        customerTask.ModelTaskId = modelTask.Id;
+
+                        customerTask.Description = modelTask.Description;
+                        customerTask.Instructions = modelTask.Instructions;
+                        customerTask.Duration = modelTask.Duration;
+                        customerTask.CreationDate = DateTime.Now;
+
+                        customerTask.StartDate = Utils.AddBusinessDays(startDate, modelTask.StartAfterDays);
+                        firstDate = (firstDate == null || customerTask.StartDate < firstDate ? customerTask.StartDate : firstDate);
+                        customerTask.EstimatedEndDate = Utils.AddBusinessDays(customerTask.StartDate, modelTask.DueDays);
+                        lastDate = (lastDate == null || customerTask.EstimatedEndDate > lastDate ? customerTask.EstimatedEndDate : lastDate);
+                        processEstimatedEndDate = (processEstimatedEndDate == null || lastDate > processEstimatedEndDate ? lastDate : processEstimatedEndDate);
+                        customerTask.EndDate = null;
+
+                        customerTask.MailSubject = modelTask.MailSubject;
+                        customerTask.MailBody = modelTask.MailBody;
+
+                        customerTask.CustomerId = customerId;
+                        customerTask.CustomerUserId = customerUserId;
+                        customerTask.ConsultantId = consultantId;
+
+                        if (modelTask.TaskTypeId == Const.TaskTypes.Customer)
+                        {
+                            customerTask.TaskTypeId = Const.TaskTypes.Customer;
+                            customerTask.OwnerId = customerUserId;
+                        }
+                        else
+                        {
+                            customerTask.TaskTypeId = Const.TaskTypes.Consultant;
+                            customerTask.OwnerId = consultantId;
+                        }
+
+                        lstTasks.Add(customerTask);
+                    }
                 }
 
                 customerStep.CustomerTasks = lstTasks;

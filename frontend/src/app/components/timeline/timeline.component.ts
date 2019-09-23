@@ -44,8 +44,8 @@ export class TimelineComponent implements OnInit {
 
   closeResult: string;
 
-  ngOnInit() {
-    this.getCustomerId();
+  async ngOnInit() {
+    await this.loadCustomer();
     this.loadModelProcesses();
     this.loadCustomerProcesses(this.customer);
     this.loadConsultants();
@@ -103,11 +103,9 @@ export class TimelineComponent implements OnInit {
     this.selectedModelProcessId = modelProcessId;
   }
 
-  getCustomerId() {
+  async loadCustomer() {
     this.customer = <Customer>JSON.parse(window.sessionStorage.getItem('customer'));
-    if (!this.customer) {
-      this.customer = window.history.state.customer;
-    }
+    this.customer = await this.customerService.getCustomer(this.customer.id);
   }
 
   updateSelectedTask(task: CustomerTask, event: Event) {

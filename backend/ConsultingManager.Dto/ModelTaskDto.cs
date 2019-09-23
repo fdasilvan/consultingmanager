@@ -14,6 +14,7 @@ namespace ConsultingManager.Dto
         public int DueDays { get; set; }
         public string MailSubject { get; set; }
         public string MailBody { get; set; }
+        public bool Enabled { get; set; }
 
         public Guid ModelStepId { get; set; }
 

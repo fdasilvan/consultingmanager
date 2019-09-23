@@ -28,11 +28,12 @@ export class ProcessRegistrationComponent implements OnInit {
     this.loadProcess();
   }
 
-  public loadProcess() {
+  async loadProcess() {
     if (window.sessionStorage.getItem('modelProcess') != 'undefined') {
       this.isEdit = true;
       this.modelProcess = <ModelProcess>JSON.parse(window.sessionStorage.getItem('modelProcess'));
-
+      this.modelProcess = await this.processService.getModelProcess(this.modelProcess.id);
+      
       if (this.modelProcess.modelSteps.length > 0) {
         this.modelProcess.modelSteps = this.modelProcess.modelSteps.sort((a, b) => -b['description'].localeCompare(a['description']));
         this.selectedStep = this.modelProcess.modelSteps[0];
@@ -53,6 +54,7 @@ export class ProcessRegistrationComponent implements OnInit {
     modelStep.description = 'Nova Etapa';
     modelStep.modelTasks = [];
     modelStep.processId = this.modelProcess.id;
+    modelStep.enabled = true;
 
     this.modelProcess.modelSteps.push(modelStep);
 
@@ -130,8 +132,16 @@ export class ProcessRegistrationComponent implements OnInit {
     }
   }
 
-  public removeStep(step: ModelStep) {
-    this.modelProcess.modelSteps = this.modelProcess.modelSteps.filter(o => o.id != step.id);
+  async removeStep(step: ModelStep) {
+    let result = confirm('Tem certeza que quer excluir a etapa?');
+    if (result) {
+      if (this.isEdit) {
+        await this.processService.disableModelStep(step.id);
+        await this.loadProcess();
+      } else {
+        this.modelProcess.modelSteps = this.modelProcess.modelSteps.filter(o => o.id != step.id);
+      }
+    }
   }
 
   public removeTask(task: ModelTask) {

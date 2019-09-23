@@ -45,7 +45,7 @@ namespace ConsultingManager.Infra.Database.Models
 
         public Guid? CustomerLevelId { get; set; }
         [ForeignKey(nameof(CustomerLevelId))]
-        public CustomerLevelPoco Customer { get; set; }
+        public CustomerLevelPoco CustomerLevel { get; set; }
 
         public virtual ICollection<CustomerProcessPoco> CustomerProcesses { get; set; }
         public virtual ICollection<CustomerMeetingPoco> CustomerMeetings { get; set; }

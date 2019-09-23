@@ -4,6 +4,7 @@ export class ModelProcess {
   id: string;
   description: string;
   modelSteps: ModelStep[];
+  enabled: boolean;
 
   constructor() {
   }

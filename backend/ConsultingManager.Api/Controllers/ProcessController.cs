@@ -62,6 +62,19 @@ namespace ConsultingManager.Api.Controllers
             }
         }
 
+        [HttpPut("model/{modelStepId}/disable")]
+        public async Task<IActionResult> DisableDisableModelStep(Guid modelStepId)
+        {
+            try
+            {
+                return Ok(await _processRepository.DisableModelStep(modelStepId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao desabilitar etapa:" + ex.Message);
+            }
+        }
+
         [HttpPost("start")]
         public async Task<IActionResult> StartCustomerProcess(StartCustomerProcessDto startCustomerProcessDto)
         {

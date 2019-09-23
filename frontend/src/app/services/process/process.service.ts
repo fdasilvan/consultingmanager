@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Config } from 'src/config/config';
 import { ModelProcess } from 'src/app/models/modelprocess.model';
 import { environment } from 'src/environments/environment';
+import { ModelStep } from 'src/app/models/modelstep.model';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +52,11 @@ export class ProcessService {
 
   public async delete(customerProcessId: string): Promise<boolean> {
     let response = await this.http.delete<boolean>(`${environment.apiUrl}/process`, { params: { customerProcessId: customerProcessId } }).toPromise();
+    return response;
+  }
+
+  public async disableModelStep(modelStepId: string): Promise<ModelStep> {
+    let response = await this.http.put<ModelStep>(`${environment.apiUrl}/process/model/${modelStepId}/disable`, { params: { modelStepId: modelStepId } }).toPromise();
     return response;
   }
 

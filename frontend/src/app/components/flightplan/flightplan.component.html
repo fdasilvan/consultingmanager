@@ -79,7 +79,7 @@
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Iniciar Processo</h4>
+    <h4 class="modal-title" id="modal-basic-title">Iniciar Ação</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -87,7 +87,7 @@
   <div class="modal-body">
     <form>
       <div class="form-group">
-        <label for="lstModelProcess">Processo</label>
+        <label for="lstModelProcess">Ação</label>
         <div class="input-group">
           <select #lstModelProcess id="lstModelProcess" (change)="updateSelectedModelProcess($event.target.value)"
             class="custom-select form-control">
@@ -111,7 +111,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="lstUsers">Usuário Responsável (cliente)</label>
+        <label for="lstUsers">Cliente</label>
         <div class="input-group">
           <select #lstUsers id="lstUsers" class="custom-select form-control">
             <option value="">

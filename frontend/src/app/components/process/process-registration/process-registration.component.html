@@ -16,7 +16,7 @@
           <div class="mb-4 ml-2 row">
             <!-- Novas Etapas -->
             <div class="margin" *ngFor="let step of this.modelProcess.modelSteps">
-              <button class="btn btn-lg btn-primary btn-steps margin" (click)="selectStep(step)" type="button">
+              <button class="btn btn-lg btn-primary btn-steps margin" (click)="selectStep(step)" [class.btn-steps-disabled]="!step.enabled" type="button">
                 {{step.description}}
                 <em (click)="removeStep(step)" class="fa fa-times"></em>
               </button>
@@ -55,6 +55,19 @@
                 <div class="card-block">
                   <div class="form-group col-8 row">
                     <h6 class="text-muted">Cód. Tarefa: {{task.id}}</h6>
+                  </div>
+                  <div class="form-group col-8 row">
+                    <label class="col-md-2 col-form-label">Ativo? </label>
+                    <div class="col-md-10">
+                      <select #lstTaskEnabled name="lstTaskEnabled" [(ngModel)]="task.enabled"
+                        [ngModelOptions]="{ standalone: true }" class="custom-select form-control task-enabled"
+                        required>
+                        <option [selected]="(task && task.enabled ? true : false)" value="true">Sim
+                        </option>
+                        <option [selected]="(task && task.enabled ? false : true)" value="false">Não
+                        </option>
+                      </select>
+                    </div>
                   </div>
                   <div class="form-group col-8 row">
                     <label class="col-md-2 col-form-label">Tipo de Tarefa: </label>

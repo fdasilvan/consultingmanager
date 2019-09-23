@@ -5,6 +5,7 @@ export class ModelStep {
   description: string;
   processId: string;
   modelTasks: ModelTask[];
+  enabled: boolean;
 
   constructor() {
   }

@@ -12,6 +12,7 @@ export class ModelTask {
   mailSubject: string;
   mailBody: string;
   taskContent: TaskContent[];
+  enabled: boolean;
 
   constructor() {
   }

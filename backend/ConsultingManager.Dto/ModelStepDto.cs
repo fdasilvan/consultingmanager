@@ -10,5 +10,6 @@ namespace ConsultingManager.Dto
         public string Description { get; set; }
         public Guid ProcessId { get; set; }
         public ICollection<ModelTaskDto> ModelTasks { get; set; }
+        public bool Enabled { get; set; }
     }
 }

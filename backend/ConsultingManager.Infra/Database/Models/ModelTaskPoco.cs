@@ -14,6 +14,7 @@ namespace ConsultingManager.Infra.Database.Models
         public int DueDays { get; set; }
         public string MailSubject { get; set; }
         public string MailBody { get; set; }
+        public bool Enabled { get; set; }
 
         public Guid TaskTypeId { get; set; }
         [ForeignKey(nameof(TaskTypeId))]

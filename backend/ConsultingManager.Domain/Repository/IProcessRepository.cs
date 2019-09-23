@@ -11,6 +11,7 @@ namespace ConsultingManager.Domain.Repository
         Task<ModelProcessDto> Get(Guid modelProcessId);
         Task<bool> Save(ModelProcessDto modelProcessoDto);
         Task<bool> Delete(Guid customerProcessId);
+        Task<ModelStepDto> DisableModelStep(Guid modelStepId);
         Task<CustomerProcessDto> StartCustomerProcess(ModelProcessDto modelProcessDto, Guid customerId, Guid consultantId, Guid customerUserId, DateTime startDate, string detail, Guid? customerMeetingId);
         Task<List<CustomerProcessDto>> GetCustomerTasks(Guid customerId);
     }

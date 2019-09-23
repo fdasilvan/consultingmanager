@@ -27,3 +27,15 @@
   background-color: #7376df !important;
   color: #fff !important;
 }
+
+.btn-steps-disabled {
+  border-radius: 0px;
+  
+  background-color: #fff !important;
+  color: #dcdcdc !important;
+  border-color: #dcdcdc !important;
+}
+
+.task-enabled {
+  width: 10rem;
+}

@@ -12,5 +12,6 @@ namespace ConsultingManager.Infra.Database.Models
         [ForeignKey(nameof(ProcessId))]
         public ModelProcessPoco Process { get; set; }
         public virtual ICollection<ModelTaskPoco> ModelTasks { get; set; }
+        public bool Enabled { get; set; }
     }
 }

@@ -132,6 +132,7 @@ namespace ConsultingManager.Domain.Repository
                 .Include(o => o.Users)
                 .Include(o => o.Consultant)
                     .ThenInclude(o => o.UserType)
+                .Include(o => o.CustomerLevel)
                 .FirstOrDefaultAsync(o => o.Id == customerId);
 
             return customer.MapTo<CustomerDto>();
@@ -147,6 +148,7 @@ namespace ConsultingManager.Domain.Repository
                 .Include(o => o.Users)
                 .Include(o => o.Consultant)
                     .ThenInclude(o => o.UserType)
+                .Include(o => o.CustomerLevel)
                 .OrderBy(o => o.Name)
                 .Select(o => o.MapTo<CustomerDto>())
                 .ToListAsync();
