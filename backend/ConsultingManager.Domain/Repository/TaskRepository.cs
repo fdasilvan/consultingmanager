@@ -25,7 +25,7 @@ namespace ConsultingManager.Domain.Repository
 
         public async Task<List<CustomerTaskDto>> GetUserTasks(Guid userId)
         {
-            return await Context.CustomerTasks
+            var customerTasks = await Context.CustomerTasks
                 .Include(task => task.Owner)
                 .Include(task => task.Customer)
                 .Include(task => task.Consultant)
@@ -36,6 +36,8 @@ namespace ConsultingManager.Domain.Repository
                 .Where(task => task.OwnerId == userId && task.EndDate == null && task.StartDate < DateTime.Now && task.Customer.SituationId == Const.CustomerSituations.Active)
                 .Select(task => task.MapTo<CustomerTaskDto>())
                 .ToListAsync();
+
+            return customerTasks.OrderBy(o => o.EstimatedEndDate).ToList();
         }
 
         public async Task<CustomerTaskDto> GetTask(Guid taskId)

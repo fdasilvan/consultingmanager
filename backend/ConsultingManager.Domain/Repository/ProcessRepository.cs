@@ -338,7 +338,7 @@ namespace ConsultingManager.Domain.Repository
                         .Select(task => task.MapTo<CustomerTaskDto>())
                         .ToListAsync();
 
-                    customerStep.CustomerTasks = customerTasks;
+                    customerStep.CustomerTasks = customerTasks.OrderBy(o => o.EstimatedEndDate).ToList();
                 }
             }
 
