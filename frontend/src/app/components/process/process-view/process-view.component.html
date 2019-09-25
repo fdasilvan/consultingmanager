@@ -13,6 +13,7 @@
           <thead>
             <tr>
               <th scope="col">Descrição</th>
+              <th scope="col">Tipo</th>
               <th scope="col">Iniciar Após</th>
               <th scope="col">Prazo</th>
             </tr>
@@ -20,6 +21,7 @@
           <tbody>
             <tr *ngFor="let task of step.modelTasks | orderBy: 'startAfterDays'">
               <td>{{task.description}}</td>
+              <td>{{task.taskType.description}}</td>
               <td>{{(task.startAfterDays == 0 ? 'Imediato' : task.startAfterDays + ' dia(s)')}}</td>
               <td>{{task.dueDays}} dia(s)</td>
             </tr>

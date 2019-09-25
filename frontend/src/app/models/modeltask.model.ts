@@ -1,4 +1,5 @@
 import { TaskContent } from './taskcontent.model';
+import { TaskType } from './tasktype.model';
 
 export class ModelTask {
   id: string;
@@ -8,6 +9,7 @@ export class ModelTask {
   startAfterDays: number;
   dueDays: number;
   taskTypeId: string;
+  taskType: TaskType;
   modelStepId: string;
   mailSubject: string;
   mailBody: string;

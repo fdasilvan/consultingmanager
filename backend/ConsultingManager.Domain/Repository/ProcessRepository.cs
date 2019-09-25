@@ -35,6 +35,7 @@ namespace ConsultingManager.Domain.Repository
             return Context.ModelProcesses
                 .Include(o => o.ModelSteps)
                     .ThenInclude(p => p.ModelTasks)
+                        .ThenInclude(task => task.TaskType)
                 .FirstOrDefaultAsync(o => o.Id == modelProcessId)
                 .Result.MapTo<ModelProcessDto>();
         }
