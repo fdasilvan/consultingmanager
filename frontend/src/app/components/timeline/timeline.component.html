@@ -6,7 +6,7 @@
       <h2 class="mb-2">{{customer.name}}</h2>
       <p *ngIf="customer.customerLevel" class="text-muted">Nível de Cliente: {{customer.customerLevel.description}}</p>
       <p *ngIf="customer.consultant" class="text-muted">Consultor Responsável: {{customer.consultant.name}}</p>
-      <p class="text-muted" *ngFor="let user of this.customer.users">Cliente: {{user.name}}</p>
+      <p class="text-muted" *ngFor="let user of this.customer.users">Cliente: {{user.name}} - {{user.email}}</p>
       <p class="text-muted">Telefone: {{(customer.phone && customer.phone != '' ? customer.phone : 'Não informado')}}
       </p>
       <a href="https://{{customer.storeUrl}}" target="_blank">https://{{customer.storeUrl}}</a>
@@ -107,7 +107,7 @@
   <div class="modal-body">
     <form>
       <div class="form-group">
-        <label for="lstModelProcess">Processo (obrigatório)</label>
+        <label for="lstModelProcess">Ação (obrigatória)</label>
         <div class="input-group">
           <select #lstModelProcess id="lstModelProcess" (change)="updateSelectedModelProcess($event.target.value)"
             class="custom-select form-control">
@@ -149,9 +149,6 @@
         <label for="lstUsers">Cliente (obrigatório)</label>
         <div class="input-group">
           <select #lstUsers id="lstUsers" class="custom-select form-control">
-            <option value="">
-              Selecionar
-            </option>
             <option *ngFor="let user of this.customer.users" value="{{user.id}}">
               {{user.name}}
             </option>

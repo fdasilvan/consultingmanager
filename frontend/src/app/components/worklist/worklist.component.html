@@ -11,6 +11,7 @@
               (change)="onMeetingDateChanged($event.target.value)" value="{{this.today | date: 'yyyy-MM-dd'}}">
           </div>
           <div class="col-10">
+            <h5>Encontros do Dia</h5>
             <p *ngIf="filteredUserMeetings && filteredUserMeetings.length == 0">
               Você não possui encontros agendados para esta data.</p>
             <div *ngFor="let meeting of this.filteredUserMeetings">

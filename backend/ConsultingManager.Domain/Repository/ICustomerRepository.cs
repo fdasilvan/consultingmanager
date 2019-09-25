@@ -14,7 +14,6 @@ namespace ConsultingManager.Domain.Repository
         Task<List<CustomerMeetingDto>> GetMeetings(Guid customerId);
         Task<List<CustomerDto>> GetAll();
         Task<CustomerDto> Get(Guid customerId);
-        Task<List<ChartResultDto>> GetChartResult();
         Task<List<CityDto>> GetCities();
         Task<List<CustomerCategoryDto>> GetCustomerCategories();
         Task<List<CustomerSituationDto>> GetCustomerSituations();

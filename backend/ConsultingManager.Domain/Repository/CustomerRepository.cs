@@ -154,18 +154,6 @@ namespace ConsultingManager.Domain.Repository
                 .ToListAsync();
         }
 
-        public async Task<List<ChartResultDto>> GetChartResult()
-        {
-            DateTime now = DateTime.Now;
-            DateTime dateFilter = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
-
-            return await Context.CustomerTasks
-                .Where(o => o.EndDate == null && o.EstimatedEndDate < dateFilter)
-                .GroupBy(p => new { p.Customer.Id, p.Customer.Name })
-                .Select(g => new ChartResultDto { Description = g.Key.Name, Value = g.Count() })
-                .ToListAsync();
-        }
-
         public async Task<List<CityDto>> GetCities()
         {
             return await Context.Cities

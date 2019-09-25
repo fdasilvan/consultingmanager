@@ -111,12 +111,9 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="lstUsers">Cliente</label>
+        <label for="lstUsers">Cliente (obrigatório)</label>
         <div class="input-group">
           <select #lstUsers id="lstUsers" class="custom-select form-control">
-            <option value="">
-              Selecionar
-            </option>
             <option *ngFor="let user of this.customer.users" value="{{user.id}}">
               {{user.name}}
             </option>

@@ -38,7 +38,6 @@
             </div>
             <div class="col-3">
               <select #lstSituation name="lstSituation" class="custom-select form-control">
-                <option value="">Todas</option>
                 <option *ngFor=" let situation of this.situationsList" value="{{situation.id}}">
                   {{situation.description}}</option>
               </select>
