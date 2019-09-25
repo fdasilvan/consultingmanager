@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, NgModule } from '@angular/core';
 import { Customer } from 'src/app/models/customer.model';
 import { Platform } from 'src/app/models/platform.model';
 import { CustomersService } from 'src/app/services/customers/customers.service';
@@ -11,6 +11,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'src/app/services/user/user.service';
 import { CustomerLevel } from 'src/app/models/customerlevel.model';
+import { NgxMaskModule } from 'ngx-mask';
+
+@NgModule({
+  imports: [NgxMaskModule.forChild()]
+})
 
 @Component({
   selector: 'app-customer-registration',
@@ -91,6 +96,15 @@ export class CustomerRegistrationComponent implements OnInit {
 
     if (email == '') {
       alert('E-mail obrigatório!');
+      return;
+    }
+
+    debugger;
+
+    let match = /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*$/.test(email);
+
+    if (!match) {
+      alert('E-mail inválido!');
       return;
     }
 

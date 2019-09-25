@@ -85,7 +85,7 @@
           <div class="form-group row">
             <label class="col-md-3 col-form-label">Telefone (obrigatório)</label>
             <div class="col-md-9">
-              <input #txtPhone id="txtPhone" type="text" name="regular" class="form-control"
+              <input #txtPhone id="txtPhone" mask="(00) 00000-0000" type="text" name="regular" class="form-control"
                 value="{{this.isEdit ? this.customer.phone : ''}}">
             </div>
           </div>

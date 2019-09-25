@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,6 +28,7 @@ import { FlightplanComponent } from './components/flightplan/flightplan.componen
 import { CommentsComponent } from './components/comments/comments.component';
 import { ProcessViewComponent } from './components/process/process-view/process-view.component';
 
+export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
 @NgModule({
   declarations: [
@@ -56,7 +58,8 @@ import { ProcessViewComponent } from './components/process/process-view/process-
     NgbModule,
     NgxChartsModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    NgxMaskModule.forRoot(options)
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],
