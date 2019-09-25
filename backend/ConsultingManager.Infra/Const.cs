@@ -22,6 +22,14 @@ namespace ConsultingManager.Infra
                 }
             }
 
+            public static Guid Implanter
+            {
+                get
+                {
+                    return Guid.Parse("BB159ACC-CB7D-476D-9C45-1A75DAFED934");
+                }
+            }
+
             public static Guid Leader
             {
                 get
