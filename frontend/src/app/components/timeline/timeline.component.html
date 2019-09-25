@@ -62,7 +62,8 @@
                   <thead>
                     <tr>
                       <th scope="col">Início</th>
-                      <th scope="col">Fim</th>
+                      <th scope="col">Previsão</th>
+                      <th scope="col">Conclusão</th>
                       <th scope="col">Status</th>
                       <th scope="col">Duração</th>
                       <th scope="col">Responsável</th>
@@ -73,6 +74,7 @@
                     <tr *ngFor="let task of step.customerTasks | orderBy: 'startDate'">
                       <td>{{task.startDate | date: 'dd/MM'}}</td>
                       <td>{{task.estimatedEndDate | date: 'dd/MM'}}
+                      <td>{{task.endDate | date: 'dd/MM'}}
                       </td>
                       <td><span class="{{this.loadClassIndicator(task)}}"></span>
                       </td>

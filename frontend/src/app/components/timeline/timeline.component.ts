@@ -155,7 +155,7 @@ export class TimelineComponent implements OnInit {
         return 'indicator label-default';
       }
     } else {
-      return 'indicator label-success';
+      return 'fa fa-check success-green';
     }
   }
 }

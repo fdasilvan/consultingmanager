@@ -9,3 +9,7 @@
 .customer-info {
   display: inline;
 }
+
+.success-green {
+	color: #8ad919;
+}
