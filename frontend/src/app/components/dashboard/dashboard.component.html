@@ -1,18 +1,83 @@
 <section class="row">
-  <div class="col-sm-10">
-    <div class="col-lg-8 mb-4 bg-default">
-      <div class="card chart">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Tarefas por Consultor</h3>
+      </div>
+      <div class="card-block">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Consultor</th>
+              <th scope="col">Atrasadas</th>
+              <th scope="col">No Prazo</th>
+              <th scope="col">Não Iniciadas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="this.dashboardConsultantsTasks.length == 0">
+              <td colspan="4">Carregando informações</td>
+            </tr>
+            <tr *ngFor="let item of this.dashboardConsultantsTasks">
+              <td>
+                <a href="javascript:void(0)"
+                  (click)="customerSelected(item.consultant, $event, contentConsultantTasks)">{{item.consultant.name}}</a>
+              </td>
+              <td>{{item.dueTasks}}</td>
+              <td>{{item.onTimeTasks}}</td>
+              <td>{{item.notStartedTasks}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- <div class="card chart">
         <div class="card-header">
           <h3 class="card-title">Tarefas Atrasadas por Cliente</h3>
         </div>
         <div class="card-block">
           <ngx-charts-bar-vertical [view]="view" [scheme]="colorScheme" [results]="single" [gradient]="gradient"
             [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
-            [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" 
+            [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel"
             [showDataLabel]="showDataLabel">
           </ngx-charts-bar-vertical>
         </div>
-      </div>
-    </div>
+      </div> -->
+
   </div>
 </section>
+
+<ng-template #contentConsultantTasks let-modalConsultantTasks>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Atividades Atrasadas - {{this.selectedConsultant.name}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalConsultantTasks.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Cliente</th>
+            <th scope="col">Tipo Tarefa</th>
+            <th scope="col">Previsão</th>
+            <th scope="col">Tarefa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="this.dashboardDueTasks.length == 0">
+            <td colspan="4">Não há tarefas atrasadas para este consultor.</td>
+          </tr>
+          <tr *ngFor="let task of this.dashboardDueTasks">
+            <td>{{task.customer.name}}</td>
+            <td>{{task.taskType.description}}</td>
+            <td>{{task.estimatedEndDate | date: 'dd/MM'}}</td>
+            <td>{{task.description}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-template>

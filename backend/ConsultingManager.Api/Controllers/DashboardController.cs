@@ -1,7 +1,4 @@
-﻿using ConsultingManager.Domain.Mailing;
-using ConsultingManager.Domain.Repository;
-using ConsultingManager.Dto;
-using Mailing.Dto;
+﻿using ConsultingManager.Domain.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -21,12 +18,12 @@ namespace ConsultingManager.Api.Controllers
 
         #region Tasks
 
-        [HttpGet("customers/tasks/due")]
-        public async Task<IActionResult> GetCustomersDueTasks()
+        [HttpGet("consultants/tasks")]
+        public async Task<IActionResult> GetConsultantsTasks()
         {
             try
             {
-                return Ok(await _dashboardRepository.GetCustomersDueTasks());
+                return Ok(await _dashboardRepository.GetConsultantsTasks());
             }
             catch (Exception ex)
             {
@@ -34,126 +31,18 @@ namespace ConsultingManager.Api.Controllers
             }
         }
 
-        [HttpGet("customers/tasks/on-time")]
-        public async Task<IActionResult> GetCustomersOnTimeTasks()
-        {
-            try
-            {
-                return Ok(await _dashboardRepository.GetCustomersOnTimeTasks());
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Erro ao buscar informações.");
-            }
-        }
-
-        [HttpGet("consultants/tasks/due")]
-        public async Task<IActionResult> GetConsultantsDueTasks()
-        {
-            try
-            {
-                return Ok(await _dashboardRepository.GetConsultantsDueTasks());
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Erro ao buscar informações.");
-            }
-        }
-
-        [HttpGet("consultants/tasks/on-time")]
-        public async Task<IActionResult> GetConsultantsOnTimeTasks()
-        {
-            try
-            {
-                return Ok(await _dashboardRepository.GetConsultantsOnTimeTasks());
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Erro ao buscar informações.");
-            }
-        }
-
-        #endregion
-
-        #region Meetings
-
-        [HttpGet("customer/meetings/past")]
-        public async Task<IActionResult> GetCustomerPastMeetings()
-        {
-            try
-            {
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Erro ao buscar informações.");
-            }
-        }
-
-        [HttpGet("customer/meetings/future")]
-        public async Task<IActionResult> GetCustomerFutureMeetings()
-        {
-            try
-            {
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Erro ao buscar informações.");
-            }
-        }
-
-        [HttpGet("consultant/meetings/past")]
-        public async Task<IActionResult> GetConsultantPastMeetings()
-        {
-            try
-            {
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Erro ao buscar informações.");
-            }
-        }
-
-        [HttpGet("consultant/meetings/future")]
-        public async Task<IActionResult> GetConsultantFutureMeetings()
-        {
-            try
-            {
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Erro ao buscar informações.");
-            }
-        }
-
-        [HttpGet("customer/meetings/processes")]
-        public async Task<IActionResult> GetCustomerMeetingsProcesses()
-        {
-            try
-            {
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Erro ao buscar informações.");
-            }
-        }
-
-        [HttpGet("consultant/meetings")]
-        public async Task<IActionResult> GetConsultantMeetingsProcesses()
-        {
-            try
-            {
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Erro ao buscar informações.");
-            }
-        }
+        //[HttpGet("customers/tasks")]
+        //public async Task<IActionResult> GetCustomersTasks()
+        //{
+        //    try
+        //    {
+        //        return Ok(await _dashboardRepository.GetConsultantsTasks());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest("Erro ao buscar informações.");
+        //    }
+        //}
 
         #endregion
     }

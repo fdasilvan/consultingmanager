@@ -20,73 +20,21 @@ namespace ConsultingManager.Domain.Repository
 
         #region Tasks
 
-        public async Task<List<ChartResultDto>> GetCustomersDueTasks()
-        {
-            DateTime now = DateTime.Now;
-            DateTime dateFilter = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
-
-            var list = await Context.CustomerTasks
-                .Where(o => o.EndDate == null && o.EstimatedEndDate < dateFilter)
-                .GroupBy(p => new { p.Customer.Id, p.Customer.Name })
-                .Select(g => new ChartResultDto { Id = g.Key.Id, Description = g.Key.Name, Value = g.Count() })
-                .ToListAsync();
-
-            return list.OrderByDescending(o => o.Value).ToList();
-        }
-
-        public async Task<List<ChartResultDto>> GetCustomersOnTimeTasks()
-        {
-            DateTime now = DateTime.Now;
-            DateTime dateFilter = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
-
-            var list = await Context.CustomerTasks
-                .Where(o => o.EndDate == null && o.EstimatedEndDate < dateFilter && o.StartDate > dateFilter)
-                .GroupBy(p => new { p.Customer.Id, p.Customer.Name })
-                .Select(g => new ChartResultDto { Id = g.Key.Id, Description = g.Key.Name, Value = g.Count() })
-                .ToListAsync();
-
-            return list.OrderByDescending(o => o.Value).ToList();
-        }
-
-        public async Task<List<ChartResultDto>> GetConsultantsDueTasks()
+        public async Task<List<CustomerTaskDto>> GetConsultantsTasks()
         {
             DateTime now = DateTime.Now;
             DateTime dateFilter = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
 
             var list = await Context.CustomerTasks
                 .Include(o => o.Consultant)
-                .Where(o => o.EndDate == null && dateFilter > o.StartDate && dateFilter < o.EstimatedEndDate)
-                .GroupBy(p => new { p.Consultant.Id, p.Consultant.Name })
-                .Select(g => new ChartResultDto { Id = g.Key.Id, Description = g.Key.Name, Value = g.Count() })
+                .Include(o => o.Customer)
+                .Include(o => o.TaskType)
+                .Where(o => o.EndDate == null)
+                .Select(o => o.MapTo<CustomerTaskDto>())
                 .ToListAsync();
 
-            return list.OrderByDescending(o => o.Value).ToList();
+            return list;
         }
-
-        public async Task<List<ChartResultDto>> GetConsultantsOnTimeTasks()
-        {
-            DateTime now = DateTime.Now;
-            DateTime dateFilter = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
-
-            var list = await Context.CustomerTasks
-                .Include(o => o.Consultant)
-                .Where(o => o.EndDate == null && dateFilter > o.StartDate && dateFilter < o.EstimatedEndDate)
-                .GroupBy(p => new { p.Consultant.Id, p.Consultant.Name })
-                .Select(g => new ChartResultDto { Id = g.Key.Id, Description = g.Key.Name, Value = g.Count() })
-                .ToListAsync();
-
-            return list.OrderByDescending(o => o.Value).ToList();
-        }
-
-        #endregion
-
-        #region Meetings
-
-        //public async Task<List<ChartResultDto>> GetCustomerPastMeetings()
-        //{
-
-        //}
-
 
         #endregion
     }
