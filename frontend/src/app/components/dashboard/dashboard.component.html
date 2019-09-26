@@ -21,7 +21,7 @@
             <tr *ngFor="let item of this.dashboardConsultantsTasks">
               <td>
                 <a href="javascript:void(0)"
-                  (click)="customerSelected(item.consultant, $event, contentConsultantTasks)">{{item.consultant.name}}</a>
+                  (click)="consultantSelected(item.consultant, $event, contentConsultantTasks)">{{item.consultant.name}}</a>
               </td>
               <td>{{item.dueTasks}}</td>
               <td>{{item.onTimeTasks}}</td>
@@ -71,7 +71,10 @@
             <td colspan="4">Não há tarefas atrasadas para este consultor.</td>
           </tr>
           <tr *ngFor="let task of this.dashboardDueTasks">
-            <td>{{task.customer.name}}</td>
+            <td>
+              <a href="javascript:void(0)"
+                (click)="customerSelected(task.customer, $event)">{{task.customer.name}}</a>
+            </td>
             <td>{{task.taskType.description}}</td>
             <td>{{task.estimatedEndDate | date: 'dd/MM'}}</td>
             <td>{{task.description}}</td>

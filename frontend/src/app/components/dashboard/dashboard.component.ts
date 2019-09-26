@@ -7,6 +7,7 @@ import { DashboardService } from 'src/app/services/dashboard/dashboard.service';
 import { CustomerTask } from 'src/app/models/customertask.model';
 import { DashboardsTasks } from 'src/app/models/dashboard-tasks.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Customer } from 'src/app/models/customer.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -80,12 +81,19 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  customerSelected(consultant: User, event: Event, content: any) {
+  consultantSelected(consultant: User, event: Event, content: any) {
     event.preventDefault();
     this.selectedConsultant = consultant;
     let now = new Date();
     this.dashboardDueTasks = this.customerTasks.filter(o => o.consultant.id == consultant.id && o.endDate == null && new Date(o.estimatedEndDate).getTime() < now.getTime());
     this.dashboardDueTasks = this.dashboardDueTasks.sort((a, b) => a.customer.name.localeCompare(b.customer.name));
     this.modalObject = this.modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' });
+  }
+
+  customerSelected(customer: Customer, event: Event) {
+    event.preventDefault();
+    this.modalObject.close();
+    window.sessionStorage.setItem('customer', JSON.stringify(customer));
+    this.router.navigate(['timeline']);
   }
 }
