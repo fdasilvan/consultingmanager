@@ -28,8 +28,6 @@ import { FlightplanComponent } from './components/flightplan/flightplan.componen
 import { CommentsComponent } from './components/comments/comments.component';
 import { ProcessViewComponent } from './components/process/process-view/process-view.component';
 
-export let options: Partial<IConfig> | (() => Partial<IConfig>);
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +57,7 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     NgxChartsModule,
     BrowserAnimationsModule,
     FormsModule,
-    NgxMaskModule.forRoot(options)
+    NgxMaskModule.forRoot()
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],

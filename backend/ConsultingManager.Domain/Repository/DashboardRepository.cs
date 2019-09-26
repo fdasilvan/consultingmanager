@@ -1,4 +1,5 @@
 ﻿using ConsultingManager.Dto;
+using ConsultingManager.Infra;
 using ConsultingManager.Infra.Database;
 using ConsultingManager.Infra.Database.Models;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +30,7 @@ namespace ConsultingManager.Domain.Repository
                 .Include(o => o.Consultant)
                 .Include(o => o.Customer)
                 .Include(o => o.TaskType)
-                .Where(o => o.EndDate == null)
+                .Where(o => o.EndDate == null && o.Customer.SituationId == Const.CustomerSituations.Active)
                 .Select(o => o.MapTo<CustomerTaskDto>())
                 .ToListAsync();
 

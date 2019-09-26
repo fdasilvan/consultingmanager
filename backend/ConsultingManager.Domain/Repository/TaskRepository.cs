@@ -65,6 +65,7 @@ namespace ConsultingManager.Domain.Repository
         {
             CustomerTaskPoco task = await Context.CustomerTasks
                 .Include(o => o.Customer)
+                    .ThenInclude(p => p.Consultant)
                 .Include(o => o.Owner)
                 .Include(o => o.CustomerUser)
                 .Include(o => o.Consultant)

@@ -50,7 +50,7 @@
                   <p class="ml-2 text-muted">{{i + 1}}</p>
                   <input #txtMeetingDate name="txtMeetingDate" [ngModel]="meeting.date | date:'yyyy-MM-dd'"
                     (ngModelChange)="meeting.date=$event" [ngModelOptions]="{ standalone: true }" type="date"
-                    class="meeting-date form-control ml-2" onkeypress="return false">
+                    class="meeting-date form-control ml-2">
                   <p class="ml-4 text-muted">{{dayOfWeek(meeting.date)}}</p>
                 </div>
                 <div class="ml-2">
