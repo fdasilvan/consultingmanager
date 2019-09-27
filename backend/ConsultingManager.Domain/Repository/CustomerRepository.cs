@@ -67,6 +67,20 @@ namespace ConsultingManager.Domain.Repository
                 customer.ConsultantId = consultantId;
 
                 var updatedCustomer = Context.Customers.Update(customer);
+
+                var customerTasks = await Context.CustomerTasks
+                    .Include(o => o.Consultant)
+                    .Include(o => o.Customer)
+                    .Include(o => o.TaskType)
+                    .Where(o => o.EndDate == null && o.Customer.Id == customerId)
+                    .ToListAsync();
+
+                foreach (CustomerTaskPoco customerTask in customerTasks)
+                {
+                    customerTask.OwnerId = consultantId;
+                    Context.CustomerTasks.Update(customerTask);
+                }
+
                 await Context.SaveChangesAsync();
                 return updatedCustomer.Entity.MapTo<CustomerDto>();
             }

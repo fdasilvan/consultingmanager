@@ -159,7 +159,11 @@ export class TimelineComponent implements OnInit {
     this.router.navigate(['customer-registration']);
   }
 
-  async transferCustomer(consultantId: string) {
+  async transferCustomer(consultantId: string) {    
+    if(consultantId == '') {
+      alert('É necessário selecionar o consultor.');
+    }
+
     await this.customerService.transferCustomer(this.customer.id, consultantId);
     this.modalObject.close();
     alert('Cliente transferido com sucesso!');

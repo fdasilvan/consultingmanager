@@ -196,6 +196,7 @@
         <label for="lstUsers">Consultor</label>
         <div class="input-group">
           <select #lstConsultants id="lstConsultants" class="custom-select form-control">
+            <option value="">Selecione</option>
             <option *ngFor="let consultant of this.consultantsList" value="{{consultant.id}}">
               {{consultant.name}}
             </option>
