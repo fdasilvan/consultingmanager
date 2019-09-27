@@ -30,7 +30,8 @@
           <div class="form-group row">
             <label class="col-md-3 col-form-label">Plano (obrigatório)</label>
             <div class="col-md-9">
-              <select #lstPlans id="lstPlans" class="custom-select form-control">
+              <select #lstPlans id="lstPlans" class="custom-select form-control"
+                (change)="onPlanChanged($event.target.value, txtMeetingsDescription)">
                 <option value="">Não informado</option>
                 <option *ngFor="let plan of this.plansList"
                   [selected]="(this.customer && this.customer.plan ? this.customer.plan.id == plan.id : false)"
@@ -38,6 +39,13 @@
                   {{plan.description}}
                 </option>
               </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Descrição de Encontros</label>
+            <div class="col-md-9">
+              <input #txtMeetingsDescription id="txtMeetingsDescription" type="text" name="regular" class="form-control"
+                value="{{this.isEdit ? this.customer.meetingsDescription : (this.selectedPlan ? this.selectedPlan.meetingsDescription : '')}}">
             </div>
           </div>
           <div class="form-group row">
@@ -154,13 +162,6 @@
             <div class="col-md-9">
               <input #txtCustomerFolderUrl id="txtCustomerFolderUrl" type="text" name="regular" class="form-control"
                 value="{{this.isEdit ? this.customer.customerFolderUrl : ''}}">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label">Descrição de Encontros</label>
-            <div class="col-md-9">
-              <input #txtMeetingsDescription id="txtMeetingsDescription" type="text" name="regular" class="form-control"
-                value="{{this.isEdit ? this.customer.meetingsDescription : ''}}">
             </div>
           </div>
           <div #userInfo id="userInfo">

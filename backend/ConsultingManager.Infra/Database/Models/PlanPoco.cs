@@ -7,5 +7,6 @@ namespace ConsultingManager.Infra.Database.Models
         public Guid Id { get; set; }
         public string Description { get; set; }
         public int Duration { get; set; }
+        public string MeetingsDescription { get; set; }
     }
 }

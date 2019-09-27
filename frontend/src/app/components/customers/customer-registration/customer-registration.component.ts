@@ -8,7 +8,6 @@ import { Plan } from 'src/app/models/plan.model';
 import { CustomerSituation } from 'src/app/models/customersituation.model';
 import { User } from 'src/app/models/user.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'src/app/services/user/user.service';
 import { CustomerLevel } from 'src/app/models/customerlevel.model';
 import { NgxMaskModule } from 'ngx-mask';
@@ -38,6 +37,7 @@ export class CustomerRegistrationComponent implements OnInit {
   public situationsList: CustomerSituation[] = [];
   public consultantsList: User[] = [];
   public customerLevelsList: CustomerLevel[] = [];
+  public selectedPlan: Plan;
 
   async ngOnInit() {
     await this.loadCustomer();
@@ -74,6 +74,15 @@ export class CustomerRegistrationComponent implements OnInit {
     this.customerLevelsList = await this.customersService.getCustomerLevels();
   }
 
+  onPlanChanged(planId: string, txtMeetingsDescription: any) {
+    let arr = this.plansList.filter(o => o.id == planId);
+    if (arr.length > 0) {
+      let plan = arr[0];
+      this.selectedPlan = plan;
+      txtMeetingsDescription.value = this.selectedPlan.meetingsDescription;
+    }
+  }
+
   async SaveCustomer(name: string, situationId: any, customerLevelId: any, email: string, phone: string, logoUrl: string,
     storeUrl: string, storeAnalysisUrl: string, cityId: string, platformId: string, categoryId: string, customerFolderUrl: string, meetingsDescription: string, planId: string, consultantId: string,
     txtUserName: any, txtUserEmail: any, redirectToTimeline: boolean) {
@@ -98,8 +107,6 @@ export class CustomerRegistrationComponent implements OnInit {
       alert('E-mail obrigatório!');
       return;
     }
-
-    debugger;
 
     let match = /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*$/.test(email);
 
