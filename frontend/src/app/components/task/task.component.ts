@@ -41,6 +41,7 @@ export class TaskComponent implements OnInit {
   public canRescheduleTask = false;
   public showActionsMenu = false;
   public canTransferTask = false;
+  public canAnticipateTask = false;
 
   ngOnInit() {
     this.loadTask();
@@ -84,6 +85,9 @@ export class TaskComponent implements OnInit {
   }
 
   checkPermissions() {
+
+    let now = new Date();
+
     if (this.loggedUser.userType.description == "Cliente" && this.task.taskType.description != "Consultor") {
       if (this.task.endDate) {
         this.canReopenTask = true;
@@ -102,6 +106,10 @@ export class TaskComponent implements OnInit {
         this.canFinishTask = true;
         this.canRescheduleTask = true;
         this.showActionsMenu = true;
+
+        if (new Date(this.task.startDate).getTime() > now.getTime()) {
+          this.canAnticipateTask = true;
+        }
       }
     }
 
@@ -124,6 +132,12 @@ export class TaskComponent implements OnInit {
       alert('Cliente transferido com sucesso!');
       this.router.navigate(['customers']);
     }
+  }
+
+  async anticipateTask(taskId: string) {
+    await this.taskService.anticipateTask(taskId);
+    alert('Tarefa atencipada com sucesso!');
+    this.goBack();
   }
 
   goBack() {

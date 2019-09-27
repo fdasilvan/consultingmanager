@@ -1,5 +1,4 @@
 ﻿using ConsultingManager.Domain.Repository;
-using ConsultingManager.Dto;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -75,6 +74,19 @@ namespace ConsultingManager.Api.Controllers
             try
             {
                 return Ok(await _taskRepository.RescheduleTask(taskId, newDate));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("{taskId}/anticipate")]
+        public async Task<IActionResult> AnticipateTask(Guid taskId)
+        {
+            try
+            {
+                return Ok(await _taskRepository.AnticipateTask(taskId));
             }
             catch (Exception ex)
             {

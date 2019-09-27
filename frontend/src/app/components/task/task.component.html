@@ -39,6 +39,27 @@
           </div>
 
           <div class="form-group row">
+            <label class="col-md-2 control-label">Previsão Início:</label>
+            <div class="col-md-10">
+              <p>{{this.task.startDate | date: 'dd/MM/yyyy'}}</p>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2 control-label">Previsão Conclusão:</label>
+            <div class="col-md-10">
+              <p>{{this.task.estimatedEndDate | date: 'dd/MM/yyyy'}}</p>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2 control-label">Conclusão:</label>
+            <div class="col-md-10">
+              <p>{{this.task.endDate | date: 'dd/MM/yyyy'}}</p>
+            </div>
+          </div>
+
+          <div class="form-group row">
             <label class="col-md-2 control-label">Duração:</label>
             <div class="col-md-10">
               <p>{{this.task.duration}} minutos</p>
@@ -76,6 +97,11 @@
             <div *ngIf="this.canRescheduleTask">
               <button class="btn btn-lg btn-outline-primary" (click)="rescheduleTaskModal(content)">
                 <span class="fa fa-clock-o"></span> Reprogramar
+              </button>
+            </div>
+            <div *ngIf="this.canAnticipateTask">
+              <button class="btn btn-lg btn-outline-primary" (click)="anticipateTask(this.task.id)">
+                <span class="fa fa-clock-o"></span> Antecipar
               </button>
             </div>
             <div *ngIf="this.canReopenTask">
@@ -148,7 +174,6 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark"
-      (click)="transferTask(lstConsultants.value)">Transferir</button>
+    <button type="button" class="btn btn-outline-dark" (click)="transferTask(lstConsultants.value)">Transferir</button>
   </div>
 </ng-template>

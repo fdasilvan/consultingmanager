@@ -25,6 +25,9 @@ namespace ConsultingManager.Domain.Repository
 
         public async Task<List<CustomerTaskDto>> GetUserTasks(Guid userId)
         {
+            DateTime now = DateTime.Now;
+            now = new DateTime(now.Year, now.Month, now.Day);
+
             var customerTasks = await Context.CustomerTasks
                 .Include(task => task.Owner)
                 .Include(task => task.Customer)
@@ -33,7 +36,7 @@ namespace ConsultingManager.Domain.Repository
                 .Include(task => task.CustomerUser)
                 .Include(task => task.TaskType)
                 .Include(task => task.ModelTask).ThenInclude(modelTask => modelTask.TaskContent)
-                .Where(task => task.OwnerId == userId && task.EndDate == null && task.StartDate < DateTime.Now && task.Customer.SituationId == Const.CustomerSituations.Active)
+                .Where(task => task.OwnerId == userId && task.EndDate == null && task.StartDate <= now && task.Customer.SituationId == Const.CustomerSituations.Active)
                 .Select(task => task.MapTo<CustomerTaskDto>())
                 .ToListAsync();
 
@@ -154,6 +157,22 @@ namespace ConsultingManager.Domain.Repository
                 .FirstOrDefaultAsync();
 
             task.EstimatedEndDate = newDate;
+            await Context.SaveChangesAsync();
+            return task.MapTo<CustomerTaskDto>();
+        }
+
+        public async Task<CustomerTaskDto> AnticipateTask(Guid taskId)
+        {
+            CustomerTaskPoco task = await Context.CustomerTasks
+                .Where(o => o.Id == taskId)
+                .FirstOrDefaultAsync();
+
+            DateTime today = DateTime.Now;
+
+            task.StartDate = new DateTime(today.Year, today.Month, today.Day);
+
+            Context.CustomerTasks.Update(task);
+
             await Context.SaveChangesAsync();
             return task.MapTo<CustomerTaskDto>();
         }

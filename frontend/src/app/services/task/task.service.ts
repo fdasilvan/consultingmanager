@@ -25,6 +25,11 @@ export class TaskService {
     return response;
   }
 
+  public async anticipateTask(taskId: string) {
+    let response = await this.http.post<any>(`${environment.apiUrl}/task/${taskId}/anticipate`, null).toPromise();
+    return response;
+  }
+
   public async rescheduleTask(taskId: string, newDate: Date) {
     let response = await this.http.post<any>(`${environment.apiUrl}/task/${taskId}/reschedule/${newDate}`, null).toPromise();
     return response;
