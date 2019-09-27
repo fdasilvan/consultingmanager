@@ -1,7 +1,7 @@
-﻿using System;
+﻿using ConsultingManager.Dto;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ConsultingManager.Dto;
 
 namespace ConsultingManager.Domain.Repository
 {
@@ -14,5 +14,6 @@ namespace ConsultingManager.Domain.Repository
         Task<ModelStepDto> DisableModelStep(Guid modelStepId);
         Task<CustomerProcessDto> StartCustomerProcess(ModelProcessDto modelProcessDto, Guid customerId, Guid consultantId, Guid customerUserId, DateTime startDate, string detail, Guid? customerMeetingId);
         Task<List<CustomerProcessDto>> GetCustomerTasks(Guid customerId);
+        Task<bool> FinishStep(Guid customerStepId);
     }
 }

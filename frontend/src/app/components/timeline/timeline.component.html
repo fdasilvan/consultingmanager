@@ -15,11 +15,11 @@
     <div *ngIf="this.loggedUser.userType.description != 'Cliente'" class="mt-4 mb-4">
       <button *ngIf="this.loggedUser.userType.description == 'Implantador'" class="btn btn-warning margin mr-1"
         (click)="openModal(content)" type="button"><span class="fa fa-plus"></span> Ação</button>
-      <button *ngIf="this.loggedUser.userType.description != 'Implantador'" class="btn btn-warning margin mr-1" (click)="customerMeetings()" type="button"><span
-          class="fa fa-users"></span>
+      <button *ngIf="this.loggedUser.userType.description != 'Implantador'" class="btn btn-warning margin mr-1"
+        (click)="customerMeetings()" type="button"><span class="fa fa-users"></span>
         Encontros</button>
-      <button *ngIf="this.loggedUser.userType.description != 'Implantador'" class="btn btn-warning margin mr-1" (click)="customerFlightplan()" type="button"><span
-          class="fa fa-plane"></span>
+      <button *ngIf="this.loggedUser.userType.description != 'Implantador'" class="btn btn-warning margin mr-1"
+        (click)="customerFlightplan()" type="button"><span class="fa fa-plane"></span>
         Plano de Vôo</button>
       <button class="btn btn-warning margin mr-1" (click)="openModal(contentTransfer)" type="button"><span
           class="fa fa-share"></span>
@@ -55,6 +55,8 @@
               <h4>{{step.description}} - {{step.startDate | date: 'dd/MM/yyyy'}} a
                 {{step.estimatedEndDate | date: 'dd/MM/yyyy'}}</h4>
               <h6 class="text-muted">Cód. Etapa: {{step.id}}</h6>
+              <button class="btn btn-success margin mr-1" (click)="finishStep(step.id, $event)" type="button"><span
+                  class="fa fa-check"></span> Finalizar etapa</button>
             </div>
             <div class="card-block">
               <div class="table-responsive">
@@ -68,6 +70,7 @@
                       <th scope="col">Duração</th>
                       <th scope="col">Responsável</th>
                       <th scope="col">Tarefa</th>
+                      <th scope="col">Finalizar</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -86,6 +89,10 @@
                         <h4><a href="javascript:void(0)"
                             (click)="updateSelectedTask(this.task, $event)">{{task.description}}</a>
                         </h4>
+                      </td>
+                      <td>
+                        <button *ngIf="task.endDate == null" class="btn btn-success margin mr-1"
+                          (click)="finishTask(task.id, $event)" type="button"><span class="fa fa-check"></span></button>
                       </td>
                     </tr>
                   </tbody>

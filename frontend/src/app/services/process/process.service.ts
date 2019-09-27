@@ -64,4 +64,9 @@ export class ProcessService {
     var response = await this.http.get<CustomerProcess[]>(`${environment.apiUrl}/process/customer/${customerId}`);
     return response.toPromise();
   }
+
+  public async finishStep(customerStepId: string) {
+    let response = await this.http.post<any>(`${environment.apiUrl}/process/step/${customerStepId}/finish`, null).toPromise();
+    return response;
+  }
 }

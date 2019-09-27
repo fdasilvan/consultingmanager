@@ -115,7 +115,7 @@ namespace ConsultingManager.Domain.Repository
 
             if (task.Customer.Consultant.Id != task.OwnerId && task.EndDate.HasValue && task.TaskTypeId == Const.TaskTypes.Consultant)
             {
-                string toName = task.Consultant.Name;
+                string toName = task.Customer.Consultant.Name;
                 string toEmailAddress = task.Customer.Consultant.Email;
                 string carbonCopyAddress = task.Owner.Email;
 

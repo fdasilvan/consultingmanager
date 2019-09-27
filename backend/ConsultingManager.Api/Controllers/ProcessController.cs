@@ -107,5 +107,18 @@ namespace ConsultingManager.Api.Controllers
                 return BadRequest("Erro ao buscar atividades do cliente.");
             }
         }
+
+        [HttpPost("step/{customerStepId}/finish")]
+        public async Task<IActionResult> FinishStep(Guid customerStepId)
+        {
+            try
+            {
+                return Ok(await _processRepository.FinishStep(customerStepId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao finalizar etapa.");
+            }
+        }
     }
 }

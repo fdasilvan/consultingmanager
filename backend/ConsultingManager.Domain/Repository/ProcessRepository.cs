@@ -357,5 +357,23 @@ namespace ConsultingManager.Domain.Repository
 
             return processesList;
         }
+
+        public async Task<bool> FinishStep(Guid customerStepId)
+        {
+            var customerTasks = await Context.CustomerTasks
+                .Where(o => o.CustomerStepId == customerStepId)
+                .ToListAsync();
+
+            DateTime now = DateTime.Now;
+
+            foreach (CustomerTaskPoco customerTask in customerTasks)
+            {
+                customerTask.EndDate = now;
+                Context.CustomerTasks.Update(customerTask);
+            }
+
+            await Context.SaveChangesAsync();
+            return true;
+        }
     }
 }

@@ -9,6 +9,7 @@ import { UserService } from 'src/app/services/user/user.service';
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModelProcess } from 'src/app/models/modelprocess.model';
 import { CustomersService } from 'src/app/services/customers/customers.service';
+import { TaskService } from 'src/app/services/task/task.service';
 
 @Component({
   selector: 'app-timeline',
@@ -20,6 +21,7 @@ export class TimelineComponent implements OnInit {
   public loggedUser: User;
   constructor(private processService: ProcessService,
     private customerService: CustomersService,
+    private taskService: TaskService,
     private userService: UserService,
     private modalService: NgbModal,
     private route: ActivatedRoute,
@@ -96,6 +98,38 @@ export class TimelineComponent implements OnInit {
     if (result) {
       await this.processService.delete(customerProcessId);
       this.loadCustomerProcesses(this.customer);
+    }
+  }
+
+  async finishTask(taskId: string, event: Event) {
+    window.sessionStorage.setItem('timeline_scroll', window.pageYOffset.toString());
+    event.preventDefault();
+    let result = confirm('Tem certeza que deseja finalizar a tarefa?');
+
+    if (result) {
+      await this.taskService.finishTask(taskId);
+      await this.loadCustomerProcesses(this.customer);
+
+      let scrollY = window.sessionStorage.getItem('timeline_scroll');
+      if (scrollY && scrollY != 'null') {
+        window.scrollTo(0, parseInt(scrollY));
+      }
+    }
+  }
+
+  async finishStep(stepId: string, event: Event) {
+    window.sessionStorage.setItem('timeline_scroll', window.pageYOffset.toString());
+    event.preventDefault();
+    let result = confirm('Tem certeza que deseja finalizar as tarefas desta etapa?');
+    
+    if (result) {
+      await this.processService.finishStep(stepId);
+      await this.loadCustomerProcesses(this.customer);
+
+      let scrollY = window.sessionStorage.getItem('timeline_scroll');
+      if (scrollY && scrollY != 'null') {
+        window.scrollTo(0, parseInt(scrollY));
+      }
     }
   }
 
