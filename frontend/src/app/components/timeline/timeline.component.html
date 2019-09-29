@@ -6,10 +6,17 @@
       <h2 class="mb-2">{{customer.name}}</h2>
       <p *ngIf="customer.customerLevel" class="text-muted">Nível de Cliente: {{customer.customerLevel.description}}</p>
       <p *ngIf="customer.consultant" class="text-muted">Consultor Responsável: {{customer.consultant.name}}</p>
-      <p class="text-muted" *ngFor="let user of this.customer.users">Cliente: {{user.name}} - {{user.email}}</p>
       <p class="text-muted">Telefone: {{(customer.phone && customer.phone != '' ? customer.phone : 'Não informado')}}
       </p>
       <a href="https://{{customer.storeUrl}}" target="_blank">https://{{customer.storeUrl}}</a>
+
+      <div class="mt-4">
+        <h3>Contatos do Cliente</h3>
+        <div *ngFor="let user of this.customer.users">
+          <p class="text-muted">Nome: {{user.name}}</p>
+          <p class="text-muted">E-mail: {{user.email}}</p>
+        </div>
+      </div>
     </div>
 
     <div *ngIf="this.loggedUser.userType.description != 'Cliente'" class="mt-4 mb-4">

@@ -21,5 +21,7 @@ namespace ConsultingManager.Domain.Repository
         Task<List<PlanDto>> GetPlans();
         Task<List<PlatformDto>> GetPlatforms();
         Task<List<UserDto>> GetConsultants();
+        Task<List<TeamDto>> GetTeams();
+        Task<PlatformDto> AddPlatform(PlatformDto platformDto);
     }
 }

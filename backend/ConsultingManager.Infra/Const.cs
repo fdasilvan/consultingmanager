@@ -85,6 +85,25 @@ namespace ConsultingManager.Infra
             }
         }
 
+        public static class Teams
+        {
+            public static Guid Implantation
+            {
+                get
+                {
+                    return Guid.Parse("7F186FCA-EEB3-48D8-A0F0-7387545EB60D");
+                }
+            }
+
+            public static Guid Consulting
+            {
+                get
+                {
+                    return Guid.Parse("EEDCAAC4-6DB4-4BB1-B102-5493D0116183");
+                }
+            }
+        }
+
         public static class CustomerSituations
         {
             public static Guid Active
@@ -116,6 +135,14 @@ namespace ConsultingManager.Infra
                 get
                 {
                     return Guid.Parse("EB71C684-A336-4985-A50F-923B3F439387");
+                }
+            }
+
+            public static Guid ContractCompleted
+            {
+                get
+                {
+                    return Guid.Parse("241B42EA-05C7-4E7F-81B0-758A688E1A56");
                 }
             }
         }

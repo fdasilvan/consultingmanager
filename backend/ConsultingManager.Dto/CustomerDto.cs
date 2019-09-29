@@ -7,6 +7,8 @@ namespace ConsultingManager.Dto
     {
         public Guid Id { get; set; }
         public DateTime CreatedDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public string ExternalId { get; set; }
         public string Name { get; set; }
         public string LogoUrl { get; set; }
         public string StoreUrl { get; set; }
@@ -15,6 +17,7 @@ namespace ConsultingManager.Dto
         public string CustomerFolderUrl { get; set; }
         public string StoreAnalysisUrl { get; set; }
         public string MeetingsDescription { get; set; }
+        public string Subcategory { get; set; }
 
         public Guid? ConsultantId { get; set; }
         public UserDto Consultant { get; set; }
@@ -36,6 +39,9 @@ namespace ConsultingManager.Dto
 
         public Guid CustomerLevelId { get; set; }
         public CustomerLevelDto CustomerLevel { get; set; }
+
+        public Guid TeamId { get; set; }
+        public TeamDto Team { get; set; }
 
         public ICollection<UserDto> Users { get; set; }
     }

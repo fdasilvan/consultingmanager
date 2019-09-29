@@ -12,6 +12,7 @@ import { CustomerSituation } from 'src/app/models/customersituation.model';
 import { User } from 'src/app/models/user.model';
 import { CustomerMeeting } from 'src/app/models/customermeeting.model';
 import { CustomerLevel } from 'src/app/models/customerlevel.model';
+import { Team } from 'src/app/models/team.model';
 
 @Injectable({
   providedIn: 'root'
@@ -93,5 +94,15 @@ export class CustomersService {
   public async getConsultants(): Promise<User[]> {
     var response = await this.http.get<User[]>(`${environment.apiUrl}/customer/consultants`);
     return response.toPromise();
+  }
+
+  public async getTeams(): Promise<Team[]> {
+    var response = await this.http.get<Team[]>(`${environment.apiUrl}/customer/teams`);
+    return response.toPromise();
+  }
+
+  public async addPlatform(platformDto: Platform): Promise<Platform> {
+    let response = await this.http.post<Platform>(`${environment.apiUrl}/customer/platform`, platformDto).toPromise();
+    return response;
   }
 }

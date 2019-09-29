@@ -34,6 +34,7 @@ namespace ConsultingManager.Infra.Database
         public DbSet<CityPoco> Cities { get; set; }
         public DbSet<CustomerSituationPoco> CustomerSituations { get; set; }
         public DbSet<CommentPoco> Comments { get; set; }
+        public DbSet<TeamPoco> Teams { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -83,6 +84,14 @@ namespace ConsultingManager.Infra.Database
             modelBuilder.Entity<CustomerSituationPoco>().HasData(new CustomerSituationPoco() { Id = Const.CustomerSituations.Paused, Description = "Pausado" });
             modelBuilder.Entity<CustomerSituationPoco>().HasData(new CustomerSituationPoco() { Id = Const.CustomerSituations.Blocked, Description = "Bloqueado" });
             modelBuilder.Entity<CustomerSituationPoco>().HasData(new CustomerSituationPoco() { Id = Const.CustomerSituations.Canceled, Description = "Cancelado" });
+            modelBuilder.Entity<CustomerSituationPoco>().HasData(new CustomerSituationPoco() { Id = Const.CustomerSituations.ContractCompleted, Description = "Contrato Concluído" });
+
+            #endregion
+
+            #region Equipes
+
+            modelBuilder.Entity<TeamPoco>().HasData(new TeamPoco() { Id = Const.Teams.Implantation, Description = "Implantação" });
+            modelBuilder.Entity<TeamPoco>().HasData(new TeamPoco() { Id = Const.Teams.Consulting, Description = "Consultoria" });
 
             #endregion
 

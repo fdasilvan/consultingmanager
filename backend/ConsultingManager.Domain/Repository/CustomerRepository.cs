@@ -33,6 +33,7 @@ namespace ConsultingManager.Domain.Repository
             if (customer != null)
             {
                 customer.Name = customerDto.Name;
+                customer.ExternalId = customerDto.ExternalId;
                 customer.SituationId = customerDto.SituationId;
                 customer.CustomerLevelId = customerDto.CustomerLevelId;
                 customer.Email = customerDto.Email;
@@ -47,6 +48,8 @@ namespace ConsultingManager.Domain.Repository
                 customer.CustomerFolderUrl = customerDto.CustomerFolderUrl;
                 customer.StoreAnalysisUrl = customerDto.StoreAnalysisUrl;
                 customer.MeetingsDescription = customerDto.MeetingsDescription;
+                customer.Subcategory = customerDto.Subcategory;
+                customer.TeamId = customerDto.TeamId;
 
                 var updatedCustomer = Context.Customers.Update(customer);
                 await Context.SaveChangesAsync();
@@ -144,6 +147,7 @@ namespace ConsultingManager.Domain.Repository
                 .Include(o => o.Situation)
                 .Include(o => o.Category)
                 .Include(o => o.Users)
+                .Include(o => o.Team)
                 .Include(o => o.Consultant)
                     .ThenInclude(o => o.UserType)
                 .Include(o => o.CustomerLevel)
@@ -223,6 +227,21 @@ namespace ConsultingManager.Domain.Repository
                 .Select(o => o.MapTo<UserDto>())
                 .OrderBy(o => o.Name)
                 .ToListAsync();
+        }
+
+        public async Task<List<TeamDto>> GetTeams()
+        {
+            return await Context.Teams
+                .Select(o => o.MapTo<TeamDto>())
+                .OrderByDescending(o => o.Description)
+                .ToListAsync();
+        }
+
+        public async Task<PlatformDto> AddPlatform(PlatformDto platformDto)
+        {
+            var newCustomer = Context.Platforms.Add(platformDto.MapTo<PlatformPoco>());
+            await Context.SaveChangesAsync();
+            return newCustomer.Entity.MapTo<PlatformDto>();
         }
     }
 }

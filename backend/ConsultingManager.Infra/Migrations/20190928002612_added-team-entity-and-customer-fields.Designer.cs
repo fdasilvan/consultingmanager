@@ -4,14 +4,16 @@ using ConsultingManager.Infra.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConsultingManager.Infra.Migrations
 {
     [DbContext(typeof(ConsultingManagerDbContext))]
-    partial class ConsultingManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190928002612_added-team-entity-and-customer-fields")]
+    partial class addedteamentityandcustomerfields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -156,8 +158,6 @@ namespace ConsultingManager.Infra.Migrations
 
                     b.Property<string>("Subcategory");
 
-                    b.Property<Guid?>("TeamId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -173,8 +173,6 @@ namespace ConsultingManager.Infra.Migrations
                     b.HasIndex("PlatformId");
 
                     b.HasIndex("SituationId");
-
-                    b.HasIndex("TeamId");
 
                     b.ToTable("Customers");
                 });
@@ -628,11 +626,6 @@ namespace ConsultingManager.Infra.Migrations
                     b.HasOne("ConsultingManager.Infra.Database.Models.CustomerSituationPoco", "Situation")
                         .WithMany()
                         .HasForeignKey("SituationId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ConsultingManager.Infra.Database.Models.TeamPoco", "Team")
-                        .WithMany()
-                        .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

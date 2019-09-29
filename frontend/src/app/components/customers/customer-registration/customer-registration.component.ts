@@ -11,6 +11,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user/user.service';
 import { CustomerLevel } from 'src/app/models/customerlevel.model';
 import { NgxMaskModule } from 'ngx-mask';
+import { Team } from 'src/app/models/team.model';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [NgxMaskModule.forChild()]
@@ -26,8 +28,10 @@ export class CustomerRegistrationComponent implements OnInit {
   constructor(private customersService: CustomersService,
     private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private modalService: NgbModal) { }
 
+  public modalObject: NgbModalRef;
   public customer: Customer;
   public isEdit: boolean = false;
   public citiesList: City[] = [];
@@ -35,6 +39,7 @@ export class CustomerRegistrationComponent implements OnInit {
   public categoriesList: CustomerCategory[] = [];
   public plansList: Plan[] = [];
   public situationsList: CustomerSituation[] = [];
+  public teamsList: Team[] = [];
   public consultantsList: User[] = [];
   public customerLevelsList: CustomerLevel[] = [];
   public selectedPlan: Plan;
@@ -60,6 +65,10 @@ export class CustomerRegistrationComponent implements OnInit {
     }
   }
 
+  openModal(content) {
+    this.modalObject = this.modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' });
+  }
+
   goBack() {
     window.history.back();
   }
@@ -72,6 +81,7 @@ export class CustomerRegistrationComponent implements OnInit {
     this.situationsList = await this.customersService.getSituations();
     this.consultantsList = await this.customersService.getConsultants();
     this.customerLevelsList = await this.customersService.getCustomerLevels();
+    this.teamsList = await this.customersService.getTeams();
   }
 
   onPlanChanged(planId: string, txtMeetingsDescription: any) {
@@ -83,13 +93,34 @@ export class CustomerRegistrationComponent implements OnInit {
     }
   }
 
-  async SaveCustomer(name: string, situationId: any, customerLevelId: any, email: string, phone: string, logoUrl: string,
-    storeUrl: string, storeAnalysisUrl: string, cityId: string, platformId: string, categoryId: string, customerFolderUrl: string, meetingsDescription: string, planId: string, consultantId: string,
-    txtUserName: any, txtUserEmail: any, redirectToTimeline: boolean) {
+  async addPlatform(platformName: string) {
+
+    if (platformName == '') {
+      alert('O nome da plataforme deve ser informado');
+      return;
+    }
+
+    let platform = new Platform();
+    platform.name = platformName;
+
+    await this.customersService.addPlatform(platform);
+    this.platformsList = await this.customersService.getPlatforms();
+    this.modalObject.close();
+  }
+
+  async SaveCustomer(name: string, externalId: string, situationId: any, customerLevelId: any, email: string, phone: string, logoUrl: string,
+    storeUrl: string, storeAnalysisUrl: string, cityId: string, platformId: string, categoryId: string, subcategory: string, customerFolderUrl: string,
+    meetingsDescription: string, planId: string, teamId: string, consultantId: string, txtUserName: any, txtUserEmail: any, redirectToTimeline: boolean) {
+
     let customerDto: Customer = new Customer();
 
     if (name == '') {
       alert('Nome obrigatório!');
+      return;
+    }
+
+    if (externalId == '') {
+      alert('Código do contrato obrigatório!');
       return;
     }
 
@@ -125,6 +156,11 @@ export class CustomerRegistrationComponent implements OnInit {
       return;
     }
 
+    if (teamId == '') {
+      alert('Equipe obrigatória!');
+      return;
+    }
+
     if (consultantId == '') {
       alert('Consultor responsável obrigatório!');
       return;
@@ -142,6 +178,7 @@ export class CustomerRegistrationComponent implements OnInit {
 
     customerDto.id = (this.customer ? this.customer.id : undefined);
     customerDto.name = name;
+    customerDto.externalId = externalId;
     customerDto.situationId = situationId;
     customerDto.customerLevelId = customerLevelId;
     customerDto.email = email;
@@ -155,7 +192,9 @@ export class CustomerRegistrationComponent implements OnInit {
     customerDto.customerFolderUrl = customerFolderUrl;
     customerDto.meetingsDescription = meetingsDescription;
     customerDto.planId = planId;
+    customerDto.teamId = teamId;
     customerDto.consultantId = consultantId;
+    customerDto.subcategory = subcategory;
 
     this.customersService.saveCustomer(customerDto)
       .then(newCustomer => {

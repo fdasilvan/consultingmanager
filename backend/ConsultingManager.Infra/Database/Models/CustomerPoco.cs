@@ -9,6 +9,7 @@ namespace ConsultingManager.Infra.Database.Models
         public Guid Id { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime StartDate { get; set; }
+        public string ExternalId { get; set; }
         public string Name { get; set; }
         public string LogoUrl { get; set; }
         public string StoreUrl { get; set; }
@@ -17,7 +18,7 @@ namespace ConsultingManager.Infra.Database.Models
         public string CustomerFolderUrl { get; set; }
         public string StoreAnalysisUrl { get; set; }
         public string MeetingsDescription { get; set; }
-
+        public string Subcategory { get; set; }
 
         public Guid? ConsultantId { get; set; }
         [ForeignKey(nameof(ConsultantId))]
@@ -46,6 +47,10 @@ namespace ConsultingManager.Infra.Database.Models
         public Guid? CustomerLevelId { get; set; }
         [ForeignKey(nameof(CustomerLevelId))]
         public CustomerLevelPoco CustomerLevel { get; set; }
+
+        public Guid? TeamId { get; set; }
+        [ForeignKey(nameof(TeamId))]
+        public TeamPoco Team { get; set; }
 
         public virtual ICollection<CustomerProcessPoco> CustomerProcesses { get; set; }
         public virtual ICollection<CustomerMeetingPoco> CustomerMeetings { get; set; }

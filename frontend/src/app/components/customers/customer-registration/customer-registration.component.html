@@ -15,6 +15,13 @@
             </div>
           </div>
           <div class="form-group row">
+            <label class="col-md-3 col-form-label">Código do Contrato (obrigatório)</label>
+            <div class="col-md-9">
+              <input #txtExternalId id="txtExternalId" type="text" class="form-control mb-2"
+                value="{{isEdit ? customer.externalId : ''}}">
+            </div>
+          </div>
+          <div class="form-group row">
             <label class="col-md-3 col-form-label">Situação (obrigatório)</label>
             <div class="col-md-9">
               <select #lstSituations id="lstSituations" class="custom-select form-control">
@@ -46,6 +53,18 @@
             <div class="col-md-9">
               <input #txtMeetingsDescription id="txtMeetingsDescription" type="text" name="regular" class="form-control"
                 value="{{this.isEdit ? this.customer.meetingsDescription : (this.selectedPlan ? this.selectedPlan.meetingsDescription : '')}}">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Equipe</label>
+            <div class="col-md-9">
+              <select #lstTeams id="lstTeams" class="custom-select form-control">
+                <option *ngFor="let team of this.teamsList"
+                  [selected]="(this.customer && this.customer.team ? this.customer.team.id == team.id : false)"
+                  value="{{team.id}}">
+                  {{team.description}}
+                </option>
+              </select>
             </div>
           </div>
           <div class="form-group row">
@@ -134,7 +153,7 @@
           <div class="form-group row">
             <label class="col-md-3 col-form-label">Plataforma</label>
             <div class="col-md-9">
-              <select #lstPlatforms id="lstPlatforms" class="custom-select form-control">
+              <select #lstPlatforms id="lstPlatforms" class="custom-select form-control mr-2">
                 <option value="">Não informado</option>
                 <option *ngFor="let platform of this.platformsList"
                   [selected]="(this.customer && this.customer.platform ? this.customer.platform.id == platform.id : false)"
@@ -142,6 +161,8 @@
                   {{platform.name}}
                 </option>
               </select>
+              <button class="btn btn-warning margin mr-1" (click)="openModal(contentAddPlatform)" type="button"><span
+                  class="fa fa-plus"></span></button>
             </div>
           </div>
           <div class="form-group row">
@@ -155,6 +176,13 @@
                   {{category.description}}
                 </option>
               </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Subcategoria</label>
+            <div class="col-md-9">
+              <input #txtSubcategory id="txtSubcategory" type="text" class="form-control mb-2"
+                value="{{isEdit ? customer.subcategory : ''}}">
             </div>
           </div>
           <div class="form-group row">
@@ -182,13 +210,13 @@
         </form>
         <div>
           <button type="button" class="btn btn-lg btn-primary float-right"
-            (click)="SaveCustomer(txtName.value, lstSituations.value, lstCustomerLevels.value, txtEmail.value, txtPhone.value, txtLogoUrl.value,
-              txtStoreUrl.value, txtStoreAnalysis.value, lstCities.value, lstPlatforms.value, lstCategories.value, txtCustomerFolderUrl.value, txtMeetingsDescription.value, lstPlans.value, lstConsultants.value, txtUserName, txtUserEmail, true)">Salvar
-            e Visualizar
-            Cliente</button>
+            (click)="SaveCustomer(txtName.value, txtExternalId.value, lstSituations.value, lstCustomerLevels.value, txtEmail.value, txtPhone.value, txtLogoUrl.value,
+              txtStoreUrl.value, txtStoreAnalysis.value, lstCities.value, lstPlatforms.value, lstCategories.value, txtSubcategory.value, txtCustomerFolderUrl.value, 
+              txtMeetingsDescription.value, lstPlans.value, lstTeams.value, lstConsultants.value, txtUserName, txtUserEmail, true)">Salvar e Visualizar Cliente</button>
           <button type="button" class="btn btn-lg btn-primary float-right ml-1 mr-1"
-            (click)="SaveCustomer(txtName.value, lstSituations.value, lstCustomerLevels.value, txtEmail.value, txtPhone.value, txtLogoUrl.value,
-              txtStoreUrl.value, txtStoreAnalysis.value, lstCities.value, lstPlatforms.value, lstCategories.value, txtCustomerFolderUrl.value, txtMeetingsDescription.value, lstPlans.value, lstConsultants.value, txtUserName, txtUserEmail, false)">Salvar</button>
+            (click)="SaveCustomer(txtName.value, txtExternalId.value, lstSituations.value, lstCustomerLevels.value, txtEmail.value, txtPhone.value, txtLogoUrl.value,
+              txtStoreUrl.value, txtStoreAnalysis.value, lstCities.value, lstPlatforms.value, lstCategories.value, txtSubcategory.value, txtCustomerFolderUrl.value, 
+              txtMeetingsDescription.value, lstPlans.value, lstTeams.value, lstConsultants.value, txtUserName, txtUserEmail, false)">Salvar</button>
           <button class="btn btn-lg btn-outline-primary float-right" (click)="goBack()">
             <span class="fa fa-arrow-left"></span> Voltar
           </button>
@@ -197,3 +225,29 @@
     </div>
   </div>
 </section>
+
+<ng-template #contentAddPlatform let-modalAddPlatform>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Adicionar Plataforma</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalAddPlatform.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-block">
+        <form>
+          <div class="form-group">
+            <label for="txtStartDate">Nome da Plataforma: </label>
+            <div class="input-group">
+              <input #txtPlatformName id="txtPlatformName" class="form-control">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="addPlatform(txtPlatformName.value)">Cadastrar</button>
+  </div>
+</ng-template>

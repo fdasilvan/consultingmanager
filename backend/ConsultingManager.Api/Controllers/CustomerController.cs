@@ -178,5 +178,24 @@ namespace ConsultingManager.Api.Controllers
                 return BadRequest("Erro ao buscar informações.");
             }
         }
+
+        [HttpGet("teams")]
+        public async Task<IActionResult> GetTeams()
+        {
+            try
+            {
+                return Ok(await _customerRepository.GetTeams());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar informações.");
+            }
+        }
+
+        [HttpPost("platform")]
+        public async Task<IActionResult> AddPlatform(PlatformDto platformDto)
+        {
+            return Ok(await _customerRepository.AddPlatform(platformDto));
+        }
     }
 }
