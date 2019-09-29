@@ -108,6 +108,22 @@ export class CustomerRegistrationComponent implements OnInit {
     this.modalObject.close();
   }
 
+  verifyName(txtName, txtStoreUrl) {
+    if (txtName.value != '') {
+      let regexUrl = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
+      let url = txtName.value.match(regexUrl);
+
+      if (url && url != '') {
+        let result = confirm("Você deseja enviar a URL da Loja para o campo correspondente?");
+
+        if (result) {
+          txtName.value = txtName.value.replace(url, '');
+          txtStoreUrl.value = url;
+        }
+      }
+    }
+  }
+
   async SaveCustomer(name: string, externalId: string, situationId: any, customerLevelId: any, email: string, phone: string, logoUrl: string,
     storeUrl: string, storeAnalysisUrl: string, cityId: string, platformId: string, categoryId: string, subcategory: string, customerFolderUrl: string,
     meetingsDescription: string, planId: string, teamId: string, consultantId: string, txtUserName: any, txtUserEmail: any, redirectToTimeline: boolean) {
