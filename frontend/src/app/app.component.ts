@@ -24,9 +24,10 @@ export class AppComponent implements OnInit {
   public loggedUser: User;
   public canRegisterProcesses: boolean = false;
   public canEditProcesses: boolean = false;
+  public canAddConsultants: boolean = false;
 
   ngOnInit() {
-    this.loggedUser = this.userService.getUser();
+    this.loggedUser = this.userService.getLoggedUser();
     if (this.loggedUser) {
       this.router.navigate(['worklist']);
     } else {
@@ -39,5 +40,6 @@ export class AppComponent implements OnInit {
   verifyPermissions() {
     this.canRegisterProcesses = (this.loggedUser.userType.description == 'Administrador' || this.loggedUser.userType.description == 'Líder' || this.loggedUser.userType.description == 'Especialista');
     this.canEditProcesses = (this.loggedUser.userType.description == 'Administrador' || this.loggedUser.userType.description == 'Líder' || this.loggedUser.userType.description == 'Especialista');
+    this.canAddConsultants = (this.loggedUser.userType.description == 'Administrador' || this.loggedUser.userType.description == 'Líder');
   }
 }

@@ -14,6 +14,8 @@ import { ProcessesListComponent } from './components/process/processes-list/proc
 import { ProcessRegistrationComponent } from './components/process/process-registration/process-registration.component';
 import { CustomerMeetingsComponent } from './components/customers/customer-meetings/customer-meetings.component';
 import { FlightplanComponent } from './components/flightplan/flightplan.component';
+import { ConsultantRegistrationComponent } from './components/users/consultant-registration/consultant-registration.component';
+import { ConsultantsListComponent } from './components/users/consultants-list/consultants-list.component';
 
 const routes: Routes = [
   {
@@ -67,6 +69,14 @@ const routes: Routes = [
   {
     path: 'task',
     component: TaskComponent
+  },
+  {
+    path: 'consultants-list',
+    component: ConsultantsListComponent
+  },
+  {
+    path: 'consultant-registration',
+    component: ConsultantRegistrationComponent
   }
 ];
 

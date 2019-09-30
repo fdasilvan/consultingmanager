@@ -76,7 +76,7 @@ export class CustomerRegistrationComponent implements OnInit {
   async loadLists() {
     this.citiesList = await this.customersService.getCities();
     this.platformsList = await this.customersService.getPlatforms();
-    this.categoriesList = await this.customersService.getCategories();
+    this.categoriesList = await this.customersService.getCustomerCategories();
     this.plansList = await this.customersService.getPlans();
     this.situationsList = await this.customersService.getSituations();
     this.consultantsList = await this.customersService.getConsultants();

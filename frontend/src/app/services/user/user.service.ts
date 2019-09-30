@@ -14,7 +14,7 @@ export class UserService {
   private loggedUser: User;
   public userEvent: EventEmitter<User> = new EventEmitter();
 
-  getUser() {
+  getLoggedUser() {
     let user = <User>JSON.parse(localStorage.getItem('user'));
 
     if (user) {
@@ -38,5 +38,15 @@ export class UserService {
   public async getUserMeetings(userId: string): Promise<CustomerMeeting[]> {
     var response = await this.http.get<CustomerMeeting[]>(`${environment.apiUrl}/user/${userId}/meetings`);
     return response.toPromise();
+  }
+
+  public async getUser(userId: string): Promise<User> {
+    var response = await this.http.get<User>(`${environment.apiUrl}/user/${userId}`);
+    return response.toPromise();
+  }
+
+  public async saveConsultant(userDto: User): Promise<User> {
+    let response = this.http.post<User>(`${environment.apiUrl}/user/consultant`, userDto).toPromise();
+    return response;
   }
 }

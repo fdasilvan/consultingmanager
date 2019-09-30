@@ -4,14 +4,16 @@ using ConsultingManager.Infra.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConsultingManager.Infra.Migrations
 {
     [DbContext(typeof(ConsultingManagerDbContext))]
-    partial class ConsultingManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190930003501_added-user-categories-level-relationship")]
+    partial class addedusercategorieslevelrelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -503,7 +505,7 @@ namespace ConsultingManager.Infra.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.UserCustomerCategoryPoco", b =>
+            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.UserCustomerCategory", b =>
                 {
                     b.Property<Guid>("UserId");
 
@@ -513,10 +515,10 @@ namespace ConsultingManager.Infra.Migrations
 
                     b.HasIndex("CustomerCategoryId");
 
-                    b.ToTable("UserCustomerCategories");
+                    b.ToTable("UserCustomerCategory");
                 });
 
-            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.UserCustomerLevelPoco", b =>
+            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.UserCustomerLevel", b =>
                 {
                     b.Property<Guid>("UserId");
 
@@ -526,7 +528,7 @@ namespace ConsultingManager.Infra.Migrations
 
                     b.HasIndex("CustomerLevelId");
 
-                    b.ToTable("UserCustomerLevels");
+                    b.ToTable("UserCustomerLevel");
                 });
 
             modelBuilder.Entity("ConsultingManager.Infra.Database.Models.UserPoco", b =>
@@ -762,7 +764,7 @@ namespace ConsultingManager.Infra.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.UserCustomerCategoryPoco", b =>
+            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.UserCustomerCategory", b =>
                 {
                     b.HasOne("ConsultingManager.Infra.Database.Models.CustomerCategoryPoco", "CustomerCategory")
                         .WithMany("UserCustomerCategories")
@@ -775,7 +777,7 @@ namespace ConsultingManager.Infra.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.UserCustomerLevelPoco", b =>
+            modelBuilder.Entity("ConsultingManager.Infra.Database.Models.UserCustomerLevel", b =>
                 {
                     b.HasOne("ConsultingManager.Infra.Database.Models.CustomerLevelPoco", "CustomerLevel")
                         .WithMany("UserCustomerLevel")

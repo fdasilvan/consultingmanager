@@ -16,7 +16,7 @@ export class CommentsComponent implements OnInit {
   constructor(private router: Router,
     private userService: UserService,
     private commentService: CommentService) {
-    this.loggedUser = this.userService.getUser();
+    this.loggedUser = this.userService.getLoggedUser();
 
     if (!this.loggedUser) {
       this.router.navigate(['login']);

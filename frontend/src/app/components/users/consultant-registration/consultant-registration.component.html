@@ -1,0 +1,65 @@
+<section class="row">
+  <div class="col-12">
+    <div class="card mb-4">
+      <div class="card-header">
+        <h3 class="card-title">Cadastro de Consultor</h3>
+      </div>
+      <div class="card-block">
+        <form class="form">
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Nome (obrigatório)</label>
+            <div class="col-md-9">
+              <input #txtName id="txtName" type="text" class="form-control mb-2"
+                value="{{isEdit ? consultant.name : ''}}">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">E-mail (obrigatório)</label>
+            <div class="col-md-9">
+              <input #txtEmail id="txtEmail" type="text" name="regular" class="form-control"
+                value="{{this.isEdit ? consultant.email : ''}}">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Quantidade de Horas Disponíveis / Mês</label>
+            <div class="col-md-9">
+              <input #txtAvailableHoursMonth id="txtAvailableHoursMonth" type="number" min="1" max="400" name="regular"
+                class="form-control" value="{{this.isEdit ? this.consultant.availableHoursMonth : ''}}">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Endereço da Sala de Conferência</label>
+            <div class="col-md-9">
+              <input #txtConferenceRoomAddress id="txtConferenceRoomAddress" type="text" name="regular"
+                class="form-control" value="{{this.isEdit ? this.consultant.conferenceRoomAddress : ''}}">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Categorias</label>
+            <div class="col-md-9">
+              <app-checkboxgroup (toggle)="onCustomerCategoryChange($event)"
+                [selectedValues]="this.consultant.customerCategories" [options]="customerCategories">
+              </app-checkboxgroup>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Níveis de Cliente</label>
+            <div class="col-md-9">
+              <app-checkboxgroup (toggle)="onCustomerLevelChange($event)"
+                [selectedValues]="this.consultant.customerLevels" [options]="customerLevels">
+              </app-checkboxgroup>
+            </div>
+          </div>
+        </form>
+        <div class="mt-2">
+          <button class="btn btn-lg btn-primary float-right" (click)="saveConsultant()">
+            <span class="fa fa-check"></span> {{ this.isEdit ? 'Atualizar' : 'Salvar' }}
+          </button>
+          <button class="btn btn-lg btn-outline-primary float-right" (click)="goBack()" type="button">
+            <span class="fa fa-arrow-left"></span> Voltar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

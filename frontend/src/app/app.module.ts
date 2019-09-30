@@ -27,6 +27,9 @@ import { CustomerMeetingsComponent } from './components/customers/customer-meeti
 import { FlightplanComponent } from './components/flightplan/flightplan.component';
 import { CommentsComponent } from './components/comments/comments.component';
 import { ProcessViewComponent } from './components/process/process-view/process-view.component';
+import { ConsultantRegistrationComponent } from './components/users/consultant-registration/consultant-registration.component';
+import { ConsultantsListComponent } from './components/users/consultants-list/consultants-list.component';
+import { CheckboxgroupComponent } from './utils/checkboxgroup/checkboxgroup.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,10 @@ import { ProcessViewComponent } from './components/process/process-view/process-
     CustomerMeetingsComponent,
     FlightplanComponent,
     CommentsComponent,
-    ProcessViewComponent
+    ProcessViewComponent,
+    ConsultantRegistrationComponent,
+    ConsultantsListComponent,
+    CheckboxgroupComponent
   ],
   imports: [
     BrowserModule,

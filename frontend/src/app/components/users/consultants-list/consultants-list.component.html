@@ -1,0 +1,36 @@
+<section class="row">
+  <div class="col-sm-12">
+    <div class="col-12 mb-2">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h3 class="card-title">Listagem de Consultores</h3>
+        </div>
+        <div class="card-block">
+          <div class="mb-4">
+            <button class="btn btn-warning margin" (click)="this.selectConsultant(undefined)" type="button"><span
+                class="fa fa-plus"></span>
+              Consultor</button>
+          </div>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Nome</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let consultant of this.consultantsList">
+                  <td>
+                    <h4><a href="javascript:void(0)"
+                        (click)="this.selectConsultant(consultant);">{{consultant.name}}</a>
+                    </h4>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

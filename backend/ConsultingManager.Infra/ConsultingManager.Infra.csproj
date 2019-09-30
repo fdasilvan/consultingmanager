@@ -38,6 +38,9 @@
     <Compile Remove="Migrations\20190909201823_fixed-customer-level-relationship.cs" />
     <Compile Remove="Migrations\20190918205906_test.cs" />
     <Compile Remove="Migrations\20190929191200_added-team-entity.cs" />
+    <Compile Remove="Migrations\20190930001849_added-user-and-customer-categories-relationship.cs" />
+    <Compile Remove="Migrations\20190930002104_added-user-and-customer-categories-relationship.cs" />
+    <Compile Remove="Migrations\20190930051201_fixed-user-customer-level-name.cs" />
   </ItemGroup>
 
   <ItemGroup>

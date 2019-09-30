@@ -1,6 +1,5 @@
 ﻿using ConsultingManager.Domain.Repository;
 using ConsultingManager.Dto;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ namespace Auth.Api.Controllers
         {
             _userRepository = userRepository;
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Add(UserDto userDto)
         {
@@ -51,6 +50,25 @@ namespace Auth.Api.Controllers
             {
                 return BadRequest("Erro ao buscar encontros do usuário: " + userId);
             }
+        }
+
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetUser(Guid userId)
+        {
+            try
+            {
+                return Ok(await _userRepository.GetUser(userId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar encontros do usuário: " + userId);
+            }
+        }
+
+        [HttpPost("consultant")]
+        public async Task<IActionResult> SaveConsultant(UserDto userDto)
+        {
+            return Ok(await _userRepository.SaveConsultant(userDto));
         }
     }
 }

@@ -31,7 +31,7 @@ export class CustomersListComponent implements OnInit {
   public filterConsultant: boolean = false;
 
   async ngOnInit() {
-    this.loggedUser = this.userService.getUser();
+    this.loggedUser = this.userService.getLoggedUser();
 
     if (!this.loggedUser) {
       this.router.navigate(['login']);

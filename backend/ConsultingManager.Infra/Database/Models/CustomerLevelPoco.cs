@@ -12,5 +12,7 @@ namespace ConsultingManager.Infra.Database.Models
         public string Description { get; set; }
         public decimal RevenueLowLimit { get; set; }
         public decimal RevenueHighLimit { get; set; }
+
+        public virtual ICollection<UserCustomerLevelPoco> UserCustomerLevel { get; set; }
     }
 }

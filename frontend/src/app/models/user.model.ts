@@ -1,5 +1,7 @@
 import { UserType } from './usertype.model';
 import { Customer } from './customer.model';
+import { CustomerCategory } from './customercategory.model';
+import { CustomerLevel } from './customerlevel.model';
 
 export class User {
   id: string;
@@ -10,7 +12,11 @@ export class User {
   userType: UserType;
   customerId: string;
   conferenceRoomAddress: string;
+  availableHoursMonth: number;
   customer: Customer;
+
+  customerCategories: CustomerCategory[] = [];
+  customerLevels: CustomerLevel[] = [];
 
   constructor() {
   }

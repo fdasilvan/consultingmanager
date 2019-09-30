@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ConsultingManager.Infra.Database.Models
@@ -10,6 +11,7 @@ namespace ConsultingManager.Infra.Database.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public string ConferenceRoomAddress { get; set; }
+        public int? AvailableHoursMonth { get; set; }
 
         public Guid UserTypeId { get; set; }
         [ForeignKey(nameof(UserTypeId))]
@@ -18,5 +20,8 @@ namespace ConsultingManager.Infra.Database.Models
         public Guid? CustomerId { get; set; }
         [ForeignKey(nameof(CustomerId))]
         public CustomerPoco Customer { get; set; }
+
+        public virtual ICollection<UserCustomerCategoryPoco> UserCustomerCategories { get; set; }
+        public virtual ICollection<UserCustomerLevelPoco> UserCustomerLevels { get; set; }
     }
 }

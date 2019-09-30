@@ -20,9 +20,11 @@
           routerLinkActive="active">
           <a routerLink="/dashboard" class="nav-link"><em class="fa fa-bar-chart"></em> Dashboard</a>
         </li>
-        <li class="nav-item" *ngIf="this.canEditProcesses"
-          routerLinkActive="active">
+        <li class="nav-item" *ngIf="this.canEditProcesses" routerLinkActive="active">
           <a routerLink="/processes" class="nav-link"><em class="fa fa-list-alt"></em> Cad. de Ações</a>
+        </li>
+        <li class="nav-item" *ngIf="this.canAddConsultants" routerLinkActive="active">
+          <a routerLink="/consultants-list" class="nav-link"><em class="fa fa-list-alt"></em> Cad. de Consultores</a>
         </li>
       </ul>
       <a routerLink="/logout" class="logout-button"><em class="fa fa-power-off"></em> Logout</a>
@@ -30,21 +32,21 @@
   </div>
 </div>
 <main class="col-xs-12 col-sm-8 col-lg-9 col-xl-10 pt-3 pl-4 ml-auto">
-    <header *ngIf="loggedUser" class="page-header row justify-center">
-        <div class="col-md-6 col-lg-8">
-          <h1 class="float-left text-center text-md-left"></h1>
+  <header *ngIf="loggedUser" class="page-header row justify-center">
+    <div class="col-md-6 col-lg-8">
+      <h1 class="float-left text-center text-md-left"></h1>
+    </div>
+    <div class="dropdown user-dropdown col-md-6 col-lg-4 text-center text-md-right"><a class="btn btn-stripped"
+        aria-haspopup="true" aria-expanded="false">
+        <img src="/assets/images/user-icon.jpg" alt="profile photo" class="circle float-left profile-photo" width="50"
+          height="auto">
+        <div class="username mt-1">
+          <h4 class="mb-1">{{loggedUser.name}}</h4>
+          <h6 class="text-muted">{{loggedUser.userType.description}}</h6>
         </div>
-        <div class="dropdown user-dropdown col-md-6 col-lg-4 text-center text-md-right"><a class="btn btn-stripped"
-            aria-haspopup="true" aria-expanded="false">
-            <img src="/assets/images/user-icon.jpg" alt="profile photo" class="circle float-left profile-photo" width="50"
-              height="auto">
-            <div class="username mt-1">
-              <h4 class="mb-1">{{loggedUser.name}}</h4>
-              <h6 class="text-muted">{{loggedUser.userType.description}}</h6>
-            </div>
-          </a>
-        </div>
-        <div class="clear"></div>
-      </header>
+      </a>
+    </div>
+    <div class="clear"></div>
+  </header>
   <router-outlet></router-outlet>
 </main>

@@ -28,7 +28,7 @@ export class ProcessViewComponent implements OnInit {
   }
 
   validateUser() {
-    this.loggedUser = this.userService.getUser();
+    this.loggedUser = this.userService.getLoggedUser();
 
     if (!this.loggedUser) {
       this.router.navigate(['login']);

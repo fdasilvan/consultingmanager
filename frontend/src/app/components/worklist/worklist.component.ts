@@ -30,7 +30,7 @@ export class WorklistComponent implements OnInit {
   public today: Date = new Date();
 
   ngOnInit() {
-    this.loggedUser = this.userService.getUser();
+    this.loggedUser = this.userService.getLoggedUser();
     this.isCustomer = this.loggedUser.userType.description == 'Cliente';
 
     if (!this.loggedUser) {

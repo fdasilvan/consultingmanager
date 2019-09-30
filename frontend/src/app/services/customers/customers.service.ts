@@ -71,7 +71,7 @@ export class CustomersService {
     return response.toPromise();
   }
 
-  public async getCategories(): Promise<CustomerCategory[]> {
+  public async getCustomerCategories(): Promise<CustomerCategory[]> {
     var response = await this.http.get<CustomerCategory[]>(`${environment.apiUrl}/customer/categories`);
     return response.toPromise();
   }

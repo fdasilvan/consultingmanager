@@ -52,5 +52,65 @@ namespace ConsultingManager.Domain.Repository
 
             return meetings;
         }
+
+        public async Task<UserDto> GetUser(Guid userId)
+        {
+            var user = await Context.Users
+                .Include(o => o.UserCustomerCategories)
+                .Include(o => o.UserCustomerLevels)
+                .Include(o => o.UserType)
+                .Where(o => o.Id == userId)
+                .FirstOrDefaultAsync();
+
+            return user.MapTo<UserDto>();
+        }
+
+        public async Task<bool> SaveConsultant(UserDto userDto)
+        {
+            var consultantToEdit = await Context.Users
+                .Include(o => o.UserCustomerCategories)
+                .Include(o => o.UserCustomerLevels)
+                .SingleOrDefaultAsync(o => o.Id == userDto.Id);
+
+            if (consultantToEdit == null)
+            {
+                return false;
+            }
+            else
+            {
+                consultantToEdit = userDto.MapTo<UserPoco>();
+
+                foreach (UserCustomerCategoryPoco userCustomerCategoryPoco in consultantToEdit.UserCustomerCategories)
+                {
+                    Context.UserCustomerCategories.Remove(userCustomerCategoryPoco);
+                }
+
+                foreach (UserCustomerLevelPoco userCustomerLevelPoco in consultantToEdit.UserCustomerLevels)
+                {
+                    Context.UserCustomerLevels.Remove(userCustomerLevelPoco);
+                }
+
+                Context.SaveChanges();
+
+                foreach (CustomerCategoryDto customerCategoryDto in userDto.CustomerCategories)
+                {
+                    UserCustomerCategoryPoco userCustomerCategory = new UserCustomerCategoryPoco();
+                    userCustomerCategory.UserId = userDto.Id;
+                    userCustomerCategory.CustomerCategoryId = customerCategoryDto.Id;
+                    Context.UserCustomerCategories.Add(userCustomerCategory);
+                }
+                
+                foreach (CustomerLevelDto customerLevelDto in userDto.CustomerLevels)
+                {
+                    UserCustomerLevelPoco userCustomerLevel = new UserCustomerLevelPoco();
+                    userCustomerLevel.UserId = userDto.Id;
+                    userCustomerLevel.CustomerLevelId = customerLevelDto.Id;
+                    Context.UserCustomerLevels.Add(userCustomerLevel);
+                }
+                
+                await Context.SaveChangesAsync();
+                return true;
+            }
+        }
     }
 }

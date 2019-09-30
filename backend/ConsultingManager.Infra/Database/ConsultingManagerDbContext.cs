@@ -26,7 +26,7 @@ namespace ConsultingManager.Infra.Database
         public DbSet<ModelTaskPoco> ModelTasks { get; set; }
         public DbSet<PlatformPoco> Platforms { get; set; }
         public DbSet<TaskContentPoco> TaskContent { get; set; }
-        public DbSet<TaskTypePoco> TaskTypes { get; set; }        
+        public DbSet<TaskTypePoco> TaskTypes { get; set; }
         public DbSet<UserPoco> Users { get; set; }
         public DbSet<UserTypePoco> UserTypes { get; set; }
         public DbSet<PlanPoco> Plans { get; set; }
@@ -35,6 +35,8 @@ namespace ConsultingManager.Infra.Database
         public DbSet<CustomerSituationPoco> CustomerSituations { get; set; }
         public DbSet<CommentPoco> Comments { get; set; }
         public DbSet<TeamPoco> Teams { get; set; }
+        public DbSet<UserCustomerCategoryPoco> UserCustomerCategories { get; set; }
+        public DbSet<UserCustomerLevelPoco> UserCustomerLevels { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -180,6 +182,40 @@ namespace ConsultingManager.Infra.Database
             modelBuilder.Entity<CustomerPoco>()
                 .HasMany(c => c.Comments)
                 .WithOne(e => e.Customer);
+
+            #endregion
+
+            #region User x Customer Categories n-to-n relationship
+
+            modelBuilder.Entity<UserCustomerCategoryPoco>()
+                .HasKey(bc => new { bc.UserId, bc.CustomerCategoryId });
+
+            modelBuilder.Entity<UserCustomerCategoryPoco>()
+                .HasOne(bc => bc.User)
+                .WithMany(b => b.UserCustomerCategories)
+                .HasForeignKey(bc => bc.UserId);
+
+            modelBuilder.Entity<UserCustomerCategoryPoco>()
+                .HasOne(bc => bc.CustomerCategory)
+                .WithMany(c => c.UserCustomerCategories)
+                .HasForeignKey(bc => bc.CustomerCategoryId);
+
+            #endregion
+
+            #region User x Customer Level n-to-n relationship
+
+            modelBuilder.Entity<UserCustomerLevelPoco>()
+                .HasKey(bc => new { bc.UserId, bc.CustomerLevelId });
+
+            modelBuilder.Entity<UserCustomerLevelPoco>()
+                .HasOne(bc => bc.User)
+                .WithMany(b => b.UserCustomerLevels)
+                .HasForeignKey(bc => bc.UserId);
+
+            modelBuilder.Entity<UserCustomerLevelPoco>()
+                .HasOne(bc => bc.CustomerLevel)
+                .WithMany(c => c.UserCustomerLevel)
+                .HasForeignKey(bc => bc.CustomerLevelId);
 
             #endregion
 

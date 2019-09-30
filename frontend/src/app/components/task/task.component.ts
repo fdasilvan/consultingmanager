@@ -22,7 +22,7 @@ export class TaskComponent implements OnInit {
     private modalService: NgbModal,
     private router: Router) {
 
-    this.loggedUser = this.userService.getUser();
+    this.loggedUser = this.userService.getLoggedUser();
 
     if (!this.loggedUser) {
       this.router.navigate(['login']);

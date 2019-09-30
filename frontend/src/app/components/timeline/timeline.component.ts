@@ -27,7 +27,7 @@ export class TimelineComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router) {
 
-    this.loggedUser = this.userService.getUser();
+    this.loggedUser = this.userService.getLoggedUser();
 
     if (!this.loggedUser) {
       this.router.navigate(['login']);
