@@ -20,8 +20,8 @@
     </div>
 
     <div *ngIf="this.loggedUser.userType.description != 'Cliente'" class="mt-4 mb-4">
-      <button *ngIf="this.canAddTaskWithoutMeeting" class="btn btn-warning margin mr-1"
-        (click)="openModal(content)" type="button"><span class="fa fa-plus"></span> Ação</button>
+      <button *ngIf="this.canAddTaskWithoutMeeting" class="btn btn-warning margin mr-1" (click)="openModal(content)"
+        type="button"><span class="fa fa-plus"></span> Ação</button>
       <button *ngIf="this.loggedUser.userType.description != 'Implantador'" class="btn btn-warning margin mr-1"
         (click)="customerMeetings()" type="button"><span class="fa fa-users"></span>
         Encontros</button>
@@ -49,12 +49,14 @@
           {{(process.detail != null && process.detail != ''  ? process.detail + ' - ' : '')}}
           {{process.startDate | date: 'dd/MM/yyyy'}} a
           {{process.estimatedEndDate | date: 'dd/MM/yyyy'}}</h5>
-
+        <h6 class="text-muted">Cód. Ação: {{process.id}}</h6>
         <div class="col-lg-12">
-          <h6 class="text-muted">Cód. Ação: {{process.id}}</h6>
-          <div *ngIf="this.canDeleteProcess">
-            <button class="btn btn-danger margin mr-1 mt-2" (click)="deleteProcess(process.id)" type="button"><span
-                class="fa fa-trash"></span>
+          <div class="row mt-2">
+            <button class="btn btn-warning margin mr-1"
+              (click)="openRescheduleProcessModal(contentRescheduleProcess, process.id)" type="button"><span
+                class="fa fa-clock-o"></span> Replanejar ação</button>
+            <button *ngIf="this.canDeleteProcess" class="btn btn-danger margin mr-1" (click)="deleteProcess(process.id)"
+              type="button"><span class="fa fa-trash"></span>
               Remover</button>
           </div>
           <div class="card mt-4" *ngFor="let step of process.customerSteps | orderBy: 'startDate'">
@@ -62,8 +64,11 @@
               <h4>{{step.description}} - {{step.startDate | date: 'dd/MM/yyyy'}} a
                 {{step.estimatedEndDate | date: 'dd/MM/yyyy'}}</h4>
               <h6 class="text-muted">Cód. Etapa: {{step.id}}</h6>
-              <button class="btn btn-success margin mr-1" (click)="finishStep(step.id, $event)" type="button"><span
+              <button class="btn btn-warning margin mr-1" (click)="finishStep(step.id, $event)" type="button"><span
                   class="fa fa-check"></span> Finalizar etapa</button>
+              <button class="btn btn-warning margin mr-1"
+                (click)="openRescheduleStepModal(contentRescheduleStep, step.id)" type="button"><span
+                  class="fa fa-clock-o"></span> Replanejar etapa</button>
             </div>
             <div class="card-block">
               <div class="table-responsive">
@@ -243,5 +248,60 @@
     <div>
       <app-process-view [(modelProcessId)]="this.selectedModelProcessId"></app-process-view>
     </div>
+  </div>
+</ng-template>
+
+<ng-template #contentRescheduleStep let-modalRescheduleStep>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Replanejar Etapa</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRescheduleStep.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-block">
+        <form>
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Dias Úteis a Adicionar: </label>
+            <div class="col-md-8">
+              <input #txtBusinessDaysToAdd id="txtBusinessDaysToAdd" type="number" value="1" class="form-control">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="rescheduleStep(txtBusinessDaysToAdd.value)">Replanejar
+      Etapa</button>
+  </div>
+</ng-template>
+
+<ng-template #contentRescheduleProcess let-modalRescheduleProcess>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Replanejar Ação</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRescheduleProcess.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-block">
+        <form>
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Dias Úteis a Adicionar: </label>
+            <div class="col-md-8">
+              <input #txtBusinessDaysToAdd id="txtBusinessDaysToAdd" type="number" value="1" class="form-control">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark"
+      (click)="rescheduleProcess(txtBusinessDaysToAdd.value)">Replanejar
+      Ação</button>
   </div>
 </ng-template>

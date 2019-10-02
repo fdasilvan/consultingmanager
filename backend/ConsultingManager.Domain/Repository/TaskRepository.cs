@@ -161,6 +161,57 @@ namespace ConsultingManager.Domain.Repository
             return task.MapTo<CustomerTaskDto>();
         }
 
+        public async Task<List<CustomerStepDto>> RescheduleStep(Guid customerStepId, int businessDaysToAdd)
+        {
+            List<CustomerTaskPoco> customerTasks = await Context.CustomerTasks
+                .Where(o => o.CustomerStepId == customerStepId)
+                .ToListAsync();
+
+            foreach (CustomerTaskPoco customerTask in customerTasks)
+            {
+                customerTask.StartDate = Utils.AddBusinessDays(customerTask.StartDate, businessDaysToAdd);
+                customerTask.EstimatedEndDate = Utils.AddBusinessDays(customerTask.EstimatedEndDate, businessDaysToAdd);
+            }
+
+            await Context.SaveChangesAsync();
+
+            return await Context.CustomerSteps
+                .Where(o => o.Id == customerStepId)
+                .Select(o => o.MapTo<CustomerStepDto>())
+                .ToListAsync();
+        }
+
+        public async Task<CustomerProcessDto> RescheduleProcess(Guid customerProcessId, int businessDaysToAdd)
+        {
+            CustomerProcessPoco customerProcess = await Context.CustomerProcesses
+                .Include(o => o.CustomerSteps)
+                    .ThenInclude(o => o.CustomerTasks)
+                .Where(o => o.Id == customerProcessId)
+                .FirstOrDefaultAsync();
+
+            foreach (CustomerStepPoco customerStep in customerProcess.CustomerSteps)
+            {
+                await RescheduleStep(customerStep.Id, businessDaysToAdd);
+            }
+
+            await Context.SaveChangesAsync();
+
+            CustomerProcessDto customerProcessDto = await Context.CustomerProcesses
+                .Include(o => o.CustomerSteps)
+                    .ThenInclude(o => o.CustomerTasks)
+                .Where(o => o.Id == customerProcessId)
+                .Select(o => o.MapTo<CustomerProcessDto>())
+                .FirstOrDefaultAsync();
+
+            foreach (CustomerStepDto customerStepDto in customerProcessDto.CustomerSteps)
+            {
+                customerStepDto.CustomerProcess = null;
+                customerStepDto.CustomerTasks = null;
+            }
+
+            return customerProcessDto;
+        }
+
         public async Task<CustomerTaskDto> AnticipateTask(Guid taskId)
         {
             CustomerTaskPoco task = await Context.CustomerTasks

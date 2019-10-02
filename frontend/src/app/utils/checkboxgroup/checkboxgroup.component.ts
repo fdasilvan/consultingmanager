@@ -27,7 +27,6 @@ export class CheckboxgroupComponent implements OnInit {
       this.selectedValues.forEach(value => {
         const element = this.options.find(x => x.id === value.id);
         if (element) {
-          debugger;
           element.checked = true;
         }
       });

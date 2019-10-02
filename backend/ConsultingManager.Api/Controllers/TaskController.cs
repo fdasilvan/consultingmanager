@@ -81,6 +81,32 @@ namespace ConsultingManager.Api.Controllers
             }
         }
 
+        [HttpPost("step/{customerStepId}/reschedule/{businessDaysToAdd}")]
+        public async Task<IActionResult> RescheduleStep(Guid customerStepId, int businessDaysToAdd)
+        {
+            try
+            {
+                return Ok(await _taskRepository.RescheduleStep(customerStepId, businessDaysToAdd));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("process/{customerProcessId}/reschedule/{businessDaysToAdd}")]
+        public async Task<IActionResult> RescheduleProcess(Guid customerProcessId, int businessDaysToAdd)
+        {
+            try
+            {
+                return Ok(await _taskRepository.RescheduleProcess(customerProcessId, businessDaysToAdd));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("{taskId}/anticipate")]
         public async Task<IActionResult> AnticipateTask(Guid taskId)
         {
@@ -95,7 +121,7 @@ namespace ConsultingManager.Api.Controllers
         }
 
         [HttpPut("{taskId}/transfer/{consultantId}")]
-        public async Task<IActionResult> RescheduleTask(Guid taskId, Guid consultantId)
+        public async Task<IActionResult> TransferTask(Guid taskId, Guid consultantId)
         {
             try
             {

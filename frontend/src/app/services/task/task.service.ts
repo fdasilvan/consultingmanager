@@ -35,6 +35,16 @@ export class TaskService {
     return response;
   }
 
+  public async rescheduleStep(customerStepId: string, businessDaysToAdd: number) {
+    let response = await this.http.post<any>(`${environment.apiUrl}/task/step/${customerStepId}/reschedule/${businessDaysToAdd}`, null).toPromise();
+    return response;
+  }
+
+  public async rescheduleProcess(customerProcessId: string, businessDaysToAdd: number) {
+    let response = await this.http.post<any>(`${environment.apiUrl}/task/process/${customerProcessId}/reschedule/${businessDaysToAdd}`, null).toPromise();
+    return response;
+  }
+
   public async transferTask(taskId: string, consultantId: string) {
     let response = await this.http.put<any>(`${environment.apiUrl}/task/${taskId}/transfer/${consultantId}`, null).toPromise();
     return response;

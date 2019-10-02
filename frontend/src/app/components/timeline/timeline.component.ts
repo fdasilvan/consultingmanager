@@ -44,6 +44,8 @@ export class TimelineComponent implements OnInit {
   public canAssignTask: boolean;
   public canAddTaskWithoutMeeting: boolean;
   public selectedModelProcessId: string;
+  public selectedCustomerProcessId: string;
+  public selectedCustomerStepId: string;
 
   closeResult: string;
 
@@ -82,6 +84,38 @@ export class TimelineComponent implements OnInit {
 
   openModal(content) {
     this.modalObject = this.modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' });
+  }
+
+  openRescheduleProcessModal(content, customerProcessId: string) {
+    this.selectedCustomerProcessId = customerProcessId;
+    this.modalObject = this.modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' });
+  }
+
+  openRescheduleStepModal(content, customerStepId: string) {
+    this.selectedCustomerStepId = customerStepId;
+    this.modalObject = this.modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' });
+  }
+
+  async rescheduleProcess(businessDaysToAdd: number) {
+    if (businessDaysToAdd < 1 || businessDaysToAdd > 60) {
+      alert("O replanejamento deve ser de 1 dia útil a 60 dias úteis.");
+      return;
+    }
+    this.modalObject.close();
+    await this.taskService.rescheduleProcess(this.selectedCustomerProcessId, businessDaysToAdd);
+    alert('Ação replanejada com sucesso!');
+    this.loadCustomerProcesses(this.customer);
+  }
+
+  async rescheduleStep(businessDaysToAdd: number) {
+    if (businessDaysToAdd < 1 || businessDaysToAdd > 60) {
+      alert("O replanejamento deve ser de 1 dia útil a 60 dias úteis.");
+      return;
+    }
+    this.modalObject.close();
+    await this.taskService.rescheduleStep(this.selectedCustomerStepId, businessDaysToAdd);
+    alert('Etapa replanejada com sucesso!');
+    this.loadCustomerProcesses(this.customer);
   }
 
   async startCustomerProcess(modelProcessId: string, modelDescription: string, detail: string, consultantId: string, customerUserId: string, startDate: string) {
@@ -123,7 +157,7 @@ export class TimelineComponent implements OnInit {
     window.sessionStorage.setItem('timeline_scroll', window.pageYOffset.toString());
     event.preventDefault();
     let result = confirm('Tem certeza que deseja finalizar as tarefas desta etapa?');
-    
+
     if (result) {
       await this.processService.finishStep(stepId);
       await this.loadCustomerProcesses(this.customer);
@@ -161,8 +195,8 @@ export class TimelineComponent implements OnInit {
     this.router.navigate(['customer-registration']);
   }
 
-  async transferCustomer(consultantId: string) {    
-    if(consultantId == '') {
+  async transferCustomer(consultantId: string) {
+    if (consultantId == '') {
       alert('É necessário selecionar o consultor.');
     }
 
