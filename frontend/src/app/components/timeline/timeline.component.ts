@@ -42,6 +42,7 @@ export class TimelineComponent implements OnInit {
   public modalObject: NgbModalRef;
   public canDeleteProcess: boolean;
   public canAssignTask: boolean;
+  public canAddTaskWithoutMeeting: boolean;
   public selectedModelProcessId: string;
 
   closeResult: string;
@@ -57,6 +58,7 @@ export class TimelineComponent implements OnInit {
   getUserPermissions() {
     this.canDeleteProcess = this.loggedUser.userType.description == "Administrador" || this.loggedUser.userType.description == "Líder";
     this.canAssignTask = this.loggedUser.userType.description == "Administrador" || this.loggedUser.userType.description == "Líder";
+    this.canAddTaskWithoutMeeting = this.loggedUser.userType.description == "Administrador" || this.loggedUser.userType.description == "Líder" || this.loggedUser.userType.description == 'Implantador';
   }
 
   ngAfterViewChecked() {

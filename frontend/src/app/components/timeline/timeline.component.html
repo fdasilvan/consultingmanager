@@ -20,7 +20,7 @@
     </div>
 
     <div *ngIf="this.loggedUser.userType.description != 'Cliente'" class="mt-4 mb-4">
-      <button *ngIf="this.loggedUser.userType.description == 'Implantador'" class="btn btn-warning margin mr-1"
+      <button *ngIf="this.canAddTaskWithoutMeeting" class="btn btn-warning margin mr-1"
         (click)="openModal(content)" type="button"><span class="fa fa-plus"></span> Ação</button>
       <button *ngIf="this.loggedUser.userType.description != 'Implantador'" class="btn btn-warning margin mr-1"
         (click)="customerMeetings()" type="button"><span class="fa fa-users"></span>

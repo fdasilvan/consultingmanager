@@ -36,17 +36,21 @@
           </div>
           <div class="form-group row">
             <label class="col-md-3 col-form-label">Categorias</label>
-            <div class="col-md-9">
-              <app-checkboxgroup (toggle)="onCustomerCategoryChange($event)"
-                [selectedValues]="this.consultant.customerCategories" [options]="customerCategories">
-              </app-checkboxgroup>
+            <div>
+              <div *ngFor="let item of this.customerCategories">
+                <input type="checkbox" (change)="onCustomerCategoryChange($event)"> {{item.description}}
+              </div>
+
+              <!-- <app-checkboxgroup (toggle)="onCustomerCategoryChange($event)"
+                [selectedValues]="this.consultant.customerCategories" [options]="this.customerCategories">
+              </app-checkboxgroup> -->
             </div>
           </div>
           <div class="form-group row">
             <label class="col-md-3 col-form-label">Níveis de Cliente</label>
             <div class="col-md-9">
               <app-checkboxgroup (toggle)="onCustomerLevelChange($event)"
-                [selectedValues]="this.consultant.customerLevels" [options]="customerLevels">
+                [selectedValues]="this.consultant.customerLevels" [options]="this.customerLevels">
               </app-checkboxgroup>
             </div>
           </div>

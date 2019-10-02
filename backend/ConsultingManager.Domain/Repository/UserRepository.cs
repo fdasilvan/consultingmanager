@@ -57,7 +57,9 @@ namespace ConsultingManager.Domain.Repository
         {
             var user = await Context.Users
                 .Include(o => o.UserCustomerCategories)
+                    .ThenInclude(o => o.CustomerCategory)
                 .Include(o => o.UserCustomerLevels)
+                    .ThenInclude(o => o.CustomerLevel)
                 .Include(o => o.UserType)
                 .Where(o => o.Id == userId)
                 .FirstOrDefaultAsync();
@@ -79,35 +81,6 @@ namespace ConsultingManager.Domain.Repository
             else
             {
                 consultantToEdit = userDto.MapTo<UserPoco>();
-
-                foreach (UserCustomerCategoryPoco userCustomerCategoryPoco in consultantToEdit.UserCustomerCategories)
-                {
-                    Context.UserCustomerCategories.Remove(userCustomerCategoryPoco);
-                }
-
-                foreach (UserCustomerLevelPoco userCustomerLevelPoco in consultantToEdit.UserCustomerLevels)
-                {
-                    Context.UserCustomerLevels.Remove(userCustomerLevelPoco);
-                }
-
-                Context.SaveChanges();
-
-                foreach (CustomerCategoryDto customerCategoryDto in userDto.CustomerCategories)
-                {
-                    UserCustomerCategoryPoco userCustomerCategory = new UserCustomerCategoryPoco();
-                    userCustomerCategory.UserId = userDto.Id;
-                    userCustomerCategory.CustomerCategoryId = customerCategoryDto.Id;
-                    Context.UserCustomerCategories.Add(userCustomerCategory);
-                }
-                
-                foreach (CustomerLevelDto customerLevelDto in userDto.CustomerLevels)
-                {
-                    UserCustomerLevelPoco userCustomerLevel = new UserCustomerLevelPoco();
-                    userCustomerLevel.UserId = userDto.Id;
-                    userCustomerLevel.CustomerLevelId = customerLevelDto.Id;
-                    Context.UserCustomerLevels.Add(userCustomerLevel);
-                }
-                
                 await Context.SaveChangesAsync();
                 return true;
             }

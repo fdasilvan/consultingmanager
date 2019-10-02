@@ -5,6 +5,8 @@ import { CustomerLevel } from 'src/app/models/customerlevel.model';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
 import { Router } from '@angular/router';
+import { UserCustomerCategory } from 'src/app/models/usercustomercategory.model';
+import { UserCustomerLevel } from 'src/app/models/usercustomerlevel.model';
 
 @Component({
   selector: 'app-consultant-registration',
@@ -44,13 +46,16 @@ export class ConsultantRegistrationComponent implements OnInit {
       this.consultant = <User>JSON.parse(window.sessionStorage.getItem('consultant'));
       this.consultant = await this.userService.getUser(this.consultant.id);
 
-      if (!this.consultant.customerCategories) {
-        this.consultant.customerCategories = this.customerCategories;
-      }
+      this.consultant.customerCategories = [];
+      this.consultant.customerLevels = [];
 
-      if (!this.consultant.customerLevels) {
-        this.consultant.customerLevels = this.customerLevels;
-      }
+      this.consultant.userCustomerCategories.forEach(userCustomerCategory => {
+        this.consultant.customerCategories.push(userCustomerCategory.customerCategory);
+      });
+
+      this.consultant.userCustomerLevels.forEach(userCustomerLevel => {
+        this.consultant.customerLevels.push(userCustomerLevel.customerLevel);
+      });
     }
   }
 
@@ -83,9 +88,28 @@ export class ConsultantRegistrationComponent implements OnInit {
   async saveConsultant() {
     if (this.isEdit) {
       console.log(this.consultant);
+
+      this.consultant.customerCategories.forEach(customerCategory => {
+        let userCustomerCategory = new UserCustomerCategory();
+        userCustomerCategory.userid = this.consultant.id;
+        userCustomerCategory.customerCategoryId = customerCategory.id;
+        this.consultant.userCustomerCategories.push(userCustomerCategory);
+      });
+
+      this.consultant.customerLevels.forEach(customerLevel => {
+        let userCustomerLevel = new UserCustomerLevel();
+        userCustomerLevel.userid = this.consultant.id;
+        userCustomerLevel.customerLevelId = customerLevel.id;
+        this.consultant.userCustomerLevels.push(userCustomerLevel);
+      });
+
       this.userService.saveConsultant(this.consultant);
     } else {
       alert('Ainda não implementado!');
     }
+  }
+
+  goBack() {
+    window.history.back();
   }
 }

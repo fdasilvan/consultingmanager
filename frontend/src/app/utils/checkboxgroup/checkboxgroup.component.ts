@@ -10,8 +10,8 @@ export class CheckboxgroupComponent implements OnInit {
 
   constructor() { }
 
-  @Input() options = Array<CheckboxItem>();
-  @Input() selectedValues: string[];
+  @Input() options = Array<any>();
+  @Input() selectedValues = Array<any>();
   @Output() toggle = new EventEmitter<any[]>();
 
   ngOnInit() { }
@@ -22,11 +22,12 @@ export class CheckboxgroupComponent implements OnInit {
     this.toggle.emit(checkedOptions.map(x => x.id));
   }
 
-  ngOnChanges() {
+  ngAfterViewChecked() {
     if (this.selectedValues) {
       this.selectedValues.forEach(value => {
-        const element = this.options.find(x => x.id === value);
+        const element = this.options.find(x => x.id === value.id);
         if (element) {
+          debugger;
           element.checked = true;
         }
       });
