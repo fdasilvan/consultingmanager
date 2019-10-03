@@ -41,11 +41,11 @@ export class FlightplanComponent implements OnInit {
   public today: Date = new Date();
   public selectedModelProcessId: string;
 
-  ngOnInit() {
-    this.loadCustomer();
-    this.loadMeetings();
-    this.loadCustomerProcesses();
-    this.loadModelProcesses();
+  async ngOnInit() {
+    await this.loadCustomer();
+    await this.loadCustomerProcesses();
+    await this.loadMeetings();
+    await this.loadModelProcesses();
   }
 
   loadCustomer() {
@@ -67,6 +67,9 @@ export class FlightplanComponent implements OnInit {
 
   async loadMeetings() {
     this.meetings = await this.customersService.getMeetings(this.customer.id);
+    this.meetings.forEach(meeting => {
+      meeting.processes = this.customerProcesses.filter(o => o.customerMeetingId == meeting.id);
+    });
   }
 
   selectMeeting(meeting: CustomerMeeting) {
@@ -90,6 +93,12 @@ export class FlightplanComponent implements OnInit {
       await this.processService.startCustomerProcess(modelProcessId, modelDescription, detail, this.customer.id, this.loggedUser.id, customerUserId, new Date(startDate), this.selectedMeeting.id);
       await this.loadCustomerProcesses();
     }
+  }
+
+  async getMeetingProcesses(customerMeetingId: string) {
+    debugger;
+    let meetingProcesses = this.customerProcesses.filter(o => o.customerMeetingId == customerMeetingId);
+    return meetingProcesses;
   }
 
   goBack() {

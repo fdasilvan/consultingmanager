@@ -6,7 +6,9 @@
       </div>
       <div class="card-block btn-margins">
         <h3 class="mb-4">Cliente: {{this.customer.name}}</h3>
-        <h5 class="mb-4">Encontros: </h5>
+        <button class="btn btn-warning margin mr-1" (click)="openModal(contentFlightplan)" type="button"><span
+            class="fa fa-search"></span> Visualizar Plano de Vôo</button>
+        <h5 class="mb-4 mt-4">Encontros: </h5>
         <div>
           <div class="mb-4 ml-2 row">
             <div *ngIf="this.meetings.length == 0">
@@ -150,6 +152,43 @@
   <div class="modal-body">
     <div>
       <app-process-view [(modelProcessId)]="this.selectedModelProcessId"></app-process-view>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #contentFlightplan let-modalFlightplan>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Visualização de Ação</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalFlightplan.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div *ngFor="let meeting of this.meetings | orderBy: 'date'">
+      <h4 class="mb-2">Encontro de {{meeting.date | date: 'dd/MM/yyy'}}</h4>
+      <div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Descrição</th>
+              <th scope="col">Dt. Início</th>
+              <th scope="col">Dt. Estimada Fim</th>
+              <th scope="col">Dt. Finalização</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="meeting.processes.length == 0">
+              <td colspan="4">Não há ações definidas para este encontro!</td>
+            </tr>
+            <tr *ngFor="let process of meeting.processes | orderBy: 'startDate'">
+              <td>{{ process.description }}</td>
+              <td>{{ process.startDate | date: 'dd/MM/yyyy' }}</td>
+              <td>{{ process.estimatedEndDate | date: 'dd/MM/yyyy' }}</td>
+              <td>{{ process.endDate | date: 'dd/MM/yyyy' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </ng-template>

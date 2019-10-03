@@ -1,4 +1,5 @@
 import { Customer } from './customer.model';
+import { CustomerProcess } from './customerprocess.model';
 
 export class CustomerMeeting {
   id: string;
@@ -6,4 +7,6 @@ export class CustomerMeeting {
   date: Date;
   customerId: string;
   customer: Customer;
+
+  processes: CustomerProcess[];
 }
