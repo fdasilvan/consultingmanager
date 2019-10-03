@@ -11,7 +11,9 @@ export class CustomerTask {
   duration: number;
   creationDate: Date;
   startDate: Date;
+  originalStartDate: Date;
   estimatedEndDate: Date;
+  originalEstimatedEndDate: Date;
   endDate: Date;
   mailSubject: string;
   mailBody: string;

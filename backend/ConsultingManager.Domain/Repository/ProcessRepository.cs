@@ -209,6 +209,9 @@ namespace ConsultingManager.Domain.Repository
                         processEstimatedEndDate = (processEstimatedEndDate == null || lastDate > processEstimatedEndDate ? lastDate : processEstimatedEndDate);
                         customerTask.EndDate = null;
 
+                        customerTask.OriginalStartDate = customerTask.StartDate;
+                        customerTask.OriginalEstimatedEndDate = customerTask.EstimatedEndDate;
+
                         customerTask.MailSubject = modelTask.MailSubject;
                         customerTask.MailBody = modelTask.MailBody;
 

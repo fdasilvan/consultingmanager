@@ -13,7 +13,9 @@ namespace ConsultingManager.Infra.Database.Models
         public int Duration { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime StartDate { get; set; }
+        public DateTime? OriginalStartDate { get; set; }
         public DateTime EstimatedEndDate { get; set; }
+        public DateTime? OriginalEstimatedEndDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string MailSubject { get; set; }
         public string MailBody { get; set; }
