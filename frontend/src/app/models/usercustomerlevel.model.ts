@@ -4,6 +4,7 @@ export class UserCustomerLevel {
 
   constructor() { }
 
+  id: string;
   userid: string;
   customerLevelId: string;
   customerLevel: CustomerLevel;

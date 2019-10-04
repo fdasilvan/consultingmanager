@@ -5,6 +5,7 @@ export class UserCustomerCategory {
 
   constructor() { }
 
+  id: string;
   userid: string;
   customerCategoryId: string;
   customerCategory: CustomerCategory;

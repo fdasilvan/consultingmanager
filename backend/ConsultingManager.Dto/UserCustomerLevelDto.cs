@@ -6,8 +6,8 @@ namespace ConsultingManager.Dto
 {
     public class UserCustomerLevelDto
     {
+        public Guid Id { get; set; }
         public Guid UserId { get; set; }
         public Guid CustomerLevelId { get; set; }
-        public CustomerLevelDto CustomerLevel { get; set; }
     }
 }

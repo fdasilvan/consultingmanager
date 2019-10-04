@@ -11,6 +11,7 @@ namespace ConsultingManager.Domain.Repository
         Task<UserDto> Authenticate(string email, string password);
         Task<List<CustomerMeetingDto>> GetUserMeetings(Guid userId);
         Task<UserDto> GetUser(Guid userId);
+        Task<List<UserTypeDto>> GetUserTypes();
         Task<bool> SaveConsultant(UserDto userDto);
     }
 }

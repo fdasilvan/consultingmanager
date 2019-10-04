@@ -1,3 +1,7 @@
-input {
+input, select {
     width: 30rem;
+}
+
+.checkbox {
+    width: 5rem;
 }

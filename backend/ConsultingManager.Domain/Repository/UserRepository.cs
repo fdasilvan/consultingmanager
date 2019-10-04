@@ -1,4 +1,5 @@
 ﻿using ConsultingManager.Dto;
+using ConsultingManager.Infra;
 using ConsultingManager.Infra.Database;
 using ConsultingManager.Infra.Database.Models;
 using Microsoft.EntityFrameworkCore;
@@ -67,6 +68,15 @@ namespace ConsultingManager.Domain.Repository
             return user.MapTo<UserDto>();
         }
 
+        public async Task<List<UserTypeDto>> GetUserTypes()
+        {
+            return await Context.UserTypes
+                .Where(o => o.Id != Const.UserTypes.Administrator && o.Id != Const.UserTypes.Customer)
+                .Select(o => o.MapTo<UserTypeDto>())
+                .OrderBy(o => o.Description)
+                .ToListAsync();
+        }
+
         public async Task<bool> SaveConsultant(UserDto userDto)
         {
             var consultantToEdit = await Context.Users
@@ -76,12 +86,47 @@ namespace ConsultingManager.Domain.Repository
 
             if (consultantToEdit == null)
             {
-                return false;
+                var newUser = Context.Users.Add(userDto.MapTo<UserPoco>());
+
+                foreach (UserCustomerCategoryDto userCustomerCategory in userDto.UserCustomerCategories)
+                {
+                    Context.UserCustomerCategories.Add(userCustomerCategory.MapTo<UserCustomerCategoryPoco>());
+                }
+
+                foreach (UserCustomerLevelDto userCustomerLevel in userDto.UserCustomerLevels)
+                {
+                    Context.UserCustomerLevels.Add(userCustomerLevel.MapTo<UserCustomerLevelPoco>());
+                }
+
+                await Context.SaveChangesAsync();
+                return true;
             }
             else
             {
-                consultantToEdit = userDto.MapTo<UserPoco>();
+                consultantToEdit.Name = userDto.Name;
+                consultantToEdit.Email = userDto.Email;
+                consultantToEdit.UserTypeId = userDto.UserTypeId;
+                consultantToEdit.AvailableHoursMonth = userDto.AvailableHoursMonth;
+                consultantToEdit.ConferenceRoomAddress = userDto.ConferenceRoomAddress;
+
+                List<UserCustomerCategoryPoco> userCustomerCategories = Context.UserCustomerCategories.Where(o => o.UserId == consultantToEdit.Id).ToList();
+                Context.UserCustomerCategories.RemoveRange(userCustomerCategories);
+
+                foreach (UserCustomerCategoryDto userCustomerCategory in userDto.UserCustomerCategories)
+                {
+                    Context.UserCustomerCategories.Add(userCustomerCategory.MapTo<UserCustomerCategoryPoco>());
+                }
+
+                List<UserCustomerLevelPoco> userCustomerLevels = Context.UserCustomerLevels.Where(o => o.UserId == consultantToEdit.Id).ToList();
+                Context.UserCustomerLevels.RemoveRange(userCustomerLevels);
+
+                foreach (UserCustomerLevelDto userCustomerLevel in userDto.UserCustomerLevels)
+                {
+                    Context.UserCustomerLevels.Add(userCustomerLevel.MapTo<UserCustomerLevelPoco>());
+                }
+
                 await Context.SaveChangesAsync();
+
                 return true;
             }
         }

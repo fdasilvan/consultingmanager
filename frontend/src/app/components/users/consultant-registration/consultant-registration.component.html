@@ -9,49 +9,64 @@
           <div class="form-group row">
             <label class="col-md-3 col-form-label">Nome (obrigatório)</label>
             <div class="col-md-9">
-              <input #txtName id="txtName" type="text" class="form-control mb-2"
-                value="{{isEdit ? consultant.name : ''}}">
+              <input #txtName id="txtName" type="text" class="form-control mb-2" [(ngModel)]="this.consultant.name"
+                [ngModelOptions]="{ standalone: true }">
             </div>
           </div>
           <div class="form-group row">
             <label class="col-md-3 col-form-label">E-mail (obrigatório)</label>
             <div class="col-md-9">
               <input #txtEmail id="txtEmail" type="text" name="regular" class="form-control"
-                value="{{this.isEdit ? consultant.email : ''}}">
+                [(ngModel)]="this.consultant.email" [ngModelOptions]="{ standalone: true }">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Tipo de Usuário</label>
+            <div class="col-md-9">
+              <select #lstUserTypes id="lstUserTypes" class="form-control" [(ngModel)]="this.consultant.userTypeId"
+                [ngModelOptions]="{ standalone: true }">
+                <option value="">Não informado</option>
+                <option *ngFor="let userType of this.userTypes"
+                  [selected]="(this.consultant && this.consultant.userTypeId ? this.consultant.userTypeId == userType.id : false)"
+                  value="{{userType.id}}">
+                  {{userType.description}}
+                </option>
+              </select>
             </div>
           </div>
           <div class="form-group row">
             <label class="col-md-3 col-form-label">Quantidade de Horas Disponíveis / Mês</label>
             <div class="col-md-9">
               <input #txtAvailableHoursMonth id="txtAvailableHoursMonth" type="number" min="1" max="400" name="regular"
-                class="form-control" value="{{this.isEdit ? this.consultant.availableHoursMonth : ''}}">
+                class="form-control" [(ngModel)]="this.consultant.availableHoursMonth"
+                [ngModelOptions]="{ standalone: true }">
             </div>
           </div>
           <div class="form-group row">
             <label class="col-md-3 col-form-label">Endereço da Sala de Conferência</label>
             <div class="col-md-9">
               <input #txtConferenceRoomAddress id="txtConferenceRoomAddress" type="text" name="regular"
-                class="form-control" value="{{this.isEdit ? this.consultant.conferenceRoomAddress : ''}}">
+                class="form-control" [(ngModel)]="this.consultant.conferenceRoomAddress"
+                [ngModelOptions]="{ standalone: true }">
             </div>
           </div>
           <div class="form-group row">
             <label class="col-md-3 col-form-label">Categorias</label>
             <div>
               <div *ngFor="let item of this.customerCategories">
-                <input type="checkbox" (change)="onCustomerCategoryChange($event)"> {{item.description}}
+                <input type="checkbox" class="checkbox" [checked]="this.isCustomerCategoryChecked(item.id)"
+                  (change)="onCustomerCategoryChange($event, item)">
+                {{item.description}}
               </div>
-
-              <!-- <app-checkboxgroup (toggle)="onCustomerCategoryChange($event)"
-                [selectedValues]="this.consultant.customerCategories" [options]="this.customerCategories">
-              </app-checkboxgroup> -->
             </div>
           </div>
           <div class="form-group row">
             <label class="col-md-3 col-form-label">Níveis de Cliente</label>
-            <div class="col-md-9">
-              <app-checkboxgroup (toggle)="onCustomerLevelChange($event)"
-                [selectedValues]="this.consultant.customerLevels" [options]="this.customerLevels">
-              </app-checkboxgroup>
+            <div>
+              <div *ngFor="let item of this.customerLevels">
+                <input type="checkbox" class="checkbox" [checked]="this.isCustomerLevelChecked(item.id)"
+                  (change)="onCustomerLevelChange($event, item)"> {{item.description}}
+              </div>
             </div>
           </div>
         </form>

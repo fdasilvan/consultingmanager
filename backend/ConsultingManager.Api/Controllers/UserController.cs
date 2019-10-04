@@ -65,6 +65,19 @@ namespace Auth.Api.Controllers
             }
         }
 
+        [HttpGet("user-types")]
+        public async Task<IActionResult> GetUserTypes()
+        {
+            try
+            {
+                return Ok(await _userRepository.GetUserTypes());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar informações.");
+            }
+        }
+
         [HttpPost("consultant")]
         public async Task<IActionResult> SaveConsultant(UserDto userDto)
         {

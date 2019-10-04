@@ -3,6 +3,7 @@ import { User } from 'src/app/models/user.model';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { CustomerMeeting } from 'src/app/models/customermeeting.model';
+import { UserType } from 'src/app/models/usertype.model';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,11 @@ export class UserService {
 
   public async getUser(userId: string): Promise<User> {
     var response = await this.http.get<User>(`${environment.apiUrl}/user/${userId}`);
+    return response.toPromise();
+  }
+
+  public async getUserTypes(): Promise<UserType[]> {
+    var response = await this.http.get<UserType[]>(`${environment.apiUrl}/user/user-types`);
     return response.toPromise();
   }
 

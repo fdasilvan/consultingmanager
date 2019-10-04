@@ -7,6 +7,8 @@ import { UserService } from 'src/app/services/user/user.service';
 import { Router } from '@angular/router';
 import { UserCustomerCategory } from 'src/app/models/usercustomercategory.model';
 import { UserCustomerLevel } from 'src/app/models/usercustomerlevel.model';
+import { v4 as newGuid } from 'uuid';
+import { UserType } from 'src/app/models/usertype.model';
 
 @Component({
   selector: 'app-consultant-registration',
@@ -29,34 +31,23 @@ export class ConsultantRegistrationComponent implements OnInit {
   isEdit: boolean;
   customerCategories: CustomerCategory[] = [];
   customerLevels: CustomerLevel[] = [];
+  userTypes: UserType[] = [];
+  selectedCustomerCategories: CustomerCategory[] = [];
+  selectedCustomerLevels: CustomerLevel[] = [];
 
   async ngOnInit() {
     await this.loadConsultant();
 
     if (this.consultant) {
       this.isEdit = true;
+    } else {
+      this.isEdit = false;
+      this.consultant = new User();
     }
 
+    await this.loadUserTypes();
     await this.loadCustomerCategories();
     await this.loadCustomerLevels();
-  }
-
-  async loadConsultant() {
-    if (window.sessionStorage.getItem('consultant') != 'undefined') {
-      this.consultant = <User>JSON.parse(window.sessionStorage.getItem('consultant'));
-      this.consultant = await this.userService.getUser(this.consultant.id);
-
-      this.consultant.customerCategories = [];
-      this.consultant.customerLevels = [];
-
-      this.consultant.userCustomerCategories.forEach(userCustomerCategory => {
-        this.consultant.customerCategories.push(userCustomerCategory.customerCategory);
-      });
-
-      this.consultant.userCustomerLevels.forEach(userCustomerLevel => {
-        this.consultant.customerLevels.push(userCustomerLevel.customerLevel);
-      });
-    }
   }
 
   async loadCustomerCategories() {
@@ -67,46 +58,77 @@ export class ConsultantRegistrationComponent implements OnInit {
     this.customerLevels = await this.customerService.getCustomerLevels();
   }
 
-  onCustomerCategoryChange(selectedCustomerCategories: string[]) {
-    this.consultant.customerCategories = [];
-    selectedCustomerCategories.forEach(customerCategoryId => {
-      let customerCategory = new CustomerCategory();
-      customerCategory.id = customerCategoryId;
-      this.consultant.customerCategories.push(customerCategory);
-    });
+  async loadUserTypes() {
+    this.userTypes = await this.userService.getUserTypes();
   }
 
-  onCustomerLevelChange(selectedCustomerLevels: string[]) {
-    this.consultant.customerLevels = [];
-    selectedCustomerLevels.forEach(customerLevelId => {
-      let customerLevel = new CustomerLevel();
-      customerLevel.id = customerLevelId;
-      this.consultant.customerLevels.push(customerLevel);
-    });
+  async loadConsultant() {
+    if (window.sessionStorage.getItem('consultant') != 'undefined') {
+      this.consultant = <User>JSON.parse(window.sessionStorage.getItem('consultant'));
+      this.consultant = await this.userService.getUser(this.consultant.id);
+
+      console.log(this.consultant);
+      debugger;
+
+      this.consultant.customerCategories = [];
+      this.consultant.customerLevels = [];
+
+      this.consultant.userCustomerCategories.forEach(userCustomerCategory => {
+        let customerCategory = new CustomerCategory();
+        customerCategory.id = userCustomerCategory.customerCategoryId;
+      });
+
+      this.consultant.userCustomerCategories.forEach(userCustomerLevel => {
+        let customerLevel = new CustomerLevel();
+        customerLevel.id = userCustomerLevel.customerCategoryId;
+      });
+    }
+  }
+
+  onCustomerCategoryChange(event: any, customerCategory: CustomerCategory) {
+    let checked = event.currentTarget.checked;
+    if (checked) {
+      let userCustomerCategory = new UserCustomerCategory();
+      userCustomerCategory.id = newGuid();
+      userCustomerCategory.userid = this.consultant.id;
+      userCustomerCategory.customerCategoryId = customerCategory.id;
+      this.consultant.userCustomerCategories.push(userCustomerCategory);
+    } else {
+      this.consultant.userCustomerCategories = this.consultant.userCustomerCategories.filter(o => o.customerCategoryId != customerCategory.id);
+    }
+  }
+
+  onCustomerLevelChange(event: any, customerLevel: CustomerLevel) {
+    let checked = event.currentTarget.checked;
+    if (checked) {
+      let userCustomerLevel = new UserCustomerLevel();
+      userCustomerLevel.id = newGuid();
+      userCustomerLevel.userid = this.consultant.id;
+      userCustomerLevel.customerLevelId = customerLevel.id;
+      this.consultant.userCustomerLevels.push(userCustomerLevel);
+    } else {
+      this.consultant.userCustomerLevels = this.consultant.userCustomerLevels.filter(o => o.customerLevelId != customerLevel.id);
+    }
+  }
+
+  isCustomerCategoryChecked(customerCategoryId: string) {
+    let result = this.consultant.userCustomerCategories.filter(o => o.customerCategoryId == customerCategoryId);
+    return result.length > 0;
+  }
+
+  isCustomerLevelChecked(customerLevelId: string) {
+    let result = this.consultant.userCustomerLevels.filter(o => o.customerLevelId == customerLevelId);
+    return result.length > 0;
   }
 
   async saveConsultant() {
+    await this.userService.saveConsultant(this.consultant);
     if (this.isEdit) {
-      console.log(this.consultant);
-
-      this.consultant.customerCategories.forEach(customerCategory => {
-        let userCustomerCategory = new UserCustomerCategory();
-        userCustomerCategory.userid = this.consultant.id;
-        userCustomerCategory.customerCategoryId = customerCategory.id;
-        this.consultant.userCustomerCategories.push(userCustomerCategory);
-      });
-
-      this.consultant.customerLevels.forEach(customerLevel => {
-        let userCustomerLevel = new UserCustomerLevel();
-        userCustomerLevel.userid = this.consultant.id;
-        userCustomerLevel.customerLevelId = customerLevel.id;
-        this.consultant.userCustomerLevels.push(userCustomerLevel);
-      });
-
-      this.userService.saveConsultant(this.consultant);
+      alert('Consultor atualizado com sucesso!');
     } else {
-      alert('Ainda não implementado!');
+      alert('Consultor incluido com sucesso!');
     }
+    this.router.navigate(['consultants-list']);
   }
 
   goBack() {
