@@ -10,6 +10,7 @@ import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-boo
 import { ModelProcess } from 'src/app/models/modelprocess.model';
 import { CustomersService } from 'src/app/services/customers/customers.service';
 import { TaskService } from 'src/app/services/task/task.service';
+import { CustomerStep } from 'src/app/models/customerstep.model';
 
 @Component({
   selector: 'app-timeline',
@@ -185,9 +186,59 @@ export class TimelineComponent implements OnInit {
     window.sessionStorage.setItem('timeline_scroll', window.pageYOffset.toString());
   }
 
-  toggleElement(element) {
-    element.parentElement.nextElementSibling.style.display = (element.parentElement.nextElementSibling.style.display == 'none' ? '' : 'none');
-    element.className = (element.className == 'fa fa-chevron-right' ? 'fa fa-chevron-down' : 'fa fa-chevron-right');
+  toggleCardBlock(element) {
+    let tag = element.tagName;
+    let cardBlockElement;
+    switch (tag) {
+      case 'H4':
+        cardBlockElement = element.parentNode.parentNode.nextElementSibling;
+        break;
+      case 'H6':
+        cardBlockElement = element.parentNode.nextElementSibling;
+        break;
+      case 'DIV':
+        if (element.className == 'card-header') {
+          cardBlockElement = element.nextElementSibling;
+        } else {
+          cardBlockElement = element.parentNode.nextElementSibling;
+        }
+        break;
+    }
+
+    cardBlockElement.classList.remove('hide');
+    cardBlockElement.style.display = (cardBlockElement.style.display == 'none' ? '' : 'none');
+  }
+
+  showProcess(element, process: CustomerProcess) {
+    let isFinished = this.isProcessFinished(process);
+    element.style.display = (isFinished ? 'none' : '');
+  }
+
+  showStep(element, step: CustomerStep) {
+    let isFinished = this.isStepFinished(step);
+    element.style.display = (isFinished ? 'none' : '');
+  }
+
+  isProcessFinished(process: CustomerProcess) {
+    let isFinished = true;
+    process.customerSteps.forEach(customerStep => {
+      customerStep.customerTasks.forEach(customerTask => {
+        if (customerTask.endDate == null) {
+          isFinished = false;
+        }
+      });
+    });
+    return isFinished;
+  }
+
+  isStepFinished(step: CustomerStep) {
+    let isFinished = true;
+    step.customerTasks.forEach(customerTask => {
+      if (customerTask.endDate == null) {
+        isFinished = false;
+      }
+    });
+    return isFinished;
   }
 
   editCustomer() {

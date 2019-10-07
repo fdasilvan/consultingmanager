@@ -6,7 +6,7 @@ export class CustomerStep {
   description: string;
   startDate: Date;
   endDate: Date;
-  tasks: CustomerTask[];
+  customerTasks: CustomerTask[];
   customerProcess: CustomerProcess;
 
   constructor() {
