@@ -113,7 +113,7 @@
                         </td>
                         <td>
                           <button *ngIf="task.endDate == null" class="btn btn-success margin mr-1"
-                            (click)="finishTask(task.id, $event)" type="button"><span
+                            (click)="finishTask(process.id, task.id, $event, contentTransfer)" type="button"><span
                               class="fa fa-check"></span></button>
                         </td>
                       </tr>

@@ -67,9 +67,6 @@ export class ConsultantRegistrationComponent implements OnInit {
       this.consultant = <User>JSON.parse(window.sessionStorage.getItem('consultant'));
       this.consultant = await this.userService.getUser(this.consultant.id);
 
-      console.log(this.consultant);
-      debugger;
-
       this.consultant.customerCategories = [];
       this.consultant.customerLevels = [];
 

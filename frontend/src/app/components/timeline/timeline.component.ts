@@ -138,7 +138,7 @@ export class TimelineComponent implements OnInit {
     }
   }
 
-  async finishTask(taskId: string, event: Event) {
+  async finishTask(customerProcessId: string, taskId: string, event: Event, contentTransfer) {
     window.sessionStorage.setItem('timeline_scroll', window.pageYOffset.toString());
     event.preventDefault();
     let result = confirm('Tem certeza que deseja finalizar a tarefa?');
@@ -146,6 +146,21 @@ export class TimelineComponent implements OnInit {
     if (result) {
       await this.taskService.finishTask(taskId);
       await this.loadCustomerProcesses(this.customer);
+
+      let processesToVerify = this.customerProcessesList.filter(o => o.id == customerProcessId);
+
+      if (processesToVerify.length > 0) {
+        let processToVerify: CustomerProcess = processesToVerify[0];
+        let isProcessClosed = this.isProcessFinished(processToVerify);
+
+        if (isProcessClosed) {
+          let result = confirm('A ação foi finalizada. Deseja transferir o cliente para outro consultor?');
+
+          if (result) {
+            this.openModal(contentTransfer);
+          }
+        }
+      }
 
       let scrollY = window.sessionStorage.getItem('timeline_scroll');
       if (scrollY && scrollY != 'null') {

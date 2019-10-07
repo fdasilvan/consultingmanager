@@ -96,7 +96,6 @@ export class FlightplanComponent implements OnInit {
   }
 
   async getMeetingProcesses(customerMeetingId: string) {
-    debugger;
     let meetingProcesses = this.customerProcesses.filter(o => o.customerMeetingId == customerMeetingId);
     return meetingProcesses;
   }
