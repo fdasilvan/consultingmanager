@@ -21,6 +21,7 @@ namespace ConsultingManager.Infra.Database
         public DbSet<CustomerStepPoco> CustomerSteps { get; set; }
         public DbSet<CustomerTaskPoco> CustomerTasks { get; set; }
         public DbSet<CustomerLevelPoco> CustomerLevels { get; set; }
+        public DbSet<CustomerCancellationPoco> CustomerCancellations { get; set; }
         public DbSet<ModelProcessPoco> ModelProcesses { get; set; }
         public DbSet<ModelStepPoco> ModelSteps { get; set; }
         public DbSet<ModelTaskPoco> ModelTasks { get; set; }
@@ -37,6 +38,7 @@ namespace ConsultingManager.Infra.Database
         public DbSet<TeamPoco> Teams { get; set; }
         public DbSet<UserCustomerCategoryPoco> UserCustomerCategories { get; set; }
         public DbSet<UserCustomerLevelPoco> UserCustomerLevels { get; set; }
+        public DbSet<CancellationReasonPoco> CancellationReasons { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
