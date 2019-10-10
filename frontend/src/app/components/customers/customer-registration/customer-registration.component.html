@@ -31,7 +31,8 @@
           <div class="form-group row">
             <label class="col-md-3 col-form-label">Situação (obrigatório)</label>
             <div class="col-md-9">
-              <select #lstSituations id="lstSituations" class="custom-select form-control">
+              <select #lstSituations id="lstSituations" class="custom-select form-control"
+                (change)="onSituationChanged($event.target.value, contentCancellation)">
                 <option value="">Não informado</option>
                 <option *ngFor="let situation of this.situationsList"
                   [selected]="(this.customer && this.customer.situation ? this.customer.situation.id == situation.id : false)"
@@ -39,6 +40,13 @@
                   {{situation.description}}
                 </option>
               </select>
+            </div>
+          </div>
+          <div *ngIf="this.customerCancellation && this.customerCancellation.cancellationReason" class="form-group row">
+            <label class="col-md-3 col-form-label">Informações do Cancelamento: </label>
+            <div class="col-md-9">
+              <p>Motivo: {{this.customerCancellation.cancellationReason.description}}</p>
+              <p>Observação: {{this.customerCancellation.notes}}</p>
             </div>
           </div>
           <div class="form-group row">
@@ -212,7 +220,8 @@
           <button type="button" class="btn btn-lg btn-primary float-right"
             (click)="SaveCustomer(txtName.value, txtExternalId.value, lstSituations.value, lstCustomerLevels.value, txtEmail.value, txtPhone.value, txtLogoUrl.value,
               txtStoreUrl.value, txtStoreAnalysis.value, lstCities.value, lstPlatforms.value, lstCategories.value, txtSubcategory.value, txtCustomerFolderUrl.value, 
-              txtMeetingsDescription.value, lstPlans.value, lstTeams.value, lstConsultants.value, txtUserName, txtUserEmail, true)">Salvar e Visualizar Cliente</button>
+              txtMeetingsDescription.value, lstPlans.value, lstTeams.value, lstConsultants.value, txtUserName, txtUserEmail, true)">Salvar e Visualizar
+            Cliente</button>
           <button type="button" class="btn btn-lg btn-primary float-right ml-1 mr-1"
             (click)="SaveCustomer(txtName.value, txtExternalId.value, lstSituations.value, lstCustomerLevels.value, txtEmail.value, txtPhone.value, txtLogoUrl.value,
               txtStoreUrl.value, txtStoreAnalysis.value, lstCities.value, lstPlatforms.value, lstCategories.value, txtSubcategory.value, txtCustomerFolderUrl.value, 
@@ -249,5 +258,43 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="addPlatform(txtPlatformName.value)">Cadastrar</button>
+  </div>
+</ng-template>
+
+<ng-template #contentCancellation let-modalCancellation>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Adicionar Plataforma</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalCancellation.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-block">
+        <form>
+          <div class="form-group">
+            <label>Motivo de Cancelamento: </label>
+            <div class="input-group">
+              <select #lstCancellationReason id="lstCancellationReason" class="custom-select form-control">
+                <option value="">Não informado</option>
+                <option *ngFor="let cancellationReason of this.cancellationReasonsList"
+                  value="{{cancellationReason.id}}">{{cancellationReason.description}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="txtCancellationNote">Observações: </label>
+            <div class="input-group">
+              <input #txtCancellationNote id="txtCancellationNote" class="form-control">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark"
+      (click)="registerCancellationReason(lstCancellationReason.value, lstCancellationReason[lstCancellationReason.selectedIndex].text, txtCancellationNote.value)">Registrar
+      Motivo</button>
   </div>
 </ng-template>

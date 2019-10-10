@@ -237,6 +237,14 @@ namespace ConsultingManager.Domain.Repository
                 .ToListAsync();
         }
 
+        public async Task<List<CancellationReasonDto>> GetCancellationReasons()
+        {
+            return await Context.CancellationReasons
+                .Select(o => o.MapTo<CancellationReasonDto>())
+                .OrderByDescending(o => o.Description)
+                .ToListAsync();
+        }
+
         public async Task<PlatformDto> AddPlatform(PlatformDto platformDto)
         {
             var newCustomer = Context.Platforms.Add(platformDto.MapTo<PlatformPoco>());

@@ -192,6 +192,19 @@ namespace ConsultingManager.Api.Controllers
             }
         }
 
+        [HttpGet("cancellation-reasons")]
+        public async Task<IActionResult> GetCancellationReasons()
+        {
+            try
+            {
+                return Ok(await _customerRepository.GetCancellationReasons());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar informações.");
+            }
+        }
+
         [HttpPost("platform")]
         public async Task<IActionResult> AddPlatform(PlatformDto platformDto)
         {

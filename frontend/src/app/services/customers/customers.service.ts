@@ -13,6 +13,7 @@ import { User } from 'src/app/models/user.model';
 import { CustomerMeeting } from 'src/app/models/customermeeting.model';
 import { CustomerLevel } from 'src/app/models/customerlevel.model';
 import { Team } from 'src/app/models/team.model';
+import { CancellationReason } from 'src/app/models/cancellationreason.model';
 
 @Injectable({
   providedIn: 'root'
@@ -98,6 +99,11 @@ export class CustomersService {
 
   public async getTeams(): Promise<Team[]> {
     var response = await this.http.get<Team[]>(`${environment.apiUrl}/customer/teams`);
+    return response.toPromise();
+  }
+
+  public async getCancellationReasons(): Promise<CancellationReason[]> {
+    var response = await this.http.get<CancellationReason[]>(`${environment.apiUrl}/customer/cancellation-reasons`);
     return response.toPromise();
   }
 

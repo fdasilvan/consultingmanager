@@ -13,6 +13,8 @@ import { CustomerLevel } from 'src/app/models/customerlevel.model';
 import { NgxMaskModule } from 'ngx-mask';
 import { Team } from 'src/app/models/team.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { CancellationReason } from 'src/app/models/cancellationreason.model';
+import { CustomerCancellation } from 'src/app/models/customercancellation.model';
 
 @NgModule({
   imports: [NgxMaskModule.forChild()]
@@ -25,11 +27,18 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 })
 export class CustomerRegistrationComponent implements OnInit {
 
+  public loggedUser: User;
   constructor(private customersService: CustomersService,
     private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal) {
+
+    this.loggedUser = this.userService.getLoggedUser();
+
+    if (!this.loggedUser) {
+      this.router.navigate(['login']);
+    }
+  }
 
   public modalObject: NgbModalRef;
   public customer: Customer;
@@ -42,7 +51,9 @@ export class CustomerRegistrationComponent implements OnInit {
   public teamsList: Team[] = [];
   public consultantsList: User[] = [];
   public customerLevelsList: CustomerLevel[] = [];
+  public cancellationReasonsList: CancellationReason[] = [];
   public selectedPlan: Plan;
+  public customerCancellation: CustomerCancellation;
 
   async ngOnInit() {
     await this.loadCustomer();
@@ -82,6 +93,8 @@ export class CustomerRegistrationComponent implements OnInit {
     this.consultantsList = await this.customersService.getConsultants();
     this.customerLevelsList = await this.customersService.getCustomerLevels();
     this.teamsList = await this.customersService.getTeams();
+    this.teamsList = await this.customersService.getTeams();
+    this.cancellationReasonsList = await this.customersService.getCancellationReasons();
   }
 
   onPlanChanged(planId: string, txtMeetingsDescription: any) {
@@ -90,6 +103,15 @@ export class CustomerRegistrationComponent implements OnInit {
       let plan = arr[0];
       this.selectedPlan = plan;
       txtMeetingsDescription.value = this.selectedPlan.meetingsDescription;
+    }
+  }
+
+  onSituationChanged(customerSituationId: string, contentCancellation) {
+    // TODO: Update situation/cancellation to a constant
+    if (customerSituationId.toUpperCase() == 'EB71C684-A336-4985-A50F-923B3F439387') {
+      this.openModal(contentCancellation);
+    } else {
+      this.customerCancellation = null;
     }
   }
 
@@ -122,6 +144,32 @@ export class CustomerRegistrationComponent implements OnInit {
         }
       }
     }
+  }
+
+  async registerCancellationReason(cancellationReasonId: string, cancellationReasonDescription: string, notes: string) {
+
+    if (cancellationReasonId == '') {
+      alert('É necessário selecionar o motivo de cancelamento');
+      return;
+    }
+
+    this.customerCancellation = new CustomerCancellation();
+
+    this.customerCancellation.date = new Date();
+    this.customerCancellation.notes = notes;
+    this.customerCancellation.customerId = this.customer.id;
+    this.customerCancellation.cancellationReasonId = cancellationReasonId;
+    this.customerCancellation.userId = this.loggedUser.id;
+
+    let cancellationReason = new CancellationReason();
+    cancellationReason.id = cancellationReasonId;
+    cancellationReason.description = cancellationReasonDescription;
+    this.customerCancellation.cancellationReason = cancellationReason;
+
+    this.modalObject.close();
+
+    alert('CADASTREI O CANCELAMENTO!');
+    console.log(this.customerCancellation);
   }
 
   async SaveCustomer(name: string, externalId: string, situationId: any, customerLevelId: any, email: string, phone: string, logoUrl: string,
@@ -212,9 +260,8 @@ export class CustomerRegistrationComponent implements OnInit {
     customerDto.consultantId = consultantId;
     customerDto.subcategory = subcategory;
 
-    this.customersService.saveCustomer(customerDto)
+    await this.customersService.saveCustomer(customerDto)
       .then(newCustomer => {
-
         window.sessionStorage.setItem('customer', JSON.stringify(newCustomer));
 
         if (!this.isEdit) {
