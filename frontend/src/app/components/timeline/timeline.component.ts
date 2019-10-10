@@ -220,7 +220,9 @@ export class TimelineComponent implements OnInit {
         break;
     }
 
-    cardBlockElement.classList.remove('hide');
+    if (cardBlockElement.classList) {
+      cardBlockElement.classList.remove('hide');
+    }
     cardBlockElement.style.display = (cardBlockElement.style.display == 'none' ? '' : 'none');
   }
 
