@@ -7,7 +7,7 @@ import { CustomerCategory } from 'src/app/models/customercategory.model';
 import { Plan } from 'src/app/models/plan.model';
 import { CustomerSituation } from 'src/app/models/customersituation.model';
 import { User } from 'src/app/models/user.model';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user/user.service';
 import { CustomerLevel } from 'src/app/models/customerlevel.model';
 import { NgxMaskModule } from 'ngx-mask';
@@ -154,7 +154,6 @@ export class CustomerRegistrationComponent implements OnInit {
     }
 
     this.customerCancellation = new CustomerCancellation();
-
     this.customerCancellation.date = new Date();
     this.customerCancellation.notes = notes;
     this.customerCancellation.customerId = this.customer.id;
@@ -167,8 +166,6 @@ export class CustomerRegistrationComponent implements OnInit {
     this.customerCancellation.cancellationReason = cancellationReason;
 
     this.modalObject.close();
-
-    alert('CADASTREI O CANCELAMENTO!');
     console.log(this.customerCancellation);
   }
 
@@ -241,24 +238,24 @@ export class CustomerRegistrationComponent implements OnInit {
     }
 
     customerDto.id = (this.customer ? this.customer.id : undefined);
-    customerDto.name = name;
-    customerDto.externalId = externalId;
+    customerDto.name = name.trim();
+    customerDto.externalId = externalId.trim();
     customerDto.situationId = situationId;
     customerDto.customerLevelId = customerLevelId;
-    customerDto.email = email;
+    customerDto.email = email.trim();
     customerDto.phone = phone;
-    customerDto.logoUrl = logoUrl;
-    customerDto.storeUrl = storeUrl;
-    customerDto.storeAnalysisUrl = storeAnalysisUrl;
+    customerDto.logoUrl = logoUrl.trim();
+    customerDto.storeUrl = storeUrl.trim();
+    customerDto.storeAnalysisUrl = storeAnalysisUrl.trim();
     customerDto.cityId = cityId;
     customerDto.platformId = platformId;
     customerDto.categoryId = categoryId;
-    customerDto.customerFolderUrl = customerFolderUrl;
-    customerDto.meetingsDescription = meetingsDescription;
+    customerDto.customerFolderUrl = customerFolderUrl.trim();
+    customerDto.meetingsDescription = meetingsDescription.trim();
     customerDto.planId = planId;
     customerDto.teamId = teamId;
     customerDto.consultantId = consultantId;
-    customerDto.subcategory = subcategory;
+    customerDto.subcategory = subcategory.trim();
 
     await this.customersService.saveCustomer(customerDto)
       .then(newCustomer => {
@@ -287,7 +284,13 @@ export class CustomerRegistrationComponent implements OnInit {
               alert('Erro: não foi possível cadastrar o usuário! ' + error.error);
             });
         } else {
-          alert('Cliente atualizado com sucesso!');
+
+          if (this.customerCancellation) {
+            let result = this.customersService.addCustomerCancellation(this.customerCancellation);
+            alert('Cliente cancelado com sucesso!');
+          } else {
+            alert('Cliente atualizado com sucesso!');
+          }
 
           if (redirectToTimeline) {
             this.router.navigate(['timeline']);

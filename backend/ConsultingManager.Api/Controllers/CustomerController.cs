@@ -205,6 +205,12 @@ namespace ConsultingManager.Api.Controllers
             }
         }
 
+        [HttpPost("cancellation")]
+        public async Task<IActionResult> AddCustomerCancellation(CustomerCancellationDto customerCancellationDto)
+        {
+            return Ok(await _customerRepository.AddCustomerCancellation(customerCancellationDto));
+        }
+
         [HttpPost("platform")]
         public async Task<IActionResult> AddPlatform(PlatformDto platformDto)
         {

@@ -251,5 +251,12 @@ namespace ConsultingManager.Domain.Repository
             await Context.SaveChangesAsync();
             return newCustomer.Entity.MapTo<PlatformDto>();
         }
+
+        public async Task<CustomerCancellationDto> AddCustomerCancellation(CustomerCancellationDto customerCancellationDto)
+        {
+            var newCustomerCancellation = Context.CustomerCancellations.Add(customerCancellationDto.MapTo<CustomerCancellationPoco>());
+            await Context.SaveChangesAsync();
+            return newCustomerCancellation.Entity.MapTo<CustomerCancellationDto>();
+        }
     }
 }

@@ -14,6 +14,7 @@ import { CustomerMeeting } from 'src/app/models/customermeeting.model';
 import { CustomerLevel } from 'src/app/models/customerlevel.model';
 import { Team } from 'src/app/models/team.model';
 import { CancellationReason } from 'src/app/models/cancellationreason.model';
+import { CustomerCancellation } from 'src/app/models/customercancellation.model';
 
 @Injectable({
   providedIn: 'root'
@@ -105,6 +106,11 @@ export class CustomersService {
   public async getCancellationReasons(): Promise<CancellationReason[]> {
     var response = await this.http.get<CancellationReason[]>(`${environment.apiUrl}/customer/cancellation-reasons`);
     return response.toPromise();
+  }
+
+  public async addCustomerCancellation(customerCancellationDto: CustomerCancellation): Promise<CustomerCancellation> {
+    let response = await this.http.post<CustomerCancellation>(`${environment.apiUrl}/customer/cancellation`, customerCancellationDto).toPromise();
+    return response;
   }
 
   public async addPlatform(platformDto: Platform): Promise<Platform> {
