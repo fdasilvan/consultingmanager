@@ -8,6 +8,7 @@ import { CustomerTask } from 'src/app/models/customertask.model';
 import { DashboardsTasks } from 'src/app/models/dashboard-tasks.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Customer } from 'src/app/models/customer.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-dashboard',
@@ -55,16 +56,19 @@ export class DashboardComponent implements OnInit {
       let onTimeTasks = 0;
       let dueTasks = 0;
 
-      let now = new Date();
+      let now = moment(new Date());
 
       for (let j = 0; j < consultantTasks.length; j++) {
         let task = consultantTasks[j];
 
-        if (new Date(task.startDate).getTime() > now.getTime()) {
+        let startDate = moment.utc(new Date(task.startDate));
+        let estimatedEndDate = moment.utc(new Date(task.estimatedEndDate));
+
+        if (startDate.isAfter(now, 'day')) {
           notStartedTasks++;
-        } else if (new Date(task.startDate).getTime() <= now.getTime() && new Date(task.estimatedEndDate).getTime() >= now.getTime()) {
+        } else if (startDate.isBefore(now, 'day') && estimatedEndDate.isAfter(now, 'day')) {
           onTimeTasks++;
-        } else if (new Date(task.estimatedEndDate).getTime() < now.getTime()) {
+        } else if (estimatedEndDate.isBefore(now, 'day')) {
           dueTasks++;
         }
       }
@@ -84,8 +88,10 @@ export class DashboardComponent implements OnInit {
   consultantSelected(consultant: User, event: Event, content: any) {
     event.preventDefault();
     this.selectedConsultant = consultant;
-    let now = new Date();
-    this.dashboardDueTasks = this.customerTasks.filter(o => o.consultant.id == consultant.id && o.endDate == null && new Date(o.estimatedEndDate).getTime() < now.getTime());
+    
+    let now = moment(new Date());
+
+    this.dashboardDueTasks = this.customerTasks.filter(o => o.consultant.id == consultant.id && o.endDate == null && moment.utc(new Date(o.estimatedEndDate)).isBefore(now, 'day'));
     this.dashboardDueTasks = this.dashboardDueTasks.sort((a, b) => a.customer.name.localeCompare(b.customer.name));
     this.modalObject = this.modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' });
   }
