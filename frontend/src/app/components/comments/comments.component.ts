@@ -4,6 +4,7 @@ import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
 import { Router } from '@angular/router';
 import { CommentService } from 'src/app/services/comment/comment.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-comments',
@@ -34,6 +35,10 @@ export class CommentsComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadComments();
+  }
+
+  formatDate(date: Date) {
+    return moment(new Date(date)).format('DD/MM/YYYY HH:mm:ss');
   }
 
   async loadComments() {

@@ -6,7 +6,7 @@
     <div *ngIf="this.comments.length == 0">Ainda não há comentários para este registro!</div>
     <div class="card mb-2" *ngFor="let comment of this.comments">
       <div class="card-header">
-        <p class="username">{{comment.user.name}}</p> em {{comment.date | date: 'dd/MM/yyyy HH:mm:ss'}}
+        <p class="username">{{comment.user.name}}</p> em {{formatDate(comment.date)}}
       </div>
       <div class="card-block">{{comment.text}}</div>
     </div>
