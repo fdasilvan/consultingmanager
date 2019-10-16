@@ -30,7 +30,7 @@ namespace ConsultingManager.Domain.Repository
                 .Include(o => o.Consultant)
                 .Include(o => o.Customer)
                 .Include(o => o.TaskType)
-                .Where(o => o.EndDate == null && o.Customer.SituationId == Const.CustomerSituations.Active)
+                .Where(o => o.EndDate == null && o.Customer.SituationId == Const.CustomerSituations.Active && o.TaskTypeId == Const.TaskTypes.Consultant)
                 .Select(o => o.MapTo<CustomerTaskDto>())
                 .ToListAsync();
 
