@@ -44,6 +44,7 @@ export class ProcessRegistrationComponent implements OnInit {
   initializeProcess() {
     this.modelProcess = new ModelProcess();
     this.modelProcess.id = newGuid();
+    this.modelProcess.enabled = true;
     this.modelProcess.modelSteps = [];
   }
 
