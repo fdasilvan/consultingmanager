@@ -39,6 +39,7 @@ namespace ConsultingManager.Infra.Database
         public DbSet<UserCustomerCategoryPoco> UserCustomerCategories { get; set; }
         public DbSet<UserCustomerLevelPoco> UserCustomerLevels { get; set; }
         public DbSet<CancellationReasonPoco> CancellationReasons { get; set; }
+        public DbSet<CustomerContactPoco> CustomerContacts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
