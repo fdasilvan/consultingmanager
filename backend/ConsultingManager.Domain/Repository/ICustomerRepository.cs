@@ -23,6 +23,7 @@ namespace ConsultingManager.Domain.Repository
         Task<List<UserDto>> GetConsultants();
         Task<List<TeamDto>> GetTeams();
         Task<List<CancellationReasonDto>> GetCancellationReasons();
+        Task<List<MeetingTypeDto>> GetMeetingTypes();
         Task<CustomerCancellationDto> AddCustomerCancellation(CustomerCancellationDto customerCancellationDto);
         Task<PlatformDto> AddPlatform(PlatformDto platformDto);
     }

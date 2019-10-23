@@ -1,8 +1,16 @@
 .meeting-control {
-  width: 300px;
+  width: 30rem;
 }
 
 .meeting-date {
+  width: 40%;
+}
+
+.meeting-type-container {
+  width: 20rem;
+}
+
+.meeting-type-control {
   width: 85%;
 }
 

@@ -205,6 +205,19 @@ namespace ConsultingManager.Api.Controllers
             }
         }
 
+        [HttpGet("meeting-types")]
+        public async Task<IActionResult> GetMeetingTypes()
+        {
+            try
+            {
+                return Ok(await _customerRepository.GetMeetingTypes());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar informações.");
+            }
+        }
+
         [HttpPost("cancellation")]
         public async Task<IActionResult> AddCustomerCancellation(CustomerCancellationDto customerCancellationDto)
         {

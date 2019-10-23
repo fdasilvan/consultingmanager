@@ -245,6 +245,14 @@ namespace ConsultingManager.Domain.Repository
                 .ToListAsync();
         }
 
+        public async Task<List<MeetingTypeDto>> GetMeetingTypes()
+        {
+            return await Context.MeetingTypes
+                .Select(o => o.MapTo<MeetingTypeDto>())
+                .OrderByDescending(o => o.Description)
+                .ToListAsync();
+        }
+
         public async Task<PlatformDto> AddPlatform(PlatformDto platformDto)
         {
             var newCustomer = Context.Platforms.Add(platformDto.MapTo<PlatformPoco>());

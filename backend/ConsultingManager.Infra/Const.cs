@@ -146,5 +146,32 @@ namespace ConsultingManager.Infra
                 }
             }
         }
+
+        public static class MeetingTypes
+        {
+            public static Guid Implantation
+            {
+                get
+                {
+                    return Guid.Parse("0A5D9561-6518-47A5-89F3-034F4D0256CD");
+                }
+            }
+
+            public static Guid Consulting
+            {
+                get
+                {
+                    return Guid.Parse("38CBB2DD-E1A9-4535-A00A-DCD81CF4FD82");
+                }
+            }
+
+            public static Guid Review
+            {
+                get
+                {
+                    return Guid.Parse("C203D729-D70A-4BB8-853A-879EF62DABE1");
+                }
+            }
+        }
     }
 }

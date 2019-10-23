@@ -6,6 +6,7 @@ import { Customer } from 'src/app/models/customer.model';
 import { CustomerMeeting } from 'src/app/models/customermeeting.model';
 import { v4 as newGuid } from 'uuid';
 import { CommonService } from 'src/app/services/common/common.service';
+import { MeetingType } from 'src/app/models/meetingtype.model';
 
 @Component({
   selector: 'app-customer-meetings',
@@ -19,6 +20,7 @@ export class CustomerMeetingsComponent implements OnInit {
 
   public customer: Customer;
   public meetingsList: CustomerMeeting[] = [];
+  public meetingTypesList: MeetingType[] = [];
   public showSuggestions: boolean = false;
 
   ngOnInit() {
@@ -29,6 +31,7 @@ export class CustomerMeetingsComponent implements OnInit {
       this.router.navigate(['customers']);
     } else {
       this.loadMeetings();
+      this.loadMeetingTypes();
       this.initList();
     }
   }
@@ -37,6 +40,10 @@ export class CustomerMeetingsComponent implements OnInit {
     if (window.sessionStorage.getItem('customer') != 'undefined') {
       this.customer = <Customer>JSON.parse(window.sessionStorage.getItem('customer'));
     }
+  }
+
+  async loadMeetingTypes() {
+    this.meetingTypesList = await this.customersService.getMeetingTypes();
   }
 
   initList() {

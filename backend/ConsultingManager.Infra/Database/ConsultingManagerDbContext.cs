@@ -40,6 +40,8 @@ namespace ConsultingManager.Infra.Database
         public DbSet<UserCustomerLevelPoco> UserCustomerLevels { get; set; }
         public DbSet<CancellationReasonPoco> CancellationReasons { get; set; }
         public DbSet<CustomerContactPoco> CustomerContacts { get; set; }
+        public DbSet<ContractSituationPoco> ContractSituations { get; set; }
+        public DbSet<MeetingTypePoco> MeetingTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -98,6 +100,14 @@ namespace ConsultingManager.Infra.Database
 
             modelBuilder.Entity<TeamPoco>().HasData(new TeamPoco() { Id = Const.Teams.Implantation, Description = "Implantação" });
             modelBuilder.Entity<TeamPoco>().HasData(new TeamPoco() { Id = Const.Teams.Consulting, Description = "Consultoria" });
+
+            #endregion
+
+            #region Tipos de Reunião
+
+            modelBuilder.Entity<MeetingTypePoco>().HasData(new MeetingTypePoco() { Id = Const.MeetingTypes.Implantation, Description = "Implantação" });
+            modelBuilder.Entity<MeetingTypePoco>().HasData(new MeetingTypePoco() { Id = Const.MeetingTypes.Consulting, Description = "Consultoria" });
+            modelBuilder.Entity<MeetingTypePoco>().HasData(new MeetingTypePoco() { Id = Const.MeetingTypes.Review, Description = "Acompanhamento" });
 
             #endregion
 

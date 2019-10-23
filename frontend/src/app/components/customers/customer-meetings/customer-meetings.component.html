@@ -53,8 +53,16 @@
                     class="meeting-date form-control ml-2">
                   <p class="ml-4 text-muted">{{dayOfWeek(meeting.date)}}</p>
                 </div>
+                <div class="meeting-type-container row">
+                  <select class="meeting-type-control form-control ml-2">
+                    <option value=""></option>
+                    <option *ngFor="let meetingType of this.meetingTypesList" value="{{meetingType.id}}">
+                      {{meetingType.description}}
+                    </option>
+                  </select>
+                </div>
                 <div class="ml-2">
-                  <em (click)="removeMeeting(meeting)" class="fa fa-times"></em>
+                  <em (click)="removeMeeting(meeting)" class="fa fa-trash-o"></em>
                 </div>
               </div>
             </div>
