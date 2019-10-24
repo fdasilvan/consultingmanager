@@ -11,7 +11,6 @@ import { ModelProcess } from 'src/app/models/modelprocess.model';
 import { CustomersService } from 'src/app/services/customers/customers.service';
 import { TaskService } from 'src/app/services/task/task.service';
 import { CustomerStep } from 'src/app/models/customerstep.model';
-import { Contact } from 'src/app/models/contact.model';
 
 @Component({
   selector: 'app-timeline',
@@ -37,7 +36,6 @@ export class TimelineComponent implements OnInit {
   }
 
   public customer: Customer;
-  public contacts: Contact[];
   public customerProcessesList: CustomerProcess[];
   public modelProcessesList: ModelProcess[];
   public consultantsList: User[];
@@ -56,7 +54,6 @@ export class TimelineComponent implements OnInit {
     await this.loadCustomer();
     this.loadModelProcesses();
     this.loadCustomerProcesses(this.customer);
-    this.loadContacts(this.customer);
     this.loadConsultants();
     this.getUserPermissions();
   }
@@ -80,10 +77,6 @@ export class TimelineComponent implements OnInit {
 
   async loadCustomerProcesses(customer: Customer) {
     this.customerProcessesList = await this.processService.getCustomerProcesses(customer.id);
-  }
-
-  async loadContacts(customer: Customer) {
-    this.contacts = await this.customerService.getContacts(customer.id);
   }
 
   async loadConsultants() {
@@ -305,17 +298,6 @@ export class TimelineComponent implements OnInit {
       }
     } else {
       return 'fa fa-check success-green';
-    }
-  }
-
-  customerForm(contact: Contact) {
-    console.log(this);
-    
-    if(contact) {
-
-    } else {
-      var form = $('<div class="col-12 col-md-6 col-xl-3"><div class="card"><div class="card-body position-relative"><input type="text" class="w-100" name="contact-name" id="name" placeholder="Nome" /><input type="text" class="w-100" name="contact-role" id="role" placeholder="Função"/><input type="tel" class="w-100" name="contact-phone" id="phone" placeholder="Telefone" /><input class="w-100" type="email" name="contact-email" id="email" placeholder="E-mail" /></div></div></div>');
-      form.insertBefore($('.add-contact-container'));
     }
   }
 }

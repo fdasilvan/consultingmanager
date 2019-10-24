@@ -1,0 +1,96 @@
+<div class="row" id="contacts-container">
+  <div class="col-12 col-md-6 col-xl-3 mb-3 contact-card" *ngFor="let contact of this.contacts">
+    <ng-container *ngTemplateOutlet="ContactCard; context: {$implicit: contact}"></ng-container>
+    <ng-container *ngTemplateOutlet="editContactForm; context: {$implicit: contact}"></ng-container>
+  </div>
+  <ng-container *ngTemplateOutlet="template;"></ng-container>
+</div>
+
+<ng-template #ContactCard let-contact>
+  <div class="card h-100 display-contact-card">
+    <div class="card-body position-relative">
+      <i class="fa fa-pencil edit-icon" (click)="addContactForm(contact, $event)"></i>
+      <h4 class="text-muted w-100 d-inline-block">{{contact.name}}</h4>
+      <p class="text-muted w-100 d-inline-block m-0">{{contact.role}}</p>
+      <a href="tel:{{contact.phone}}" class="text-muted w-100 d-inline-block">{{contact.phone}}</a>
+      <a href="mailto:{{contact.email}}" class="text-muted w-100 d-inline-block">{{contact.email}}</a>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #addContactCard>
+  <div class="col-12 col-md-6 col-xl-3 mb-3 add-contact-card">
+    <div class="card h-100">
+      <div class="card-body add-contact" (click)="addContactForm(null, $event)">
+        <i class="fa fa-plus"></i>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #newContactForm>
+  <div class="col-12 col-md-6 col-xl-3 mb-3 new-contact-card">
+    <div class="card h-100">
+      <div class="card-body position-relative">
+        <form class="form">
+          <div class="form-group">
+            <input type="text" class="form-control form-control-sm" required id="contactName" #contactName
+              placeholder="Nome">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control form-control-sm" required id="contactRole" #contactRole
+              placeholder="Função">
+          </div>
+          <div class="form-group">
+            <input type="tel" class="form-control form-control-sm" mask="(00) 00000-0000" required id="contactPhone"
+              #contactPhone placeholder="Telefone">
+          </div>
+          <div class="form-group">
+            <input type="email" class="form-control form-control-sm" required id="contactEmail" #contactEmail
+              placeholder="E-mail">
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-lg btn-primary ml-1 mr-1"
+              (click)="SaveContact(contactName.value, contactRole.value, contactPhone.value, contactEmail.value)">Salvar</button>
+            <button class="btn btn-lg btn-outline-primary" type="reset">
+              Limpar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #editContactForm let-contact>
+  <div class="card h-100 edit-contact-card d-none">
+    <div class="card-body position-relative">
+      <form class="form">
+        <input type="hidden" id="contactId" #contactId value="{{contact.id}}">
+        <div class="form-group">
+          <input type="text" class="form-control form-control-sm" required value="{{contact.name}}" id="contactName" #contactName
+            placeholder="Nome">
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control form-control-sm" required id="contactRole" #contactRole
+            placeholder="Função" value="{{contact.role}}">
+        </div>
+        <div class="form-group">
+          <input type="tel" class="form-control form-control-sm" mask="(00) 00000-0000" required id="contactPhone"
+            #contactPhone placeholder="Telefone" value="{{contact.phone}}">
+        </div>
+        <div class="form-group">
+          <input type="email" class="form-control form-control-sm" required id="contactEmail" #contactEmail
+            placeholder="E-mail" value="{{contact.email}}">
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-lg btn-primary ml-1 mr-1"
+            (click)="SaveContact(contactName.value, contactRole.value, contactPhone.value, contactEmail.value, contactId.value)">Salvar</button>
+          <button class="btn btn-lg btn-outline-primary" type="reset">
+            Limpar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>

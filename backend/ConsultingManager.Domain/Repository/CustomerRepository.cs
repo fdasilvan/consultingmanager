@@ -237,15 +237,18 @@ namespace ConsultingManager.Domain.Repository
                 {
                     if (customerId == customerContactDto.CustomerId)
                     {
-                        var customerMeetingToEdit = await Context.CustomerContacts.SingleOrDefaultAsync(o => o.Id == customerContactDto.Id);
+                        var customerContactToEdit = await Context.CustomerContacts.SingleOrDefaultAsync(o => o.Id == customerContactDto.Id);
 
-                        if (customerMeetingToEdit == null)
+                        if (customerContactToEdit == null)
                         {
                             var lst = Context.CustomerContacts.Add(customerContactDto.MapTo<CustomerContactPoco>());
                         }
                         else
                         {
-                            customerMeetingToEdit = customerContactDto.MapTo<CustomerContactPoco>();
+                            customerContactToEdit.Name = customerContactDto.Name;
+                            customerContactToEdit.Email = customerContactDto.Email;
+                            customerContactToEdit.Role = customerContactDto.Role;
+                            customerContactToEdit.Phone = customerContactDto.Phone;
                         }
                     }
                 }

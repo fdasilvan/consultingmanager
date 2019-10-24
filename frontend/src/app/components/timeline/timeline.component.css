@@ -53,21 +53,6 @@
   float: right;
 }
 
-.add-contact {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 3rem;
-  cursor: pointer;
-}
-
-.edit-icon {
-  top: .5rem;
-  position: absolute;
-  right: .5rem;
-  cursor: pointer;
-}
-
 .success-green {
 	color: #8ad919;
 }

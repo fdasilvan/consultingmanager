@@ -17,26 +17,7 @@
   <div class="col-12">
     <div class="mt-4">
       <h3>Contatos do Cliente</h3>
-      <div class="row">
-        <div class="col-12 col-md-6 col-xl-3" *ngFor="let contact of this.contacts">
-          <div class="card">
-            <div class="card-body position-relative">
-              <i class="fa fa-pencil edit-icon" (click)="customerForm(contact, $event)"></i>
-              <h4 class="text-muted w-100 d-inline-block">{{contact.name}}</h4>
-              <p class="text-muted w-100 d-inline-block m-0">{{contact.role}}</p>
-              <a href="tel:{{contact.phone}}" class="text-muted w-100 d-inline-block">{{contact.phone}}</a>
-              <a href="mailto:{{contact.email}}" class="text-muted w-100 d-inline-block">{{contact.email}}</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-xl-3 add-contact-container">
-          <div class="card h-100">
-            <div class="card-body add-contact" (click)="customerForm(null, $event)">
-                <i class="fa fa-plus"></i>
-            </div>
-          </div>
-        </div>
-      </div>
+      <app-contacts customerId="{{customer.id}}"></app-contacts>
     </div>
 
     <div *ngIf="this.loggedUser.userType.description != 'Cliente'" class="mt-4 mb-4">
