@@ -1,22 +1,23 @@
-<section class="row">
-  <div class="col-12">
-    <div class="customer-info">
+<div class="customer-info">
+  <div class="customer-header">
+    <div class="customer-header__info">
       <img src="/assets/images/user-icon.jpg" alt="profile photo" class="circle float-left profile-photo customerLogo"
         width="50" height="auto" />
-      <h2 class="mb-2">{{customer.name}}</h2>
-      <p *ngIf="customer.customerLevel" class="text-muted">Nível de Cliente: {{customer.customerLevel.description}}</p>
-      <p *ngIf="customer.consultant" class="text-muted">Consultor Responsável: {{customer.consultant.name}}</p>
-      <p class="text-muted">Telefone: {{(customer.phone && customer.phone != '' ? customer.phone : 'Não informado')}}
-      </p>
-      <a href="https://{{customer.storeUrl}}" target="_blank">https://{{customer.storeUrl}}</a>
+      <h2 class="mb-2 customer-name">{{customer.name}}</h2>
+      <a href="https://{{customer.storeUrl}}" target="_blank" class="customer-store__url text-muted">https://{{customer.storeUrl}}</a>
+      <p *ngIf="!(customer.phone && customer.phone != '')" class="text-muted customer-phone">Não informado</p>
+      <a *ngIf="(customer.phone && customer.phone != '')" href="tel:{{customer.phone}}" class="text-muted customer-phone">{{customer.phone}}</a>
+    </div>
+    <p *ngIf="customer.customerLevel" class="text-muted customer-level">{{customer.customerLevel.description}}</p>
+    <p *ngIf="customer.consultant" class="text-muted customer-consultant">Consultor Responsável: {{customer.consultant.name}}</p>
+  </div>
+</div>
 
-      <div class="mt-4">
-        <h3>Contatos do Cliente</h3>
-        <div *ngFor="let user of this.customer.users">
-          <p class="text-muted">Nome: {{user.name}}</p>
-          <p class="text-muted">E-mail: {{user.email}}</p>
-        </div>
-      </div>
+<section class="row">
+  <div class="col-12">
+    <div class="mt-4">
+      <h3>Contatos do Cliente</h3>
+      <app-contacts customerId="{{customer.id}}"></app-contacts>
     </div>
 
     <div *ngIf="this.loggedUser.userType.description != 'Cliente'" class="mt-4 mb-4">

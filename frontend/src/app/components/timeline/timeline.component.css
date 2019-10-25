@@ -10,6 +10,49 @@
   display: inline;
 }
 
+.customer-header {
+  border-bottom: 1px solid #dfdfdf;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.customer-header .customer-name {
+  display: inline;
+  border: none;
+}
+
+.customer-header .customer-level {
+  margin-bottom: 0;
+}
+
+.customer-header h2,
+.customer-header .customer-store__url,
+.customer-header .customer-phone {
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.customer-header .customer-store__url {
+  margin-left: .5rem;
+}
+
+.customer-header .customer-consultant,
+.customer-header .customer-level {
+  position: absolute;
+  top: -1rem;
+  left: 4.5rem;
+}
+
+.customer-header .customer-level {
+  top: auto;
+  bottom: 0;
+}
+
+.customer-phone {
+  float: right;
+}
+
 .success-green {
 	color: #8ad919;
 }
