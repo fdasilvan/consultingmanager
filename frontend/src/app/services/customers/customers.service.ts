@@ -16,6 +16,7 @@ import { Team } from 'src/app/models/team.model';
 import { CancellationReason } from 'src/app/models/cancellationreason.model';
 import { CustomerCancellation } from 'src/app/models/customercancellation.model';
 import { MeetingType } from 'src/app/models/meetingtype.model';
+import { CustomerContact } from 'src/app/models/customercontact.model';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +47,16 @@ export class CustomersService {
 
   public async getMeetings(customerId: string): Promise<CustomerMeeting[]> {
     var response = await this.http.get<CustomerMeeting[]>(`${environment.apiUrl}/customer/${customerId}/meetings`);
+    return response.toPromise();
+  }
+
+  public async saveContacts(customerId: string, customerContacts: CustomerContact[]): Promise<boolean> {
+    let response = await this.http.post<boolean>(`${environment.apiUrl}/customer/${customerId}/contacts`, customerContacts).toPromise();
+    return response;
+  }
+
+  public async getContacts(customerId: string): Promise<CustomerContact[]> {
+    var response = await this.http.get<CustomerContact[]>(`${environment.apiUrl}/customer/${customerId}/contacts`);
     return response.toPromise();
   }
 

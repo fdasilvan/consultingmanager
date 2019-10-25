@@ -82,6 +82,32 @@ namespace ConsultingManager.Api.Controllers
             }
         }
 
+        [HttpPost("{customerId}/contacts")]
+        public async Task<IActionResult> AddContacts(Guid customerId, List<CustomerContactDto> customerContactDto)
+        {
+            try
+            {
+                return Ok(await _customerRepository.AddCustomer(customerId, customerContactDto));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao atualizar cliente: " + ex.Message);
+            }
+        }
+
+        [HttpGet("{customerId}/contacts")]
+        public async Task<IActionResult> GetContacts(Guid customerId)
+        {
+            try
+            {
+                return Ok(await _customerRepository.GetCustomerContacts(customerId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar contatos: " + ex.Message);
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
