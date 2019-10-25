@@ -1,0 +1,91 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Iniciar Ação</h4>
+  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form>
+    <div class="form-group">
+      <label for="lstModelProcess">Ação (obrigatória)</label>
+      <div class="input-group d-inline">
+        <ng-autocomplete [data]="modelProcessesListData" searchKeyword="description"
+          (selected)='updateSelectedModelProcess($event.id)' (inputChanged)='onModelProcessChangeSearch($event)' (inputFocused)='onModelProcessFocused($event)'
+          [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" placeHolder="Ação">
+        </ng-autocomplete>
+      </div>
+      <div class="form-group mt-2">
+        <button class="btn btn-warning margin mr-1" (click)="openModal(contentProcessView)" type="button"><span
+            class="fa fa-search"></span> Visualizar Ação</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="txtStartDate">Detalhes (opcional)</label>
+      <div class="input-group">
+        <input #txtDetail id="txtDetail" class="form-control" placeholder="(Ex.: produto X ou categoria Y)">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="lstConsultantsStartProcess">Consultor (obrigatório)</label>
+      <div class="input-group">
+        <select #lstConsultantsStartProcess id="lstConsultantsStartProcess" class="custom-select form-control"
+          [disabled]="!this.canAssignTask">
+          <option value="">
+            Selecionar
+          </option>
+          <option *ngFor="let consultant of this.consultantsList" value="{{consultant.id}}"
+            [selected]="((!canAssignTask && this.loggedUser.id == consultant.id) ? true : false)">
+            {{consultant.name}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="lstUsers">Cliente (obrigatório)</label>
+      <div class="input-group">
+        <select #lstUsers id="lstUsers" class="custom-select form-control">
+          <option *ngFor="let user of this.customer.users" value="{{user.id}}">
+            {{user.name}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="txtStartDate">Data de Início (obrigatório)</label>
+      <div class="input-group">
+        <input #txtStartDate id="txtStartDate" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
+          #dp="ngbDatepicker" value="{{this.today | date: 'yyyy-MM-dd'}}">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary calendar fa fa-calendar" (click)="dp.toggle()"
+            type="button"></button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark"
+    (click)="startCustomerProcess(lstModelProcess.value, lstModelProcess[lstModelProcess.selectedIndex].text, txtDetail.value, lstConsultantsStartProcess.value, lstUsers.value, txtStartDate.value)">Incluir</button>
+</div>
+
+<ng-template #contentProcessView let-modalProcessView>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Visualização de Ação</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalProcessView.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <app-process-view [(modelProcessId)]="this.selectedModelProcessId"></app-process-view>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #itemTemplate let-item>
+  <a [innerHTML]="item.description"></a>
+</ng-template>
+
+<ng-template #notFoundTemplate let-notFound>
+  <div innerHTML="Nenhum valor encontrado"></div>
+</ng-template>
