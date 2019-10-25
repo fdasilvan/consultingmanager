@@ -56,7 +56,7 @@ export class ContactsComponent implements OnInit {
   addContactForm(contact: Contact, event: any) {
     if(contact) {
       let container:HTMLElement = event.target.closest('.contact-card');
-      container.getElementsByClassName('display-contact-card')[0].classList.toggle("d-none");
+      container.getElementsByClassName('display-contact-card')[0].classList.add("d-none");
       container.getElementsByClassName('edit-contact-card')[0].classList.remove("d-none");
     } else {
       this.template = this.newContactFormTemplate;
@@ -115,5 +115,15 @@ export class ContactsComponent implements OnInit {
         console.log(error.error)
         this.ngOnInit();
       });
+  }
+
+  Clear(type: string, event: any) {
+    if(type === 'edit') {
+      let container:HTMLElement = event.target.closest('.contact-card');
+      container.getElementsByClassName('display-contact-card')[0].classList.remove("d-none");
+      container.getElementsByClassName('edit-contact-card')[0].classList.add("d-none");
+    } else {
+      this.template = this.addContactCardTemplate;
+    }
   }
 }
