@@ -46,9 +46,14 @@ export class CustomersService {
     return response;
   }
 
-  public async getMeetings(customerId: string): Promise<CustomerMeeting[]> {
-    var response = await this.http.get<CustomerMeeting[]>(`${environment.apiUrl}/customer/${customerId}/meetings`);
-    return response.toPromise();
+  public async getMeetings(customerId: string, contractId: string): Promise<CustomerMeeting[]> {
+    if (contractId && contractId != '') {
+      var response = await this.http.get<CustomerMeeting[]>(`${environment.apiUrl}/customer/${customerId}/contract/${contractId}/meetings`);
+      return response.toPromise();
+    } else {
+      var response = await this.http.get<CustomerMeeting[]>(`${environment.apiUrl}/customer/${customerId}/meetings`);
+      return response.toPromise();
+    }
   }
 
   public async saveContacts(customerId: string, customerContacts: CustomerContact[]): Promise<boolean> {

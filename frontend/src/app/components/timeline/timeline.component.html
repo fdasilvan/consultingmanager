@@ -23,6 +23,18 @@
       <app-contacts customerId="{{customer.id}}"></app-contacts>
     </div>
 
+    <div class="mt-4 mb-4">
+      <label for="lstContracts">Contrato: </label>
+      <select #lstContracts id="lstContract" class="form-control" (change)="onContractChanged(lstContracts.value)">
+        <option value="">Contrato não informado</option>
+        <option *ngFor="let contract of this.customerContractsList"
+          [selected]="(contract.contractSituation.description == 'Ativo' ? true : false)" value="{{contract.id}}">
+          {{contract.number}} - {{contract.startDate | date: 'dd/MM/yyyy'}} a {{contract.endDate | date: 'dd/MM/yyyy'}}
+          - {{contract.plan.description}} - {{contract.contractSituation.description}}
+        </option>
+      </select>
+    </div>
+
     <div *ngIf="this.loggedUser.userType.description != 'Cliente'" class="mt-4 mb-4">
       <button class="btn btn-warning margin mr-1" (click)="openModal(content)" type="button"><span
           class="fa fa-plus"></span> Ação</button>
@@ -114,9 +126,8 @@
                         </td>
                         <td>{{task.taskType.description}}</td>
                         <td>
-                          <h4><a href="javascript:void(0)"
-                              (click)="updateSelectedTask(this.task, $event)">{{task.description}}</a>
-                          </h4>
+                          <a href="javascript:void(0)"
+                            (click)="updateSelectedTask(this.task, $event)">{{task.description}}</a>
                         </td>
                         <td>
                           <button *ngIf="task.endDate == null" class="btn btn-success margin mr-1"

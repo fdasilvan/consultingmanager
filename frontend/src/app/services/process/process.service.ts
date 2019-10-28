@@ -60,9 +60,14 @@ export class ProcessService {
     return response;
   }
 
-  public async getCustomerProcesses(customerId: string): Promise<CustomerProcess[]> {
-    var response = await this.http.get<CustomerProcess[]>(`${environment.apiUrl}/process/customer/${customerId}`);
-    return response.toPromise();
+  public async getCustomerProcesses(customerId: string, contractId: string): Promise<CustomerProcess[]> {
+    if (contractId == '') {
+      var response = await this.http.get<CustomerProcess[]>(`${environment.apiUrl}/process/customer/${customerId}`);
+      return response.toPromise();
+    } else {
+      var response = await this.http.get<CustomerProcess[]>(`${environment.apiUrl}/process/customer/${customerId}/contract/${contractId}`);
+      return response.toPromise();
+    }
   }
 
   public async finishStep(customerStepId: string) {

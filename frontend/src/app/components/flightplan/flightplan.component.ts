@@ -32,6 +32,7 @@ export class FlightplanComponent implements OnInit {
   }
 
   public customer: Customer;
+  public selectedContractId: string;
   public meetings: CustomerMeeting[] = [];
   public customerProcesses: CustomerProcess[] = []
   public filteredCustomerProcesses: CustomerProcess[] = []
@@ -43,6 +44,7 @@ export class FlightplanComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadCustomer();
+    await this.loadContract();
     await this.loadCustomerProcesses();
     await this.loadMeetings();
     await this.loadModelProcesses();
@@ -54,19 +56,25 @@ export class FlightplanComponent implements OnInit {
     }
   }
 
+  loadContract() {
+    if (window.sessionStorage.getItem('contract') != 'undefined') {
+      this.selectedContractId = window.sessionStorage.getItem('contract');
+    }
+  }
+
   async loadModelProcesses() {
     this.modelProcessesList = await this.processService.getModelProcesses();
   }
 
   async loadCustomerProcesses() {
-    this.customerProcesses = await this.processService.getCustomerProcesses(this.customer.id);
+    this.customerProcesses = await this.processService.getCustomerProcesses(this.customer.id, this.selectedContractId);
     if (this.selectedMeeting) {
       this.filteredCustomerProcesses = this.customerProcesses.filter(o => o.customerMeetingId == this.selectedMeeting.id);
     }
   }
 
   async loadMeetings() {
-    this.meetings = await this.customersService.getMeetings(this.customer.id);
+    this.meetings = await this.customersService.getMeetings(this.customer.id, this.selectedContractId);
     this.meetings.forEach(meeting => {
       meeting.processes = this.customerProcesses.filter(o => o.customerMeetingId == meeting.id);
     });

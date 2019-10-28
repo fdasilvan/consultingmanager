@@ -317,13 +317,35 @@ namespace ConsultingManager.Domain.Repository
             return processesList;
         }
 
-        public async Task<List<CustomerProcessDto>> GetCustomerTasks(Guid customerId)
+        public async Task<List<CustomerProcessDto>> GetCustomerTasks(Guid customerId, Guid? contractId)
         {
-            List<CustomerProcessDto> processesList = await Context.CustomerProcesses
-                .Include(process => process.CustomerSteps)
-                .Where(process => process.CustomerId == customerId)
-                .Select(process => process.MapTo<CustomerProcessDto>())
-                .ToListAsync();
+            List<CustomerProcessDto> processesList = new List<CustomerProcessDto>();
+
+            if (contractId.HasValue)
+            {
+                var customerMeetings = Context.CustomerMeetings
+                    .Where(o => o.ContractId == contractId.Value)
+                    .ToList();
+
+                foreach (CustomerMeetingPoco customerMeeting in customerMeetings)
+                {
+                    var meetingProcesses = await Context.CustomerProcesses
+                        .Include(process => process.CustomerSteps)
+                        .Where(process => process.CustomerMeetingId == customerMeeting.Id)
+                        .Select(process => process.MapTo<CustomerProcessDto>())
+                        .ToListAsync();
+
+                    processesList.AddRange(meetingProcesses);
+                }
+            }
+            else
+            {
+                processesList = await Context.CustomerProcesses
+                    .Include(process => process.CustomerSteps)
+                    .Where(process => process.CustomerId == customerId)
+                    .Select(process => process.MapTo<CustomerProcessDto>())
+                    .ToListAsync();
+            }
 
             foreach (CustomerProcessDto customerProcess in processesList)
             {

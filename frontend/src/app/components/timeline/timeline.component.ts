@@ -11,6 +11,7 @@ import { ModelProcess } from 'src/app/models/modelprocess.model';
 import { CustomersService } from 'src/app/services/customers/customers.service';
 import { TaskService } from 'src/app/services/task/task.service';
 import { CustomerStep } from 'src/app/models/customerstep.model';
+import { Contract } from 'src/app/models/contract.model';
 
 @Component({
   selector: 'app-timeline',
@@ -39,6 +40,7 @@ export class TimelineComponent implements OnInit {
   public customerProcessesList: CustomerProcess[];
   public modelProcessesList: ModelProcess[];
   public consultantsList: User[];
+  public customerContractsList: Contract[] = [];
   public today: Date = new Date();
   public modalObject: NgbModalRef;
   public canDeleteProcess: boolean;
@@ -47,15 +49,17 @@ export class TimelineComponent implements OnInit {
   public selectedModelProcessId: string;
   public selectedCustomerProcessId: string;
   public selectedCustomerStepId: string;
+  public selectedContractId: string;
 
   closeResult: string;
 
   async ngOnInit() {
     await this.loadCustomer();
     this.loadModelProcesses();
-    this.loadCustomerProcesses(this.customer);
     this.loadConsultants();
     this.getUserPermissions();
+    await this.loadContracts();
+    await this.loadCustomerProcesses(this.customer, this.selectedContractId);
   }
 
   getUserPermissions() {
@@ -75,12 +79,21 @@ export class TimelineComponent implements OnInit {
     this.modelProcessesList = await this.processService.getModelProcesses();
   }
 
-  async loadCustomerProcesses(customer: Customer) {
-    this.customerProcessesList = await this.processService.getCustomerProcesses(customer.id);
+  async loadCustomerProcesses(customer: Customer, contractId: string) {
+    this.customerProcessesList = await this.processService.getCustomerProcesses(customer.id, contractId);
   }
 
   async loadConsultants() {
     this.consultantsList = await this.customerService.getConsultants();
+  }
+
+  async loadContracts() {
+    this.customerContractsList = await this.customerService.getContracts(this.customer.id);
+    let activeContract = this.customerContractsList.filter(o => o.contractSituation.description == 'Ativo');
+
+    if (activeContract.length > 0) {
+      this.selectedContractId = activeContract[0].id;
+    }
   }
 
   openModal(content) {
@@ -105,7 +118,7 @@ export class TimelineComponent implements OnInit {
     this.modalObject.close();
     await this.taskService.rescheduleProcess(this.selectedCustomerProcessId, businessDaysToAdd);
     alert('Ação replanejada com sucesso!');
-    this.loadCustomerProcesses(this.customer);
+    this.loadCustomerProcesses(this.customer, this.selectedContractId);
   }
 
   async rescheduleStep(businessDaysToAdd: number) {
@@ -116,7 +129,7 @@ export class TimelineComponent implements OnInit {
     this.modalObject.close();
     await this.taskService.rescheduleStep(this.selectedCustomerStepId, businessDaysToAdd);
     alert('Etapa replanejada com sucesso!');
-    this.loadCustomerProcesses(this.customer);
+    this.loadCustomerProcesses(this.customer, this.selectedContractId);
   }
 
   async startCustomerProcess(modelProcessId: string, modelDescription: string, detail: string, consultantId: string, customerUserId: string, startDate: string) {
@@ -126,7 +139,7 @@ export class TimelineComponent implements OnInit {
       this.modalObject.close();
       let ownerId = (consultantId && consultantId == '' ? this.loggedUser.id : consultantId);
       await this.processService.startCustomerProcess(modelProcessId, modelDescription, detail, this.customer.id, ownerId, customerUserId, new Date(startDate), null);
-      this.loadCustomerProcesses(this.customer);
+      this.loadCustomerProcesses(this.customer, this.selectedContractId);
     }
   }
 
@@ -134,7 +147,7 @@ export class TimelineComponent implements OnInit {
     let result = confirm('Tem certeza que quer excluir a ação?');
     if (result) {
       await this.processService.delete(customerProcessId);
-      this.loadCustomerProcesses(this.customer);
+      this.loadCustomerProcesses(this.customer, this.selectedContractId);
     }
   }
 
@@ -145,7 +158,7 @@ export class TimelineComponent implements OnInit {
 
     if (result) {
       await this.taskService.finishTask(taskId);
-      await this.loadCustomerProcesses(this.customer);
+      await this.loadCustomerProcesses(this.customer, this.selectedContractId);
 
       let processesToVerify = this.customerProcessesList.filter(o => o.id == customerProcessId);
 
@@ -176,7 +189,7 @@ export class TimelineComponent implements OnInit {
 
     if (result) {
       await this.processService.finishStep(stepId);
-      await this.loadCustomerProcesses(this.customer);
+      await this.loadCustomerProcesses(this.customer, this.selectedContractId);
 
       let scrollY = window.sessionStorage.getItem('timeline_scroll');
       if (scrollY && scrollY != 'null') {
@@ -187,6 +200,11 @@ export class TimelineComponent implements OnInit {
 
   updateSelectedModelProcess(modelProcessId: string) {
     this.selectedModelProcessId = modelProcessId;
+  }
+
+  async onContractChanged(contractId: string) {
+    this.selectedContractId = contractId;
+    await this.loadCustomerProcesses(this.customer, this.selectedContractId);
   }
 
   async loadCustomer() {
@@ -276,11 +294,13 @@ export class TimelineComponent implements OnInit {
 
   customerMeetings() {
     window.sessionStorage.setItem('customer', JSON.stringify(this.customer));
+    window.sessionStorage.setItem('contract',this.selectedContractId);
     this.router.navigate(['customer-meetings']);
   }
 
   customerFlightplan() {
     window.sessionStorage.setItem('customer', JSON.stringify(this.customer));
+    window.sessionStorage.setItem('contract',this.selectedContractId);
     this.router.navigate(['flightplan']);
   }
 

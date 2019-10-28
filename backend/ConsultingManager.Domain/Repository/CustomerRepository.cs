@@ -110,6 +110,23 @@ namespace ConsultingManager.Domain.Repository
             }
         }
 
+        public async Task<List<CustomerMeetingDto>> GetMeetingsByContract(Guid customerId, Guid contractId)
+        {
+            try
+            {
+                return await Context.CustomerMeetings
+                    .Include(o => o.Customer)
+                        .ThenInclude(o => o.Plan)
+                    .Where(o => o.CustomerId == customerId && o.ContractId == contractId)
+                    .Select(o => o.MapTo<CustomerMeetingDto>())
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task<bool> AddMeetings(Guid customerId, List<CustomerMeetingDto> customerMeetings)
         {
             try
@@ -127,6 +144,8 @@ namespace ConsultingManager.Domain.Repository
                         else
                         {
                             customerMeetingToEdit.Date = customerMeetingDto.Date;
+                            customerMeetingDto.MeetingTypeId = customerMeetingDto.MeetingTypeId;
+                            customerMeetingDto.IsFinished = customerMeetingDto.IsFinished;
                         }
                     }
                 }

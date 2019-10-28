@@ -100,11 +100,24 @@ namespace ConsultingManager.Api.Controllers
         {
             try
             {
-                return Ok(await _processRepository.GetCustomerTasks(customerId));
+                return Ok(await _processRepository.GetCustomerTasks(customerId, null));
             }
             catch (Exception ex)
             {
                 return BadRequest("Erro ao buscar atividades do cliente.");
+            }
+        }
+
+        [HttpGet("customer/{customerId}/contract/{contractId}")]
+        public async Task<IActionResult> GetCustomerTasksByContract(Guid customerId, Guid contractId)
+        {
+            try
+            {
+                return Ok(await _processRepository.GetCustomerTasks(customerId, contractId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar atividades do cliente/contrato.");
             }
         }
 

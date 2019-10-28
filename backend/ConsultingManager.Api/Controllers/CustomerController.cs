@@ -82,6 +82,19 @@ namespace ConsultingManager.Api.Controllers
             }
         }
 
+        [HttpGet("{customerId}/contract/{contractId}/meetings")]
+        public async Task<IActionResult> GetMeetingsByContract(Guid customerId, Guid contractId)
+        {
+            try
+            {
+                return Ok(await _customerRepository.GetMeetingsByContract(customerId, contractId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao atualizar cliente: " + ex.Message);
+            }
+        }
+
         [HttpPost("{customerId}/contacts")]
         public async Task<IActionResult> AddContacts(Guid customerId, List<CustomerContactDto> customerContactDto)
         {

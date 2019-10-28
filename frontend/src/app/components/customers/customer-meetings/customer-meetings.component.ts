@@ -19,19 +19,21 @@ export class CustomerMeetingsComponent implements OnInit {
     private customersService: CustomersService) { }
 
   public customer: Customer;
+  public selectedContractId: string;
   public meetingsList: CustomerMeeting[] = [];
   public meetingTypesList: MeetingType[] = [];
   public showSuggestions: boolean = false;
 
-  ngOnInit() {
-    this.loadCustomer();
+  async ngOnInit() {
+    await this.loadCustomer();
+    await this.loadContract();
 
     if (!this.customer.planId) {
       alert('O cliente não possui um plano cadastrado. Favor atualizar o cadastro do mesmo!');
       this.router.navigate(['customers']);
     } else {
-      this.loadMeetings();
-      this.loadMeetingTypes();
+      await this.loadMeetings();
+      await this.loadMeetingTypes();
       this.initList();
     }
   }
@@ -39,6 +41,12 @@ export class CustomerMeetingsComponent implements OnInit {
   loadCustomer() {
     if (window.sessionStorage.getItem('customer') != 'undefined') {
       this.customer = <Customer>JSON.parse(window.sessionStorage.getItem('customer'));
+    }
+  }
+
+  loadContract() {
+    if (window.sessionStorage.getItem('contract') != 'undefined') {
+      this.selectedContractId = window.sessionStorage.getItem('contract');
     }
   }
 
@@ -53,7 +61,7 @@ export class CustomerMeetingsComponent implements OnInit {
   }
 
   async loadMeetings() {
-    this.meetingsList = await this.customersService.getMeetings(this.customer.id);
+    this.meetingsList = await this.customersService.getMeetings(this.customer.id, this.selectedContractId);
     this.orderMeetings();
   }
 
@@ -64,6 +72,7 @@ export class CustomerMeetingsComponent implements OnInit {
     customerMeeting.date = new Date();
     customerMeeting.originalDate = new Date();
     customerMeeting.customerId = this.customer.id;
+    customerMeeting.contractId = this.selectedContractId;
 
     this.meetingsList.push(customerMeeting);
   }
@@ -88,6 +97,7 @@ export class CustomerMeetingsComponent implements OnInit {
     newMeetingObj.customerId = this.customer.id;
     newMeetingObj.date = new Date(newDate.getTime());
     newMeetingObj.originalDate = new Date(newDate.getTime());
+    newMeetingObj.contractId = this.selectedContractId;
 
     this.meetingsList.push(newMeetingObj);
 
@@ -120,9 +130,9 @@ export class CustomerMeetingsComponent implements OnInit {
   }
 
   public saveProcess() {
+    console.log(this.meetingsList);
     this.customersService.saveMeetings(this.customer.id, this.meetingsList)
       .then(meetingsList => {
-        console.log(meetingsList);
         alert('Encontros salvos com sucesso!');
         window.sessionStorage.setItem('customer', JSON.stringify(this.customer));
         this.router.navigate(['flightplan']);

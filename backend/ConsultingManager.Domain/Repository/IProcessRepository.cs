@@ -13,7 +13,7 @@ namespace ConsultingManager.Domain.Repository
         Task<bool> Delete(Guid customerProcessId);
         Task<ModelStepDto> DisableModelStep(Guid modelStepId);
         Task<CustomerProcessDto> StartCustomerProcess(ModelProcessDto modelProcessDto, Guid customerId, Guid consultantId, Guid customerUserId, DateTime startDate, string detail, Guid? customerMeetingId);
-        Task<List<CustomerProcessDto>> GetCustomerTasks(Guid customerId);
+        Task<List<CustomerProcessDto>> GetCustomerTasks(Guid customerId, Guid? contractId);
         Task<bool> FinishStep(Guid customerStepId);
     }
 }
