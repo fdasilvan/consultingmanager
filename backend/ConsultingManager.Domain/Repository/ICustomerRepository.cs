@@ -18,8 +18,11 @@ namespace ConsultingManager.Domain.Repository
         Task<List<CustomerCategoryDto>> GetCustomerCategories();
         Task<List<CustomerSituationDto>> GetCustomerSituations();
         Task<List<CustomerLevelDto>> GetCustomerLevels();
+        Task<List<ContractSituationDto>> GetContractSituations();
         Task<List<CustomerContactDto>> GetCustomerContacts(Guid customerId);
-        Task<bool> AddCustomer(Guid customerId, List<CustomerContactDto> customerContacts);
+        Task<List<ContractDto>> GetCustomerContracts(Guid customerId);
+        Task<bool> AddCustomerContacts(Guid customerId, List<CustomerContactDto> customerContacts);
+        Task<bool> SaveContract(Guid customerId, ContractDto contract);
         Task<List<PlanDto>> GetPlans();
         Task<List<PlatformDto>> GetPlatforms();
         Task<List<UserDto>> GetConsultants();

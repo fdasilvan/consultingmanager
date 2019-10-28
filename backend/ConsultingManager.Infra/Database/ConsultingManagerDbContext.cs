@@ -42,6 +42,7 @@ namespace ConsultingManager.Infra.Database
         public DbSet<CustomerContactPoco> CustomerContacts { get; set; }
         public DbSet<ContractSituationPoco> ContractSituations { get; set; }
         public DbSet<MeetingTypePoco> MeetingTypes { get; set; }
+        public DbSet<ContractPoco> Contracts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -108,6 +109,16 @@ namespace ConsultingManager.Infra.Database
             modelBuilder.Entity<MeetingTypePoco>().HasData(new MeetingTypePoco() { Id = Const.MeetingTypes.Implantation, Description = "Implantação" });
             modelBuilder.Entity<MeetingTypePoco>().HasData(new MeetingTypePoco() { Id = Const.MeetingTypes.Consulting, Description = "Consultoria" });
             modelBuilder.Entity<MeetingTypePoco>().HasData(new MeetingTypePoco() { Id = Const.MeetingTypes.Review, Description = "Acompanhamento" });
+
+            #endregion
+
+            #region Situações do Contrato
+
+            modelBuilder.Entity<ContractSituationPoco>().HasData(new ContractSituationPoco() { Id = Const.ContractSituations.Active, Description = "Ativo" });
+            modelBuilder.Entity<ContractSituationPoco>().HasData(new ContractSituationPoco() { Id = Const.ContractSituations.Paused, Description = "Pausado" });
+            modelBuilder.Entity<ContractSituationPoco>().HasData(new ContractSituationPoco() { Id = Const.ContractSituations.Blocked, Description = "Bloqueado" });
+            modelBuilder.Entity<ContractSituationPoco>().HasData(new ContractSituationPoco() { Id = Const.ContractSituations.Canceled, Description = "Cancelado" });
+            modelBuilder.Entity<ContractSituationPoco>().HasData(new ContractSituationPoco() { Id = Const.ContractSituations.Completed, Description = "Concluído" });
 
             #endregion
 

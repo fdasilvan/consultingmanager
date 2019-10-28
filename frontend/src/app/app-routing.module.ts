@@ -16,6 +16,7 @@ import { CustomerMeetingsComponent } from './components/customers/customer-meeti
 import { FlightplanComponent } from './components/flightplan/flightplan.component';
 import { ConsultantRegistrationComponent } from './components/users/consultant-registration/consultant-registration.component';
 import { ConsultantsListComponent } from './components/users/consultants-list/consultants-list.component';
+import { CustomerContractsComponent } from './components/customers/customer-contracts/customer-contracts.component';
 
 const routes: Routes = [
   {
@@ -57,6 +58,10 @@ const routes: Routes = [
   {
     path: 'customer-meetings',
     component: CustomerMeetingsComponent
+  },
+  {
+    path: 'customer-contracts',
+    component: CustomerContractsComponent
   },
   {
     path: 'flightplan',

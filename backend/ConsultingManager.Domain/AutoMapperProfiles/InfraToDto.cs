@@ -35,6 +35,8 @@ namespace ConsultingManager.Domain
             CreateMap<UserCustomerCategoryDto, UserCustomerCategoryPoco>().ForAllOtherMembers(opts => opts.MapAtRuntime());
             CreateMap<UserCustomerLevelPoco, UserCustomerLevelDto>().ForAllOtherMembers(opts => opts.MapAtRuntime());
             CreateMap<UserCustomerLevelDto, UserCustomerLevelPoco>().ForAllOtherMembers(opts => opts.MapAtRuntime());
+            CreateMap<ContractPoco, ContractDto>().ForAllOtherMembers(opts => opts.MapAtRuntime());
+            CreateMap<ContractDto, ContractPoco>().ForAllOtherMembers(opts => opts.MapAtRuntime());
         }
     }
 }

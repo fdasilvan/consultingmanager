@@ -220,6 +220,14 @@ namespace ConsultingManager.Domain.Repository
                 .ToListAsync();
         }
 
+        public async Task<List<ContractSituationDto>> GetContractSituations()
+        {
+            return await Context.ContractSituations
+                .Select(o => o.MapTo<ContractSituationDto>())
+                .OrderBy(o => o.Description)
+                .ToListAsync();
+        }
+
         public async Task<List<CustomerContactDto>> GetCustomerContacts(Guid customerId)
         {
             return await Context.CustomerContacts
@@ -229,7 +237,18 @@ namespace ConsultingManager.Domain.Repository
                 .ToListAsync();
         }
 
-        public async Task<bool> AddCustomer(Guid customerId, List<CustomerContactDto> customerContacts)
+        public async Task<List<ContractDto>> GetCustomerContracts(Guid customerId)
+        {
+            return await Context.Contracts
+                    .Include(o => o.Plan)
+                    .Include(o => o.ContractSituation)
+                .Select(o => o.MapTo<ContractDto>())
+                .Where(o => o.CustomerId == customerId)
+                .OrderBy(o => o.StartDate)
+                .ToListAsync();
+        }
+
+        public async Task<bool> AddCustomerContacts(Guid customerId, List<CustomerContactDto> customerContacts)
         {
             try
             {
@@ -258,6 +277,34 @@ namespace ConsultingManager.Domain.Repository
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        public async Task<bool> SaveContract(Guid customerId, ContractDto contract)
+        {
+            if (contract.CustomerId == customerId)
+            {
+                var contractToEdit = await Context.Contracts.SingleOrDefaultAsync(o => o.Id == contract.Id);
+
+                if (contractToEdit == null)
+                {
+                    var lst = Context.Contracts.Add(contract.MapTo<ContractPoco>());
+                }
+                else
+                {
+                    contractToEdit.Number = contract.Number;
+                    contractToEdit.PlanId = contract.PlanId;
+                    contractToEdit.ContractSituationId = contract.ContractSituationId;
+                    contractToEdit.StartDate = contract.StartDate;
+                    contractToEdit.EndDate = contract.EndDate;
+                }
+
+                await Context.SaveChangesAsync();
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 

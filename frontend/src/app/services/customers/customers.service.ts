@@ -17,6 +17,7 @@ import { CancellationReason } from 'src/app/models/cancellationreason.model';
 import { CustomerCancellation } from 'src/app/models/customercancellation.model';
 import { MeetingType } from 'src/app/models/meetingtype.model';
 import { CustomerContact } from 'src/app/models/customercontact.model';
+import { Contract } from 'src/app/models/contract.model';
 
 @Injectable({
   providedIn: 'root'
@@ -58,6 +59,16 @@ export class CustomersService {
   public async getContacts(customerId: string): Promise<CustomerContact[]> {
     var response = await this.http.get<CustomerContact[]>(`${environment.apiUrl}/customer/${customerId}/contacts`);
     return response.toPromise();
+  }
+
+  public async getContracts(customerId: string): Promise<Contract[]> {
+    var response = await this.http.get<Contract[]>(`${environment.apiUrl}/customer/${customerId}/contracts`);
+    return response.toPromise();
+  }
+
+  public async saveContract(customerId: string, contract: Contract): Promise<boolean> {
+    let response = await this.http.post<boolean>(`${environment.apiUrl}/customer/${customerId}/contracts`, contract).toPromise();
+    return response;
   }
 
   public async getAll(): Promise<Customer[]> {
@@ -102,6 +113,11 @@ export class CustomersService {
 
   public async getCustomerLevels(): Promise<CustomerLevel[]> {
     var response = await this.http.get<CustomerLevel[]>(`${environment.apiUrl}/customer/levels`);
+    return response.toPromise();
+  }
+
+  public async getContractSituations(): Promise<CustomerLevel[]> {
+    var response = await this.http.get<CustomerLevel[]>(`${environment.apiUrl}/customer/contract-situations`);
     return response.toPromise();
   }
 

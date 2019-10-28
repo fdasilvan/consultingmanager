@@ -87,7 +87,7 @@ namespace ConsultingManager.Api.Controllers
         {
             try
             {
-                return Ok(await _customerRepository.AddCustomer(customerId, customerContactDto));
+                return Ok(await _customerRepository.AddCustomerContacts(customerId, customerContactDto));
             }
             catch (Exception ex)
             {
@@ -101,6 +101,32 @@ namespace ConsultingManager.Api.Controllers
             try
             {
                 return Ok(await _customerRepository.GetCustomerContacts(customerId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar contatos: " + ex.Message);
+            }
+        }
+
+        [HttpPost("{customerId}/contracts")]
+        public async Task<IActionResult> AddContract(Guid customerId, ContractDto contractDto)
+        {
+            try
+            {
+                return Ok(await _customerRepository.SaveContract(customerId, contractDto));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao criar o contrato: " + ex.Message);
+            }
+        }
+
+        [HttpGet("{customerId}/contracts")]
+        public async Task<IActionResult> GetContracts(Guid customerId)
+        {
+            try
+            {
+                return Ok(await _customerRepository.GetCustomerContracts(customerId));
             }
             catch (Exception ex)
             {
@@ -185,6 +211,19 @@ namespace ConsultingManager.Api.Controllers
             try
             {
                 return Ok(await _customerRepository.GetCustomerLevels());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar informações.");
+            }
+        }
+
+        [HttpGet("contract-situations")]
+        public async Task<IActionResult> GetContractSituations()
+        {
+            try
+            {
+                return Ok(await _customerRepository.GetContractSituations());
             }
             catch (Exception ex)
             {

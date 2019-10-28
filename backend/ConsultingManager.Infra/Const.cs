@@ -147,6 +147,49 @@ namespace ConsultingManager.Infra
             }
         }
 
+        public static class ContractSituations
+        {
+            public static Guid Active
+            {
+                get
+                {
+                    return Guid.Parse("92B405A1-7EC7-4310-8EF3-BE7C4040A94A");
+                }
+            }
+
+            public static Guid Paused
+            {
+                get
+                {
+                    return Guid.Parse("7EC78F62-0A7F-4FDA-BFF4-6819E724A8E1");
+                }
+            }
+
+            public static Guid Blocked
+            {
+                get
+                {
+                    return Guid.Parse("9BE12448-E253-4C47-AE0D-3F69DE0D023A");
+                }
+            }
+
+            public static Guid Canceled
+            {
+                get
+                {
+                    return Guid.Parse("BD944220-6985-4BAD-A7AF-80BBD1BF1084");
+                }
+            }
+
+            public static Guid Completed
+            {
+                get
+                {
+                    return Guid.Parse("CB7F761D-DFC6-4BDA-A061-239B607D384E");
+                }
+            }
+        }
+
         public static class MeetingTypes
         {
             public static Guid Implantation

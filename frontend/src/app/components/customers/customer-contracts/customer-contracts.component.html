@@ -1,0 +1,121 @@
+<section class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Contratos de {{ this.customer.name }}</h3>
+      </div>
+      <div class="card-block">
+        <div class="mb-4">
+          <button class="btn btn-warning margin" (click)="addContract(contentContractForm)" type="button"><span
+              class="fa fa-plus"></span>
+            Contrato</button>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Número</th>
+              <th scope="col">Início</th>
+              <th scope="col">Final</th>
+              <th scope="col">Plano</th>
+              <th scope="col">Situação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="this.customerContractsList.length == 0">
+              <td colspan="4">Este cliente não possui contratos cadastrados.</td>
+            </tr>
+            <tr *ngFor="let contract of this.customerContractsList">
+              <td>
+                <a href="javascript:void(0)"
+                  (click)="onContractSelected(contract, contentContractForm)">{{contract.number}}</a>
+              </td>
+              <td>{{contract.startDate | date: 'dd/MM/yyyy'}}</td>
+              <td>{{contract.endDate | date: 'dd/MM/yyyy'}}</td>
+              <td>{{contract.plan.description}}</td>
+              <td>{{contract.contractSituation.description}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="floating-container mb-4">
+        <div class="floating-content">
+          <button class="btn btn-lg btn-secondary" (click)="goBack()" type="button">
+            <span class="fa fa-arrow-left"></span> Voltar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-template #contentContractForm let-modalContractForm>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Cadastro de Contrato</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalContractForm.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-block">
+        <form>
+          <div class="form-group">
+            <label for="txtContractNumber">Número do Contrato: </label>
+            <div class="input-group">
+              <input #txtContractNumber id="txtContractNumber" [(ngModel)]="selectedContract.number"
+                [ngModelOptions]="{ standalone: true }" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lstPlans">Plano: </label>
+            <div class="input-group">
+              <select #lstPlans name="lstPlans" [(ngModel)]="selectedContract.planId"
+                [ngModelOptions]="{ standalone: true }" class="custom-select form-control task-enabled">
+                <option value=""></option>
+                <option *ngFor="let plan of this.plansList"
+                  [selected]="(this.selectedContract && this.selectedContract.planId == plan.id ? true : false)"
+                  value="{{plan.id}}">
+                  {{plan.description}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lstSituations">Situação do Contrato: </label>
+            <div class="input-group">
+              <select #lstSituations name="lstSituations" [(ngModel)]="selectedContract.contractSituationId"
+                [ngModelOptions]="{ standalone: true }" class="custom-select form-control task-enabled">
+                <option value=""></option>
+                <option *ngFor="let situation of this.contractSituationsList"
+                  [selected]="(this.selectedContract && this.selectedContract.contractSituationId == situation.id ? true : false)"
+                  value="{{situation.id}}">
+                  {{situation.description}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="txtStartDate">Data de Início: </label>
+            <div class="input-group">
+              <input #txtStartDate id="txtStartDate" type="date"
+                [ngModel]="(selectedContract.startDate | date: 'yyyy-MM-dd')" [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="selectedContract.startDate = $event" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="txtEndDate">Data de Conclusão: </label>
+            <div class="input-group">
+              <input #txtEndDate id="txtEndDate" type="date" [ngModel]="(selectedContract.endDate | date: 'yyyy-MM-dd')"
+                (ngModelChange)="selectedContract.endDate = $event" [ngModelOptions]="{ standalone: true }"
+                class="form-control">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="saveContract(this.selectedContract)">Salvar
+      Contrato</button>
+  </div>
+</ng-template>

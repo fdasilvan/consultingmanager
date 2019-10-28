@@ -4,14 +4,16 @@ using ConsultingManager.Infra.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConsultingManager.Infra.Migrations
 {
     [DbContext(typeof(ConsultingManagerDbContext))]
-    partial class ConsultingManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191028012359_added-contract-to-context")]
+    partial class addedcontracttocontext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,33 +117,6 @@ namespace ConsultingManager.Infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ContractSituations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("92b405a1-7ec7-4310-8ef3-be7c4040a94a"),
-                            Description = "Ativo"
-                        },
-                        new
-                        {
-                            Id = new Guid("7ec78f62-0a7f-4fda-bff4-6819e724a8e1"),
-                            Description = "Pausado"
-                        },
-                        new
-                        {
-                            Id = new Guid("9be12448-e253-4c47-ae0d-3f69de0d023a"),
-                            Description = "Bloqueado"
-                        },
-                        new
-                        {
-                            Id = new Guid("bd944220-6985-4bad-a7af-80bbd1bf1084"),
-                            Description = "Cancelado"
-                        },
-                        new
-                        {
-                            Id = new Guid("cb7f761d-dfc6-4bda-a061-239b607d384e"),
-                            Description = "Concluído"
-                        });
                 });
 
             modelBuilder.Entity("ConsultingManager.Infra.Database.Models.CustomerCancellationPoco", b =>
