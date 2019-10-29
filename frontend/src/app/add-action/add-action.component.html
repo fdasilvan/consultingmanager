@@ -10,7 +10,7 @@
       <label for="lstModelProcess">Ação (obrigatória)</label>
       <div class="input-group d-inline">
         <ng-autocomplete [data]="modelProcessesListData" searchKeyword="description"
-          (selected)='updateSelectedModelProcess($event.id)' (inputChanged)='onModelProcessChangeSearch($event)' (inputFocused)='onModelProcessFocused($event)'
+          (selected)='updateSelectedModelProcess($event)' (inputChanged)='onModelProcessChangeSearch($event)' (inputFocused)='onModelProcessFocused($event)'
           [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" placeHolder="Ação">
         </ng-autocomplete>
       </div>
@@ -28,26 +28,19 @@
     <div class="form-group">
       <label for="lstConsultantsStartProcess">Consultor (obrigatório)</label>
       <div class="input-group">
-        <select #lstConsultantsStartProcess id="lstConsultantsStartProcess" class="custom-select form-control"
-          [disabled]="!this.canAssignTask">
-          <option value="">
-            Selecionar
-          </option>
-          <option *ngFor="let consultant of this.consultantsList" value="{{consultant.id}}"
-            [selected]="((!canAssignTask && this.loggedUser.id == consultant.id) ? true : false)">
-            {{consultant.name}}
-          </option>
-        </select>
+          <ng-autocomplete [data]="consultantProcessesListData" searchKeyword="name"
+          (selected)='updateSelectedConsultantProcess($event)' (inputChanged)='onConsultantProcessChangeSearch($event)' (inputFocused)='onConsultantProcessFocused($event)'
+          [itemTemplate]="itemTemplateUser" [notFoundTemplate]="notFoundTemplate" [initialValue]='initialConsultant' placeHolder="Consultor (obrigatório)" [disabled]='!this.canAssignTask'>
+        </ng-autocomplete>
       </div>
     </div>
     <div class="form-group">
       <label for="lstUsers">Cliente (obrigatório)</label>
       <div class="input-group">
-        <select #lstUsers id="lstUsers" class="custom-select form-control">
-          <option *ngFor="let user of this.customer.users" value="{{user.id}}">
-            {{user.name}}
-          </option>
-        </select>
+          <ng-autocomplete [data]="userProcessesListData" searchKeyword="name"
+          (selected)='updateSelectedUserProcess($event)' (inputChanged)='onUserProcessChangeSearch($event)' (inputFocused)='onUserProcessFocused($event)'
+          [itemTemplate]="itemTemplateUser" [notFoundTemplate]="notFoundTemplate" placeHolder="Cliente (obrigatório)">
+        </ng-autocomplete>
       </div>
     </div>
     <div class="form-group">
@@ -65,7 +58,7 @@
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-outline-dark"
-    (click)="startCustomerProcess(lstModelProcess.value, lstModelProcess[lstModelProcess.selectedIndex].text, txtDetail.value, lstConsultantsStartProcess.value, lstUsers.value, txtStartDate.value)">Incluir</button>
+    (click)="startCustomerProcess(selectedModelProcessId, selectedModelProcessDesc, txtDetail.value, selectedConsultantProcessId, selectedUserProcessId, txtStartDate.value)">Incluir</button>
 </div>
 
 <ng-template #contentProcessView let-modalProcessView>
@@ -85,6 +78,10 @@
 <ng-template #itemTemplate let-item>
   <a [innerHTML]="item.description"></a>
 </ng-template>
+
+<ng-template #itemTemplateUser let-item>
+    <a [innerHTML]="item.name"></a>
+  </ng-template>
 
 <ng-template #notFoundTemplate let-notFound>
   <div innerHTML="Nenhum valor encontrado"></div>
