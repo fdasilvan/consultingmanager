@@ -31,6 +31,8 @@ import { ConsultantRegistrationComponent } from './components/users/consultant-r
 import { ConsultantsListComponent } from './components/users/consultants-list/consultants-list.component';
 import { CheckboxgroupComponent } from './utils/checkboxgroup/checkboxgroup.component';
 import { ContactsComponent } from './contacts/contacts.component';
+import { AddActionComponent } from './add-action/add-action.component';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,8 @@ import { ContactsComponent } from './contacts/contacts.component';
     ConsultantRegistrationComponent,
     ConsultantsListComponent,
     CheckboxgroupComponent,
-    ContactsComponent
+    ContactsComponent,
+    AddActionComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +68,7 @@ import { ContactsComponent } from './contacts/contacts.component';
     NgxChartsModule,
     BrowserAnimationsModule,
     FormsModule,
+    AutocompleteLibModule,
     NgxMaskModule.forRoot()
   ],
   providers: [AuthService],
