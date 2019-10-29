@@ -22,6 +22,7 @@ namespace ConsultingManager.Domain.Repository
         Task<List<ContractSituationDto>> GetContractSituations();
         Task<List<CustomerContactDto>> GetCustomerContacts(Guid customerId);
         Task<List<ContractDto>> GetCustomerContracts(Guid customerId);
+        Task<ContractDto> GetContract(Guid customerId, Guid contractId);
         Task<bool> AddCustomerContacts(Guid customerId, List<CustomerContactDto> customerContacts);
         Task<bool> SaveContract(Guid customerId, ContractDto contract);
         Task<List<PlanDto>> GetPlans();

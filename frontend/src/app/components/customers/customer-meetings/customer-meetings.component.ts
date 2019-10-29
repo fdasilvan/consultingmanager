@@ -7,6 +7,8 @@ import { CustomerMeeting } from 'src/app/models/customermeeting.model';
 import { v4 as newGuid } from 'uuid';
 import { CommonService } from 'src/app/services/common/common.service';
 import { MeetingType } from 'src/app/models/meetingtype.model';
+import { Contract } from 'src/app/models/contract.model';
+import { Plan } from 'src/app/models/plan.model';
 
 @Component({
   selector: 'app-customer-meetings',
@@ -20,6 +22,8 @@ export class CustomerMeetingsComponent implements OnInit {
 
   public customer: Customer;
   public selectedContractId: string;
+  public contract: Contract;
+  public plan: Plan;
   public meetingsList: CustomerMeeting[] = [];
   public meetingTypesList: MeetingType[] = [];
   public showSuggestions: boolean = false;
@@ -38,15 +42,18 @@ export class CustomerMeetingsComponent implements OnInit {
     }
   }
 
-  loadCustomer() {
+  async loadCustomer() {
     if (window.sessionStorage.getItem('customer') != 'undefined') {
       this.customer = <Customer>JSON.parse(window.sessionStorage.getItem('customer'));
     }
   }
 
-  loadContract() {
+  async loadContract() {
     if (window.sessionStorage.getItem('contract') != 'undefined') {
       this.selectedContractId = window.sessionStorage.getItem('contract');
+      this.contract = await this.customersService.getContract(this.customer.id, this.selectedContractId);
+      this.plan = this.contract.plan;
+      debugger;
     }
   }
 
@@ -129,8 +136,18 @@ export class CustomerMeetingsComponent implements OnInit {
     this.meetingsList = this.meetingsList.filter(o => o.id != meeting.id);
   }
 
-  public saveProcess() {
+  async saveProcess() {
     console.log(this.meetingsList);
+    for (let i = 0; i < this.meetingTypesList.length; i++) {
+      let meeting = this.meetingsList[i];
+      if (meeting.meetingTypeId == null || meeting.meetingTypeId == '') {
+        alert('AVISO! Todos os encontros devem ter um tipo definido.');
+        return;
+      }
+    }
+
+    debugger;
+
     this.customersService.saveMeetings(this.customer.id, this.meetingsList)
       .then(meetingsList => {
         alert('Encontros salvos com sucesso!');

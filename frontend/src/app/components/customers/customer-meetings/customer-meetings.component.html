@@ -2,18 +2,36 @@
   <div class="col-12">
     <div class="card mb-4">
       <div class="card-header">
-        <h3 class="card-title">Cadastro de Encontros</h3>
+        <h3 class="card-title">Cadastro de Encontros - Cliente: {{this.customer.name}}</h3>
       </div>
       <div class="card-block">
-        <div class="card-block btn-margins">
-          <div class="mb-4">
-            <h3 class="mb-4">Cliente: {{this.customer.name}} </h3>
-            <p>Plano: {{this.customer.plan ? this.customer.plan.description : 'Não informado'}}</p>
-            <p>Duração:
-              {{this.customer.plan && this.customer.plan.duration ? this.customer.plan.duration + ' meses' : 'Não informado'}}
-            </p>
-            <p>Descrição de Encontros:
-              {{this.customer.meetingsDescription ? this.customer.meetingsDescription : 'Não informado'}}</p>
+        <div class="card-block">
+          <div class="mb-2">
+            <p *ngIf="this.contract && this.contract.contractSituation">Contrato nº {{this.contract.number}} - Situação:
+              {{this.contract.contractSituation.description}} - Vigência:
+              {{this.contract.startDate | date: 'dd/MM/yyyy'}} a
+              {{this.contract.endDate | date: 'dd/MM/yyyy'}}</p>
+            <div class="card mt-2" *ngIf="this.plan">
+              <div class="card-header">
+                <h3 class="card-title">Plano: {{this.customer.plan ? this.customer.plan.description : 'Não informado'}}
+                  - Duração: {{this.plan && this.plan.duration ? this.plan.duration + ' meses' : 'Não informado'}}
+                </h3>
+              </div>
+              <div class="card-block row">
+                <div class="col-4">
+                  <p>Implantação: {{this.plan.implantationQuantity}}</p>
+                  <p>Freq. Implantação: a cada {{this.plan.implantationFrequency}} dias</p>
+                </div>
+                <div class="col-4">
+                  <p>Qtd. Consultoria: {{this.plan.consultingQuantity}}</p>
+                  <p>Freq. Consultoria: a cada {{this.plan.consultingFrequency}} dias</p>
+                </div>
+                <div class="col-4">
+                  <p>Qtd. Acompanhamento: {{this.plan.reviewQuantity}}</p>
+                  <p>Freq. Acompanhamento: a cada {{this.plan.reviewFrequency}} dias</p>
+                </div>
+              </div>
+            </div>
           </div>
           <div *ngIf="this.meetingsList.length == 0" class="row ml-4 mb-4">
             <div class="col-md-2">
@@ -54,9 +72,11 @@
                   <p class="ml-4 text-muted">{{dayOfWeek(meeting.date)}}</p>
                 </div>
                 <div class="meeting-type-container row">
-                  <select class="meeting-type-control form-control ml-2">
+                  <select [(ngModel)]="meeting.meetingTypeId" [ngModelOptions]="{ standalone: true }"
+                    class="meeting-type-control form-control ml-2">
                     <option value=""></option>
-                    <option *ngFor="let meetingType of this.meetingTypesList" value="{{meetingType.id}}">
+                    <option *ngFor="let meetingType of this.meetingTypesList" value="{{meetingType.id}}"
+                      [selected]="meeting.meetingTypeId == meetingType.id">
                       {{meetingType.description}}
                     </option>
                   </select>

@@ -144,8 +144,8 @@ namespace ConsultingManager.Domain.Repository
                         else
                         {
                             customerMeetingToEdit.Date = customerMeetingDto.Date;
-                            customerMeetingDto.MeetingTypeId = customerMeetingDto.MeetingTypeId;
-                            customerMeetingDto.IsFinished = customerMeetingDto.IsFinished;
+                            customerMeetingToEdit.MeetingTypeId = customerMeetingDto.MeetingTypeId;
+                            customerMeetingToEdit.IsFinished = customerMeetingDto.IsFinished;
                         }
                     }
                 }
@@ -265,6 +265,16 @@ namespace ConsultingManager.Domain.Repository
                 .Where(o => o.CustomerId == customerId)
                 .OrderBy(o => o.StartDate)
                 .ToListAsync();
+        }
+
+        public async Task<ContractDto> GetContract(Guid customerId, Guid contractId)
+        {
+            return await Context.Contracts
+                    .Include(o => o.Plan)
+                    .Include(o => o.ContractSituation)
+                .Select(o => o.MapTo<ContractDto>())
+                .Where(o => o.CustomerId == customerId && o.Id == contractId)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<bool> AddCustomerContacts(Guid customerId, List<CustomerContactDto> customerContacts)

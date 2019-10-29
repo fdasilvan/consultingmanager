@@ -22,7 +22,7 @@ namespace ConsultingManager.Infra.Database.Models
 
         public Guid? MeetingTypeId { get; set; }
         [ForeignKey(nameof(MeetingTypeId))]
-        public ContractPoco MeetingType { get; set; }
+        public MeetingTypePoco MeetingType { get; set; }
 
         public virtual ICollection<CustomerProcessPoco> CustomerProcesses { get; set; }
         public virtual ICollection<CommentPoco> Comments { get; set; }

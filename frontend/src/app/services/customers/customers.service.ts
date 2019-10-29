@@ -71,6 +71,11 @@ export class CustomersService {
     return response.toPromise();
   }
 
+  public async getContract(customerId: string, contractId: string): Promise<Contract> {
+    var response = await this.http.get<Contract>(`${environment.apiUrl}/customer/${customerId}/contracts/${contractId}`);
+    return response.toPromise();
+  }
+
   public async saveContract(customerId: string, contract: Contract): Promise<boolean> {
     let response = await this.http.post<boolean>(`${environment.apiUrl}/customer/${customerId}/contracts`, contract).toPromise();
     return response;

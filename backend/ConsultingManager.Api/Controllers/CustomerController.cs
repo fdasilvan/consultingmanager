@@ -147,6 +147,19 @@ namespace ConsultingManager.Api.Controllers
             }
         }
 
+        [HttpGet("{customerId}/contracts/{contractId}")]
+        public async Task<IActionResult> GetContracts(Guid customerId, Guid contractId)
+        {
+            try
+            {
+                return Ok(await _customerRepository.GetContract(customerId, contractId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao buscar contatos: " + ex.Message);
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

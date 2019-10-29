@@ -16,7 +16,7 @@ namespace ConsultingManager.Dto
         public Guid? ContractId { get; set; }
         public ContractDto Contract { get; set; }
 
-        public Guid MeetingTypeId { get; set; }
+        public Guid? MeetingTypeId { get; set; }
         public MeetingTypeDto MeetingType { get; set; }
     }
 }
