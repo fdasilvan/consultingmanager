@@ -59,6 +59,8 @@ export class FlightplanComponent implements OnInit {
   loadContract() {
     if (window.sessionStorage.getItem('contract') != 'undefined') {
       this.selectedContractId = window.sessionStorage.getItem('contract');
+    } else {
+      this.selectedContractId = '';
     }
   }
 
@@ -110,6 +112,17 @@ export class FlightplanComponent implements OnInit {
 
   goBack() {
     window.history.back();
+  }
+
+  substringText(text: string, length: number) {
+    return text.substr(0, length);
+  }
+
+  mustShowMeeting(meetingDate: Date) {
+    let date = new Date(meetingDate);
+    let dateLimit = new Date();
+    dateLimit.setMonth(dateLimit.getMonth() + 1);
+    return date.getTime() < dateLimit.getTime();
   }
 
   registerMeetings() {

@@ -3,11 +3,11 @@ export interface Plan {
   description: string;
   duration: number;
   meetingsDescription: string;
-  implantationQuantity: string;
-  implantationFrequency: string;
-  consultingQuantity: string;
-  consultingFrequency: string;
-  reviewQuantity: string;
-  reviewFrequency: string;
+  implantationQuantity: number;
+  implantationFrequency: number;
+  consultingQuantity: number;
+  consultingFrequency: number;
+  reviewQuantity: number;
+  reviewFrequency: number;
   allowGroupMeeting: boolean;
 }

@@ -19,29 +19,30 @@
               </div>
               <div class="card-block row">
                 <div class="col-4">
-                  <p>Implantação: {{this.plan.implantationQuantity}}</p>
-                  <p>Freq. Implantação: a cada {{this.plan.implantationFrequency}} dias</p>
+                  <p>Qtd. Implantações: {{this.plan.implantationQuantity}}</p>
+                  <p>Freq. Implantações: a cada {{this.plan.implantationFrequency}} dias</p>
                 </div>
                 <div class="col-4">
-                  <p>Qtd. Consultoria: {{this.plan.consultingQuantity}}</p>
-                  <p>Freq. Consultoria: a cada {{this.plan.consultingFrequency}} dias</p>
+                  <p>Qtd. Consultorias: {{this.plan.consultingQuantity}}</p>
+                  <p>Freq. Consultorias: a cada {{this.plan.consultingFrequency}} dias</p>
                 </div>
                 <div class="col-4">
-                  <p>Qtd. Acompanhamento: {{this.plan.reviewQuantity}}</p>
-                  <p>Freq. Acompanhamento: a cada {{this.plan.reviewFrequency}} dias</p>
+                  <p>Qtd. Acompanhamentos: {{this.plan.reviewQuantity}}</p>
+                  <p>Freq. Acompanhamentos: a cada {{this.plan.reviewFrequency}} dias</p>
                 </div>
               </div>
             </div>
           </div>
           <div *ngIf="this.meetingsList.length == 0" class="row ml-4 mb-4">
             <div class="col-md-2">
-              <label class="col-form-label">Número de Encontros: </label>
+              <label class="col-form-label">Primeiro Encontro: </label>
             </div>
             <div class="col-md-2">
-              <input #txtQtyMeetings name="txtQtyMeetings" placeholder="Ex.: 12" type="number" class="form-control">
+              <input #txtFirstDate name="txtFirstDate" type="date" value="{{this.today | date: 'yyyy-MM-dd'}}"
+                class="form-control">
             </div>
             <div class="col-md-2">
-              <button class="btn btn-warning margin" (click)="suggestMeetings(txtQtyMeetings.value)" type="button"><span
+              <button class="btn btn-warning margin" (click)="suggestMeetings(txtFirstDate.value)" type="button"><span
                   class="fa fa-clock-o"></span>
                 Sugerir</button>
             </div>
@@ -53,7 +54,7 @@
             <div class="card-block">
               <p *ngIf="this.meetingsList.length == 0">Ainda não foram cadastardos encontros para este cliente!</p>
               <div class="mb-4 ml-2 row">
-                <button class="btn btn-warning margin" (click)="addMeeting()" type="button"><span
+                <button class="btn btn-warning margin" (click)="addMeeting(null, null)" type="button"><span
                     class="fa fa-plus"></span>
                   Encontro</button>
                 <button class="btn btn-warning margin" (click)="orderMeetings()" type="button"><span

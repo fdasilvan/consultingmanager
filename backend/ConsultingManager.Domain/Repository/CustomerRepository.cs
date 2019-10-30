@@ -100,6 +100,7 @@ namespace ConsultingManager.Domain.Repository
                 return await Context.CustomerMeetings
                     .Include(o => o.Customer)
                         .ThenInclude(o => o.Plan)
+                    .Include(o => o.MeetingType)
                     .Where(o => o.CustomerId == customerId)
                     .Select(o => o.MapTo<CustomerMeetingDto>())
                     .ToListAsync();
@@ -117,6 +118,7 @@ namespace ConsultingManager.Domain.Repository
                 return await Context.CustomerMeetings
                     .Include(o => o.Customer)
                         .ThenInclude(o => o.Plan)
+                    .Include(o => o.MeetingType)
                     .Where(o => o.CustomerId == customerId && o.ContractId == contractId)
                     .Select(o => o.MapTo<CustomerMeetingDto>())
                     .ToListAsync();

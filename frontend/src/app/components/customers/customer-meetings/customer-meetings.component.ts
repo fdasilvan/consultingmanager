@@ -5,7 +5,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Customer } from 'src/app/models/customer.model';
 import { CustomerMeeting } from 'src/app/models/customermeeting.model';
 import { v4 as newGuid } from 'uuid';
-import { CommonService } from 'src/app/services/common/common.service';
 import { MeetingType } from 'src/app/models/meetingtype.model';
 import { Contract } from 'src/app/models/contract.model';
 import { Plan } from 'src/app/models/plan.model';
@@ -27,6 +26,7 @@ export class CustomerMeetingsComponent implements OnInit {
   public meetingsList: CustomerMeeting[] = [];
   public meetingTypesList: MeetingType[] = [];
   public showSuggestions: boolean = false;
+  public today: Date = new Date();
 
   async ngOnInit() {
     await this.loadCustomer();
@@ -53,7 +53,6 @@ export class CustomerMeetingsComponent implements OnInit {
       this.selectedContractId = window.sessionStorage.getItem('contract');
       this.contract = await this.customersService.getContract(this.customer.id, this.selectedContractId);
       this.plan = this.contract.plan;
-      debugger;
     }
   }
 
@@ -72,14 +71,19 @@ export class CustomerMeetingsComponent implements OnInit {
     this.orderMeetings();
   }
 
-  public addMeeting() {
+  public addMeeting(date: Date, meetingTypeId: string) {
     let customerMeeting = new CustomerMeeting();
+    let objDate = (date == null ? this.today : new Date(date));
 
     customerMeeting.id = newGuid();
-    customerMeeting.date = new Date();
-    customerMeeting.originalDate = new Date();
+    customerMeeting.date = objDate;
+    customerMeeting.originalDate = objDate;
     customerMeeting.customerId = this.customer.id;
     customerMeeting.contractId = this.selectedContractId;
+
+    if (meetingTypeId != null) {
+      customerMeeting.meetingTypeId = meetingTypeId;
+    }
 
     this.meetingsList.push(customerMeeting);
   }
@@ -98,37 +102,73 @@ export class CustomerMeetingsComponent implements OnInit {
       newDate.setDate(newDate.getDate() + 2);
     }
 
-    let newMeetingObj = new CustomerMeeting();
-
-    newMeetingObj.id = newGuid();
-    newMeetingObj.customerId = this.customer.id;
-    newMeetingObj.date = new Date(newDate.getTime());
-    newMeetingObj.originalDate = new Date(newDate.getTime());
-    newMeetingObj.contractId = this.selectedContractId;
-
-    this.meetingsList.push(newMeetingObj);
-
     return newDate;
   }
 
-  public suggestMeetings(qtyMeetings: number) {
-    this.meetingsList = [];
-    let today = new Date();
+  async suggestMeetings(firstDate: Date) {
+    const IMPLANTATION_TYPE_ID = '0a5d9561-6518-47a5-89f3-034f4d0256cd';
+    const CONSULTING_TYPE_ID = '38cbb2dd-e1a9-4535-a00a-dcd81cf4fd82';
+    const REVIEW_TYPE_ID = 'c203d729-d70a-4bb8-853a-879ef62dabe1';
 
-    let endDate = new Date();
-    endDate.setMonth(endDate.getMonth() + this.customer.plan.duration);
+    if (firstDate) {
+      this.meetingsList = [];
+      let nextMeetingDate = new Date(firstDate);
+      // Needed in order to prevent GMT-3:00 timezone problems
+      nextMeetingDate.setDate(nextMeetingDate.getDate() + 1);
 
-    const diffTime = Math.abs(endDate.getTime() - today.getTime());
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    const daysBetweenMeetings = Math.floor(diffDays / qtyMeetings);
-
-    let lastMeeting = today;
-
-    for (let i = 1; i < qtyMeetings; i++) {
-      if (i == 1) {
-        lastMeeting = this.calculateNextMeeting(lastMeeting, 1);
+      if (!this.plan) {
+        alert('Para usar a sugestão de datas de encontros o cliente deve possuir um contrato/plano.');
+        return;
       }
-      lastMeeting = this.calculateNextMeeting(lastMeeting, daysBetweenMeetings);
+
+      // Implantação
+      for (let i = 0; i < this.plan.implantationQuantity; i++) {
+        if (i > 0) {
+          nextMeetingDate = this.calculateNextMeeting(nextMeetingDate, this.plan.implantationFrequency);
+        }
+        this.addMeeting(nextMeetingDate, IMPLANTATION_TYPE_ID);
+      }
+
+      // Consultoria e Acompanhamento
+      if (this.plan.consultingQuantity > 0 && this.plan.reviewQuantity > 0) {
+        let meetingsRatio = this.plan.reviewQuantity / this.plan.consultingQuantity;
+        meetingsRatio = Math.floor(meetingsRatio);
+        if (meetingsRatio < 1) {
+          meetingsRatio = 1;
+        }
+
+        let reviewCount = 0;
+
+        for (let i = 0; i < this.plan.consultingQuantity; i++) {
+          nextMeetingDate = this.calculateNextMeeting(nextMeetingDate, this.plan.consultingFrequency);
+          this.addMeeting(nextMeetingDate, CONSULTING_TYPE_ID);
+
+          for (let j = 0; j < meetingsRatio; j++) {
+            if (reviewCount >= this.plan.reviewQuantity) {
+              continue;
+            }
+            nextMeetingDate = this.calculateNextMeeting(nextMeetingDate, this.plan.reviewFrequency);
+            this.addMeeting(nextMeetingDate, REVIEW_TYPE_ID);
+            reviewCount++;
+          }
+        }
+      } else if (this.plan.consultingQuantity > 0) {
+        // Somente consultoria
+        for (let i = 0; i < this.plan.consultingQuantity; i++) {
+          nextMeetingDate = this.calculateNextMeeting(nextMeetingDate, this.plan.consultingFrequency);
+          this.addMeeting(nextMeetingDate, CONSULTING_TYPE_ID);
+        }
+      } else if (this.plan.reviewQuantity > 0) {
+        // Somente acompanhamento
+        for (let i = 0; i < this.plan.reviewQuantity; i++) {
+          nextMeetingDate = this.calculateNextMeeting(nextMeetingDate, this.plan.reviewFrequency);
+          this.addMeeting(nextMeetingDate, REVIEW_TYPE_ID);
+        }
+      } else {
+        alert('Não foi possível sugerir os encontros para cliente/contrato. Favor verificar o cadastro do plano.');
+      }
+    } else {
+      alert('Data da primeira reunião inválida.');
     }
   }
 
@@ -137,7 +177,6 @@ export class CustomerMeetingsComponent implements OnInit {
   }
 
   async saveProcess() {
-    console.log(this.meetingsList);
     for (let i = 0; i < this.meetingTypesList.length; i++) {
       let meeting = this.meetingsList[i];
       if (meeting.meetingTypeId == null || meeting.meetingTypeId == '') {
@@ -145,8 +184,6 @@ export class CustomerMeetingsComponent implements OnInit {
         return;
       }
     }
-
-    debugger;
 
     this.customersService.saveMeetings(this.customer.id, this.meetingsList)
       .then(meetingsList => {
