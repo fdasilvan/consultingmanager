@@ -13,7 +13,7 @@
               {{this.contract.endDate | date: 'dd/MM/yyyy'}}</p>
             <div class="card mt-2" *ngIf="this.plan">
               <div class="card-header">
-                <h3 class="card-title">Plano: {{this.customer.plan ? this.customer.plan.description : 'Não informado'}}
+                <h3 class="card-title">Plano: {{this.plan ? this.plan.description : 'Não informado'}}
                   - Duração: {{this.plan && this.plan.duration ? this.plan.duration + ' meses' : 'Não informado'}}
                 </h3>
               </div>

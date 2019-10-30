@@ -93,6 +93,8 @@ export class TimelineComponent implements OnInit {
 
     if (activeContract.length > 0) {
       this.selectedContractId = activeContract[0].id;
+    } else {
+      this.selectedContractId = '';
     }
   }
 

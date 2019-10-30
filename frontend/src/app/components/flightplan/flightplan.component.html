@@ -2,14 +2,13 @@
   <div class="col-12">
     <div class="card mb-4">
       <div class="card-header">
-        <h3 class="card-title">Plano de Vôo</h3>
+        <h3 class="card-title">Plano de Vôo de {{this.customer.name}}</h3>
       </div>
       <div class="card-block btn-margins">
-        <h3 class="mb-4">Cliente: {{this.customer.name}}</h3>
         <button class="btn btn-warning margin mr-1" (click)="openModal(contentFlightplan)" type="button"><span
             class="fa fa-search"></span> Visualizar Plano de Vôo</button>
         <h5 class="mb-4 mt-4">Encontros: </h5>
-        <p class="text-muted">São exibidos os encontros passados e dos próximos 30 dias.</p>
+        <p class="text-muted">Aqui são exibidos os encontros anteriores e os encontros que ocorrerão nos próximos 30 dias.</p>
         <p class="text-muted">Legenda: I - Implantação, C - Consultoria e A - Acompanhamento</p>
         <div>
           <div class="mb-4 ml-2 row">

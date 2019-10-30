@@ -68,6 +68,27 @@ export class CustomerContractsComponent implements OnInit {
   }
 
   async saveContract() {
+
+    if (this.selectedContract.number == '') {
+      alert('Número do contrato é obrigatório!');
+      return;
+    }
+
+    if (this.selectedContract.planId == '') {
+      alert('Plano é obrigatório!');
+      return;
+    }
+
+    if (this.selectedContract.contractSituationId == '') {
+      alert('Situação do contrato é obrigatória!');
+      return;
+    }
+
+    if (this.selectedContract.startDate == null || this.selectedContract.endDate == null) {
+      alert('Vigência do contrato obrigatória!');
+      return;
+    }
+
     let success = await this.customersService.saveContract(this.customer.id, this.selectedContract);
 
     if (success) {
