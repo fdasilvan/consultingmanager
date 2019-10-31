@@ -8,7 +8,8 @@
         <button class="btn btn-warning margin mr-1" (click)="openModal(contentFlightplan)" type="button"><span
             class="fa fa-search"></span> Visualizar Plano de Vôo</button>
         <h5 class="mb-4 mt-4">Encontros: </h5>
-        <p class="text-muted">Aqui são exibidos os encontros anteriores e os encontros que ocorrerão nos próximos 30 dias.</p>
+        <p class="text-muted">Aqui são exibidos os encontros anteriores e os encontros que ocorrerão nos próximos 30
+          dias.</p>
         <p class="text-muted">Legenda: I - Implantação, C - Consultoria e A - Acompanhamento</p>
         <div>
           <div class="mb-4 ml-2 row">
@@ -20,7 +21,9 @@
               <button *ngIf="mustShowMeeting(meeting.date)"
                 class="{{(this.selectedMeeting && this.selectedMeeting.id == meeting.id ? 'btn btn-lg btn-primary btn-steps margin' : 'btn btn-lg btn-primary btn-steps-selected margin')}}"
                 (click)="selectMeeting(meeting)" type="button">
-                {{meeting.date | date: 'dd/MM/yyyy'}} ({{(meeting.meetingType ? substringText(meeting.meetingType.description, 1) : '?')}})
+                {{meeting.date | date: 'dd/MM/yyyy'}}
+                ({{(meeting.meetingType ? substringText(meeting.meetingType.description, 1) : '?')}})
+                <em *ngIf="meeting.isFinished" class="fa fa-check success-green"></em>
               </button>
             </div>
           </div>
@@ -33,10 +36,20 @@
               <h6 class="text-muted">Cód. Encontro: {{this.selectedMeeting.id}}</h6>
             </div>
             <div class="card-block">
+              <div class="row ml-2 mt-2 mb-2">
+                <div class="col-4">Todas as pendências do encontro foram finalizadas?</div>
+                <div class="col-1">
+                  <select #lstMeetingFinished id="lstMeetingFinished" class="form-control"
+                    [(ngModel)]="this.selectedMeeting.isFinished"
+                    (change)="onMeetingFinishedChanged(lstMeetingFinished.value)">
+                    <option [selected]="!this.select.isFinished" value="false">Não</option>
+                    <option [selected]="this.select.isFinished" value="true">Sim</option>
+                  </select>
+                </div>
+              </div>
               <h5 class="mt-4 mb-4">Ações</h5>
               <p *ngIf="this.filteredCustomerProcesses.length == 0">Não há ações definidas para este encontro!
               </p>
-
               <div class="table-responsive" *ngIf="this.filteredCustomerProcesses.length > 0">
                 <table class="table">
                   <thead>

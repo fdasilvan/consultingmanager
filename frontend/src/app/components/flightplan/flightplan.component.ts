@@ -110,6 +110,14 @@ export class FlightplanComponent implements OnInit {
     return meetingProcesses;
   }
 
+  async onMeetingFinishedChanged(isFinished: boolean) {    
+    this.selectedMeeting.isFinished = isFinished;
+    let arr: CustomerMeeting[] = [];
+    arr.push(this.selectedMeeting);
+    await this.customersService.saveMeetings(this.customer.id, arr);
+    await this.loadMeetings();
+  }
+
   goBack() {
     window.history.back();
   }
