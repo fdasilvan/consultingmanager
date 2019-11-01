@@ -381,6 +381,7 @@ namespace ConsultingManager.Domain.Repository
 
         public async Task<CustomerCancellationDto> AddCustomerCancellation(CustomerCancellationDto customerCancellationDto)
         {
+            customerCancellationDto.CancellationReason = null;
             var newCustomerCancellation = Context.CustomerCancellations.Add(customerCancellationDto.MapTo<CustomerCancellationPoco>());
             await Context.SaveChangesAsync();
             return newCustomerCancellation.Entity.MapTo<CustomerCancellationDto>();
