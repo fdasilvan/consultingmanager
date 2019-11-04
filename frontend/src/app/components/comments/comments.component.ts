@@ -38,7 +38,8 @@ export class CommentsComponent implements OnInit {
   }
 
   formatDate(date: Date) {
-    return moment(new Date(date)).format('DD/MM/YYYY HH:mm:ss');
+    let newDate = moment(new Date(date)).format('DD/MM/YYYY HH:mm:ss');
+    return newDate;
   }
 
   async loadComments() {
@@ -70,7 +71,7 @@ export class CommentsComponent implements OnInit {
           comment.customerTaskId = this.genericId;
       }
 
-      comment.date = new Date();
+      comment.date = moment.utc(new Date()).toDate();
       comment.text = txtComment.value;
       comment.user = this.loggedUser;
       comment.userId = this.loggedUser.id;

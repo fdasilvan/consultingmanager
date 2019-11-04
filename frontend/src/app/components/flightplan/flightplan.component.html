@@ -37,13 +37,13 @@
             </div>
             <div class="card-block">
               <div class="row ml-2 mt-2 mb-2">
-                <div class="col-4">Todas as pendências do encontro foram finalizadas?</div>
-                <div class="col-1">
+                <div class="col-5">Todas as pendências do encontro foram finalizadas?</div>
+                <div class="col-2">
                   <select #lstMeetingFinished id="lstMeetingFinished" class="form-control"
                     [(ngModel)]="this.selectedMeeting.isFinished"
                     (change)="onMeetingFinishedChanged(lstMeetingFinished.value)">
-                    <option [selected]="!this.select.isFinished" value="false">Não</option>
-                    <option [selected]="this.select.isFinished" value="true">Sim</option>
+                    <option [selected]="!this.selectedMeeting.isFinished" value="false">Não</option>
+                    <option [selected]="this.selectedMeeting.isFinished" value="true">Sim</option>
                   </select>
                 </div>
               </div>

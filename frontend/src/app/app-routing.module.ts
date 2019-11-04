@@ -17,6 +17,7 @@ import { FlightplanComponent } from './components/flightplan/flightplan.componen
 import { ConsultantRegistrationComponent } from './components/users/consultant-registration/consultant-registration.component';
 import { ConsultantsListComponent } from './components/users/consultants-list/consultants-list.component';
 import { CustomerContractsComponent } from './components/customers/customer-contracts/customer-contracts.component';
+import { FinancialSummaryComponent } from './components/customers/financial-summary/financial-summary.component';
 
 const routes: Routes = [
   {
@@ -62,6 +63,10 @@ const routes: Routes = [
   {
     path: 'customer-contracts',
     component: CustomerContractsComponent
+  },
+  {
+    path: 'financial-summary',
+    component: FinancialSummaryComponent
   },
   {
     path: 'flightplan',

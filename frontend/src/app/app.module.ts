@@ -32,6 +32,7 @@ import { ConsultantsListComponent } from './components/users/consultants-list/co
 import { CheckboxgroupComponent } from './utils/checkboxgroup/checkboxgroup.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { CustomerContractsComponent } from './components/customers/customer-contracts/customer-contracts.component';
+import { FinancialSummaryComponent } from './components/customers/financial-summary/financial-summary.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { CustomerContractsComponent } from './components/customers/customer-cont
     ConsultantsListComponent,
     CheckboxgroupComponent,
     ContactsComponent,
-    CustomerContractsComponent
+    CustomerContractsComponent,
+    FinancialSummaryComponent
   ],
   imports: [
     BrowserModule,

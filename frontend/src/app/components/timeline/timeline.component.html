@@ -38,12 +38,15 @@
     <div *ngIf="this.loggedUser.userType.description != 'Cliente'" class="mt-4 mb-4">
       <button class="btn btn-warning margin mr-1" (click)="openModal(content)" type="button"><span
           class="fa fa-plus"></span> Ação</button>
-      <button *ngIf="this.loggedUser.userType.description != 'Implantador'" class="btn btn-warning margin mr-1"
+      <button class="btn btn-warning margin mr-1"
         (click)="customerMeetings()" type="button"><span class="fa fa-users"></span>
         Encontros</button>
-      <button *ngIf="this.loggedUser.userType.description != 'Implantador'" class="btn btn-warning margin mr-1"
+      <button class="btn btn-warning margin mr-1"
         (click)="customerFlightplan()" type="button"><span class="fa fa-plane"></span>
         Plano de Vôo</button>
+      <!-- <button class="btn btn-warning margin mr-1"
+        (click)="customerFinancialSummary()" type="button"><span class="fa fa-edit"></span>
+        GPS</button> -->
       <button class="btn btn-warning margin mr-1" (click)="openModal(contentTransfer)" type="button"><span
           class="fa fa-share"></span>
         Transferir</button>

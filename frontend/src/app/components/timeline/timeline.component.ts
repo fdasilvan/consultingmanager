@@ -311,6 +311,11 @@ export class TimelineComponent implements OnInit {
     this.router.navigate(['customer-contracts']);
   }
 
+  customerFinancialSummary() {
+    window.sessionStorage.setItem('customer', JSON.stringify(this.customer));
+    this.router.navigate(['financial-summary']);
+  }
+
   loadClassIndicator(task: CustomerTask) {
     let today: Date = new Date();
     today.setHours(0, 0, 0, 0);
