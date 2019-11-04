@@ -31,8 +31,8 @@ import { ConsultantRegistrationComponent } from './components/users/consultant-r
 import { ConsultantsListComponent } from './components/users/consultants-list/consultants-list.component';
 import { CheckboxgroupComponent } from './utils/checkboxgroup/checkboxgroup.component';
 import { ContactsComponent } from './contacts/contacts.component';
-import { AddActionComponent } from './add-action/add-action.component';
-import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { AddProcessComponent } from './components/global/add-process/add-process.component';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 
 @NgModule({
   declarations: [
@@ -57,7 +57,7 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
     ConsultantsListComponent,
     CheckboxgroupComponent,
     ContactsComponent,
-    AddActionComponent
+    AddProcessComponent
   ],
   imports: [
     BrowserModule,

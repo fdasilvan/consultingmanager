@@ -1,20 +1,20 @@
 import { Component, OnInit, Input, Output, EventEmitter, NgModule } from '@angular/core';
-import { User } from '../models/user.model';
+import { User } from '../../../models/user.model';
 import { Router } from '@angular/router';
-import { UserService } from '../services/user/user.service';
-import { ModelProcess } from '../models/modelprocess.model';
+import { UserService } from '../../../services/user/user.service';
+import { ModelProcess } from '../../../models/modelprocess.model';
 import { NgbModal, NgbModalRef, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProcessService } from '../services/process/process.service';
-import { Customer } from '../models/customer.model';
-import { CustomerProcess } from '../models/customerprocess.model';
-import { CustomersService } from '../services/customers/customers.service';
+import { ProcessService } from '../../../services/process/process.service';
+import { Customer } from '../../../models/customer.model';
+import { CustomerProcess } from '../../../models/customerprocess.model';
+import { CustomersService } from '../../../services/customers/customers.service';
 
 @Component({
-  selector: 'app-add-action',
-  templateUrl: './add-action.component.html',
-  styleUrls: ['./add-action.component.css']
+  selector: 'app-add-process',
+  templateUrl: './add-process.component.html',
+  styleUrls: ['./add-process.component.css']
 })
-export class AddActionComponent implements OnInit {
+export class AddProcessComponent implements OnInit {
   @Input() modal : NgbActiveModal;
   @Input() customerProcessesList : CustomerProcess[];
   @Input() customer : Customer;
