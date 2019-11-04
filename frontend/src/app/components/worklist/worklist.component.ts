@@ -6,6 +6,7 @@ import { TaskService } from 'src/app/services/task/task.service';
 import { Customer } from 'src/app/models/customer.model';
 import { UserService } from 'src/app/services/user/user.service';
 import { CustomerMeeting } from 'src/app/models/customermeeting.model';
+import { NgbDateStruct, NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-worklist',
@@ -17,7 +18,8 @@ export class WorklistComponent implements OnInit {
   constructor(private taskService: TaskService,
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private calendar: NgbCalendar) { }
 
   public tasksList: CustomerTask[];
   public filteredTasksList: CustomerTask[] = [];
@@ -28,6 +30,7 @@ export class WorklistComponent implements OnInit {
   public userMeetings: CustomerMeeting[] = [];
   public filteredUserMeetings: CustomerMeeting[] = []
   public today: Date = new Date();
+  public dateModel: NgbDateStruct;
 
   ngOnInit() {
     this.loggedUser = this.userService.getLoggedUser();
@@ -38,7 +41,7 @@ export class WorklistComponent implements OnInit {
     }
 
     this.today.setHours(0, 0, 0, 0);
-
+    this.dateModel = this.calendar.getToday();
     this.selectedCustomerFilter = '';
     this.loadTasks();
     this.loadUserMeetings();
@@ -66,12 +69,12 @@ export class WorklistComponent implements OnInit {
     });
   }
 
-  onMeetingDateChanged(date: Date) {
+  onMeetingDateChanged(date: NgbDate) {
     if (date) {
-      let selectedDay = new Date(date + "T00:00");
+      let selectedDay = new Date(date.year, date.month-1, date.day);
       this.filteredUserMeetings = this.userMeetings.filter(o => {
         let meetingDate = new Date(o.date);
-        let datesMatch = (meetingDate.getTime() == selectedDay.getTime());
+        let datesMatch = (meetingDate.getFullYear() == selectedDay.getFullYear() && meetingDate.getMonth() == selectedDay.getMonth() && meetingDate.getDay() == selectedDay.getDay());
         return datesMatch;
       });
     }

@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
                 alert('Usuário/senha inválidos!');
             } else {
                 alert('Erro!');
+                console.log(error);
             }
         }
     }

@@ -6,11 +6,12 @@
           <h3 class="card-title">Meus Encontros</h3>
         </div>
         <div class="card-block row">
-          <div class="col-3">
-            <input #txtMeetingDate id="txtMeetingDate" type="date" class="form-control" style="width: 12rem"
-              (change)="onMeetingDateChanged($event.target.value)" value="{{this.today | date: 'yyyy-MM-dd'}}">
+          <div class="col">
+            <ngb-datepicker displayMonths="2" navigation="arrows"
+              outsideDays="hidden" [(ngModel)]="dateModel" (select)="onMeetingDateChanged($event)">
+            </ngb-datepicker>
           </div>
-          <div class="col-9">
+          <div class="col">
             <h5>Encontros do Dia</h5>
             <p *ngIf="filteredUserMeetings && filteredUserMeetings.length == 0">
               Você não possui encontros agendados para esta data.</p>
