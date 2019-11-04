@@ -33,6 +33,19 @@ import { CheckboxgroupComponent } from './utils/checkboxgroup/checkboxgroup.comp
 import { ContactsComponent } from './contacts/contacts.component';
 import { CustomerContractsComponent } from './components/customers/customer-contracts/customer-contracts.component';
 import { FinancialSummaryComponent } from './components/customers/financial-summary/financial-summary.component';
+import { NgxCurrencyModule } from "ngx-currency";
+
+export const customCurrencyMaskConfig = {
+  align: "right",
+  allowNegative: true,
+  allowZero: true,
+  decimal: ",",
+  precision: 2,
+  prefix: "R$ ",
+  suffix: "",
+  thousands: ".",
+  nullable: true
+};
 
 @NgModule({
   declarations: [
@@ -69,7 +82,8 @@ import { FinancialSummaryComponent } from './components/customers/financial-summ
     NgxChartsModule,
     BrowserAnimationsModule,
     FormsModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],

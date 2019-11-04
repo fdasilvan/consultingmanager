@@ -6,6 +6,44 @@
       </div>
       <div class="card-block">
         <div class="mb-4">
+          <div class="financial-table row">
+            <div class="financial-table-description">
+              <div>Mês/Ano</div>
+              <div>Faturamento</div>
+              <div>Pedidos</div>
+              <div>Pedidos Pagos</div>
+              <div>Visitantes</div>
+              <div>Investimento em Anúncios</div>
+            </div>
+            <div *ngFor="let month of this.financialMonthsList">
+              <div>{{month.month}}/{{month.year}}</div>
+              <div>
+                <input currencyMask [(ngModel)]="month.storeRevenue">
+              </div>
+              <div>
+                <input [(ngModel)]="month.totalOrders">
+              </div>
+              <div>
+                <input [(ngModel)]="month.paidOrders">
+              </div>
+              <div>
+                <input [(ngModel)]="month.visitors">
+              </div>
+              <div>
+                <input currencyMask [(ngModel)]="month.adsInvestment">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="floating-container mb-4">
+          <div class="floating-content">
+            <button class="btn btn-lg btn-secondary" (click)="goBack()" type="button">
+              <span class="fa fa-arrow-left"></span> Voltar
+            </button>
+            <button class="btn btn-lg btn-primary" (click)="saveForm()">
+              <span class="fa fa-check"></span> Salvar
+            </button>
+          </div>
         </div>
       </div>
     </div>
