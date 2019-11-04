@@ -86,7 +86,6 @@ export class AddActionComponent implements OnInit {
   }
 
   async startCustomerProcess(modelProcessId: string, modelDescription: string, detail: string, consultantId: string, customerUserId: string, startDate: string) {
-    debugger;
     if (modelProcessId == '' || customerUserId == '' || (this.canAssignTask && consultantId == '')) {
       alert('Favor preencher todos os campos obrigatórios!');
     } else {

@@ -812,3 +812,25 @@ table, td, tr, th, thead {
   background: #f7f7f7; }
   .error-page h1 {
     font-size: 4rem; }
+
+/*Autocomplete Component Syling for Add Action*/
+.input-group .autocomplete-container {
+  box-shadow: none;
+}
+
+.input-group .autocomplete-container .input-container input {
+  height: 46px;
+  border: 1px solid #dfdfdf;
+  background-color: #ffffff;
+  box-shadow: none;
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-clip: padding-box;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
