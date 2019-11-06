@@ -81,7 +81,7 @@
 </section>
 
 <ng-template #content let-modal>
-  <app-add-process [modal]="modal" [customerProcessesList]="customerProcessesList" [customer]="customer" (reloadCustomerProcess)="loadCustomerProcesses($event)"></app-add-process>
+  <app-add-process [modal]="modal" [customerProcessesList]="customerProcessesList" [customer]="customer" (reloadCustomerProcess)="loadCustomerProcesses($event)" [selectedMeeting]="selectedMeeting"></app-add-process>
 </ng-template>
 
 

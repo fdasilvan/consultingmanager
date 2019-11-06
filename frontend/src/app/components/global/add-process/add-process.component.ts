@@ -8,6 +8,7 @@ import { ProcessService } from '../../../services/process/process.service';
 import { Customer } from '../../../models/customer.model';
 import { CustomerProcess } from '../../../models/customerprocess.model';
 import { CustomersService } from '../../../services/customers/customers.service';
+import { CustomerMeeting } from 'src/app/models/customermeeting.model';
 
 @Component({
   selector: 'app-add-process',
@@ -18,6 +19,7 @@ export class AddProcessComponent implements OnInit {
   @Input() modal : NgbActiveModal;
   @Input() customerProcessesList : CustomerProcess[];
   @Input() customer : Customer;
+  @Input() selectedMeeting: CustomerMeeting;
 
   @Output() reloadCustomerProcess = new EventEmitter<Customer>();
 
@@ -41,6 +43,7 @@ export class AddProcessComponent implements OnInit {
   public consultantProcessesListData: User[];
   public userProcessesListData: User[];
   public initialConsultant: User;
+  public selectedCustomer: User;
   public today: Date = new Date();
   public canDeleteProcess: boolean;
   public canAssignTask: boolean;
@@ -60,6 +63,9 @@ export class AddProcessComponent implements OnInit {
     this.loadConsultants();
     this.modelProcessesListData = this.modelProcessesList;
     this.initialConsultant = this.loggedUser.userType.description === 'Consultor' ? this.loggedUser : null;
+    if(this.customer.users.length == 1) {
+      this.selectedCustomer = this.customer.users[0];
+    }
   }
 
   async loadModelProcesses() {
@@ -86,7 +92,7 @@ export class AddProcessComponent implements OnInit {
   }
 
   async startCustomerProcess(modelProcessId: string, modelDescription: string, detail: string, consultantId: string, customerUserId: string, startDate: string) {
-    if (modelProcessId == '' || customerUserId == '' || (this.canAssignTask && consultantId == '')) {
+    if (modelProcessId == undefined || customerUserId == undefined || consultantId == undefined || modelProcessId == '' || customerUserId == '' || consultantId == '') {
       alert('Favor preencher todos os campos obrigatórios!');
     } else {
       this.modal.close()
@@ -94,7 +100,7 @@ export class AddProcessComponent implements OnInit {
         this.modalObject.close();
       }
       let ownerId = (consultantId && consultantId == '' ? this.loggedUser.id : consultantId);
-      await this.processService.startCustomerProcess(modelProcessId, modelDescription, detail, this.customer.id, ownerId, customerUserId, new Date(startDate), null);
+      await this.processService.startCustomerProcess(modelProcessId, modelDescription, detail, this.customer.id, ownerId, customerUserId, new Date(startDate), this.selectedMeeting != undefined ? this.selectedMeeting.id: null);
       this.loadCustomerProcesses(this.customer);
     }
   }

@@ -39,7 +39,7 @@
       <div class="input-group">
           <ng-autocomplete [data]="userProcessesListData" searchKeyword="name"
           (selected)='updateSelectedUserProcess($event)' (inputChanged)='onUserProcessChangeSearch($event)' (inputFocused)='onUserProcessFocused($event)'
-          [itemTemplate]="itemTemplateUser" [notFoundTemplate]="notFoundTemplate" placeHolder="Cliente (obrigatório)">
+          [itemTemplate]="itemTemplateUser" [notFoundTemplate]="notFoundTemplate" [initialValue]="selectedCustomer" placeHolder="Cliente (obrigatório)">
         </ng-autocomplete>
       </div>
     </div>
