@@ -220,6 +220,47 @@ namespace ConsultingManager.Domain.Repository
                 .ToListAsync();
         }
 
+        public async Task<List<CustomerContactDto>> GetCustomerContacts(Guid customerId)
+        {
+            return await Context.CustomerContacts
+                .Select(o => o.MapTo<CustomerContactDto>())
+                .Where(o => o.CustomerId == customerId)
+                .OrderBy(o => o.Name)
+                .ToListAsync();
+        }
+
+        public async Task<bool> AddCustomer(Guid customerId, List<CustomerContactDto> customerContacts)
+        {
+            try
+            {
+                foreach (CustomerContactDto customerContactDto in customerContacts)
+                {
+                    if (customerId == customerContactDto.CustomerId)
+                    {
+                        var customerContactToEdit = await Context.CustomerContacts.SingleOrDefaultAsync(o => o.Id == customerContactDto.Id);
+
+                        if (customerContactToEdit == null)
+                        {
+                            var lst = Context.CustomerContacts.Add(customerContactDto.MapTo<CustomerContactPoco>());
+                        }
+                        else
+                        {
+                            customerContactToEdit.Name = customerContactDto.Name;
+                            customerContactToEdit.Email = customerContactDto.Email;
+                            customerContactToEdit.Role = customerContactDto.Role;
+                            customerContactToEdit.Phone = customerContactDto.Phone;
+                        }
+                    }
+                }
+                await Context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task<List<UserDto>> GetConsultants()
         {
             return await Context.Users

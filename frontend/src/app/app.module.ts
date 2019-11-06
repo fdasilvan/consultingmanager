@@ -30,6 +30,9 @@ import { ProcessViewComponent } from './components/process/process-view/process-
 import { ConsultantRegistrationComponent } from './components/users/consultant-registration/consultant-registration.component';
 import { ConsultantsListComponent } from './components/users/consultants-list/consultants-list.component';
 import { CheckboxgroupComponent } from './utils/checkboxgroup/checkboxgroup.component';
+import { ContactsComponent } from './components/global/contacts/contacts.component';
+import { AddProcessComponent } from './components/global/add-process/add-process.component';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 
 @NgModule({
   declarations: [
@@ -52,7 +55,9 @@ import { CheckboxgroupComponent } from './utils/checkboxgroup/checkboxgroup.comp
     ProcessViewComponent,
     ConsultantRegistrationComponent,
     ConsultantsListComponent,
-    CheckboxgroupComponent
+    CheckboxgroupComponent,
+    ContactsComponent,
+    AddProcessComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +68,7 @@ import { CheckboxgroupComponent } from './utils/checkboxgroup/checkboxgroup.comp
     NgxChartsModule,
     BrowserAnimationsModule,
     FormsModule,
+    AutocompleteLibModule,
     NgxMaskModule.forRoot()
   ],
   providers: [AuthService],
