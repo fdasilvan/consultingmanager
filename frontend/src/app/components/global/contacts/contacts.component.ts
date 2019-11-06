@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, ViewChild, TemplateRef, NgModule } from '@angular/core';
-import { CustomersService } from '../services/customers/customers.service';
-import { UserService } from '../services/user/user.service';
+import { CustomersService } from '../../../services/customers/customers.service';
+import { UserService } from '../../../services/user/user.service';
 import { Router } from '@angular/router';
-import { User } from '../models/user.model';
-import { Contact } from '../models/contact.model';
+import { User } from '../../../models/user.model';
+import { Contact } from '../../../models/contact.model';
 import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({

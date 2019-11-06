@@ -37,7 +37,6 @@ export class TimelineComponent implements OnInit {
 
   public customer: Customer;
   public customerProcessesList: CustomerProcess[];
-  public modelProcessesList: ModelProcess[];
   public consultantsList: User[];
   public today: Date = new Date();
   public modalObject: NgbModalRef;
@@ -52,7 +51,6 @@ export class TimelineComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadCustomer();
-    this.loadModelProcesses();
     this.loadCustomerProcesses(this.customer);
     this.loadConsultants();
     this.getUserPermissions();
@@ -69,10 +67,6 @@ export class TimelineComponent implements OnInit {
     if (scrollY && scrollY != 'null') {
       window.scrollTo(0, parseInt(scrollY));
     }
-  }
-
-  async loadModelProcesses() {
-    this.modelProcessesList = await this.processService.getModelProcesses();
   }
 
   async loadCustomerProcesses(customer: Customer) {
@@ -117,17 +111,6 @@ export class TimelineComponent implements OnInit {
     await this.taskService.rescheduleStep(this.selectedCustomerStepId, businessDaysToAdd);
     alert('Etapa replanejada com sucesso!');
     this.loadCustomerProcesses(this.customer);
-  }
-
-  async startCustomerProcess(modelProcessId: string, modelDescription: string, detail: string, consultantId: string, customerUserId: string, startDate: string) {
-    if (modelProcessId == '' || customerUserId == '' || (this.canAssignTask && consultantId == '')) {
-      alert('Favor preencher todos os campos obrigatórios!');
-    } else {
-      this.modalObject.close();
-      let ownerId = (consultantId && consultantId == '' ? this.loggedUser.id : consultantId);
-      await this.processService.startCustomerProcess(modelProcessId, modelDescription, detail, this.customer.id, ownerId, customerUserId, new Date(startDate), null);
-      this.loadCustomerProcesses(this.customer);
-    }
   }
 
   async deleteProcess(customerProcessId: string) {
