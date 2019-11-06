@@ -119,6 +119,7 @@ export class ConsultantRegistrationComponent implements OnInit {
   }
 
   async saveConsultant() {
+    this.consultant.password = '123456';
     await this.userService.saveConsultant(this.consultant);
     if (this.isEdit) {
       alert('Consultor atualizado com sucesso!');

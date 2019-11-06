@@ -23,10 +23,23 @@ export class FinancialSummaryComponent implements OnInit {
 
   public customer: Customer;
   public financialMonthsList: FinancialSummaryMonth[] = [];
+  public monthsList: Date[] = []
 
   ngOnInit() {
     this.loadCustomer();
+    this.loadMonths();
+    
     this.loadMock();
+  }
+
+  loadMonths() {
+    let dateNow = new Date();
+    let currentMonth = dateNow.getMonth();
+    let numberOfMonths = 6;
+
+    for (let i = 0; i < numberOfMonths; i++) {
+      
+    }
   }
 
   loadMock() {
